@@ -1,0 +1,40 @@
+#background {background: #ee0979;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #ff6a00, #ee0979); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.forms{
+	border: 1px solid;
+}
+
+.brand {
+	color: #ee0979;
+}
+
+
+.background{background: #74ebd5;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #ACB6E5, #74ebd5);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #ACB6E5, #74ebd5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.row{
+	padding: 20px;
+}
+
+.sign-up{
+	margin-top: 2px;
+	border-spacing: 10px;
+	padding-bottom: 2empx;
+}
+
+.navbar{
+	float: right;
+	background-color: #74ebd5;
+}
+
+
+.bg-light{
+	background-color: #74ebd5 !important;
+	color: #ffffff !important;
+	/*display: none;*/
+}

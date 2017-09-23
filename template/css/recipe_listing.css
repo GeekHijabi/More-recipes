@@ -1,0 +1,23 @@
+
+h2 {
+    color: red;
+    font-size: 40px;
+    font-style: cursive;
+}
+
+
+h1 {
+  font-style: cursive;
+}
+
+.search_btn{
+  float: right;
+
+}
+
+.navbar-brand{
+	float: right;
+}
+
+.background{background: #74ebd5;
+  }
