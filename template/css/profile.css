@@ -28,4 +28,9 @@ body {
     border: 2px;
     border-left-width: 2px;
     margin: 20px;
-}   
+}  
+
+#footer-text{
+    float: left;
+    margin: 1px solid;
+} 

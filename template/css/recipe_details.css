@@ -1,21 +1,24 @@
-body {
+/*body {
     margin-left: 3%;
     margin-right: 3%;
-}
+}*/
 
-.navbar {
-    padding-top: 2%;
-    margin-bottom: 3%;
-}
 
 
 .container{
-    margin-top: 3%;
+    margin-top: 1px solid;
     padding-top: 5%;
     color: #fff;
     font-size:12px;
 }
 
 
-.background{background: #74ebd5;
-  }
+/*.card-text{
+	padding-bottom: 20px;
+	margin: 20px;
+}*/
+
+.card-title{
+	color: red;
+	padding-bottom: 50px;
+}
