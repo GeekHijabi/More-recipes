@@ -2,124 +2,326 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/profile.css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script src="https://use.fontawesome.com/07b0ce5d10.js"></script>  
-    <link rel="stylesheet" href="../css/recipe_details.css">
-    <title>Recipe Details</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/recipepage.css">
+    <title>Recipes</title>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="recipe_listing.html">Catalog</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" href="recipe_details.html">Details</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="fav.html">Favorite</a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <div class="dropdown">
+                    <nav class="navbar navbar-light bg-light">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </nav>
+                    <nav class="navbar navbar-light bg-light"></nav>
+                </div>
+            </ul>
+                </div>
+            <div class="dropdown">
+                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</button>
+                <div class="dropdown-menu">
+                     <a class="dropdown-item" href="#">View profile</a>
+                     <a class="dropdown-item" href="#">My Recipes</a>
+                     <a class="dropdown-item" href="#">Favorite Recipes</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="#">Log out</a>
+                </div>
+        </div>
     </nav>
 
-<div class="header">
-    <center>
-        <h2>Recipe Page</h2>
-    </center>
-</div>
-
-
-<div class="row">
-<div class="col-lg-6 card">
-         <img class="card-img-top" src="../images/ewa_agoyin.jpg" alt="ewa_agoyin">
-    </div>
-    <div class="col-lg-5">
-        <h4 class="card-title">Ewa Agoyin</h4>
-           <h5 class="card-text">
-            Add 6 cups of water to a pot, set on low heat. Wash and add the beans. Leave on low heat for 2hr:30min or until the beans is very soft. Add salt to taste.
-            In a blender, combine the bell pepper, habanero(rodo) pepper and the half medium onion.
-            Set a medium sized pot on low heat, add the palm oil.Bleach the oil for 10-15mins.
-            Add in the blender chopped pepper to another pot, boil for 15mins (this is to remove excess water)
-            Add the parboiled pepper to the fried onion, cook for about 15mins.
-            Taste for seasoning. Cook on medium heat for another 10mins.
-            Serve on beans.
-</h5>
-            <h6> 200 like<i class="fa fa-thumbs-up" aria-hidden="true"></i></h6>
-            <h6> 0 unlike<i class="fa fa-thumbs-down" aria-hidden="true"></i></h6>
-            <h6><a href="#">Add to favourite<i class="fa fa-heart" aria-hidden="true"></a></i></h6>
-            <h5>Posted by Hamdalah</h5>
-    </div>
-<br> <br>
-
-<div class="col-lg-5 card">
-
-         <img class="card-img-top" src="../images/waffles.jpg" alt="waffles">
-    </div>
-    <div class="col-lg-5">
-        <h4 class="card-title">Waffles</h4>
-           <h5 class="card-text">
-            Add 6 cups of water to a pot, set on low heat. Wash and add the beans. Leave on low heat for 2hr:30min or until the bPreheat waffle iron. Beat eggs in large bowl with hand beater until fluffy. Beat in flour, milk, vegetable oil, sugar, baking powder, salt and vanilla, just until smooth.Spray preheated waffle iron with non-stick cooking spray. Pour mix onto hot waffle iron. Cook until golden brown. Serve hot.</h5>
-            <h6> 34 like<i class="fa fa-thumbs-up" aria-hidden="true"></i></h6>
-            <h6> 2 unlike<i class="fa fa-thumbs-down" aria-hidden="true"></i></h6>
-            <h6><a href="#">Add to favourite<i class="fa fa-heart" aria-hidden="true"></a></i></h6>
-            <h5>Posted by Sonna</h5>
-       
-    </div>
-    <div class="col-lg-6 card">
-         <img class="card-img-top" src="../images/atama.jpg"" alt="Card image cap">
-    </div>
-    <div class="col-lg-5">
-        <h4 class="card-title">Abak Atama Soup</h4>
-           <h5 class="card-text">
-                           Wash periwinkles thoroughly. Then Wash and boil the palm fruits for about 30 minutes. Strain off the water and pound the palm fruit until the pulp/fibre separates from the nuts.
-                Boil some clean water and add to the pounded palm fruit and mix thoroughly to separate the oily extract from the rest of the pulp, then strain off the oily extract.
-                Add the atama leaves and boil without stirring for another 10 minutes. Stir and add salt to tast.
-                Allow to simmer for another 15 –10 minutes or until slightly thick. Remove from heat and serve with pounded yam, garri or cassava fufu.
-            </h5>
-            <h6> 20 like<i class="fa fa-thumbs-up" aria-hidden="true"></i></h6>
-            <h6> 2 unlike<i class="fa fa-thumbs-down" aria-hidden="true"></i></h6>
-            <h6><a href="#">Add to favourite<i class="fa fa-heart" aria-hidden="true"></a></i></h6>
-            <h5>Posted by Nnenna</h5>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+            <img class="card-img-top" src="../images/ofada.jpg" alt="ofada rice">
+            <div class="card-body">
+                <h4 class="card-title">Ofada Rice</h4>
+                <p class="card-text">Made with our local rice, enjoy with well fried stew and ponmo!</p>
+                <p class="card-text text-right"><small class="text-muted">Hamdalah's recipe</small></p>
+                <a href="#" class="btn btn-success">Read more</a>
+                <h6> 200 like<i class="fa fa-thumbs-up" aria-hidden="true"></i></h6>
+                <h6> 0 unlike<i class="fa fa-thumbs-down" aria-hidden="true"></i></h6>
+                <h6><a href="#">Add to favourite<i class="fa fa-heart" aria-hidden="true"></a></i></h6>
+                <h5>Posted by Hamdalah</h5>
+            </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Review </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Review</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="post-form">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Post</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    <div class="col-sm-6">
+      <div class="card">
+            <img class="card-img-top" src="../images/ewa_agoyin.jpg" alt="ewa">
+            <div class="card-body">
+                <h4 class="card-title">Ewa Agoyin</h4>
+                <p class="card-text">well-mashed beans from the agoyin tribe, can be served with bread or yam and a bottle of cold coke!</p>
+                <a href="#" class="btn btn-success">Read more</a>
+                <h6> 500 like<i class="fa fa-thumbs-up" aria-hidden="true"></i></h6>
+                <h6> 3 unlike<i class="fa fa-thumbs-down" aria-hidden="true"></i></h6>
+                <h6><a href="#">Add to favourite<i class="fa fa-heart" aria-hidden="true"></a></i></h6>
+                <h5>Posted by Kala</h5>
+            </div>
             
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Review </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Review</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="post-form">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Post</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>    
+        </div>            
     </div>
 </div>
-
-
-<br> <br>
 </div>
-</body>
-
-<footer>
-    <center>
-    <div class="container">
-                <div class="footer">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <p id="footer-text">&copy;
-                        <span id="footer-year"></span> More-Recipes. For the love of good food.</p>
-                    </center>
+<div class="row">
+<div class="col-sm-6">
+<div class="card">
+            <img class="card-img-top" src="../images/turkish_salad.jpg" alt="salad">
+            <div class="card-body">
+                <h4 class="card-title">Turkish salad</h4>
+                <p class="card-text">Mix together the cucumber, tomatoes, pepper, onion, mint and oil in a large serving bowl and sprinkle over the feta and parsley.</p>
+                <a href="#" class="btn btn-success">Read more</a>
+                <h6> 10 like<i class="fa fa-thumbs-up" aria-hidden="true"></i></h6>
+                <h6> 5 unlike<i class="fa fa-thumbs-down" aria-hidden="true"></i></h6>
+                <h6><a href="#">Add to favourite<i class="fa fa-heart" aria-hidden="true"></a></i></h6>
+                <h5>Posted by Hamdalah</h5>
+            </div>
+            
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Review </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Review</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="post-form">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Post</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="card-footer">
+                <small class="text-muted">Edited 15 mins ago</small>
             </div>
-    </center>
+    </div>
+<!-- </div> -->
+</div>
+<div class="col-sm-6">
+<div class="card">
+            <img class="card-img-top" src="../images/atama.jpg" alt="atama">
+            <div class="card-body">
+                <h4 class="card-title">atama</h4>
+                <p class="card-text">Atama soup is a vegetable and palm nut soup that originates from the Ibibio People of Akwa Ibom State in South South Nigeria. It is popularly known amongst the Akwa Ibom and Cross River People of Nigeria.</p>
+                <a href="#" class="btn btn-success">Read more</a>
+                <h6> 10 like<i class="fa fa-thumbs-up" aria-hidden="true"></i></h6>
+                <h6> 5 unlike<i class="fa fa-thumbs-down" aria-hidden="true"></i></h6>
+                <h6><a href="#">Add to favourite<i class="fa fa-heart" aria-hidden="true"></a></i></h6>
+                <h5>Posted by Tex</h5>
+            </div>
             
-</footer>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Review </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Review</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="post-form">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Post</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Edited 25 mins ago</small>
+            </div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-6">
+<div class="card">
+            <img class="card-img-top" src="../images/mosa.jpg" alt="mosa">
+            <div class="card-body">
+                <h4 class="card-title">mosa</h4>
+                <p class="card-text">For the love of fries, well fried plaintain.</p>
+                <a href="#" class="btn btn-success">Read more</a>
+                <h6> 10 like<i class="fa fa-thumbs-up" aria-hidden="true"></i></h6>
+                <h6> 5 unlike<i class="fa fa-thumbs-down" aria-hidden="true"></i></h6>
+                <h6><a href="#">Add to favourite<i class="fa fa-heart" aria-hidden="true"></a></i></h6>
+                <h5>Posted by Tex</h5>
+            </div>
+            
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Review </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Review</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="post-form">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Post</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Edited 5 mins ago</small>
+            </div>
+</div>
+</div>
+<div class="col-sm-6">
+<div class="card">
+            <img class="card-img-top" src="../images/pounded_yam.jpg" alt="pounded_yam">
+            <div class="card-body">
+                <h4 class="card-title">Pounded Yam</h4>
+                <p class="card-text">Best served with efo-riro or any soup of choice.</p>
+                <a href="#" class="btn btn-success">Read more</a>
+                <h6> 10 like<i class="fa fa-thumbs-up" aria-hidden="true"></i></h6>
+                <h6> 5 unlike<i class="fa fa-thumbs-down" aria-hidden="true"></i></h6>
+                <h6><a href="#">Add to favourite<i class="fa fa-heart" aria-hidden="true"></a></i></h6>
+                <h5>Posted by Shola</h5>
+            </div>
+            
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Review </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Review</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="post-form">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Post</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Edited 1 hr ago</small>
+            </div>
+</div>
+</div>
+</div>
+</div>
+</br>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h6>Support</h6>
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="col">
+                <h6>About Us</h6>
+                <a href="#">Newsroom</a>
+                <p>© 2017 Morerecipes.com </p>
+                <p>All Rights Reserved</p>
+            </div>
+            <div class="col">
+                <h6>Advertising</h6>
+                <a href="#">Advertise with Us</a>
+            </div>
+        </div>  
+    </div>
+</div>
+</div>
+</body>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 </html>
