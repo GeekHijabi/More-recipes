@@ -1,0 +1,33 @@
+{
+  "name": "more_recipes",
+  "version": "1.0.0",
+  "description": "connect people to recipes they love",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon --watch server --exec babel-node -- server/bin/www.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeekHijabi/More-recipes.git"
+  },
+  "author": "Hamdalah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GeekHijabi/More-recipes/issues"
+  },
+  "homepage": "https://github.com/GeekHijabi/More-recipes#readme",
+  "dependencies": {
+    "express": "^4.15.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "body-parser": "^1.18.2",
+    "eslint": "^4.7.2",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.12.1"
+  }
+}
