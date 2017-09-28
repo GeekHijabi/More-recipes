@@ -1,0 +1,40 @@
+.header {
+    width: 300px;
+    margin: 8% auto 0px;
+    color: #fff;
+    background: #3956D5;
+    text-align: center;
+    border-bottom: none;
+    border-radius: 10px 10px 0px 0px;
+    padding: 20px;
+}
+
+.bg-img{
+    background: url('../images/bg2.jpg') no-repeat center;
+    background-size: cover;   
+}
+
+
+form {
+    background: wheat;
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.input-group {
+    margin: 10px 0px 10px 0px;
+}
+
+.btn {
+   padding: 10px;
+}
+
+.footer{
+    background-color: #3F3F3F;
+    padding-top: 5px;
+    text-align: center;
+    color: #fff;
+    font-size:12px;
+}

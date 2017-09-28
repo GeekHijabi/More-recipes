@@ -1,45 +1,43 @@
-#background {background: #ee0979;  
-	background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  
-	background: linear-gradient(to right, #ff6a00, #ee0979); 
+
+body {
+    background-color: #D3D3D3;
+    background-size: 100%;
 }
 
-.navbar{
-	float: right;
-	background-color: #74ebd5;
+.navbar {
+    padding-top: 2%;
+    padding-right: 4%;
+    padding-left: 4%;
 }
 
-
-.forms{
-	border: 1px solid;
+.jumbotron {
+    text-align: center;
+    margin-left: 3%;
+    margin-right: 3%;
 }
 
-.brand {
-	color: #ee0979;
-	font-size: 60px;
-	text-align-last: center;
+h5 {
+    margin-top: 2%;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Baloo Bhaijaan', cursive;
+    font-size: 28px;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
-
-.background{background: #74ebd5;  
-	background: -webkit-linear-gradient(to right, #ACB6E5, #74ebd5);  
-	background: linear-gradient(to right, #ACB6E5, #74ebd5);
+.show-off {
+    font-size: 20px;
 }
 
-.bg-light{
-	background-color: #74ebd5 !important;
-	color: #ffffff !important;
-
-
-.sign-up{
-	margin-top: 2px;
-	border-spacing: 10px;
-	padding-bottom: 2em;
+#carouselExampleControls{
+    margin-left: 4%;
+    margin-right: 4%; 
 }
-
 
 .footer{
-	background: black
-	border: 2px solid blue;
-	align-self: auto;
-	padding-bottom: 2px;
+    background-color: #3F3F3F;
+    padding-top: 5px;
+    text-align: center;
+    color: #fff;
+    font-size:12px;
 }

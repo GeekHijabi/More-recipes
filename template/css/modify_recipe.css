@@ -1,9 +1,17 @@
-.nav-link{
-	float: right;
+body {
+    margin-left: 3%;
+    margin-right: 3%;
 }
 
+.navbar {
+	margin-bottom: 2%;
+}
 
-  .footer{
+    .container{
+        margin-top: 7%
+    }
+
+.footer{
     background-color: #3F3F3F;
     margin-top: 68%;
     padding-top: 5%;

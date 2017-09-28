@@ -8,7 +8,6 @@
 .container{
     margin-top: 1px solid;
     padding-top: 5%;
-    color: #fff;
     font-size:12px;
 }
 
@@ -21,4 +20,23 @@
 .card-title{
 	color: red;
 	padding-bottom: 50px;
+}
+
+.card-image{
+    height: 250px;
+}
+
+.card-body {
+    background: #fff;
+}
+
+.footer{
+    background-color: #3F3F3F;
+    margin-top: 68%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-right: 5%;
+    text-align: center;
+    color: #fff;
+    font-size:12px;
 }
