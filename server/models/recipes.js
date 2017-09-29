@@ -2,6 +2,7 @@ const db = []
 
 db.recipes = [
   {
+    id: 1,
     userId: 1,
     name: 'shade',
     recipeName: 'ofada rice',
@@ -11,6 +12,7 @@ db.recipes = [
   },
 
   {
+    id: 2,
     userId: 2,
     name: 'Lola',
     recipeName: 'Turkish salad',
@@ -20,6 +22,7 @@ db.recipes = [
   },
 
   {
+    id: 3,
     userId: 3,
     name: 'Rex',
     recipeName: 'Ewa Agoyin',

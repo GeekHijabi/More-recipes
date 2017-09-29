@@ -1,7 +1,6 @@
 import {db} from '../models/recipes';
 
 class review {
- 
   add(req, res) {
     const { review, userId } = req.body;
     if(!review) {
