@@ -9,10 +9,11 @@ const reviewController = new review();
 
 let router = express.Router();
 
-router.post('/', recipeController.addRecipe)
-router.get('/', recipeController.getRecipe)
-router.delete('/:userId', recipeController.deleteRecipe)
+router.post('/', recipeController.addRecipe);
+router.get('/', recipeController.getRecipe);
+router.delete('/:Id', recipeController.deleteRecipe);
 router.post('/:Id/reviews', reviewController.add);
+router.put('/:Id', recipeController.put)
 
 
 export default router;

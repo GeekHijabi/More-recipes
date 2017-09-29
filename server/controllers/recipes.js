@@ -2,15 +2,19 @@ import {db} from '../models/recipes';
 
 class Recipe{
   addRecipe(req, res) {
-    const {recipeName, description} = req.body;
+    const {recipeName, description, name} = req.body;
     if (!recipeName){ 
         return res.status(400).send({message: 'supply recipe'});
     }
     if (!description){
       return res.status(400).send({message: 'Description your recipe'});
     }
+    if (!name){
+      return res.status(400).send({message: 'Input a valid name'});
+    }
     
       let newRecipe = {
+        name: name,
         recipeName: recipeName,
         description: description,
       }
@@ -27,7 +31,7 @@ class Recipe{
 
   deleteRecipe(req, res) {
     for (let i = 0; i < db.recipes.length; i++) {
-      if (parseInt(db.recipes[i].userId, 10) === parseInt(req.params.userId, 10)){
+      if (parseInt(db.recipes[i].Id, 10) === parseInt(req.params.Id, 10)){
         db.recipes.splice(i, 1);
         return res.status(204).send({
           message: 'Recipe Deleted'
@@ -35,7 +39,7 @@ class Recipe{
       }
     }
     return res.status(404).send({
-      message: 'No Recipe found!'
+      message: 'Recipe Not found!'
     });    
 }
 
@@ -45,6 +49,7 @@ put(req, res) {
 
   for (let i = 0; i < db.recipes.length; i++) {
     if (db.recipes[i].id === parseInt(id, 10)){
+      db.name[i].Name = Name || db.recipes[i].Name;
       db.recipes[i].recipeName = recipeName || db.recipes[i].recipeName;
       db.recipes[i].description = description || db.recipes[i].description;
       
@@ -57,6 +62,7 @@ put(req, res) {
     message: 'Recipe Not found!'
   });
 }
+
 
   
     

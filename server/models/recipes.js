@@ -3,6 +3,7 @@ const db = []
 db.recipes = [
   {
     userId: 1,
+    name: 'shade',
     recipeName: 'ofada rice',
     description: "Made with our local rice, enjoy with well fried stew and ponmo",
     upvote: 20,
@@ -11,6 +12,7 @@ db.recipes = [
 
   {
     userId: 2,
+    name: 'Lola',
     recipeName: 'Turkish salad',
     description: "Mix together the cucumber, tomatoes, pepper, onion, mint and oil in a large serving bowl and sprinkle over the feta and parsley",
     upvote: 20,
@@ -19,6 +21,7 @@ db.recipes = [
 
   {
     userId: 3,
+    name: 'Rex',
     recipeName: 'Ewa Agoyin',
     description: "Mashed beans serve with stew",
     upvote: 20,
