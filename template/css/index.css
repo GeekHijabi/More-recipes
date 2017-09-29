@@ -29,10 +29,6 @@ h5 {
     font-size: 20px;
 }
 
-/* .carousel{
-    height: 30%;
-    width: 100%;
-} */
 
 #carouselExampleControls{
     margin-left: 4%;
@@ -42,17 +38,11 @@ h5 {
 .footer {
     padding: 15px 0px;
     background-color: #3F3F3F;
-    bottom: 0px;
-    margin-left:-20px;
-    margin-right:-20px;
+    margin-bottom: -200px;
+    margin-left: -60px;
+    margin-right: -60px;
     text-align: center;
-    border-top: 1px solid #efefef ;
-    color:peachpuff ;  
-    letter-spacing: 0.1em;
-    line-height:1.5;
-    font-size: 22px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: normal;
+    color:peachpuff;  
     margin-top:40px;
-    
    }
+

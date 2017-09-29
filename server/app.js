@@ -3,7 +3,6 @@ import logger from 'morgan';
 import bodyParser from 'body-parser';
 
 import recipes from './routes/recipes';
-// import users from '../routes/users';
 
 const app = express();
 

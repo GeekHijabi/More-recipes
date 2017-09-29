@@ -11,13 +11,14 @@ body {
         margin-top: 7%
     }
 
-.footer{
-    background-color: #3F3F3F;
-    margin-top: 68%;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    padding-right: 5%;
-    text-align: center;
-    color: #fff;
-    font-size:12px;
-}
+    .footer {
+        padding: 15px 0px;
+        background-color: #3F3F3F;
+        margin-bottom: -200px;
+        margin-left: -60px;
+        margin-right: -60px;
+        text-align: center;
+        color:peachpuff;  
+        margin-top:40px;
+       }
+    
