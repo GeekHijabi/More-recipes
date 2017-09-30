@@ -35,10 +35,7 @@ class Recipe{
         db.recipes.splice(i, 1);
         return res.status(200).json({
           status: "success",
-          message: "Recipe Deleted",
-          recipe: db.recipes[i]
-
-
+          message: "Recipe Deleted"
         })
       }
     }
@@ -53,7 +50,7 @@ put(req, res) {
     return res.status(404).json({
     message: 'Recipe Not found!'
   });
-  const { recipeName, description, name } = req.body;
+  const { userId, recipeName, description, Name } = req.body;
   for (let i = 0; i < db.recipes.length; i++) {
     if (db.recipes[i].id === parseInt(id, 10)){
       db.recipes[i].userId = userId || db.recipes[i].userId;
