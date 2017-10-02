@@ -1,10 +1,3 @@
 language: node_js
 node_js:
 - "stable"
-# env:
-#   global:
-#     - export NODE_ENV=test
-# script:
-# - npm run coverage
-# - npm install
-#  after_success: 'npm run coveralls'
