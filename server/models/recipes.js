@@ -1,6 +1,5 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var recipes = sequelize.define('recipes', {
+  const recipes = sequelize.define('recipes', {
     recipeName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -17,10 +16,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    recipeID: {
+    UserId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true,
+      references:{
+      model: 'users',
+      key: 'id',
+      as: 'userId',
+      },
     },
     reviews:{ 
       type: DataTypes.STRING,

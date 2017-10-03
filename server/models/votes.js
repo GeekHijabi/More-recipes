@@ -1,6 +1,5 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var votes = sequelize.define('votes', {
+  const votes = sequelize.define('votes', {
     recipeID:{ 
       type: DataTypes.INTEGER,
       allowNull: false,

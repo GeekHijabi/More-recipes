@@ -1,7 +1,5 @@
-// const Recipe = require('./recipes');
-// const Review = require('./reviews');
+const recipes = require('./recipes');
 
-// module.exports = {
-//     recipes,
-//     reviews,
-// };
+module.exports = {
+    recipes,
+};

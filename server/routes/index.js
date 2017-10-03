@@ -4,8 +4,8 @@ module.exports = (app) => {
 }));
 
 };
-//     app.post('/api/recipes', RecipeController.create);
-// };
+    app.post('/api/recipes', recipesController.create);
+};
 
 // import express from 'express';
 // import {Recipe} from '../controllers/recipes';

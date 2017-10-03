@@ -34,11 +34,15 @@ module.exports = (sequelize, DataTypes) => {
     user.hasMany(model.reviews,{
       foreignKey: 'userId',
       as: 'recipesId',
-    }),
+    });
     user.hasMany(models.votes,{
       foreignKey:'userId',
       as: 'recipesId',
-    }),
-);
+    });
+    user.hasMany(model.favouriteRecipes,{
+      foreignKey: 'userId',
+      as: 'recipeId'
+    });
+  };
   return user;
 };
