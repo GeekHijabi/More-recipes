@@ -1,17 +1,16 @@
-module.exports = (app) => {
-    app.get('/api', (req, res) => res.status(200).send({
-        message: 'Welcome to more recipes API',
-}));
+const recipesController = require('../controllers').recipes;
 
-};
-    app.post('/api/recipes', recipesController.create);
+module.exports = (app) => {
+  app.get('/api', (req, res) => res.status(200).send({
+    message: 'Welcome to more recipes API',
+  }));
+
+  app.post('/api/recipes', recipesController.create);
 };
 
 // import express from 'express';
 // import {Recipe} from '../controllers/recipes';
 // import {review} from "../controllers/reviews";
-
-
 
 // const recipeController = new Recipe()
 // const reviewController = new review();

@@ -17,31 +17,25 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: { 
-        isEmail: true
-      }
+      validate: { isEmail: true }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false
     },
   });
-   user.associate = (models) => {
-    user.hasMany(model.recipes,{
+  user.associate = (models) => {
+    user.hasMany(models.recipes, {
       foreignKey: 'userId',
-      as: 'recipesId',
     });
-    user.hasMany(model.reviews,{
+    user.hasMany(models.reviews, {
       foreignKey: 'userId',
-      as: 'recipesId',
     });
-    user.hasMany(models.votes,{
-      foreignKey:'userId',
-      as: 'recipesId',
-    });
-    user.hasMany(model.favouriteRecipes,{
+    user.hasMany(models.votes, {
       foreignKey: 'userId',
-      as: 'recipeId'
+    });
+    user.hasMany(models.favoriterecipe, {
+      foreignKey: 'userId',
     });
   };
   return user;

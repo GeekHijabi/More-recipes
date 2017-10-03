@@ -1,4 +1,6 @@
-const recipe = require('../models').recipes;
+import recipes from '../models';
+
+// const recipes = models.recipes;
 
 module.exports = {
   create(req, res) {

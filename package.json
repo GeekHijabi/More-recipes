@@ -4,7 +4,7 @@
   "description": "connect people to recipes they love",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon ./bin/www",
+    "start:dev": "nodemon --watch server --exec babel-node  -- ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/GeekHijabi/More-recipes#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "chai": "^4.1.2",
+    "dotenv": "^4.0.0",
     "express": "^4.15.5",
+    "jsonwebtoken": "^8.0.1",
     "mocha": "^3.5.3",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
