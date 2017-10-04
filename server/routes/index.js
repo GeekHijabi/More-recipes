@@ -13,6 +13,8 @@ const routes = (app) => {
   app.post('/api/recipes', authenticate.Verify, recipesController.create);
 
   app.post('/api/user/signup', confirmUserInput, usersController.signup);
+
+  app.post('/api/user/signin', usersController.signin);
 };
 
 export default routes;

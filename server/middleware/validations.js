@@ -20,30 +20,28 @@ export const confirmUserInput = (req, res, next) => {
 
 
 export const checkUserValidity = (req, res, next) => {
-  req.checkBody(
-    {
-      userName: {
-        notEmpty: true,
-        isLength: {
-          options: [{ min: 6 }],
-          errorMessage: 'Please provide a username with atleast 5 characters.'
-        }
-      },
-      email: {
-        notEmpty: true,
-        isEmail: {
-          errorMessage: 'Provide a valid a Email Adrress'
-        }
-      },
-      password: {
-        notEmpty: true,
-        isLength: {
-          options: [{ min: 8 }],
-          errorMessage: 'Provide a valid password with minimum of 8 characters'
-        }
+  req.body({
+    userName: {
+      notEmpty: true,
+      isLength: {
+        options: [{ min: 6 }],
+        errorMessage: 'Please provide a username with atleast 5 characters.'
+      }
+    },
+    email: {
+      notEmpty: true,
+      isEmail: {
+        errorMessage: 'Provide a valid a Email Adrress'
+      }
+    },
+    password: {
+      notEmpty: true,
+      isLength: {
+        options: [{ min: 8 }],
+        errorMessage: 'Provide a valid password with minimum of 8 characters'
       }
     }
-  );
+  });
   const errors = req.validationErrors();
   if (errors) {
     const allErrors = [];

@@ -8,7 +8,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+          as: 'userId'
+        }
       },
       recipeName: {
         type: Sequelize.STRING
@@ -38,5 +44,5 @@ module.exports = {
       }
     });
   },
-  down: (queryInterface/*, Sequelize*/) => queryInterface.dropTable('recipes'),
+  down: queryInterface => queryInterface.dropTable('recipes'),
 };

@@ -1,6 +1,6 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => 
-  queryInterface.createTable('reviews', {
+  up: (queryInterface, Sequelize) =>
+    queryInterface.createTable('reviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,7 +11,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       recipeID: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'recipes',
+          key: 'id',
+          as: 'recipeId'
+        }
       },
       reviews: {
         type: Sequelize.STRING
@@ -25,5 +30,5 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('reviews'),
+  down: queryInterface => queryInterface.dropTable('reviews'),
 };

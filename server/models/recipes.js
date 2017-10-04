@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    votes: {
+    vote: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'userId',
       },
     },
-    reviews: {
+    review: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -34,7 +34,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
-    recipes.hasMany
+    recipes.hasMany(models.reviews, {
+      foreignKey: 'recipeId',
+      onDelete: 'CASCADE',
+    });
+    recipes.hasMany(models.favoriterecipe, {
+      foreignKey: 'recipeId',
+      onDelete: 'CASCADE',
+    });
+    recipes.hasMany(models.votes, {
+      foreignKey: 'recipeId',
+      onDelete: 'CASCADE',
+    });
   };
   return recipes;
 };
