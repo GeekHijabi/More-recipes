@@ -18,22 +18,23 @@ module.exports = (sequelize, DataTypes) => {
     },
     UserId: {
       type: DataTypes.INTEGER,
-      references:{
-      model: 'users',
-      key: 'id',
-      as: 'userId',
+      references: {
+        model: 'users',
+        key: 'id',
+        as: 'userId',
       },
     },
-    reviews:{ 
+    reviews: {
       type: DataTypes.STRING,
       allowNull: false,
-  },
-});
+    },
+  });
   recipes.associate = (models) => {
-    recipes.belongsTo(models.user,{
+    recipes.belongsTo(models.user, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
+    recipes.hasMany
   };
   return recipes;
 };

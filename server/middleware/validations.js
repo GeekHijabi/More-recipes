@@ -22,7 +22,7 @@ export const confirmUserInput = (req, res, next) => {
 export const checkUserValidity = (req, res, next) => {
   req.checkBody(
     {
-      username: {
+      userName: {
         notEmpty: true,
         isLength: {
           options: [{ min: 6 }],

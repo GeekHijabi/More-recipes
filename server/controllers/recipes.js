@@ -6,7 +6,7 @@ module.exports = {
       .create({
         recipeName: req.body.recipeName,
         description: req.body.description,
-        Name: req.body.Name,
+        name: req.body.name,
         recipeId: req.body.recipeId,
         reviews: req.body.reviews
       })

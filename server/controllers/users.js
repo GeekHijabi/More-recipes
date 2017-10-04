@@ -6,7 +6,6 @@ import db from '../models';
 dotenv.load();
 const secret = process.env.SUPER_KEY;
 const users = db.user;
-const saltRounds = 10;
 
 export default {
   signup(req, res) {
@@ -16,7 +15,7 @@ export default {
         lastName: req.body.lastName,
         userName: req.body.userName,
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, saltRounds)
+        password: bcrypt.hashSync(req.body.password, 10)
       })
       .then(display => res.status(201).json({
         status: 'success',
