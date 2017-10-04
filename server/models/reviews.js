@@ -1,5 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
   const reviews = sequelize.define('reviews', {
+    userId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id',
+        as: 'userId',
+      }
+    },
     recipeName: {
       type: DataTypes.STRING,
       allowNull: false,
