@@ -4,7 +4,7 @@
   "description": "connect people to recipes they love",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon --watch server --exec babel-node  -- ./bin/www",
+    "start:dev": "nodemon --watch server --exec babel-node ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,13 +20,16 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "dotenv": "^4.0.0",
     "express": "^4.15.5",
     "jsonwebtoken": "^8.0.1",
     "mocha": "^3.5.3",
+    "morgan": "^1.9.0",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.13.2"
+    "sequelize": "^4.13.2",
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -38,7 +41,6 @@
     "eslint": "^4.7.2",
     "eslint-config-airbnb-base": "^12.0.1",
     "eslint-plugin-import": "^2.7.0",
-    "morgan": "^1.9.0",
     "nodemon": "^1.12.1",
     "sequelize-cli": "^3.0.0"
   }

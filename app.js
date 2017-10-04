@@ -1,31 +1,22 @@
-const express = require('express');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
+import express from 'express';
 
-// import recipes from './routes/recipes';
+import logger from 'morgan';
+import bodyParser from 'body-parser';
+
+import routes from './server/routes';
 
 const app = express();
+const port = process.env.PORT || 3000;
+app.set('port', port);
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended:false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-//app.use('/api/users', users)
-// app.use('/api/recipes', recipes);
+routes(app);
+app.listen(port);
+console.log('server has started on port: '+ port);
 
-// app.get('/', (req, res) => {
-//   res.status(200).send({
-//       Message: 'Welcome to More recipes!'
-//   });
-// })
+export default app;
 
-// app.use((req, res, next) => {
-//     const err = res.status(400).send({
-//         ERROR: '404: Sorry Page Not Found!'
-//     })
-//     next(err)
-require('./server/routes')(app);
-app.get('*',(req,res) => res.status(200).send({
-    message: 'Welcome'
-}));
-module.exports = app;
