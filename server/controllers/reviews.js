@@ -1,23 +1,41 @@
-import {db} from '../models/recipes';
+import db from '../models';
 
-class review {
-  add(req, res) {
-    const { review, userId } = req.body;
-    if(!review) {
-      res.status(400).send({
-        Message: 'review this recipe'
-      });
-    } else {
-      let l = db.review.length;
-      const id = 1 + l;
-      db.review.push({
-        id: id,
-        userId: userId,
-        review: review
-      });
-      res.status(200).send(db.review[userId-1]);
+const { reviews } = db;
+
+export default {
+
+  create(req, res) {
+    return reviews
+      .create({
+        recipeID: req.params.recipeId,
+        reviews: req.body.reviews,
+        recipeName: req.body.recipeName,
+      })
+      .then(data => res.status(200).json({
+        status: 'success',
+        message: 'Your recipe has been reviewed',
+        data: { userId: data.userId, recipeId: data.recipeId }
+      }))
+      .catch(error => res.status(400).json(error));
+  },
+
+  list(req, res) {
+    if (req.query.order) {
+      return reviews
+        .findAll({
+          order: [
+            ['upvotes', 'DESC']
+          ]
+        }).then(sortedReviews => res.status(200).send(sortedReviews));
     }
-  }
-}
-
-export {review};
+    return reviews
+      .findAll({ offset: req.query.next }).then((Reviews) => {
+        if (!Reviews) {
+          return res.status(200).send({
+            Message: 'No recipes created!'
+          });
+        }
+        return res.status(200).send(Reviews);
+      });
+  },
+};
