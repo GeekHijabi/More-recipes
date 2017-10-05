@@ -20,7 +20,9 @@ export const confirmUserInput = (req, res, next) => {
 };
 
 
-export const checkUserValidity = (req, res, next) => {
+export const checkUserValidity = (req, res, next) => 
+{
+  let filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;  
   if (req.body.userName.length < 5) {
     return res.status(400).json({ errorMessage: 'Please provide a username with atleast 5 characters.' });
   }
@@ -32,7 +34,9 @@ export const checkUserValidity = (req, res, next) => {
   }
   if (typeOf(req.body.username) !== String) {
     return res.status(409).json({ message: 'Invalid Username' });
-  }
+  }  
+if (!filter.test(req.body.email))
+  return res.status(400).json({ message: "Invalid email address!" });
   next();
 };
 
