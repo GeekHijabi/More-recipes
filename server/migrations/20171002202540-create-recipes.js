@@ -25,14 +25,9 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      votes: {
-        type: Sequelize.STRING
-      },
-      recipeID: {
-        type: Sequelize.INTEGER
-      },
-      reviews: {
-        type: Sequelize.STRING
+      vote: {
+        type: Sequelize.STRING,
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,

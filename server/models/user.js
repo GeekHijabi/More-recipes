@@ -2,11 +2,11 @@ export default (sequelize, DataTypes) => {
   const user = sequelize.define('user', {
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true,
     },
     userName: {
       type: DataTypes.STRING,
@@ -24,6 +24,11 @@ export default (sequelize, DataTypes) => {
       allowNull: false
     },
   });
+  user.prototype.toJSON = function toJSON() {
+    const values = Object.assign({}, this.get());
+    delete values.password;
+    return values;
+  };
   user.associate = (models) => {
     user.hasMany(models.recipes, {
       foreignKey: 'userId',
