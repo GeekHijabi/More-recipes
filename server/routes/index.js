@@ -1,7 +1,10 @@
-import authenticate from '../middleware';
-import { confirmUserInput } from '../middleware/validations';
+import { authenticate } from '../middleware/index';
+import { confirmUserInput, checkUserValidity, validateUsers } from '../middleware/validations';
 import usersController from '../controllers/users';
 import recipesController from '../controllers/recipes';
+import reviewsController from '../controllers/reviews';
+import favoriterecipeController from '../controllers/favoriterecipe';
+
 
 const routes = (app) => {
   app.get('/api', (req, res) => {
@@ -10,11 +13,16 @@ const routes = (app) => {
     });
   });
 
-  app.post('/api/recipes', authenticate.Verify, recipesController.create);
-
-  app.post('/api/user/signup', confirmUserInput, usersController.signup);
-
-  app.post('/api/user/signin', usersController.signin);
+  app.post('/api/user/signup', confirmUserInput, checkUserValidity, usersController.signup);
+  app.post('/api/user/signin', validateUsers, usersController.signin);
+  app.get('/api/v1/recipes', recipesController.list);
+  app.post('/api/v1/recipes', authenticate.Verify, recipesController.create);
+  app.delete('/api/v1/recipes/:recipeId', authenticate.Verify, recipesController.destroy);
+  app.put('/api/v1/recipes/:recipeId', authenticate.Verify, recipesController.update);
+  app.post('/api/v1/recipes/:recipeId/reviews', authenticate.Verify, reviewsController.create);
+  app.get('/api/v1/recipes/:recipeId/reviews', authenticate.Verify, reviewsController.list);
+  app.get('/api/v1/recipes/reviews', authenticate.Verify, reviewsController.list);
+  app.get('/api/v1/users/:userId/recipes', authenticate.Verify, favoriterecipeController.list);
 };
 
 export default routes;
