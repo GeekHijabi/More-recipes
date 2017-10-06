@@ -32,9 +32,6 @@ export const checkUserValidity = (req, res, next) =>
   if (req.body.password.length < 8) {
     return res.status(400).json({ message: 'password must be 8 characters or more' });
   }
-  if (typeof (req.body.username) !== 'string') {
-    return res.status(409).json({ message: 'Invalid Username' });
-  }
   if (!filter.test(req.body.email)) { return res.status(400)
     .json({ message: "Invalid email address!" });}
   next();
