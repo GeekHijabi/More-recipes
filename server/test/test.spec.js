@@ -38,10 +38,9 @@ describe('More Recipes', () => {
     chai.request(app)
       .post('/api/v1/users/signup')
       .send({
-        username: 'oriyomi',
-        fullName: 'test user',
-        email: 'temitayo',
-        password: 'mypassword'
+        username: 'password',
+        email: 'fraiser',
+        password: 'password'
       })
       .res.should.have.status(409)
       .end((err, res) => {
