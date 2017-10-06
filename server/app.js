@@ -7,7 +7,7 @@ import 'dotenv';
 import routes from './routes';
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 app.set('port', port);
 
 process.env.secretKey;
