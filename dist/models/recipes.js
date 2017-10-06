@@ -1,46 +1,52 @@
-export default (sequelize, DataTypes) => {
-  const recipes = sequelize.define('recipes', {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (sequelize, DataTypes) {
+  var recipes = sequelize.define('recipes', {
     recipeName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     ingredients: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     vote: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     userId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'users',
         key: 'id',
-        as: 'userId',
-      },
-    },
+        as: 'userId'
+      }
+    }
   });
-  recipes.associate = (models) => {
+  recipes.associate = function (models) {
     recipes.belongsTo(models.user, {
       foreignKey: 'userId',
-      onDelete: 'CASCADE',
+      onDelete: 'CASCADE'
     });
     recipes.hasMany(models.reviews, {
       foreignKey: 'recipeId',
-      onDelete: 'CASCADE',
+      onDelete: 'CASCADE'
     });
     recipes.hasMany(models.favoriterecipe, {
       foreignKey: 'recipeId',
-      onDelete: 'CASCADE',
+      onDelete: 'CASCADE'
     });
     recipes.hasMany(models.votes, {
       foreignKey: 'recipeId',
-      onDelete: 'CASCADE',
+      onDelete: 'CASCADE'
     });
   };
   return recipes;

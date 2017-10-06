@@ -2,10 +2,12 @@
   "name": "more_recipes",
   "version": "1.0.0",
   "description": "connect people to recipes they love",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch server --exec babel-node -- server/bin/www.js",
-    "test": "mocha server/test/test.spec.js"
+    "start": "nodemon ./dist/app.js",
+    "build": "babel ./server -d ./dist",
+    "start:dev": "nodemon --watch server --exec babel-node server/app.js",
+    "test": "mocha ./server/test/ --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -18,20 +20,30 @@
   },
   "homepage": "https://github.com/GeekHijabi/More-recipes#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "dotenv": "^4.0.0",
     "express": "^4.15.5",
-    "mocha": "^3.5.3"
-  },
-  "devDependencies": {
+    "jsonwebtoken": "^8.0.1",
+    "mocha": "^3.5.3",
+    "morgan": "^1.9.0",
+    "pg": "^7.3.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.13.2",
+    "supertest": "^3.0.0",
+    "sequelize-cli": "^3.0.0",
+    "nodemon": "^1.12.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.2"
+  },
+  "devDependencies": {
+    "babel-preset-latest": "^6.24.1",
     "eslint": "^4.7.2",
     "eslint-config-airbnb-base": "^12.0.1",
-    "eslint-plugin-import": "^2.7.0",
-    "morgan": "^1.9.0",
-    "nodemon": "^1.12.1"
+    "eslint-plugin-import": "^2.7.0"
   }
 }

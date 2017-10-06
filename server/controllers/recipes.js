@@ -1,71 +1,104 @@
-import {db} from '../models/recipes';
+import jwt from 'jsonwebtoken';
+import db from '../models';
 
-class Recipe{
-  addRecipe(req, res) {
-    const {recipeName, description, name} = req.body;
-    if (!recipeName){ 
-        return res.status(400).send({message: 'supply recipe'});
+const { recipes } = db;
+
+
+export default {
+  create(req, res) {
+    const token = req.headers['x-token'];
+    const decodedToken = jwt.decode(token);
+    return recipes
+      .create({
+        recipeName: req.body.recipeName,
+        description: req.body.description,
+        name: req.body.name || '',
+        userId: decodedToken.currentUser.userId
+      })
+      .then(data => res.status(201).json({
+        status: 'success',
+        recipeName: data.recipeName,
+        message: 'Recipe added successfully',
+        data: { recipeId: data.id, userId: data.userId }
+      }))
+      .catch((error) => {
+        console.log('error =>', error);
+        res.status(400).json(error);
+      });
+  },
+
+  list(req, res) {
+    if (req.query.order) {
+      return recipes
+        .findAll({
+          order: [
+            ['upvotes', 'DESC']
+          ]
+        }).then(sortedRecipes => res.status(200).send(sortedRecipes));
     }
-    if (!description){
-      return res.status(400).send({message: 'Description your recipe'});
-    }
-    if (!name){
-      return res.status(400).send({message: 'Input a valid name'});
-    }
-    
-      let newRecipe = {
-        name: name,
-        recipeName: recipeName,
-        description: description,
-      }
-    db.recipes.push(newRecipe);
-    res.status(200)
-      .send(newRecipe);
-    }
-
-  getRecipe(req, res) {
-      res.status(200).send(db.recipes);
-    }
+    return recipes
+      .findAll({ offset: req.query.next }).then((Recipes) => {
+        if (!Recipes) {
+          return res.status(200).send({
+            Message: 'No recipes created!'
+          });
+        }
+        return res.status(200).send(Recipes);
+      });
+  },
 
 
+  update(req, res) {
+    return recipes
+      .find({
+        where: {
+          id: req.params.recipeId,
+        },
+      }).then((found) => {
+        if (found) {
+          return found
+            .update({
+              recipeName: req.body.recipeName || found.recipeName,
+              description: req.body.description || found.description,
+            }, {
+              where: {
+                id: req.params.recipeId
+              }
+            })
+            .then(updated => res.status(200).json({
+              status: 'success',
+              updated
+            }));
+        }
+      }).catch(error => res.status(400).send(error));
+  },
 
-  deleteRecipe(req, res) {
-    for (let i = 0; i < db.recipes.length; i++) {
-      if (parseInt(db.recipes[i].id, 10) === parseInt(req.params.Id, 10)){
-        db.recipes.splice(i, 1);
-        return res.status(200).json({
-          status: "success",
-          message: "Recipe Deleted"
-        })
-      }
-    }
-    return res.status(404).send({
-      message: 'Recipe Not found!'
-    });    
-}
+  destroy(req, res) {
+    return recipes
+      .find({
+        where: {
+          id: req.params.recipeId,
+        },
+      })
+      .then((found) => {
+        if (!found) {
+          return res.status(404).send({
+            message: 'recipe Not Found',
+          });
+        }
+        return recipes
+          .destroy({
+            where: {
+              id: req.params.recipeId,
+            },
+          })
+          .then(() => res.status(200).send('Recipe deleted successfully'))
+          .catch(error => res.status(400).send('Recipe cannot be deleted'));
+      })
+      .catch((error) => {
+        res.status(400).send(error);
+      });
+  },
 
-put(req, res) {
-  let id = req.params.Id;
-  if (!id){
-    return res.status(404).json({
-    message: 'Recipe Not found!'
-  });
-  const { userId, recipeName, description, Name } = req.body;
-  for (let i = 0; i < db.recipes.length; i++) {
-    if (db.recipes[i].id === parseInt(id, 10)){
-      db.recipes[i].userId = userId || db.recipes[i].userId;
-      db.recipes[i].Name = Name || db.recipes[i].Name;
-      db.recipes[i].recipeName = recipeName || db.recipes[i].recipeName;
-      db.recipes[i].description = description || db.recipes[i].description;
-      return res.status(200).send(db.recipes[i]);   
-    } 
-  }
-  return res.status(404).send('incomplete data')
-}
-
-    
-}
-}
-  
-export {Recipe};
+};
 
