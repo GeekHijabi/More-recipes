@@ -34,7 +34,7 @@ var routes = function routes(app) {
   });
 
   app.post('/api/user/signup', _validations.confirmUserInput, _validations.checkUserValidity, _users2.default.signup);
-  app.post('/api/user/signin', _validations.validateUsers, _users2.default.signin);
+  app.post('/api/user/signin', _users2.default.signin);
   app.get('/api/v1/recipes', _recipes2.default.list);
   app.post('/api/v1/recipes', _index.authenticate.Verify, _recipes2.default.create);
   app.delete('/api/v1/recipes/:recipeId', _index.authenticate.Verify, _recipes2.default.destroy);
