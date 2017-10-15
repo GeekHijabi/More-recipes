@@ -29,10 +29,51 @@ export const checkUserValidity = (req, res, next) => {
   }
   if (req.body.password.length < 8) {
     return res.status(400).json({ message: 'password must be 8 characters or more' });
+<<<<<<< HEAD
+  } 
+if (!filter.test(req.body.email))
+  return res.status(400).json({ message: "Invalid email address!" });
+  next();
+};
+
+
+export const validateUsers = (req, res, next) => {
+  users
+    .findOne({
+      where: {
+        username: req.body.username
+      },
+    })
+    .then((user) => {
+      if (user) {
+        return res.status(400).json({ message: 'Username already exists' });
+      }
+      users
+        .findOne({
+          where: {
+            email: req.body.email
+          },
+        })
+        .then((email) => {
+          if (email) {
+            return res.status(400).json({ message: 'Email already exists' });
+          }
+          next();
+        });
+    });
+};
+
+export const validateLoginUser = (req, res, next) => {
+  if (!req.body.username) {
+    return res.status(400).json({
+      message: 'Please provide your username'
+    });
+=======
   }
   if (!filter.test(req.body.email)) {
     return res.status(400)
       .json({ message: 'Invalid email address!' });
+>>>>>>> development
   }
   next();
 };
