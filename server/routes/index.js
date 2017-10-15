@@ -1,5 +1,5 @@
 import { authenticate } from '../middleware/index';
-import { confirmUserInput, checkUserValidity, validateUsers } from '../middleware/validations';
+import { confirmUserInput, checkUserValidity } from '../middleware/validations';
 import usersController from '../controllers/users';
 import recipesController from '../controllers/recipes';
 import reviewsController from '../controllers/reviews';
@@ -14,7 +14,7 @@ const routes = (app) => {
   });
 
   app.post('/api/user/signup', confirmUserInput, checkUserValidity, usersController.signup);
-  app.post('/api/user/signin', validateUsers, usersController.signin);
+  app.post('/api/user/signin', usersController.signin);
   app.get('/api/v1/recipes', recipesController.list);
   app.post('/api/v1/recipes', authenticate.Verify, recipesController.create);
   app.delete('/api/v1/recipes/:recipeId', authenticate.Verify, recipesController.destroy);
