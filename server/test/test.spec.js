@@ -2,6 +2,9 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
 import models from '../models';
+import fakeData from './faker'
+
+const expect = chai.expect
 
 const should = chai.Should();
 chai.use(chaiHttp);
