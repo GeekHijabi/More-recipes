@@ -35,14 +35,21 @@ var routes = function routes(app) {
 
   app.post('/api/user/signup', _validations.confirmUserInput, _validations.checkUserValidity, _users2.default.signup);
   app.post('/api/user/signin', _users2.default.signin);
+
   app.get('/api/v1/recipes', _recipes2.default.list);
   app.post('/api/v1/recipes', _index.authenticate.Verify, _recipes2.default.create);
   app.delete('/api/v1/recipes/:recipeId', _index.authenticate.Verify, _recipes2.default.destroy);
   app.put('/api/v1/recipes/:recipeId', _index.authenticate.Verify, _recipes2.default.update);
+
   app.post('/api/v1/recipes/:recipeId/reviews', _index.authenticate.Verify, _reviews2.default.create);
   app.get('/api/v1/recipes/:recipeId/reviews', _index.authenticate.Verify, _reviews2.default.list);
   app.get('/api/v1/recipes/reviews', _index.authenticate.Verify, _reviews2.default.list);
+
   app.get('/api/v1/users/:userId/recipes', _index.authenticate.Verify, _favoriterecipe2.default.list);
+  app.post('/api/v1/users/:userId/recipes', _favoriterecipe2.default.create);
+
+  app.post('/api/v1/users/upvote/:recipeId', _index.authenticate.Verify, votesController.upvote);
+  app.get('api/recipes?sort=upvotes&order=desc', _index.authenticate.Verify, votesController.list);
 };
 
 exports.default = routes;

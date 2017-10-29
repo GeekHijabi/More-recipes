@@ -4,6 +4,7 @@ import usersController from '../controllers/users';
 import recipesController from '../controllers/recipes';
 import reviewsController from '../controllers/reviews';
 import favoriterecipeController from '../controllers/favoriterecipe';
+import votesController from '../controllers/votes';
 
 
 const routes = (app) => {
@@ -27,11 +28,9 @@ const routes = (app) => {
 
   app.get('/api/v1/users/:userId/recipes', authenticate.Verify, favoriterecipeController.list);
   app.post('/api/v1/users/:userId/recipes', favoriterecipeController.create);
-  
 
   app.post('/api/v1/users/upvote/:recipeId', authenticate.Verify, votesController.upvote);
-  app.get('api/recipes?sort=upvotes&order=desc', authenticate.Verify,votesController.list)
-  
+  // app.get('api/recipes?sort=upvotes&order=desc', authenticate.Verify, votesController.list);
 };
 
 export default routes;
