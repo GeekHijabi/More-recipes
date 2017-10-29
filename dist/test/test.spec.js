@@ -16,7 +16,13 @@ var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
 
+var _faker = require('./faker');
+
+var _faker2 = _interopRequireDefault(_faker);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var expect = _chai2.default.expect;
 
 var should = _chai2.default.Should();
 _chai2.default.use(_chaiHttp2.default);
