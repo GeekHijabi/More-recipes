@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-// import { Button } from 'reactstrap';
+// import Button  from 'reactstrap';
 import '../../../styles/index.scss';
 /**
  * 
@@ -10,17 +9,32 @@ import '../../../styles/index.scss';
  * @extends {React.Component}
  */
 class Header extends React.Component {
-/**
-* @return {dom} DomElement
-*/
+  /**
+   * @description COnstructor Function
+   * @param {any} props
+   * @memberof Home
+   * @return {void} 
+   */
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     active: true
+  //   };
+  // }
+  /**
+   * 
+   * 
+   *@return {dom} DomElement
+   * @memberof Header
+   */
   render() {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light">
-          <a className="navbar-brand" href="#">
-                    <i className="fa fa-eercast" />
+          {/* <a className="navbar-brand" href="#"> */}
+          {/* <i className="fa fa-eercast" /> */}
                         moreRecipe
-          </a>
+          {/* </a> */}
           <button
             className="navbar-toggler"
             type="button"
@@ -43,10 +57,10 @@ class Header extends React.Component {
             </ul>
             <form className="form-inline">
               <input
-                            className="form-control mr-sm-2"
-                            type="text"
-                            placeholder="Search"
-                            aria-label="Search"
+                className="form-control mr-sm-2"
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
               />
             </form>
           </div>
@@ -56,6 +70,4 @@ class Header extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <Header />,);
-
+export default Header;
