@@ -1,33 +1,43 @@
 import faker from 'faker';
 
 const fakeData = {
-  signup1: {
-    firstName: 'bestie',
-    email: 'bestie@bestie.com',
-    lastName: '',
-    password: 'bestyyy'
-
+  newUser: {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    userName: faker.name.findName(),
+    email: faker.internet.email(),
+    password: 'fodddyyy',
+    confirmPassword: 'fodddyyy'
   },
 
-  user2: {
-    firstName: 'foodie',
-    email: 'foodie@food.com',
-    lastName: '',
-    password: 'foodlova'
-
+  noEmailInput: {
+    userName: faker.name.findName(),
+    password: 'fodddyyy',
+    confirmPassword: 'fodddyyy'
   },
 
-  recipe1: {
-    recipeName: 'rice',
-    ingredients: 'water, rice',
-    description: 'boil rice',
-
+  noPasswordInput: {
+    userName: faker.name.findName(),
+    email: faker.internet.email(),
+    confirmPassword: 'fodddyyy'
   },
-
-  reviews: {
-    recipeName: 'rice',
-    reviews: 'yummy'
-
+  passwordWrong: {
+    userName: faker.name.findName(),
+    email: faker.internet.email(),
+    password: 'fodddyyy',
+    confirmPassword: 'fodddyyy'
+  },
+  lenPasswordShort: {
+    userName: faker.name.findName(),
+    email: faker.internet.email(),
+    password: 'food',
+    confirmPassword: 'food'
+  },
+  nouserNameInput: {
+    email: faker.internet.email(),
+    password: 'fodddyyy',
+    confirmPassword: 'fodddyyy'
   },
 };
+
 export default fakeData;
