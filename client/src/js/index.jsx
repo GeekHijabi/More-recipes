@@ -1,50 +1,23 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Match, Miss } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import './../styles/index.scss';
-// import Header from './components/partials/header';
-// import NotFound from './components/notfound';
+import NotFound from './components/notfound';
 import Home from './sample';
-console.log('Hey')
-/**
- * 
- * 
- * @class Header
- * @extends {React.Component}
- */
-class Index extends React.Component {
-/**
-   * @description COnstructor Function
-   * @param {any} props
-   * @memberof Home
-   * @return {void} 
-   */
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     active: true
-  //   };
-  // }
-  /**
-   * 
-   * 
-   *@return {dom} DomElement
-   * @memberof Header
-   */
-  render() {
-    return (
-      <BrowserRouter>
-        <div id="main">
-          <Match exactly pattern="/" component={Home} />
-          {/* <Match pattern="/sample" component={Home} /> */}
-          {/* <Miss component={NotFound} /> */}
+import Homepage from './components/home/homepage';
+import SignIn from './components/auth/signin';
+import SignUp from './components/auth/signup';
 
-        </div>
-      </BrowserRouter>
-    );
-  }
-}
-console.log('ho ho ho!xmas is here')
 
-export default Index;
+render(
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={Homepage} />
+      <Route path="/home" component={Home} />
+      <Route path="/signIn" component={SignIn} />
+      <Route path="/signup" component={SignUp} />
+      <Route component={NotFound} />
+    </Switch>
+  </BrowserRouter>, document.getElementById('main')
+);
