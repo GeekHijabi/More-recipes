@@ -1,21 +1,16 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'font-awesome/css/font-awesome.min.css';
-import RecipeHeader from '../../Partials/RecipeHeader';
-import CardItem from '../../Partials/CardItem';
-import Footer from '../../Partials/Footer';
-
 /**
  *
  *
- * @class Recipes
+ * @class MyProfile
  * @extends {React.Component}
  */
-class Recipes extends React.Component {
+class AddRecipe extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
-   * @memberof Recipes
+   * @memberof Home
    * @return {void}
    */
   constructor(props) {
@@ -33,14 +28,15 @@ class Recipes extends React.Component {
   render() {
     return (
       <div>
-        <RecipeHeader />
-        <section>
-          <CardItem />
-        </section>
-        <Footer />
+        <div className="add-recipe ml-auto">
+          <h3>
+            <span><i className="fa fa-check-circle-o fa-3x" /></span>
+            <h3>Add Recipe</h3>
+          </h3>
+        </div>
       </div>
     );
   }
 }
 
-export default Recipes;
+export default AddRecipe;

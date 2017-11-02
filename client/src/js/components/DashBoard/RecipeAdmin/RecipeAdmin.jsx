@@ -1,21 +1,21 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'font-awesome/css/font-awesome.min.css';
 import RecipeHeader from '../../Partials/RecipeHeader';
-import CardItem from '../../Partials/CardItem';
 import Footer from '../../Partials/Footer';
+import AddRecipe from './AddRecipe';
+import CardItem from '../../Partials/CardItem';
 
 /**
  *
  *
- * @class Recipes
+ * @class MyProfile
  * @extends {React.Component}
  */
-class Recipes extends React.Component {
+class RecipeAdmin extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
-   * @memberof Recipes
+   * @memberof Home
    * @return {void}
    */
   constructor(props) {
@@ -34,13 +34,12 @@ class Recipes extends React.Component {
     return (
       <div>
         <RecipeHeader />
-        <section>
-          <CardItem />
-        </section>
+        <CardItem />
+        <AddRecipe />
         <Footer />
       </div>
     );
   }
 }
 
-export default Recipes;
+export default RecipeAdmin;

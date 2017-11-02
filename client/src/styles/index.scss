@@ -213,6 +213,10 @@ main[page="details"] .vote_type * {
           filter: grayscale(0.6);
 }
 
+.prof-up {
+  margin-top: -2em;
+}
+
 h1.name {
   font-size: 4em;
   padding: 0.7em 0em;
@@ -335,6 +339,9 @@ h1.name {
   padding-right: -2px;
 }
 
+.btn-white {
+  color: white !important;
+}
 
 @media screen and (max-width: 576px) { 
   #banner {
