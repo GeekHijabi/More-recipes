@@ -1,23 +1,29 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import './../styles/index.scss';
-import NotFound from './components/notfound';
-import Home from './sample';
-import Homepage from './components/home/homepage';
-import SignIn from './components/auth/signin';
-import SignUp from './components/auth/signup';
+import NotFound from './components/NotFound';
+import Homepage from './components/Home';
+import SignIn from './components/Auth/SignIn';
+import SignUp from './components/Auth/SignUp';
+import Recipes from './components/DashBoard/Recipes/index';
+import MyProfile from './components/DashBoard/Profile/MyProfile';
+import MyRecipe from './components/DashBoard/Profile/MyRecipe';
+import AddRecipe from './components/DashBoard/RecipeAdmin/RecipeAdmin';
 
 
 render(
-  <BrowserRouter>
+  <HashRouter>
     <Switch>
       <Route exact path="/" component={Homepage} />
-      <Route path="/home" component={Home} />
       <Route path="/signIn" component={SignIn} />
       <Route path="/signup" component={SignUp} />
+      <Route exact path="/recipes" component={Recipes} />
+      <Route path="/recipes/detail/:id" component={MyRecipe} />
+      <Route path="/profile" component={MyProfile} />
+      <Route path="/dashboard" component={AddRecipe} />
       <Route component={NotFound} />
     </Switch>
-  </BrowserRouter>, document.getElementById('main')
+  </HashRouter>, document.getElementById('main')
 );
