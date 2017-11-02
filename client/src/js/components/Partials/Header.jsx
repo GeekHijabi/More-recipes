@@ -1,39 +1,24 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-// import Button  from 'reactstrap';
+// import { Button } from 'reactstrap';
 import '../../../styles/index.scss';
-import SearchBar from '../Partials/SearchBar';
-
 /**
  * 
- * *
+ * 
  * @class Header
  * @extends {React.Component}
  */
 class Header extends React.Component {
-  /**
-   * @description COnstructor Function
-   * @param {any} props
-   * @memberof Home
-   * @return {void}
-   */
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: true
-    };
-  }
-  /** 
-   *
-   *@return {dom} DomElement
-   *
-   */
+/**
+* @return {dom} DomElement
+*/
   render() {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light">
-          <a className="navbar-brand" href="">
-            <i className="fa fa-eercast" />
+          <a className="navbar-brand" href="#">
+                    <i className="fa fa-eercast" />
                         moreRecipe
           </a>
           <button
@@ -56,7 +41,14 @@ class Header extends React.Component {
                 <a className="nav-link btn cornflowerblue" href="./signup.html">Sign up</a>
               </li>
             </ul>
-            <SearchBar />
+            <form className="form-inline">
+              <input
+                            className="form-control mr-sm-2"
+                            type="text"
+                            placeholder="Search"
+                            aria-label="Search"
+              />
+            </form>
           </div>
         </nav>
       </div>
@@ -64,4 +56,6 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+ReactDOM.render(
+  <Header />,);
+
