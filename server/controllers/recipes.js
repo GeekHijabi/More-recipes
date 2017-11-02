@@ -13,6 +13,7 @@ export default {
         recipeName: req.body.recipeName,
         description: req.body.description,
         name: req.body.name || '',
+        ingredients: req.body.ingredients,
         userId: decodedToken.currentUser.userId
       })
       .then(data => res.status(201).json({
@@ -22,7 +23,6 @@ export default {
         data: { recipeId: data.id, userId: data.userId }
       }))
       .catch((error) => {
-        console.log('error =>', error);
         res.status(400).json(error);
       });
   },
@@ -60,6 +60,7 @@ export default {
             .update({
               recipeName: req.body.recipeName || found.recipeName,
               description: req.body.description || found.description,
+              ingredients: req.body.ingredients
             }, {
               where: {
                 id: req.params.recipeId

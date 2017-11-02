@@ -19,7 +19,9 @@ export default {
         message: `You successfully choose recipe id ${req.params.recipeId} as your favorite recipes`,
         data: { userId: favorite.userId, recipeId: favorite.recipeId }
       }))
-      .catch(error => res.status(400).json(error));
+      .catch((error) => {
+        res.status(400).json(error)
+      });
   },
 
   list(req, res) {
