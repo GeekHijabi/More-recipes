@@ -1,12 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-// import { Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 import './../styles/index.scss';
 
 const image = require('../assets/images/banner_bg.jpg');
-
-// console.log(banner_bg);
 
 /**
  * @description Displays Home View
@@ -43,7 +40,4 @@ class Home extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <Home />,
-  document.getElementById('root')
-);
+export default Home;
