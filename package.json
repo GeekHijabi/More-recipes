@@ -5,7 +5,7 @@
     "node": "8.8.1"
   },
   "description": "connect people to recipes they love",
-  "main": "index.js",
+  "main": "index.jsx",
   "scripts": {
     "start": "npm run build && nodemon ./dist/app.js",
     "build": "concurrently \"npm run build:server\" \"npm run build:client\"",
