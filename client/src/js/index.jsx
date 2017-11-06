@@ -1,8 +1,11 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
-
+import configureStore from './store/configureStore';
 import './../styles/index.scss';
+
+
 import NotFound from './components/NotFound';
 import Homepage from './components/Home';
 import SignIn from './components/Auth/SignIn';
@@ -12,8 +15,11 @@ import MyProfile from './components/DashBoard/Profile/MyProfile';
 import MyRecipe from './components/DashBoard/Profile/MyRecipe';
 import AddRecipe from './components/DashBoard/RecipeAdmin/RecipeAdmin';
 
+const store = configureStore();
+
 
 render(
+  <Provider store={store}>
   <HashRouter>
     <Switch>
       <Route exact path="/" component={Homepage} />
@@ -25,5 +31,8 @@ render(
       <Route path="/dashboard" component={AddRecipe} />
       <Route component={NotFound} />
     </Switch>
-  </HashRouter>, document.getElementById('main')
+  </HashRouter>
+  </Provider>
+  , document.getElementById('main')
+  
 );

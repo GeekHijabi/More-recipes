@@ -15,6 +15,13 @@ export const confirmUserInput = (req, res, next) => {
   if (!req.body.password) {
     return res.status(400).json({ message: 'Password is required' });
   }
+  if (!req.body.firstName) {
+    return res.status(400).json({ message: 'Name field cannot be left empty' });
+  }
+  if (!req.body.lastName) {
+    return res.status(400).json({ message: 'Name field cannot be left empty' });
+  }
+
   next();
 };
 
