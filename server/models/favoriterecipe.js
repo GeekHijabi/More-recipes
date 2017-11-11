@@ -1,5 +1,9 @@
 export default(sequelize, DataTypes) => {
   const favoriterecipe = sequelize.define('favoriterecipe', {
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     recipeID: {
       type: DataTypes.INTEGER,
       allownull: false,
