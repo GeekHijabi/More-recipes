@@ -7,7 +7,7 @@
   "description": "connect people to recipes they love",
   "main": "index.jsx",
   "scripts": {
-    "start": "npm run build && nodemon ./dist/app.js",
+    "start": "npm run build && node ./server/dist/app.js",
     "build": "concurrently \"npm run build:server\" \"npm run build:client\"",
     "build:server": "babel ./server -d ./server/dist",
     "client:dev": "webpack-dev-server --hot",
