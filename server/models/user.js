@@ -2,11 +2,11 @@ export default (sequelize, DataTypes) => {
   const user = sequelize.define('user', {
     firstName: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     userName: {
       type: DataTypes.STRING,

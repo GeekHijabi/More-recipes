@@ -13,7 +13,7 @@ module.exports = {
         references: {
           model: 'recipes',
           key: 'id',
-          as: 'recipeId'
+          as: 'recipeID'
         }
       },
       userId: {
@@ -25,14 +25,13 @@ module.exports = {
           as: 'userId'
         }
       },
-      category: {
-        type: Sequelize.STRING
-      },
       upvotes: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN,
+        allowNull: true
       },
       downvotes: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,
