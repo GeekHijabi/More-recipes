@@ -7,15 +7,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      recipeName: {
-        type: Sequelize.STRING
+      userId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'users',
+          key: 'id',
+          as: 'userId',
+        }
       },
       recipeID: {
         type: Sequelize.INTEGER,
         references: {
           model: 'recipes',
           key: 'id',
-          as: 'recipeId'
+          as: 'recipeID'
         }
       },
       reviews: {
