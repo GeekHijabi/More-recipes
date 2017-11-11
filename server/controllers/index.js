@@ -1,12 +1,13 @@
 import recipes from './recipes';
-import user from './users';
+import user from './user';
 import reviews from './reviews';
-import favoriterecipe from './favoriterecipe';
-
+import favoriteRecipe from './favoriteRecipe';
+import votes from './votes';
 
 export default {
   recipes,
   user,
   reviews,
-  favoriterecipe,
+  favoriteRecipe,
+  votes
 };
