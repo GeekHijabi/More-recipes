@@ -35,7 +35,6 @@ const routes = (app) => {
 
   app.post('/api/v1/users/upvote/:recipeId', authenticate.Verify, votes.upvote);
   app.post('/api/v1/users/downvote/:recipeId', authenticate.Verify, votes.downvote);
-  // app.get('api/recipes?sort=upvotes&order=desc', authenticate.Verify, votes.list);
 };
 
 export default routes;
