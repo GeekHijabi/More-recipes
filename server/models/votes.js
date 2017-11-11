@@ -2,20 +2,27 @@ module.exports = (sequelize, DataTypes) => {
   const votes = sequelize.define('votes', {
     userId: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     },
-    recipeId: {
+    recipeID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
+      references: {
+        model: 'recipes',
+        key: 'id'
+      }
     },
     upvotes: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     },
     downvotes: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.BOOLEAN,
+      allowNull: true
     },
   });
   votes.associate = (models) => {
@@ -24,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
     votes.belongsTo(models.user, {
-      foreignKey: 'recipeId'
+      foreignKey: 'recipeID'
     });
   };
   return votes;

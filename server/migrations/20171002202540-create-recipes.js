@@ -25,8 +25,16 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      vote: {
-        type: Sequelize.STRING,
+      upvotes: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      downvotes: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      views: {
+        type: Sequelize.INTEGER,
         defaultValue: 0,
       },
       createdAt: {

@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
         as: 'userId',
       }
     },
-    recipeName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     recipeID: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: true
+      onDelete: 'CASCADE',
+      references: {
+        model: 'recipes',
+        key: 'id',
+        as: 'recipeID',
+      },
     },
     reviews: {
       type: DataTypes.STRING,
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
     reviews.belongsTo(models.recipes, {
-      foreignKey: 'recipeId',
+      foreignKey: 'recipeID',
       onDelete: 'CASCADE',
     });
   };

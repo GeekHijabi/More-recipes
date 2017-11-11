@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
 import db from '../models';
 
-const { favoriterecipe } = db;
+const { favoriteRecipe } = db;
 
 export default {
 
   create(req, res) {
     const token = req.headers['x-token'];
     const decodedToken = jwt.decode(token);
-    return favoriterecipe
+    return favoriteRecipe
       .create({
         recipeId: req.params.recipeId,
         userId: decodedToken.currentUser.userId,
@@ -20,12 +20,12 @@ export default {
         data: { userId: favorite.userId, recipeId: favorite.recipeId }
       }))
       .catch((error) => {
-        res.status(400).json(error)
+        res.status(400).json(error);
       });
   },
 
   list(req, res) {
-    return favoriterecipe
+    return favoriteRecipe
       .findAll({
         where: { userId: req.params.userId },
         include: [{
