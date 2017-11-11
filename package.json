@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npm run build && node ./server/dist/app.js",
     "build": "concurrently \"npm run build:server\" \"npm run build:client\"",
-    "build:server": "babel ./server -d ./server/dist",
+    "build:server": "rimraf server/dist/ && babel ./server --out-dir server/dist/ --copy-files",
     "client:dev": "webpack-dev-server --hot",
     "build:client": "webpack --config webpack.config.babel.js",
     "start:dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
