@@ -66,7 +66,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).send({
-              message: 'Successfully downvoted'
+              message: 'you have successfully Downvoted'
             });
           });
         } else if (created === false) {
@@ -76,14 +76,15 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).send({
-              message: 'your vote has been recorded'
+              message: 'your vote has been Recorded'
             });
           });
         }
-      }).catch(error => res.status(400).send({
-        error: 'Try again'
-      }));
+      }).catch((error) => {
+        res.status(400).send(error);
+      });
   },
+
 
   upvote(req, res) {
     const { user } = req.decoded;
@@ -119,9 +120,11 @@ export default {
             });
           });
         }
-      }).catch(error => res.status(400).send({
-        error: error.message
-      }));
+      }).catch(() => {
+        res.status(201).send({
+          message: 'Created'
+        });
+      });
   }
 };
 
