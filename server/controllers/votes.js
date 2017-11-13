@@ -99,7 +99,6 @@ export default {
           downvotes: false
         }
       }).spread((vote, created) => {
-        console.log(created);
         if (created === true) {
           vote.updateAttributes({
             upvotes: true,
