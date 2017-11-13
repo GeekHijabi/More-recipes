@@ -66,7 +66,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).send({
-              message: 'Successfully downvoted'
+              message: 'you have successfully Downvoted'
             });
           });
         } else if (created === false) {
@@ -76,7 +76,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).send({
-              message: 'your vote has been recorded'
+              message: 'your vote has been Recorded'
             });
           });
         }
