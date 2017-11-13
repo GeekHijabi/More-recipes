@@ -17,7 +17,7 @@ describe('More Recipes', () => {
   it('should get the home page', (done) => {
     chai
       .request(app)
-      .get('/api')
+      .get('/api/v1')
       .end((err, res) => {
         res
           .should
@@ -40,18 +40,9 @@ describe('More Recipes', () => {
       cascade: true,
       truncate: true
     });
-    it('should not sign in user with no usernane', (done) => {
-      chai.request(app).post('/api/user/signup')
-        .send(fakeData.noUsernameInput)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.have.property('message').equal('No username supplied');
-          done();
-        });
-    });
   });
   it('should create a new User', (done) => {
-    chai.request(app).post('/api/user/signup')
+    chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.newUser)
       .end((err, res) => {
         res.should.have.status(201);
@@ -69,14 +60,14 @@ describe('More Recipes', () => {
         res
           .should
           .have
-          .status(404);
+          .status(400);
         done();
       });
   });
 });
 
-it('should check if password is less 8 characters', (done) => {
-  chai.request(app).post('/api/user/signup')
+it('should check if password is less than 8 characters', (done) => {
+  chai.request(app).post('/api/v1/user/signup')
     .send(fakeData.lenPasswordShort)
     .end((err, res) => {
       res.should.have.status(400);
