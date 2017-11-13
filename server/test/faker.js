@@ -30,6 +30,8 @@ const fakeData = {
   lenPasswordShort: {
     userName: faker.name.findName(),
     email: faker.internet.email(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     password: 'food',
     confirmPassword: 'food'
   },
