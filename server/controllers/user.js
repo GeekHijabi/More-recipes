@@ -21,9 +21,9 @@ export default {
         }
         return users
           .create({
-            firstName: req.body.firstName.trim(),
-            lastName: req.body.lastName.trim(),
-            userName: req.body.userName.trim().toLowerCase().replace(/ +/g, ''),
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            userName: req.body.userName,
             email: req.body.email,
             password: bcrypt
               .hashSync(req.body.password, salt, null)
@@ -52,7 +52,7 @@ export default {
       })
       .then((user) => {
         if (!user) {
-          return res.status(400).json({ statusCode: 400, message: 'User is not registered' });
+          return res.status(400).json({ message: 'User is not registered' });
         }
         const token = jwt.sign({ user }, secret);
         const { password } = user;

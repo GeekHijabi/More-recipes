@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import db from '../models';
 
 const { favoriteRecipe } = db;
@@ -6,13 +5,11 @@ const { favoriteRecipe } = db;
 export default {
 
   create(req, res) {
-    const token = req.headers['x-token'];
-    const decodedToken = jwt.decode(token);
+    const { user } = req.decoded;
     return favoriteRecipe
       .create({
         recipeId: req.params.recipeId,
-        userId: decodedToken.currentUser.userId,
-        category: req.body.category
+        userId: user.id,
       })
       .then(favorite => res.status(200).json({
         status: 'success',
@@ -30,10 +27,10 @@ export default {
         where: { userId: req.params.userId },
         include: [{
           model: db.recipes,
-          attributes: ['recipeName', 'ingredient', 'details', 'votes'],
+          attributes: ['recipeName', 'ingredients', 'description'],
           include: [{
             model: db.user,
-            attributes: ['fullName', 'updatedAt']
+            attributes: ['userName', 'updatedAt']
           }]
         }],
       })
