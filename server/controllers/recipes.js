@@ -11,9 +11,9 @@ export default {
 
     return recipes
       .create({
-        recipeName: req.body.recipeName.trim(),
-        description: req.body.description.trim(),
-        ingredients: req.body.ingredients.trim(),
+        recipeName: req.body.recipeName,
+        description: req.body.description,
+        ingredients: req.body.ingredients,
         userId: decodedToken.user.id
       })
       .then(data => res.status(201).json({
@@ -80,9 +80,9 @@ export default {
             }));
         }
         if (!found) {
-          return res.status(404).send({ error: 'not found' });
+          return res.status(404).send({ error: 'not recipe found' });
         }
-        return res.status(400).send({ error: 'not yours occurred' });
+        return res.status(400).send({ error: 'recipe does not belong to you' });
       }).catch(error => res.status(400).send({ error: error.message }));
   },
 
@@ -109,7 +109,7 @@ export default {
             message: 'Recipe deleted successfully'
           }))
           .catch(error => res.status(400).json({
-            error: 'Recipe cannot be deleted',
+            error: 'Recipe cannot be deleted by you',
             message: error.message
           }));
       })
