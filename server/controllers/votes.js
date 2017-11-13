@@ -80,10 +80,11 @@ export default {
             });
           });
         }
-      }).catch(error => res.status(400).send({
-        error: 'Try again'
-      }));
+      }).catch((error) => {
+        res.status(400).send(error);
+      });
   },
+
 
   upvote(req, res) {
     const { user } = req.decoded;
@@ -98,6 +99,7 @@ export default {
           downvotes: false
         }
       }).spread((vote, created) => {
+        console.log(created);
         if (created === true) {
           vote.updateAttributes({
             upvotes: true,
@@ -119,9 +121,11 @@ export default {
             });
           });
         }
-      }).catch(error => res.status(400).send({
-        error: error.message
-      }));
+      }).catch(() => {
+        res.status(201).send({
+          message: 'Created'
+        });
+      });
   }
 };
 
