@@ -32,9 +32,6 @@ const updateVoteCounts = (recipeId) => {
                       id: recipeId
                     }
                   }).then((foundRecipe) => {
-                    console.log('foundRecipe', foundRecipe);
-                    console.log('totalUpvotes', totalUpVotes);
-                    console.log('totalDownVotes', totalDownVotes);
                     foundRecipe.updateAttributes({
                       upvotes: totalUpVotes,
                       downvotes: totalDownVotes
@@ -79,12 +76,12 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).send({
-              message: 'already voted'
+              message: 'your vote has been recorded'
             });
           });
         }
       }).catch(error => res.status(400).send({
-        error: error.message
+        error: 'Try again'
       }));
   },
 

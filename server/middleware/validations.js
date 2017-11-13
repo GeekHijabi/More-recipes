@@ -24,8 +24,8 @@ export const signInField = (req, res, next) => {
 export const signUpField = (req, res, next) => {
   const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   if (!req.body.userName ||
-    req.body.userName.length < 5 ||
-    req.body.userName.trim() === '') {
+    req.body.userName.length < 2 ||
+    req.body.userName.toLowerCase().replace(/ +/g, '').trim() === '') {
     return res.status(400).json({
       errorMessage: 'Please provide a valid username with atleast 5 characters.'
     });
@@ -63,14 +63,19 @@ export const signUpField = (req, res, next) => {
 
 
 export const validateGetRecipe = (req, res, next) => {
-  if (!req.body.description) {
+  if (!req.body.description.trim() === '') {
     return res.status(400).json({
       message: 'Input a description for your recipe'
     });
   }
-  if (!req.body.recipeName) {
+  if (!req.body.recipeName.trim() === '') {
     return res.status(400).json({
       message: 'Input a name for your recipe'
+    });
+  }
+  if (!req.body.ingredients.trim() === '') {
+    return res.status(400).json({
+      message: 'Input ingredients for your recipes'
     });
   }
   next();
