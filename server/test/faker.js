@@ -7,25 +7,48 @@ const fakeData = {
     userName: faker.name.findName(),
     email: faker.internet.email(),
     password: 'fodddyyy',
-    confirmPassword: 'fodddyyy'
   },
 
   noEmailInput: {
     userName: faker.name.findName(),
-    password: 'fodddyyy',
-    confirmPassword: 'fodddyyy'
   },
+
+  noFirstNameInput: {
+    userName: faker.name.findName(),
+    email: faker.internet.email(),
+    firstName: faker.name.lastName(),
+    password: 'fodddyyy',
+  },
+  noLastNameInput: {
+    userName: faker.name.findName(),
+    email: faker.internet.email(),
+    lastName: faker.name.lastName(),
+    password: 'fodddyyy',
+  },
+  IncorrectFirstNameInput: {
+    firstName: '     ',
+    userName: faker.name.findName(),
+    email: faker.internet.email(),
+    lastName: faker.name.lastName(),
+    password: 'fodddyyy',
+  },
+  IncorrectLastNameInput: {
+    lastName: '     ',
+    userName: faker.name.findName(),
+    email: faker.internet.email(),
+    firstName: faker.name.firstName(),
+    password: 'fodddyyy',
+  },
+  
 
   noPasswordInput: {
     userName: faker.name.findName(),
     email: faker.internet.email(),
-    confirmPassword: 'fodddyyy'
   },
   passwordWrong: {
     userName: faker.name.findName(),
     email: faker.internet.email(),
     password: 'fodddyyy',
-    confirmPassword: 'fodddyyy'
   },
   lenPasswordShort: {
     userName: faker.name.findName(),
@@ -33,12 +56,16 @@ const fakeData = {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
     password: 'food',
-    confirmPassword: 'food'
   },
-  nouserNameInput: {
-    email: faker.internet.email(),
-    password: 'fodddyyy',
-    confirmPassword: 'fodddyyy'
+  recipe1: {
+    recipeName: 'Rice',
+    ingredients: 'water rice',
+    description: 'boil rice',
+  },
+  recipe2: {
+    recipeName: 'Beans',
+    ingredients: 'water, beans',
+    description: 'fry beans'
   },
 };
 
