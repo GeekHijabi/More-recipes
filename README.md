@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/GeekHijabi/More-recipes.svg?branch=development)](https://travis-ci.org/GeekHijabi/More-recipes)
+[![Coverage Status](https://coveralls.io/repos/github/GeekHijabi/More-recipes/badge.svg?branch=development)](https://coveralls.io/github/GeekHijabi/More-recipes?branch=development)
+[![Code Climate](https://codeclimate.com/github/GeekHijabi/More-Recipes/badges/gpa.svg)](https://codeclimate.com/github/GeekHijabi/More-Recipes)
 _**About**_:
 * More-Recipes provides a platform for users to share the awesome and exciting  recipe ideas they have invented or learnt.  Suppose a user comes up with a recipe,  he/she can post it on More-Recipes and  get feedback in form of reviews and votes from other users who explore that recipe. Users can also keep a list of their favorite recipes on the application.
 
