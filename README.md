@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/GeekHijabi/More-recipes.svg?branch=development)](https://travis-ci.org/GeekHijabi/More-recipes)
 [![Coverage Status](https://coveralls.io/repos/github/GeekHijabi/More-recipes/badge.svg?branch=development)](https://coveralls.io/github/GeekHijabi/More-recipes?branch=development)
-[![Code Climate](https://codeclimate.com/github/GeekHijabi/More-recipes/badges/gpa.svg)](https://codeclimate.com/github/GeekHijabi/More-Recipes?branch=development)
 [![Maintainability](https://api.codeclimate.com/v1/badges/fd85a9dcb3df2fd5ad26/maintainability)](https://codeclimate.com/github/GeekHijabi/More-recipes/maintainability)
 
 
