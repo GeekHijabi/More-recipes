@@ -8,6 +8,11 @@ const fakeData = {
     email: faker.internet.email(),
     password: 'fodddyyy',
   },
+  newUser2: {
+    userName: faker.name.findName(),
+    email: faker.internet.email(),
+    password: 'tester123',
+  },
 
   noEmailInput: {
     userName: faker.name.findName(),
