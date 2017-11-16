@@ -1,16 +1,16 @@
 import db from '../models';
 
-const { recipes, votes } = db;
+const { Recipe, Vote } = db;
 const updateVoteCounts = (recipeId) => {
-  votes
+  Vote
     .count({
       where: {
-        recipeID: recipeId,
+        recipeId,
         downvotes: true
       }
     }).then((totalDownVotes) => {
       if (totalDownVotes >= 0) {
-        recipes.findOne({
+        Recipe.findOne({
           where: {
             id: recipeId
           }
@@ -18,15 +18,15 @@ const updateVoteCounts = (recipeId) => {
           recipeFound.updateAttributes({
             downvotes: totalDownVotes
           }).then(() => {
-            votes
+            Vote
               .count({
                 where: {
-                  recipeID: recipeId,
+                  recipeId,
                   upvotes: true
                 }
               }).then((totalUpVotes) => {
                 if (totalUpVotes >= 0) {
-                  recipes.findOne({
+                  Recipe.findOne({
                     where: {
                       id: recipeId
                     }
@@ -47,10 +47,10 @@ const updateVoteCounts = (recipeId) => {
 export default {
   downvote(req, res) {
     const { userDetail } = req.decoded;
-    return votes
+    return Vote
       .findOrCreate({
         where: {
-          recipeID: req.params.recipeId,
+          recipeId: req.params.recipeId,
           userId: userDetail.id
         },
         defaults: {
@@ -65,7 +65,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).send({
-              message: 'you have successfully Downvoted'
+              message: 'counted'
             });
           });
         } else if (created === false) {
@@ -75,7 +75,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).send({
-              message: 'your vote has been Recorded'
+              message: 'downvoted'
             });
           });
         }
@@ -87,10 +87,10 @@ export default {
 
   upvote(req, res) {
     const { userDetail } = req.decoded;
-    return votes
+    return Vote
       .findOrCreate({
         where: {
-          recipeID: req.params.recipeId,
+          recipeId: req.params.recipeId,
           userId: userDetail.id
         },
         defaults: {
@@ -105,7 +105,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).send({
-              message: 'Successfully upvoted'
+              message: 'counted'
             });
           });
         } else if (created === false) {
@@ -121,7 +121,7 @@ export default {
         }
       }).catch(() => {
         res.status(201).send({
-          message: 'Created'
+          message: 'upvoted'
         });
       });
   }
