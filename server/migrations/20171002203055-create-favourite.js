@@ -1,16 +1,16 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('favouriterecipe', {
+    queryInterface.createTable('Favorites', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      recipeID: {
+      recipeId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'recipes',
+          model: 'Recipes',
           key: 'id',
           as: 'recipeId'
         }
@@ -19,13 +19,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',
+          model: 'Users',
           key: 'id',
           as: 'userId'
         }
-      },
-      category: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -36,5 +33,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('favouriterecipe'),
+  down: queryInterface => queryInterface.dropTable('Favorites', {
+    force: true, cascade: true
+  }),
 };

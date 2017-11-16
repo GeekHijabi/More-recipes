@@ -1,26 +1,26 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('votes', {
+    queryInterface.createTable('Votes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      recipeID: {
+      recipeId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'recipes',
+          model: 'Recipes',
           key: 'id',
-          as: 'recipeID'
+          as: 'recipeId'
         }
       },
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'users',
+          model: 'Users',
           key: 'id',
           as: 'userId'
         }
@@ -42,5 +42,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  down: queryInterface => queryInterface.dropTable('votes'),
+  down: queryInterface => queryInterface.dropTable('Votes', {
+    force: true, cascade: true
+  }),
 };

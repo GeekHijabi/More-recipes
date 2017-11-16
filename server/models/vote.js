@@ -1,18 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
-  const votes = sequelize.define('votes', {
+  const vote = sequelize.define('Vote', {
     userId: {
       type: DataTypes.STRING,
       allowNull: false,
       references: {
-        model: 'users',
+        model: 'User',
         key: 'id'
       }
     },
-    recipeID: {
+    recipeId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'recipes',
+        model: 'Recipe',
         key: 'id'
       }
     },
@@ -25,14 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
   });
-  votes.associate = (models) => {
-    votes.belongsTo(models.user, {
+  vote.associate = (models) => {
+    vote.belongsTo(models.User, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
-    votes.belongsTo(models.user, {
-      foreignKey: 'recipeID'
+    vote.belongsTo(models.Recipe, {
+      foreignKey: 'recipeId'
     });
   };
-  return votes;
+  return vote;
 };
