@@ -23,16 +23,19 @@ module.exports = {
   module: {
     loaders: [
       // > JS
-      { test: /\.js$/,
+      {
+        test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },
       // > JSX
-      { test: /\.jsx$/,
+      {
+        test: /\.jsx$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },
-      { test: /\.jsx?$/,
+      {
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
@@ -40,7 +43,8 @@ module.exports = {
         }
       },
       // > CSS / SCSS
-      { test: /\.(css|scss)?$/,
+      {
+        test: /\.(css|scss)?$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'sass-loader']
@@ -54,10 +58,12 @@ module.exports = {
           'img-loader'
         ]
       },
-      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=10000&mimetype=application/font-woff'
       },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
       }
     ] // loaders

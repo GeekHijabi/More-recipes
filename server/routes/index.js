@@ -1,4 +1,4 @@
-import { authenticate } from '../middleware/index';
+import authenticate from '../middleware/authenticate';
 import { signUpField,
   signInField,
   validateGetRecipe,
@@ -21,20 +21,20 @@ const routes = (app) => {
   app.post('/api/v1/user/signin', signInField, user.signin);
 
   app.get('/api/v1/recipes', recipes.listAllRecipes);
-  app.post('/api/v1/recipes', authenticate.Verify, recipeValidation, validateGetRecipe, recipes.create);
-  app.delete('/api/v1/recipes/:recipeId', authenticate.Verify, recipes.destroy);
-  app.put('/api/v1/recipes/:recipeId', authenticate.Verify, recipeValidation, recipes.update);
-  app.get('/api/v1/users/myrecipes', authenticate.Verify, recipes.getUserRecipes);
+  app.post('/api/v1/recipes', authenticate, recipeValidation, validateGetRecipe, recipes.create);
+  app.delete('/api/v1/recipes/:recipeId', authenticate, recipes.destroy);
+  app.put('/api/v1/recipes/:recipeId', authenticate, recipeValidation, recipes.update);
+  app.get('/api/v1/users/myrecipes', authenticate, recipes.getUserRecipes);
 
-  app.post('/api/v1/recipes/:recipeId/reviews', authenticate.Verify, reviewsValidation, reviews.create);
-  app.get('/api/v1/recipes/:recipeId/reviews', authenticate.Verify, reviews.list);
-  app.get('/api/v1/recipes/reviews', authenticate.Verify, reviews.list);
+  app.post('/api/v1/recipes/:recipeId/reviews', authenticate, reviewsValidation, reviews.create);
+  app.get('/api/v1/recipes/:recipeId/reviews', authenticate, reviews.list);
+  app.get('/api/v1/recipes/reviews', authenticate, reviews.list);
 
-  app.get('/api/v1/users/:userId/recipes', authenticate.Verify, favoriteRecipe.list);
-  app.post('/api/v1/users/:userId/recipes', favoriteRecipe.create);
+  app.get('/api/v1/users/:userId/recipes', authenticate, favoriteRecipe.list);
+  app.post('/api/v1/users/:userId/recipes', authenticate, favoriteRecipe.create);
 
-  app.post('/api/v1/users/upvote/:recipeId', authenticate.Verify, votes.upvote);
-  app.post('/api/v1/users/downvote/:recipeId', authenticate.Verify, votes.downvote);
+  app.post('/api/v1/users/upvote/:recipeId', authenticate, votes.upvote);
+  app.post('/api/v1/users/downvote/:recipeId', authenticate, votes.downvote);
 };
 
 export default routes;
