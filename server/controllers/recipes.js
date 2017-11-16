@@ -1,29 +1,34 @@
 import jwt from 'jsonwebtoken';
 import db from '../models';
 
-const { recipes, reviews } = db;
+const { Recipe, Review } = db;
 
 export default {
   create(req, res) {
-    const token = req.headers['x-token'];
-    const decodedToken = jwt.decode(token);
-    return recipes
+    const { userDetail } = req.decoded;
+    if (!userDetail) {
+      return res.status(400)
+        .json({ error: 'user not found' });
+    }
+    return Recipe
       .create({
         recipeName: req.body.recipeName,
         description: req.body.description,
         ingredients: req.body.ingredients,
-        userId: decodedToken.userDetail.id
+        userId: userDetail.id
       })
       .then(newRecipe => res.status(201).json({
-        status: 'success',
         recipeName: newRecipe.recipeName,
         description: newRecipe.description,
-        ingredients: newRecipe.description,
+        ingredients: newRecipe.ingredients,
         recipeId: newRecipe.id,
         userId: newRecipe.userId
       }))
       .catch((error) => {
         res.status(400).json({ error: error.message });
+      })
+      .catch(() => {
+        res.status(500).json({ error: 'oops something went wrong' });
       });
   },
 
@@ -35,7 +40,7 @@ export default {
       req.query.sort : 'upvotes';
     const order = req.query.order === 'des' ?
       'DESC' : 'DESC';
-    recipes
+    Recipe
       .findAndCountAll({
         order: [
           [sort, order]
@@ -55,7 +60,7 @@ export default {
 
   update(req, res) {
     const { userDetail } = req.decoded;
-    return recipes
+    return Recipe
       .find({
         where: {
           id: req.params.recipeId,
@@ -88,7 +93,7 @@ export default {
   },
 
   destroy(req, res) {
-    return recipes
+    return Recipe
       .find({
         where: {
           id: req.params.recipeId,
@@ -100,7 +105,7 @@ export default {
             error: 'recipe Not Found',
           });
         }
-        return recipes
+        return Recipe
           .destroy({
             where: {
               id: req.params.recipeId,
@@ -123,13 +128,13 @@ export default {
 
   getUserRecipes(req, res) {
     const { userDetail } = req.decoded;
-    recipes
+    Recipe
       .findAll({
         where: {
           userId: userDetail.id
         },
         include: [{
-          model: reviews,
+          model: Review,
           attributes: ['reviews']
         }]
       })

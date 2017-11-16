@@ -24,17 +24,17 @@ const routes = (app) => {
   app.post('/api/v1/recipes', authenticate, recipeValidation, validateGetRecipe, recipes.create);
   app.delete('/api/v1/recipes/:recipeId', authenticate, recipes.destroy);
   app.put('/api/v1/recipes/:recipeId', authenticate, recipeValidation, recipes.update);
-  app.get('/api/v1/users/myrecipes', authenticate, recipes.getUserRecipes);
+  app.get('/api/v1/user/myrecipes', authenticate, recipes.getUserRecipes);
 
   app.post('/api/v1/recipes/:recipeId/reviews', authenticate, reviewsValidation, reviews.create);
   app.get('/api/v1/recipes/:recipeId/reviews', authenticate, reviews.list);
   app.get('/api/v1/recipes/reviews', authenticate, reviews.list);
 
-  app.get('/api/v1/users/:userId/recipes', authenticate, favoriteRecipe.list);
-  app.post('/api/v1/users/:userId/recipes', authenticate, favoriteRecipe.create);
+  app.get('/api/v1/user/:userId/favorites', authenticate, favoriteRecipe.list);
+  app.post('/api/v1/user/:recipeId/favorites', authenticate, favoriteRecipe.create);
 
-  app.post('/api/v1/users/upvote/:recipeId', authenticate, votes.upvote);
-  app.post('/api/v1/users/downvote/:recipeId', authenticate, votes.downvote);
+  app.post('/api/v1/user/upvote/:recipeId', authenticate, votes.upvote);
+  app.post('/api/v1/user/downvote/:recipeId', authenticate, votes.downvote);
 };
 
 export default routes;

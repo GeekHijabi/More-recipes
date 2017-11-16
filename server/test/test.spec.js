@@ -36,9 +36,10 @@ describe('More Recipes', () => {
   });
 
   describe('User', () => {
-    db.user.destroy({
+    db.User.destroy({
       cascade: true,
-      truncate: true
+      truncate: true,
+      restartIdentity: true
     });
   });
   it('should create a new User', (done) => {
@@ -61,10 +62,10 @@ describe('More Recipes', () => {
   });
   it('should not let user sign up with the same email/username', (done) => {
     chai.request(app)
-      .post('/api/v1/users/signup')
-      .send(fakeData.newUsers)
+      .post('/api/v1/user/signup')
+      .send(fakeData.newuser)
       .end((err, res) => {
-        res.should.have.status(404);
+        res.should.have.status(411);
         res.body.should.be.a('object');
         done();
       });
@@ -86,7 +87,7 @@ describe('More Recipes', () => {
         res
           .should
           .have
-          .status(400);
+          .status(422);
         done();
       });
   });
@@ -94,7 +95,7 @@ describe('More Recipes', () => {
     chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.noEmailInput)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(422);
         res.body.should.have
           .property('message')
           .equal('Please supply valid email address');
@@ -105,7 +106,7 @@ describe('More Recipes', () => {
     chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.noPasswordInput)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(406);
         res.body.should.have
           .property('message')
           .equal('password cannot be empty');
@@ -116,7 +117,7 @@ describe('More Recipes', () => {
     chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.lenPasswordShort)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(411);
         res.body.should.have
           .property('message')
           .equal('password must be 8 characters or more');
@@ -129,7 +130,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signup')
       .send(fakeData.noFirstNameInput)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(406);
         done();
       });
   });
@@ -139,7 +140,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signup')
       .send(fakeData.nolastNameInput)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(411);
         done();
       });
   });
@@ -149,7 +150,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signup')
       .send(fakeData.IncorrectFirstNameInput)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(406);
         res.body.should.have
           .property('message')
           .equal('Input a valid first Name');
@@ -162,7 +163,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signup')
       .send(fakeData.IncorrectLastNameInput)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(406);
         res.body.should.have
           .property('message')
           .equal('Input a valid last Name');
@@ -175,7 +176,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signup')
       .send(fakeData.nolastNameInput)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(411);
         done();
       });
   });
@@ -185,7 +186,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signin')
       .send(fakeData.newUser2)
       .end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(404);
         done();
       });
   });
@@ -209,9 +210,9 @@ describe('More Recipes', () => {
         done();
       });
   });
-  it('should let users sign in', (done) => {
+  it('should let user sign in', (done) => {
     chai.request(app)
-      .post('/api/v1/users/signin')
+      .post('/api/v1/user/signin')
       .send(fakeData.newUser)
       .end((err, res) => {
         token = { token };
@@ -289,7 +290,7 @@ describe('Recipes', () => {
 describe('Votes', () => {
   it('should not let unauthenticated user upvote a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/users/upvote/:recipeId')
+      .post('/api/v1/user/upvote/:recipeId')
       .end((err, res) => {
         res.body.should.have.property('message').equal('Unauthorised User!');
         done();
@@ -297,7 +298,7 @@ describe('Votes', () => {
   });
   it('should not let unauthenticated user downvote a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/users/downvote/:recipeId')
+      .post('/api/v1/user/downvote/:recipeId')
       .end((err, res) => {
         res.body.should.have.property('message').equal('Unauthorised User!');
         done();
@@ -305,7 +306,7 @@ describe('Votes', () => {
   });
   it('should not let user with un-verified Token upvote a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/users/upvote/:recipeId')
+      .post('/api/v1/user/upvote/:recipeId')
       .send(fakeData.recipe1)
       .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
       .end((err, res) => {
@@ -316,7 +317,7 @@ describe('Votes', () => {
   });
   it('should not let user with un-verified Token downvote a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/users/downvote/:recipeId')
+      .post('/api/v1/user/downvote/:recipeId')
       .send(fakeData.recipe1)
       .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
       .end((err, res) => {
