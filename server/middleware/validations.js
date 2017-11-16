@@ -63,17 +63,17 @@ export const signUpField = (req, res, next) => {
 
 
 export const validateGetRecipe = (req, res, next) => {
-  if (!req.body.description.trim() === '') {
+  if (!req.body.description) {
     return res.status(400).json({
       message: 'Input a description for your recipe'
     });
   }
-  if (!req.body.recipeName.trim() === '') {
+  if (!req.body.recipeName) {
     return res.status(400).json({
       message: 'Input a name for your recipe'
     });
   }
-  if (!req.body.ingredients.trim() === '') {
+  if (!req.body.ingredients) {
     return res.status(400).json({
       message: 'Input ingredients for your recipes'
     });
