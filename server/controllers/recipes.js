@@ -3,24 +3,24 @@ import db from '../models';
 
 const { recipes, reviews } = db;
 
-
 export default {
   create(req, res) {
     const token = req.headers['x-token'];
     const decodedToken = jwt.decode(token);
-
     return recipes
       .create({
         recipeName: req.body.recipeName,
         description: req.body.description,
         ingredients: req.body.ingredients,
-        userId: decodedToken.user.id
+        userId: decodedToken.userDetail.id
       })
-      .then(data => res.status(201).json({
+      .then(newRecipe => res.status(201).json({
         status: 'success',
-        recipeName: data.recipeName,
-        message: 'Recipe added successfully',
-        data: { recipeId: data.id, userId: data.userId }
+        recipeName: newRecipe.recipeName,
+        description: newRecipe.description,
+        ingredients: newRecipe.description,
+        recipeId: newRecipe.id,
+        userId: newRecipe.userId
       }))
       .catch((error) => {
         res.status(400).json({ error: error.message });
@@ -43,46 +43,47 @@ export default {
         limit: limitValue,
         offset: pageValue * limitValue
       })
-      .then(result => res.status(200).send({
+      .then(recipeList => res.status(200).send({
         page: (pageValue + 1),
-        totalCount: result.count,
-        pageCount: Math.ceil(result.count / limitValue),
-        pageSize: parseInt(result.rows.length, 10),
-        allRecipes: result.rows
+        totalCount: recipeList.count,
+        pageCount: Math.ceil(recipeList.count / limitValue),
+        pageSize: parseInt(recipeList.rows.length, 10),
+        allRecipes: recipeList.rows
       }))
-      .catch(error => res.status(400).send({
-        error: error.message
-      }));
+      .catch(() => res.status(422).send('Recipe Not Created yet'));
   },
 
   update(req, res) {
-    const { user } = req.decoded;
+    const { userDetail } = req.decoded;
     return recipes
       .find({
         where: {
           id: req.params.recipeId,
         },
-      }).then((found) => {
-        if (found && found.userId === user.id) {
-          return found
+      }).then((Recipefound) => {
+        if (Recipefound && Recipefound.userId === userDetail.id) {
+          return Recipefound
             .update({
-              recipeName: req.body.recipeName || found.recipeName,
-              description: req.body.description || found.description,
-              ingredients: req.body.ingredients || found.ingredients
+              recipeName: req.body.recipeName || Recipefound.recipeName,
+              description: req.body.description || Recipefound.description,
+              ingredients: req.body.ingredients || Recipefound.ingredients
             }, {
               where: {
                 id: req.params.recipeId
               }
             })
-            .then(updated => res.status(200).json({
+            .then(updatedRecipe => res.status(200).json({
               status: 'success',
-              updated
+              updatedRecipe
             }));
         }
-        if (!found) {
-          return res.status(404).send({ error: 'not recipe found' });
+        if (!Recipefound) {
+          return res.status(404).send({ error: 'Recipe not found' });
         }
-        return res.status(400).send({ error: 'recipe does not belong to you' });
+        return res.status(401)
+          .send({
+            error: 'You cannot update a recipe that does not belong to you'
+          });
       }).catch(error => res.status(400).send({ error: error.message }));
   },
 
@@ -93,10 +94,10 @@ export default {
           id: req.params.recipeId,
         },
       })
-      .then((found) => {
-        if (!found) {
+      .then((Recipefound) => {
+        if (!Recipefound) {
           return res.status(404).send({
-            message: 'recipe Not Found',
+            error: 'recipe Not Found',
           });
         }
         return recipes
@@ -108,8 +109,8 @@ export default {
           .then(() => res.status(200).json({
             message: 'Recipe deleted successfully'
           }))
-          .catch(error => res.status(400).json({
-            error: 'Recipe cannot be deleted by you',
+          .catch(error => res.status(401).json({
+            error: 'You cannot delete a recipe that does not belong to you',
             message: error.message
           }));
       })
@@ -121,11 +122,11 @@ export default {
   },
 
   getUserRecipes(req, res) {
-    const { user } = req.decoded;
+    const { userDetail } = req.decoded;
     recipes
       .findAll({
         where: {
-          userId: user.id
+          userId: userDetail.id
         },
         include: [{
           model: reviews,

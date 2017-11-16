@@ -26,35 +26,35 @@ export const signUpField = (req, res, next) => {
   if (!req.body.userName ||
     req.body.userName.length < 2 ||
     req.body.userName.toLowerCase().replace(/ +/g, '').trim() === '') {
-    return res.status(400).json({
+    return res.status(411).json({
       errorMessage: 'Please provide a valid username with atleast 5 characters.'
     });
   }
   if (!req.body.email || !filter.test(req.body.email)) {
-    return res.status(400).json({
+    return res.status(422).json({
       message: 'Please supply valid email address'
     });
   }
   if (!req.body.password || req.body.password.trim() === '') {
-    return res.status(400)
+    return res.status(406)
       .json({
         message: 'password cannot be empty'
       });
   }
   if (!req.body.firstName || req.body.firstName.trim() === '') {
-    return res.status(400)
+    return res.status(406)
       .json({
         message: 'Input a valid first Name'
       });
   }
   if (!req.body.lastName || req.body.lastName.trim() === '') {
-    return res.status(400)
+    return res.status(406)
       .json({
         message: 'Input a valid last Name'
       });
   }
   if (req.body.password.length < 8) {
-    return res.status(400).json({
+    return res.status(411).json({
       message: 'password must be 8 characters or more'
     });
   }
@@ -84,7 +84,7 @@ export const validateGetRecipe = (req, res, next) => {
 export const recipeValidation = (req, res, next) => {
   if (!req.body.description && !req.body.recipeName && !req.body.ingredients) {
     return res.status(400).json({
-      error: 'Input a value'
+      error: 'Input a valid recipe name'
     });
   }
   next();
