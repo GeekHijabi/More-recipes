@@ -1,48 +1,65 @@
 import db from '../models';
 
-const { favoriteRecipe } = db;
+const { favoriterecipe, recipes } = db;
+
 
 export default {
-
   create(req, res) {
-    const { user } = req.decoded;
-    return favoriteRecipe
-      .create({
-        recipeId: req.params.recipeId,
-        userId: user.id,
-      })
-      .then(favorite => res.status(200).json({
-        status: 'success',
-        message: `You successfully choose recipe id ${req.params.recipeId} as your favorite recipes`,
-        data: { userId: favorite.userId, recipeId: favorite.recipeId }
-      }))
-      .catch((error) => {
-        res.status(400).json(error);
-      });
+    const { userDetail } = req.decoded;
+
+    recipes.find({
+      where: {
+        id: req.params.recipeId
+      }
+    }).then((foundRecipe) => {
+      if (!foundRecipe) {
+        favoriterecipe.findOne({
+          where: {
+            recipeId: req.params.recipeId,
+            userDetail
+          }
+        }).then((foundFavorite) => {
+          if (foundFavorite) {
+            return res.status(400).json({
+              message: 'Recipe already Favorited'
+            });
+          }
+          return favoriterecipe
+            .create({
+              recipeId: req.params.recipeId,
+              userDetail
+            }).then(favorited => res.status(201).json({
+              message: 'Recipe Favorited!',
+              favorited
+            }));
+        });
+      } else {
+        return res.status(404).json({
+          message: 'Recipe Not found!'
+        });
+      }
+    });
   },
 
   list(req, res) {
-    return favoriteRecipe
+    const { userDetail } = req.decoded;
+    return favoriterecipe
       .findAll({
-        where: { userId: req.params.userId },
-        include: [{
-          model: db.recipes,
-          attributes: ['recipeName', 'ingredients', 'description'],
-          include: [{
-            model: db.user,
-            attributes: ['userName', 'updatedAt']
-          }]
-        }],
-      })
-      .then((favoriterecipe) => {
-        if (favoriterecipe.length < 1) {
-          res.status(404).json({
-            message: 'No favorite recipe found'
-          });
-        } else {
-          res.status(200).json(favoriterecipe);
+        where: {
+          userDetail
+        },
+        include: [
+          {
+            model: recipes
+          }
+        ]
+      }).then((Recipefound) => {
+        if (Recipefound) {
+          return res.status(200).json(found);
         }
-      })
-      .catch(error => res.status(404).json(error));
+        return res.status(404).json({
+          message: 'You have no favorite recipe yet'
+        });
+      });
   }
 };
