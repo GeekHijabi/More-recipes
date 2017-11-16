@@ -1,7 +1,6 @@
 import db from '../models';
 
 const { recipes, votes } = db;
-
 const updateVoteCounts = (recipeId) => {
   votes
     .count({
@@ -47,12 +46,12 @@ const updateVoteCounts = (recipeId) => {
 
 export default {
   downvote(req, res) {
-    const { user } = req.decoded;
+    const { userDetail } = req.decoded;
     return votes
       .findOrCreate({
         where: {
           recipeID: req.params.recipeId,
-          userId: user.id
+          userId: userDetail.id
         },
         defaults: {
           upvotes: false,
@@ -87,12 +86,12 @@ export default {
 
 
   upvote(req, res) {
-    const { user } = req.decoded;
+    const { userDetail } = req.decoded;
     return votes
       .findOrCreate({
         where: {
           recipeID: req.params.recipeId,
-          userId: user.id
+          userId: userDetail.id
         },
         defaults: {
           upvotes: true,

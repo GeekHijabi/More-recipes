@@ -24,7 +24,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false
     },
   });
-  user.prototype.toJSON = function toJSON() {
+  user.prototype.toJSON = function removePassword() {
     const values = Object.assign({}, this.get());
     delete values.password;
     return values;
