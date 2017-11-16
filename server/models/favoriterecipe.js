@@ -1,4 +1,4 @@
-export default(sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const favoriterecipe = sequelize.define('favoriterecipe', {
     userId: {
       type: DataTypes.INTEGER,
@@ -6,19 +6,22 @@ export default(sequelize, DataTypes) => {
     },
     recipeID: {
       type: DataTypes.INTEGER,
-      allownull: false,
-      unique: true,
-    },
-    category: {
-      type: DataTypes.STRING,
-      allownull: false,
-    },
+      allowNull: false
+    }
   });
+
   favoriterecipe.associate = (models) => {
+    favoriterecipe.belongsTo(models.recipes, {
+      foreignKey: 'recipeId',
+      onDelete: 'CASCADE',
+    });
+
     favoriterecipe.belongsTo(models.user, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
   };
+
+
   return favoriterecipe;
 };
