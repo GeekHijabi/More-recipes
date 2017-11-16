@@ -1,32 +1,32 @@
 import db from '../models';
 
-const { recipes, reviews } = db;
+const { Recipe, Review } = db;
 
 export default {
   create(req, res) {
     const { userDetail } = req.decoded;
-    recipes.find({
+    Recipe.find({
       where: { id: req.params.recipeId }
     })
-      .then((found) => {
-        if (!found) {
+      .then((foundRecipe) => {
+        if (!foundRecipe) {
           res.status(404).json({
             message: 'recipe not found'
           });
         }
       });
-    return reviews
+    return Review
       .create({
-        recipeID: req.params.recipeId,
+        recipeId: req.params.recipeId,
         userId: userDetail.id,
-        reviews: req.body.reviews.trim()
+        reviews: req.body.reviews
       })
       .then(data => res.status(200).json({
         status: 'success',
         message: 'Your recipe has been reviewed',
         review: {
           userId: data.userId,
-          recipeId: data.recipeID,
+          recipeId: data.recipeId,
           review: data.reviews
         }
       }))
@@ -36,17 +36,17 @@ export default {
   },
 
   list(req, res) {
-    return reviews
+    return Review
       .findAll({
         where: { recipeId: req.params.recipeId }
       })
-      .then(() => {
-        if (reviews.length < 1) {
+      .then((review) => {
+        if (review.length < 1) {
           res.status(404).json({
             message: 'No review found'
           });
         } else {
-          res.status(200).json(reviews);
+          res.status(200).json(review);
         }
       })
       .catch(error => res.status(404).json(error));

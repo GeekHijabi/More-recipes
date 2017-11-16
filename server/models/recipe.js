@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const recipes = sequelize.define('recipes', {
+  const recipe = sequelize.define('Recipe', {
     recipeName: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -14,11 +14,7 @@ export default (sequelize, DataTypes) => {
     },
     userId: {
       type: DataTypes.INTEGER,
-      references: {
-        model: 'users',
-        key: 'id',
-        as: 'userId',
-      },
+      allowNull: false
     },
     upvotes: {
       type: DataTypes.INTEGER,
@@ -36,23 +32,23 @@ export default (sequelize, DataTypes) => {
       defaultValue: 0
     }
   });
-  recipes.associate = (models) => {
-    recipes.belongsTo(models.user, {
+  recipe.associate = (models) => {
+    recipe.belongsTo(models.User, {
       foreignKey: 'userId',
       onDelete: 'CASCADE',
     });
-    recipes.hasMany(models.reviews, {
-      foreignKey: 'recipeID',
+    recipe.hasMany(models.Review, {
+      foreignKey: 'recipeId',
       onDelete: 'CASCADE',
     });
-    recipes.hasMany(models.favoriterecipe, {
-      foreignKey: 'recipeID',
+    recipe.hasMany(models.Favorite, {
+      foreignKey: 'recipeId',
       onDelete: 'CASCADE',
     });
-    recipes.hasMany(models.votes, {
-      foreignKey: 'recipeID',
+    recipe.hasMany(models.Vote, {
+      foreignKey: 'recipeId',
       onDelete: 'CASCADE',
     });
   };
-  return recipes;
+  return recipe;
 };

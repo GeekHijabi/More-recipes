@@ -4,7 +4,7 @@
 
 
 #About
-* More-Recipes provides a platform for users to share the awesome and exciting  recipe ideas they have invented or learnt.  Suppose a user comes up with a recipe,  he/she can post it on More-Recipes and  get feedback in form of reviews and votes from other users who explore that recipe. Users can also keep a list of their favorite recipes on the application.
+* More-Recipes provides a platform for user to share the awesome and exciting  recipe ideas they have invented or learnt.  Suppose a user comes up with a recipe,  he/she can post it on More-Recipes and  get feedback in form of reviews and votes from other user who explore that recipe. user can also keep a list of their favorite recipes on the application.
 
 * Technologies:
 Written following JavaScript ES6 Syntax and nodejs on the backend, using:
@@ -23,9 +23,9 @@ Written following JavaScript ES6 Syntax and nodejs on the backend, using:
 * Postman; a powerful HTTP client for testing web services.
 
 Endpoints:
-* API endpoints for users to create accounts and login to the application:
-    * POST: /api/users/signup 
-    * POST: /api/users/signin
+* API endpoints for user to create accounts and login to the application:
+    * POST: /api/user/signup 
+    * POST: /api/user/signin
 * API route that allows authenticated user to add a recipe:
     * POST: /api/recipes
 * API route that allows authenticated user to modify a recipe they added
@@ -37,7 +37,7 @@ Endpoints:
 * API route that allows an authenticated user post a review for a recipe
      * POST: /api/recipes/<recipeId>/reviews
 * API route that allows an authenticated user to get all his/her favorite recipes
-    * GET: /api/users/<userId>/recipes
+    * GET: /api/user/<userId>/recipes
 * API route that allows a user to get just recipes with the most upvotes
     * GET: /api/recipes?sort=upvotes&order=desc
 
