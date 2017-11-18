@@ -4,10 +4,8 @@ dotenv.load();
 
 export const signInField = (req, res, next) => {
   const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  if (!req.body.userName || req.body.userName.trim() === '') {
-    return res.status(400).json({
-      message: 'Supply a valid username / email address'
-    });
+  if (!req.body.email && req.body.userName.trim() === '') {
+    return res.status(404).json({ message: 'Invalid username' });
   }
   if (req.body.email && !filter.test(req.body.email)) {
     return res.status(400).json({

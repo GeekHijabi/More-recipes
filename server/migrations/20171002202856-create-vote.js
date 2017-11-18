@@ -27,11 +27,13 @@ module.exports = {
       },
       upvotes: {
         type: Sequelize.BOOLEAN,
-        allowNull: true
+        allowNull: true,
+        defaultValue: true
       },
       downvotes: {
         type: Sequelize.BOOLEAN,
-        allowNull: true
+        allowNull: true,
+        defaultValue: true
       },
       createdAt: {
         allowNull: false,

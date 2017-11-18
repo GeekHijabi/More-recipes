@@ -18,11 +18,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     upvotes: {
       type: DataTypes.BOOLEAN,
-      allowNull: true
+      allowNull: true,
+      defaultValue: false
     },
     downvotes: {
       type: DataTypes.BOOLEAN,
-      allowNull: true
+      allowNull: true,
+      defaultValue: false
     },
   });
   vote.associate = (models) => {
