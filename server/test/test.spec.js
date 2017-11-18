@@ -1,6 +1,5 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import jwt from 'jsonwebtoken';
 
 
 import fakeData from './faker';
@@ -11,7 +10,7 @@ const should = chai.Should();
 chai.use(chaiHttp);
 
 
-let token
+let token;
 
 describe('More Recipes', () => {
   it('should get the home page', (done) => {
@@ -55,7 +54,7 @@ describe('More Recipes', () => {
       .send(fakeData.newUser)
       .end((err, res) => {
         res.body.should.have
-          .property('message')
+          .property('error')
           .equal('User already exists');
         done();
       });
@@ -196,7 +195,8 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signin')
       .send(fakeData.newUser2)
       .end((err, res) => {
-        res.body.should.have.property('message').equal('User is not registered');
+        res.body.should.have.property('message')
+          .equal('User is not registered');
         done();
       });
   });
@@ -206,7 +206,8 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signin')
       .send(fakeData.noPasswordInput)
       .end((err, res) => {
-        res.body.should.have.property('message').equal('Password is required');
+        res.body.should.have.property('message')
+          .equal('Password is required');
         done();
       });
   });
@@ -238,7 +239,8 @@ describe('More Recipes', () => {
       .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
       .end((err, res) => {
         res.should.have.status(403);
-        res.body.should.have.property('error').equal('Token could not be authenticated');
+        res.body.should.have.property('error')
+          .equal('Token could not be authenticated');
         done();
       });
   });
@@ -257,7 +259,7 @@ describe('Recipes', () => {
     chai.request(app)
       .delete('/api/v1/recipes/:recipeId')
       .end((err, res) => {
-        res.body.should.have.property('message').equal('Unauthorised User!');
+        res.body.should.have.property('error').equal('Unauthorised User!');
         done();
       });
   });
@@ -265,7 +267,7 @@ describe('Recipes', () => {
     chai.request(app)
       .post('/api/v1/recipes')
       .end((err, res) => {
-        res.body.should.have.property('message').equal('Unauthorised User!');
+        res.body.should.have.property('error').equal('Unauthorised User!');
         done();
       });
   });
@@ -273,15 +275,15 @@ describe('Recipes', () => {
     chai.request(app)
       .put('/api/v1/recipes/:recipeId')
       .end((err, res) => {
-        res.body.should.have.property('message').equal('Unauthorised User!');
+        res.body.should.have.property('error').equal('Unauthorised User!');
         done();
       });
   });
   it('should not let unauthorized user review a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/recipes/:recipeId/reviews')
+      .post('/api/v1/recipes/:recipeId/review')
       .end((err, res) => {
-        res.body.should.have.property('message').equal('Unauthorised User!');
+        res.body.should.have.property('error').equal('Unauthorised User!');
         done();
       });
   });
@@ -290,39 +292,41 @@ describe('Recipes', () => {
 describe('Votes', () => {
   it('should not let unauthenticated user upvote a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/user/upvote/:recipeId')
+      .post('/api/v1/recipe/:recipeId/upvote')
       .end((err, res) => {
-        res.body.should.have.property('message').equal('Unauthorised User!');
+        res.body.should.have.property('error').equal('Unauthorised User!');
         done();
       });
   });
   it('should not let unauthenticated user downvote a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/user/downvote/:recipeId')
+      .post('/api/v1/recipe/:recipeId/downvote')
       .end((err, res) => {
-        res.body.should.have.property('message').equal('Unauthorised User!');
+        res.body.should.have.property('error').equal('Unauthorised User!');
         done();
       });
   });
   it('should not let user with un-verified Token upvote a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/user/upvote/:recipeId')
+      .post('/api/v1/recipe/:recipeId/upvote')
       .send(fakeData.recipe1)
       .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
       .end((err, res) => {
         res.should.have.status(403);
-        res.body.should.have.property('error').equal('Token could not be authenticated');
+        res.body.should.have.property('error')
+          .equal('Token could not be authenticated');
         done();
       });
   });
   it('should not let user with un-verified Token downvote a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/user/downvote/:recipeId')
+      .post('/api/v1/recipe/:recipeId/downvote')
       .send(fakeData.recipe1)
       .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
       .end((err, res) => {
         res.should.have.status(403);
-        res.body.should.have.property('error').equal('Token could not be authenticated');
+        res.body.should.have.property('error')
+          .equal('Token could not be authenticated');
         done();
       });
   });
