@@ -5,40 +5,39 @@ const { Recipe, Review } = db;
 export default {
   create(req, res) {
     const { userDetail } = req.decoded;
-    const { recipeName } = req.body;
-    const { id } = userDetail;
-
+    console.log(userDetail);
     Recipe.findOne(({
       where: {
-        $and: [
+        $or: [
           {
-            recipeName
+            recipeName: req.body.recipeName
           },
-          { userId: id }
+          { recipeId: req.params.recipeId }
         ]
       },
-    }))
-      .then((RecipeFound) => {
-        if (RecipeFound) {
-          return res.status(409).json({
-            error: 'You cannot create same recipe twice'
-          });
-        }
-        return Recipe
-          .create({
-            recipeName: req.body.recipeName,
-            description: req.body.description,
-            ingredients: req.body.ingredients,
-            userId: userDetail.id
-          })
-          .then(newRecipe => res.status(201).json({
-            recipeName: newRecipe.recipeName,
-            description: newRecipe.description,
-            ingredients: newRecipe.ingredients,
-            recipeId: newRecipe.id,
-            userId: newRecipe.userId
-          }));
-      }).catch(() => {
+    }));
+    if (!userDetail) {
+      return res.status(400)
+        .json({ error: 'user not found' });
+    }
+    return Recipe
+      .create({
+        recipeName: req.body.recipeName,
+        description: req.body.description,
+        ingredients: req.body.ingredients,
+        userId: userDetail.id
+      })
+      .then(newRecipe => res.status(201).json({
+        recipeName: newRecipe.recipeName,
+        description: newRecipe.description,
+        ingredients: newRecipe.ingredients,
+        recipeId: newRecipe.id,
+        userId: newRecipe.userId
+      }))
+      .catch((error) => {
+        res.status(400).json({ error: error.message });
+      })
+      .catch(() => {
         res.status(500).json({ error: 'oops something went wrong' });
       });
   },
@@ -59,14 +58,14 @@ export default {
         limit: limitValue,
         offset: pageValue * limitValue
       })
-      .then(recipeList => res.status(200).json({
+      .then(recipeList => res.status(200).send({
         page: (pageValue + 1),
         totalCount: recipeList.count,
         pageCount: Math.ceil(recipeList.count / limitValue),
         pageSize: parseInt(recipeList.rows.length, 10),
         allRecipes: recipeList.rows
       }))
-      .catch(() => res.status(422).json({ error: 'Recipe Not Created yet' }));
+      .catch(() => res.status(422).send('Recipe Not Created yet'));
   },
 
   update(req, res) {
@@ -125,8 +124,9 @@ export default {
           .then(() => res.status(200).json({
             message: 'Recipe deleted successfully'
           }))
-          .catch(() => res.status(401).json({
+          .catch(error => res.status(401).json({
             error: 'You cannot delete a recipe that does not belong to you',
+            message: error.message
           }));
       })
       .catch(() => {
