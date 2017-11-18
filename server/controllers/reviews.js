@@ -22,7 +22,6 @@ export default {
         reviews: req.body.reviews
       })
       .then(data => res.status(200).json({
-        status: 'success',
         message: 'Your recipe has been reviewed',
         review: {
           userId: data.userId,
@@ -46,9 +45,9 @@ export default {
             message: 'No review found'
           });
         } else {
-          res.status(200).json(review);
+          res.status(200).json({ review });
         }
       })
-      .catch(error => res.status(404).json(error));
+      .catch(error => res.status(404).json(error.message));
   }
 };

@@ -17,24 +17,85 @@ const routes = (app) => {
     });
   });
 
-  app.post('/api/v1/user/signup', signUpField, user.signup);
-  app.post('/api/v1/user/signin', signInField, user.signin);
+  app.post(
+    '/api/v1/user/signup',
+    signUpField,
+    user.signup
+  );
+  app.post(
+    '/api/v1/user/signin',
+    signInField,
+    user.signin
+  );
 
-  app.get('/api/v1/recipes', recipes.listAllRecipes);
-  app.post('/api/v1/recipes', authenticate, recipeValidation, validateGetRecipe, recipes.create);
-  app.delete('/api/v1/recipes/:recipeId', authenticate, recipes.destroy);
-  app.put('/api/v1/recipes/:recipeId', authenticate, recipeValidation, recipes.update);
-  app.get('/api/v1/user/myrecipes', authenticate, recipes.getUserRecipes);
+  app.get(
+    '/api/v1/recipes',
+    recipes.listAllRecipes
+  );
+  app.post(
+    '/api/v1/recipes',
+    authenticate,
+    recipeValidation,
+    validateGetRecipe,
+    recipes.create
+  );
 
-  app.post('/api/v1/recipes/:recipeId/reviews', authenticate, reviewsValidation, reviews.create);
-  app.get('/api/v1/recipes/:recipeId/reviews', authenticate, reviews.list);
-  app.get('/api/v1/recipes/reviews', authenticate, reviews.list);
+  app.delete(
+    '/api/v1/recipes/:recipeId',
+    authenticate,
+    recipes.destroy
+  );
 
-  app.get('/api/v1/user/:userId/favorites', authenticate, favoriteRecipe.list);
-  app.post('/api/v1/user/:recipeId/favorites', authenticate, favoriteRecipe.create);
+  app.put(
+    '/api/v1/recipes/:recipeId',
+    authenticate,
+    recipeValidation,
+    recipes.update
+  );
+  app.get(
+    '/api/v1/recipes/myrecipes',
+    authenticate,
+    recipes.getUserRecipes
+  );
 
-  app.post('/api/v1/user/upvote/:recipeId', authenticate, votes.upvote);
-  app.post('/api/v1/user/downvote/:recipeId', authenticate, votes.downvote);
+  app.post(
+    '/api/v1/recipes/:recipeId/review',
+    authenticate,
+    reviewsValidation,
+    reviews.create
+  );
+  app.get(
+    '/api/v1/recipes/:recipeId/reviews',
+    authenticate,
+    reviews.list
+  );
+  app.get(
+    '/api/v1/recipes/reviews',
+    authenticate,
+    reviews.list
+  );
+
+  app.get(
+    '/api/v1/user/:userId/favorites',
+    authenticate,
+    favoriteRecipe.list
+  );
+  app.post(
+    '/api/v1/recipe/:recipeId/favorite',
+    authenticate, favoriteRecipe.create
+  );
+
+  app.post(
+    '/api/v1/recipe/:recipeId/upvote',
+    authenticate,
+    votes.upvote
+  );
+
+  app.post(
+    '/api/v1/recipe/:recipeId/downvote',
+    authenticate,
+    votes.downvote
+  );
 };
 
 export default routes;
