@@ -48,81 +48,92 @@ export default {
   downvote(req, res) {
     const { userDetail } = req.decoded;
     return Vote
-      .findOrCreate({
+      .findOne({
         where: {
           recipeId: req.params.recipeId,
           userId: userDetail.id
-        },
-        defaults: {
-          upvotes: false,
-          downvotes: true
         }
-      }).spread((vote, created) => {
-        if (created === true) {
-          vote.updateAttributes({
-            upvotes: false,
-            downvotes: true
+      }).then((foundVote) => {
+        if (!foundVote) {
+          return Vote.create({
+            userId: userDetail.id,
+            recipeId: req.params.recipeId,
+            downvotes: true,
+            upvotes: false
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).send({
-              message: 'counted'
+            return res.status(200).json({
+              message: 'Successfully downvoted'
             });
           });
-        } else if (created === false) {
-          vote.updateAttributes({
-            upvotes: false,
-            downvotes: true
+        } else if (foundVote.downvotes === false) {
+          return res.status(400).send({
+            message: 'you cannot downvote, please remove upvote'
+          });
+        } else if (foundVote.downvotes === true
+            && foundVote.upvotes === false) {
+          Vote.destroy({
+            where: {
+              $and: [
+                {
+                  recipeId: foundVote.recipeId
+                },
+                { userId: foundVote.userId }
+              ]
+            }
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).send({
-              message: 'downvoted'
+            return res.status(200).json({
+              message: 'downvote removed'
             });
           });
         }
-      }).catch((error) => {
-        res.status(400).send(error);
       });
   },
-
 
   upvote(req, res) {
     const { userDetail } = req.decoded;
     return Vote
-      .findOrCreate({
+      .findOne({
         where: {
           recipeId: req.params.recipeId,
           userId: userDetail.id
-        },
-        defaults: {
-          upvotes: true,
-          downvotes: false
         }
-      }).spread((vote, created) => {
-        if (created === true) {
-          vote.updateAttributes({
-            upvotes: true,
-            downvotes: false
+      }).then((foundVote) => {
+        if (!foundVote) {
+          return Vote.create({
+            userId: userDetail.id,
+            recipeId: req.params.recipeId,
+            downvotes: false,
+            upvotes: true
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).send({
-              message: 'counted'
+            return res.status(200).json({
+              message: 'Successfully upvoted'
             });
           });
-        } else if (created === false) {
-          vote.updateAttributes({
-            upvotes: true,
-            downvotes: false
+        } else if (foundVote.upvotes === false) {
+          return res.status(400).send({
+            message: 'you cannot upvote, please remove downvote'
+          });
+        } else if (foundVote.upvotes === true
+            && foundVote.downvotes === false) {
+          Vote.destroy({
+            where: {
+              $and: [
+                {
+                  recipeId: foundVote.recipeId
+                },
+                { userId: foundVote.userId }
+              ]
+            }
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).send({
-              message: 'already voted'
+            return res.status(200).json({
+              message: 'upvote removed'
             });
           });
         }
-      }).catch(() => {
-        res.status(201).send({
-          message: 'upvoted'
-        });
       });
   }
 };

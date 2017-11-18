@@ -5,28 +5,43 @@ const { Favorite, Recipe } = db;
 export default {
   create(req, res) {
     const { userDetail } = req.decoded;
-    Recipe.find({
-      where: { id: req.params.recipeId }
-    })
+    Favorite.findOne(({
+      where: {
+        $and: [
+          {
+            recipeId: req.params.recipeId
+          },
+          { userId: userDetail.id }
+        ]
+      },
+    }))
       .then((foundRecipe) => {
         if (!foundRecipe) {
-          return res.status(404).json({
-            message: 'Recipe not found'
+          Favorite
+            .create({
+              recipeId: req.params.recipeId,
+              userId: userDetail.id
+            });
+          return res.status(201).json({
+            message: 'Recipe favorited'
           });
         }
-      });
-    return Favorite
-      .create({
-        recipeId: req.params.recipeId,
-        userId: userDetail.id
-      })
-      .then(favorited => res.status(201).json({
-        message: 'Recipe Favorited!',
-        favorited
-      }))
-      .catch(() => {
+        Favorite.destroy({
+          where: {
+            $and: [
+              {
+                recipeId: req.params.recipeId
+              },
+              { userId: userDetail.id }
+            ]
+          }
+        });
+        return res.status(409).json({
+          error: 'Recipe unfavorited'
+        });
+      }).catch(() => {
         res.status(500).send({
-          message: 'oops! something went wrong'
+          error: 'oops! something went wrong'
         });
       });
   },
@@ -48,7 +63,7 @@ export default {
           return res.status(200).json(Recipefound);
         }
         return res.status(404).json({
-          message: 'You have no favorite recipe yet'
+          error: 'You have no favorite recipe yet'
         });
       });
   }

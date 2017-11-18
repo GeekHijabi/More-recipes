@@ -7,7 +7,7 @@ const authenticate = (req, res, next) => {
   const token = req.body.token || req.query.token || req.headers['x-token'];
   if (!token) {
     return res.status(401).send({
-      message: 'Unauthorised User!'
+      error: 'Unauthorised User!'
     });
   }
 

@@ -24,9 +24,8 @@ export default {
     }))
       .then((userFound) => {
         if (userFound) {
-          console.log(userFound);
           return res.status(422).json({
-            message: 'User already exists'
+            error: 'User already exists'
           });
         }
         return User
@@ -39,26 +38,29 @@ export default {
               .hashSync(req.body.password, salt, null)
           })
           .then(detail => res.status(201).json(detail));
-      }).catch(error => res.status(500).send(error, console.log(error)));
+      }).catch(() => res.status(500).json('Internal server error'));
   },
 
   signin(req, res) {
-    const { userName } = req.body;
-    return User
-      .findOne({
+    const { userName, email } = req.body;
+    User
+      .findOne(({
         where: {
           $or: [
             {
-              userName: req.body.userName
-                .trim().toLowerCase().replace(/ +/g, '')
+              email
             },
-            { email: req.body.email }
+            {
+              userName
+            }
           ]
         },
-      })
+      }))
       .then((userDetail) => {
         if (!userDetail) {
-          return res.status(404).json({ message: 'User is not registered' });
+          return res.status(404).json({
+            message: 'User is not registered'
+          });
         }
         const token = jwt.sign(
           { userDetail }
@@ -67,13 +69,13 @@ export default {
         );
         const { password } = userDetail;
         if (!bcrypt.compareSync(req.body.password, password)) {
-          return res.status(404).send({
-            message: 'Email and password mismatch'
+          return res.status(409).send({
+            error: 'Email and password mismatch'
           });
         }
         return res.status(200)
           .json({
-            message: `You have successfully signed in ${userName}!`,
+            message: 'You have successfully signed in!',
             token
           });
       });
