@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Button } from 'reactstrap';
 import './../styles/index.scss';
 
-const image = require('../assets/images/banner_bg.jpg');
+// const image = require('../assets/images/banner_bg.jpg');
 
 /**
  * @description Displays Home View
@@ -16,7 +16,7 @@ class Home extends React.Component {
    * @description COnstructor Function
    * @param {any} props
    * @memberof Home
-   * @return {void} 
+   * @return {void}
    */
   constructor(props) {
     super(props);
