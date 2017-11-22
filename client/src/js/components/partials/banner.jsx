@@ -20,7 +20,6 @@ class Banner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: true
     };
   }
   /**
@@ -38,7 +37,7 @@ class Banner extends React.Component {
             <div className="card card-body">
               <h1>Life is too short for just a rough meal</h1>
               <p className="btn">
-                <a href="./recipes.html">Browse our collecton of Recipes</a>
+                <a>Browse our collecton of Recipes</a>
               </p>
             </div>
           </div>
