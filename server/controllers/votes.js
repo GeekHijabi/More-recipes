@@ -88,6 +88,8 @@ export default {
             });
           });
         }
+      }).catch(() => {
+        res.status(500).json({ error: 'No recipe found' });
       });
   },
 
@@ -134,7 +136,8 @@ export default {
             });
           });
         }
+      }).catch(() => {
+        res.status(500).json({ error: 'No recipe found' });
       });
   }
 };
-
