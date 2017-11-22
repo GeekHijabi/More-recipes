@@ -7,7 +7,7 @@ engines:
     config:
       languages:
         javascript:
-          mass_threshold: 20
+          mass_threshold: 80
 ratings:
   paths:
   - "server/**.js"
