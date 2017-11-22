@@ -100,10 +100,11 @@ export default {
           .send({
             error: 'You cannot update a recipe that does not belong to you'
           });
-      }).catch(error => res.status(400).send({ error: error.message }));
+      }).catch(() => res.status(400).json({ error: 'Recipe not found' }));
   },
 
   destroy(req, res) {
+    const { userDetail } = req.decoded;
     return Recipe
       .find({
         where: {
@@ -111,23 +112,25 @@ export default {
         },
       })
       .then((Recipefound) => {
+        if (Recipefound && Recipefound.userId === userDetail.id) {
+          return Recipefound
+            .destroy({
+              where: {
+                id: req.params.recipeId,
+              },
+            })
+            .then(() => res.status(200).json({
+              message: 'Recipe deleted successfully'
+            }));
+        }
         if (!Recipefound) {
           return res.status(404).send({
             error: 'recipe Not Found',
           });
         }
-        return Recipe
-          .destroy({
-            where: {
-              id: req.params.recipeId,
-            },
-          })
-          .then(() => res.status(200).json({
-            message: 'Recipe deleted successfully'
-          }))
-          .catch(() => res.status(401).json({
-            error: 'You cannot delete a recipe that does not belong to you',
-          }));
+        return res.status(401).send({
+          error: 'You cannot delete a recipe that does not belong to you',
+        });
       })
       .catch(() => {
         res.status(500).json({

@@ -44,32 +44,33 @@ class SignUp extends React.Component {
                 <h3 className="dark-grey-text mb-5"><strong>Sign up</strong></h3>
               </div>
               <div className="md-form">
-                <label htmlFor="Form-email1">First Name</label>
-                <input type="text" id="Form-email1" className="form-control" placeholder="First Name" />
-
+                <label htmlFor="firstname">First Name
+                  <input type="text" id="firstname" className="form-control" placeholder="First Name" />
+                </label>
               </div>
 
               <div className="md-form">
-                <label htmlFor="Form-email1">Last Name</label>
-                <input type="text" id="Form-email1" className="form-control" placeholder="Last Name" />
-
+                <label htmlFor="lastname">Last Name
+                  <input type="text" id="lastname" className="form-control" placeholder="Last Name" />
+                </label>
               </div>
 
               <div className="md-form">
-                <label htmlFor="Form-email1">Email</label>
-                <input type="text" id="Form-email1" className="form-control" placeholder="email" />
-
+                <label htmlFor="email">Email
+                  <input type="text" id="email" className="form-control" placeholder="email" />
+                </label>
               </div>
 
               <div className="md-form">
-                <label htmlFor="Form-email1">Username</label>
-                <input type="text" id="Form-email1" className="form-control" placeholder="UserName" />
-
+                <label htmlFor="username">Username
+                <input type="text" id="Form-username" className="form-control" placeholder="UserName" />
+                </label>
               </div>
 
               <div className="md-form pb-3">
-                <label htmlFor="Form-pass1">Password</label>
-                <input type="password" id="Form-pass1" className="form-control" placeholder="Password" />
+                <label htmlFor="password">Password
+                  <input type="password" id="password" className="form-control" placeholder="Password" />
+                </label>
               </div>
 
               <div className="text-center mb-3">
