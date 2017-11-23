@@ -5,7 +5,6 @@ const { Recipe, Review } = db;
 export default {
   create(req, res) {
     const { userDetail } = req.decoded;
-    console.log(userDetail);
     Recipe.findOne(({
       where: {
         $or: [
@@ -124,9 +123,8 @@ export default {
           .then(() => res.status(200).json({
             message: 'Recipe deleted successfully'
           }))
-          .catch(error => res.status(401).json({
-            error: 'You cannot delete a recipe that does not belong to you',
-            message: error.message
+          .catch(() => res.status(401).json({
+            error: 'You cannot delete a recipe that does not belong to you'
           }));
       })
       .catch(() => {

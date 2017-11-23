@@ -5,15 +5,15 @@ dotenv.load();
 export const signInField = (req, res, next) => {
   const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   if (!req.body.email && req.body.userName.trim() === '') {
-    return res.status(404).json({ message: 'Invalid username' });
+    return res.status(404).json({ error: 'Invalid username' });
   }
   if (req.body.email && !filter.test(req.body.email)) {
     return res.status(400).json({
-      message: 'Please supply valid username / email address'
+      error: 'Please supply valid username / email address'
     });
   }
   if (!req.body.password || req.body.password.trim() === '') {
-    return res.status(400).json({ message: 'Password is required' });
+    return res.status(400).json({ error: 'Password is required' });
   }
   next();
 };
@@ -25,35 +25,35 @@ export const signUpField = (req, res, next) => {
     req.body.userName.length < 2 ||
     req.body.userName.toLowerCase().replace(/ +/g, '').trim() === '') {
     return res.status(411).json({
-      errorMessage: 'Please provide a valid username with atleast 5 characters.'
+      error: 'Please provide a valid username with atleast 5 characters.'
     });
   }
   if (!req.body.email || !filter.test(req.body.email)) {
     return res.status(422).json({
-      message: 'Please supply valid email address'
+      error: 'Please supply valid email address'
     });
   }
   if (!req.body.password || req.body.password.trim() === '') {
     return res.status(406)
       .json({
-        message: 'password cannot be empty'
+        error: 'password cannot be empty'
       });
   }
   if (!req.body.firstName || req.body.firstName.trim() === '') {
     return res.status(406)
       .json({
-        message: 'Input a valid first Name'
+        error: 'Input a valid first Name'
       });
   }
   if (!req.body.lastName || req.body.lastName.trim() === '') {
     return res.status(406)
       .json({
-        message: 'Input a valid last Name'
+        error: 'Input a valid last Name'
       });
   }
   if (req.body.password.length < 8) {
     return res.status(411).json({
-      message: 'password must be 8 characters or more'
+      error: 'password must be 8 characters or more'
     });
   }
   next();
@@ -63,17 +63,17 @@ export const signUpField = (req, res, next) => {
 export const validateGetRecipe = (req, res, next) => {
   if (!req.body.description) {
     return res.status(400).json({
-      message: 'Input a description for your recipe'
+      error: 'Input a description for your recipe'
     });
   }
   if (!req.body.recipeName) {
     return res.status(400).json({
-      message: 'Input a name for your recipe'
+      error: 'Input a name for your recipe'
     });
   }
   if (!req.body.ingredients) {
     return res.status(400).json({
-      message: 'Input ingredients for your recipes'
+      error: 'Input ingredients for your recipes'
     });
   }
   next();
