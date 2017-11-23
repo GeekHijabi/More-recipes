@@ -1,7 +1,8 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import { button } from 'reactstrap';
-import '../../../styles/index.scss';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { apiRegisterUser } from '../../actions/auth';
 
 const image = require('../../../assets/images/banner_bg.jpg');
 
@@ -15,19 +16,46 @@ class SignUp extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
-   * @memberof Home
+   * @memberof SignUp
    * @return {void}
    */
   constructor(props) {
     super(props);
     this.state = {
-      active: true
+      firstName: '',
+      lastName: '',
+      userName: '',
+      email: '',
+      password: ''
     };
+    this.onChange = this.onChange.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+  /**
+ * @returns {void}
+ *
+ * @param {any} e
+ * @memberof SignUp
+ */
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} e
+ * @memberof SignUp
+ */
+  onClick(e) {
+    e.preventDefault();
+    // axios.post('http://localhost:3000/api/v1/user/signup', { user: this.state });
+    this.props.apiRegisterUser(this.state);
   }
   /**
    * @description Constructor Function
    * @param {any} props
-   * @memberof Home
+   * @memberof SignUp
    * @return {void}
    */
   render() {
@@ -44,37 +72,83 @@ class SignUp extends React.Component {
                 <h3 className="dark-grey-text mb-5"><strong>Sign up</strong></h3>
               </div>
               <div className="md-form">
-                <label htmlFor="firstname">First Name
-                  <input type="text" id="firstname" className="form-control" placeholder="First Name" />
+                <label htmlFor="Form-email1">firstname
+                  <input
+                    type="text"
+                    id="Form-email1"
+                    className="form-control"
+                    placeholder="First Name"
+                    name="firstName"
+                    onChange={this.onChange}
+                    value={this.state.firstName}
+                  />
                 </label>
               </div>
 
               <div className="md-form">
-                <label htmlFor="lastname">Last Name
-                  <input type="text" id="lastname" className="form-control" placeholder="Last Name" />
+                <label htmlFor="Form-email1">lastname
+                  <input
+                    type="text"
+                    id="Form-email1"
+                    className="form-control"
+                    placeholder="Last Name"
+                    name="lastName"
+                    onChange={this.onChange}
+                    value={this.state.lastName}
+                  />
                 </label>
               </div>
 
               <div className="md-form">
-                <label htmlFor="email">Email
-                  <input type="text" id="email" className="form-control" placeholder="email" />
+                <label htmlFor="Form-email1">email
+                  <input
+                    type="text"
+                    id="Form-email1"
+                    className="form-control"
+                    placeholder="email"
+                    name="email"
+                    onChange={this.onChange}
+                    value={this.state.email}
+                  />
                 </label>
               </div>
 
               <div className="md-form">
-                <label htmlFor="username">Username
-                <input type="text" id="Form-username" className="form-control" placeholder="UserName" />
+                <label htmlFor="Form-email1">username
+                <input
+                  type="text"
+                  id="Form-email1"
+                  className="form-control"
+                  placeholder="UserName"
+                  name="userName"
+                  onChange={this.onChange}
+                  value={this.state.userName}
+                />
                 </label>
               </div>
 
               <div className="md-form pb-3">
-                <label htmlFor="password">Password
-                  <input type="password" id="password" className="form-control" placeholder="Password" />
+                <label htmlFor="Form-pass1">password
+                  <input
+                    type="password"
+                    id="Form-pass1"
+                    className="form-control"
+                    placeholder="Password"
+                    name="password"
+                    onChange={this.onChange}
+                    value={this.state.password}
+                  />
                 </label>
               </div>
 
               <div className="text-center mb-3">
-                <button type="button" className="btn blue-gradient btn-white btn-block btn-rounded z-depth-1a">Sign up</button>
+                <button
+                  type="button"
+                  className="btn blue-gradient btn-white btn-block btn-rounded z-depth-1a"
+                  onClick={this.onClick}
+                >
+                Sign up
+                </button>
               </div>
               <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> or Sign up with:</p>
 
@@ -92,4 +166,8 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+SignUp.propTypes = {
+  apiRegisterUser: PropTypes.func.isRequired,
+};
+
+export default connect(null, { apiRegisterUser })(SignUp);

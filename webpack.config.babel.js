@@ -93,7 +93,7 @@ module.exports = {
   ], // plugins
   devServer: {
     proxy: {
-      '/api/v1': process.env.PORT || 'http://localhost:5000'
+      '/api/v1': process.env.PORT || 'http://localhost:3000'
     },
     hot: true,
     historyApiFallback: true
