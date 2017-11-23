@@ -96,7 +96,7 @@ describe('More Recipes', () => {
       .end((err, res) => {
         res.should.have.status(422);
         res.body.should.have
-          .property('message')
+          .property('error')
           .equal('Please supply valid email address');
         done();
       });
@@ -107,7 +107,7 @@ describe('More Recipes', () => {
       .end((err, res) => {
         res.should.have.status(406);
         res.body.should.have
-          .property('message')
+          .property('error')
           .equal('password cannot be empty');
         done();
       });
@@ -118,7 +118,7 @@ describe('More Recipes', () => {
       .end((err, res) => {
         res.should.have.status(411);
         res.body.should.have
-          .property('message')
+          .property('error')
           .equal('password must be 8 characters or more');
         done();
       });
@@ -151,7 +151,7 @@ describe('More Recipes', () => {
       .end((err, res) => {
         res.should.have.status(406);
         res.body.should.have
-          .property('message')
+          .property('error')
           .equal('Input a valid first Name');
         done();
       });
@@ -164,7 +164,7 @@ describe('More Recipes', () => {
       .end((err, res) => {
         res.should.have.status(406);
         res.body.should.have
-          .property('message')
+          .property('error')
           .equal('Input a valid last Name');
         done();
       });
@@ -206,7 +206,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signin')
       .send(fakeData.noPasswordInput)
       .end((err, res) => {
-        res.body.should.have.property('message')
+        res.body.should.have.property('error')
           .equal('Password is required');
         done();
       });
