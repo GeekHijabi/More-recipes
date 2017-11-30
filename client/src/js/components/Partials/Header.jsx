@@ -1,11 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.css';
-// import { Button } from 'reactstrap';
-import '../../../styles/index.scss';
 /**
- * 
- * 
+ *
+ *
  * @class Header
  * @extends {React.Component}
  */
@@ -43,10 +39,10 @@ class Header extends React.Component {
             </ul>
             <form className="form-inline">
               <input
-                            className="form-control mr-sm-2"
-                            type="text"
-                            placeholder="Search"
-                            aria-label="Search"
+                className="form-control mr-sm-2"
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
               />
             </form>
           </div>

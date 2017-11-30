@@ -54,10 +54,14 @@ export const apiRegisterUser = ({
       method: 'POST',
       url: '/api/v1/user/signup'
     });
-    request.then((response) => {
-      dispatch(signupSuccess(response.message));
-    }).catch((res) => {
-      dispatch(signupFailure(res.error));
+    request.then((res) => {
+      if (res && res.response) {
+        dispatch(signupSuccess(res.response.data.message));
+      }
+    }).catch((err) => {
+      if (err && err.response) {
+        dispatch(signupFailure(err.response.data.error));
+      }
     });
     return request;
   };
@@ -68,26 +72,27 @@ export const apiRegisterUser = ({
  * @param {object} options
  */
 export const apiLoginUser = ({
-  username, email, password
+  identifier, userName, email, password
 }) =>
   function action(dispatch) {
     const request = axios({
       data: {
-        username: username || null,
-        email: email || null,
+        identifier: identifier || userName || email,
         password
       },
       method: 'POST',
       url: '/api/v1/user/signin'
     });
     request.then((response) => {
-      const { token } = response;
+      const { token } = response.data;
       const decodedToken = jwt.decode(token);
       setToken(token);
-      dispatch(loginSuccess(response.message));
+      dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
-    }).catch((res) => {
-      dispatch(loginFailure(res.error));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(loginFailure(err.data.error));
+      }
     });
     return request;
   };
