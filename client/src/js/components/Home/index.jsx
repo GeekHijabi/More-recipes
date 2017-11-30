@@ -4,7 +4,20 @@ import Footer from '../Partials/Footer';
 import HandPickedRecipe from '../Partials/HandPickedRecipe';
 import Banner from '../Partials/Banner';
 
+/**
+ *
+ *
+ * @class HomePage
+ * @extends {React.Component}
+ */
 class HomePage extends React.Component {
+/**
+ *
+ *
+ * @class HomePage
+ * @extends {React.Component}
+ */
+
   render() {
     return (
       <div>

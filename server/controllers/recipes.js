@@ -28,6 +28,7 @@ export default {
           .create({
             recipeName: req.body.recipeName,
             description: req.body.description,
+            imageUrl: req.body.imageUrl,
             ingredients: req.body.ingredients,
             userId: userDetail.id
           })
@@ -35,6 +36,7 @@ export default {
             recipeName: newRecipe.recipeName,
             description: newRecipe.description,
             ingredients: newRecipe.ingredients,
+            imageUrl: newRecipe.imageUrl,
             recipeId: newRecipe.id,
             userId: newRecipe.userId
           }));

@@ -8,11 +8,11 @@ const image = require('../../../assets/images/banner_bg.jpg');
  * @class Banner
  * @extends {React.Component}
  */
-class CardItem extends React.Component {
+class AdminCardItem extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
-   * @memberof Home
+   * @memberof AdminCardItem
    * @return {void}
    */
   constructor(props) {
@@ -29,6 +29,10 @@ class CardItem extends React.Component {
  * @param {any} event
  * @memberof CardItem
  */
+  onDelete(event) {
+    // this.props.deleteRecipe(this.props.recipe.id);
+    console.log('we are deleting******');
+  }
 
   /**
    * @description COnstructor Function
@@ -73,5 +77,5 @@ class CardItem extends React.Component {
   }
 }
 
-export default CardItem;
+export default AdminCardItem;
 

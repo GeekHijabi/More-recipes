@@ -2,10 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Tangerine');
 
 body {
-    color: $colorBlue;
-}
-
-body {
   overflow-x: hidden;
 }
 
@@ -86,6 +82,14 @@ img.bg {
 .heading span {
   border-left: 2px solid;
   padding-left: 0.5em;
+}
+
+.heading i {
+  position: absolute;
+  top: 0;
+  right: 0.5em;
+  margin-top: -0.3em;
+  cursor: pointer;
 }
 
 main > div.dual {
@@ -221,6 +225,9 @@ h1.name {
   font-size: 4em;
   padding: 0.7em 0em;
 }
+.form-control {
+  padding-right: 8.7em !important;
+}
 
 .name-desc {
   margin-top: -1em;
@@ -341,6 +348,11 @@ h1.name {
 
 .btn-white {
   color: white !important;
+}
+
+.food-image {
+  max-height: 300px;
+  max-width: auto;
 }
 
 @media screen and (max-width: 576px) { 

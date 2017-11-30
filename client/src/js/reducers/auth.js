@@ -1,4 +1,4 @@
-import { cloneDeep, isEmpty } from 'lodash';
+import { cloneDeep } from 'lodash';
 import initialState from '../utils/initialState';
 import {
   LOGIN_USER_SUCCESS,
@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
     case LOGIN_USER_SUCCESS:
       return {
         ...newState,
-        isAuthenticated: !isEmpty(user),
+        isAuthenticated: true,
         successMessage: message
       };
     case LOGIN_USER_FAILURE:
