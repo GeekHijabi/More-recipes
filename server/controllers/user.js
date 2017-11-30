@@ -42,16 +42,16 @@ export default {
   },
 
   signin(req, res) {
-    const { userName, email } = req.body;
+    const { identifier } = req.body;
     User
       .findOne(({
         where: {
           $or: [
             {
-              email
+              email: identifier
             },
             {
-              userName
+              userName: identifier
             }
           ]
         },
@@ -59,7 +59,7 @@ export default {
       .then((userDetail) => {
         if (!userDetail) {
           return res.status(404).json({
-            message: 'User is not registered'
+            error: 'User is not registered'
           });
         }
         const token = jwt.sign(

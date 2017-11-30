@@ -38,7 +38,8 @@ class MyProfile extends React.Component {
           <div className="dual col-xs-12 col-sm-6 col-md-6 col-lg-5">
             <div className="container">
               <h1 className="name">Adetunji
-                <br /> Hamdalah</h1>
+                <br /> Hamdalah
+              </h1>
               <p className="name-desc">Life-learner, Dreamer, Food-lover</p>
               <div className="red-border-line" />
               <h4>Bio</h4>

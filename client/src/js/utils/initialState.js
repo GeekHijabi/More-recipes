@@ -4,7 +4,8 @@ export default {
   successMessage: '',
   errorMessage: '',
   recipes: [],
+  isLoadingRecipe: false,
   favoriteRecipes: [],
-  myRecipe: [],
+  myRecipes: [],
   recipe: {}
 };
