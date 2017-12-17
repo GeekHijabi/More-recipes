@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const image = require('../../../assets/images/banner_bg.jpg');
 
@@ -30,7 +31,7 @@ class Banner extends React.Component {
  */
   onClick(event) {
     event.preventDefault();
-    this.props.history.push('/recipes');
+    this.context.router.transitionTo('/recipes');
   }
   /**
    * @description COnstructor Function

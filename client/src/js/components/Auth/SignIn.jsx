@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
 import { apiLoginUser } from '../../actions/auth';
@@ -149,7 +150,7 @@ class SignIn extends React.Component {
               required
             />
                   <p className="font-small blue-text d-flex justify-content-end">Forgot
-                <a href="" className="blue-text ml-1">Password?</a>
+                <Link to="/" href="/" className="blue-text ml-1">Password?</Link>
                   </p>
                 </label>
               </div>

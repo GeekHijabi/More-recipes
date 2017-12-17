@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import RecipeHeader from '../Partials/RecipeHeader';
 import CardItem from '../Partials/CardItem';
 import Footer from '../Partials/Footer';
-import { apiGetRecipe } from '../../actions/recipe';
+import { apiGetRecipe, apiUpVoteRecipe } from '../../actions/recipe';
 
 /**
  *
@@ -43,11 +43,12 @@ class Recipes extends React.Component {
    * @return {void}
    */
   render() {
+    const { recipes } = this.props;
     return (
       <div>
         <RecipeHeader />
         <div className="row container-fluid mv-card">
-          {this.props.recipes.map(recipe =>
+          {recipes.map(recipe =>
             <CardItem recipe={recipe} key={recipe.id} />)}
         </div>
         <Footer />
@@ -57,7 +58,12 @@ class Recipes extends React.Component {
 }
 
 Recipes.propTypes = {
-  apiGetRecipe: PropTypes.func.isRequired
+  apiGetRecipe: PropTypes.func.isRequired,
+  recipes: PropTypes.arrayOf(PropTypes.object)
+};
+
+Recipes.defaultProps = {
+  recipes: []
 };
 
 /**

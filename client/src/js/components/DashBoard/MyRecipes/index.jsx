@@ -5,19 +5,24 @@ import RecipeHeader from '../../Partials/RecipeHeader';
 import Footer from '../../Partials/Footer';
 import AdminCardItem from '../../Partials/AdminCardItem';
 import AddRecipeModal from '../../Partials/AddRecipeModal';
-import { apiCreateRecipe, apiGetRecipe } from '../../../actions/recipe';
+import { apiCreateRecipe,
+  apiGetMyRecipe,
+  apiEditRecipe,
+  apiDeleteRecipe,
+  onViewRecipe
+} from '../../../actions/recipe';
 
 /**
  *
  *
- * @class MyProfile
+ * @class RecipeAdmin
  * @extends {React.Component}
  */
 class RecipeAdmin extends React.Component {
   /**
-   * @description COnstructor Function
+   * @description Constructor Function
    * @param {any} props
-   * @memberof Home
+   * @memberof RecipeAdmin
    * @return {void}
    */
   constructor(props) {
@@ -26,6 +31,8 @@ class RecipeAdmin extends React.Component {
       modal: false
     };
     this.toggle = this.toggle.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+    this.viewRecipe = this.viewRecipe.bind(this);
   }
 
   /**
@@ -35,7 +42,17 @@ class RecipeAdmin extends React.Component {
  * @memberof RecipeAdmin
  */
   componentWillMount() {
-    this.props.apiGetRecipe();
+    this.props.apiGetMyRecipe();
+  }
+
+  /**
+   * @returns {void}
+   *
+   * @param {integer} id
+   * @memberof RecipeAdmin
+   */
+  onDelete(id) {
+    this.props.apiDeleteRecipe(id);
   }
 
   /**
@@ -48,6 +65,17 @@ class RecipeAdmin extends React.Component {
     this.setState({
       modal: !this.state.modal
     });
+  }
+
+  /**
+   * @returns {void}
+   *
+   * @param {any} recipeId
+   * @memberof RecipeAdmin
+   */
+  viewRecipe(recipeId) {
+    this.props.onViewRecipe(recipeId);
+    this.context.router.history.push(`/recipe/${recipeId}`);
   }
 
   /**
@@ -69,6 +97,7 @@ class RecipeAdmin extends React.Component {
               role="button"
               tabIndex="-1"
               onClick={this.toggle}
+              onKeyPress={this.handleKeyPress}
               className="fa fa-plus-circle fa-3x"
             />
           </div>
@@ -78,8 +107,14 @@ class RecipeAdmin extends React.Component {
             createRecipe={this.props.apiCreateRecipe}
           />
           <div className="row container-fluid mv-card">
-            {this.props.recipes.map(recipe =>
-              <AdminCardItem recipe={recipe} key={recipe.id} />)}
+            {this.props.myRecipes.map(recipe =>
+              (<AdminCardItem
+                recipe={recipe}
+                key={recipe.id}
+                editRecipe={this.props.apiEditRecipe}
+                deleteRecipe={this.onDelete}
+                onViewRecipe={this.viewRecipe}
+              />))}
           </div>
         </section>
         <Footer />
@@ -88,9 +123,18 @@ class RecipeAdmin extends React.Component {
   }
 }
 
+
 RecipeAdmin.propTypes = {
   apiCreateRecipe: PropTypes.func.isRequired,
-  apiGetRecipe: PropTypes.func.isRequired
+  apiGetMyRecipe: PropTypes.func.isRequired,
+  apiDeleteRecipe: PropTypes.func.isRequired,
+  apiEditRecipe: PropTypes.func.isRequired,
+  onViewRecipe: PropTypes.func.isRequired,
+  myRecipes: PropTypes.string.isRequired,
+};
+
+RecipeAdmin.contextTypes = {
+  router: PropTypes.object.isRequired
 };
 
 /**
@@ -101,8 +145,18 @@ RecipeAdmin.propTypes = {
  */
 function mapStateToProps(state) {
   return {
-    recipes: state.recipe.recipes
+    myRecipes: state.recipe.myRecipes,
+    recipe: state.recipe.recipe,
   };
 }
 
-export default connect(mapStateToProps, { apiCreateRecipe, apiGetRecipe })(RecipeAdmin);
+export default connect(
+  mapStateToProps,
+  {
+    apiCreateRecipe,
+    apiGetMyRecipe,
+    apiDeleteRecipe,
+    apiEditRecipe,
+    onViewRecipe
+  }
+)(RecipeAdmin);

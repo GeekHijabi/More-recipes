@@ -1,8 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.css';
 import RecipeHeader from '../../Partials/RecipeHeader';
 import Footer from '../../Partials/Footer';
-// import CardItem from '../../Partials/CardItem';
+import Tabs from './Tabs';
+import Content from './Content';
+import { onViewRecipe,
+  apiUpVoteRecipe,
+  apiDownVoteRecipe,
+  apifavoriteRecipe } from '../../../actions/recipe';
 
 const Image = require('../../../../assets/images/banner_bg.jpg');
 
@@ -22,112 +29,137 @@ class MyRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: true
+      activeTab: {
+        name: 'Ingredients',
+        isActive: true
+      }
     };
+    this.handleChangeTab = this.handleChangeTab.bind(this);
+    this.handleUpVote = this.handleupvote.bind(this);
+  }
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} void
+ * @memberof RecipeAdmin
+ */
+  componentWillMount() {
+    const recipeId = this.props.match.params.id;
+    this.props.onViewRecipe(recipeId);
+  }
+
+  /**
+   *
+   * @param {object} tab
+   *
+   * @returns {void}
+   */
+  handleChangeTab(tab) {
+    this.setState({
+      activeTab: tab
+    });
+  }
+
+  /**
+   *
+   * @param {object} id
+   *
+   * @returns {void}
+   */
+  handleupvote() {
+    this.props.apiUpVoteRecipe(this.props.recipe.id)
+      .then(() => {
+        this.props.onViewRecipe(this.props.recipe.id);
+      });
   }
   /**
-   * @description COnstructor Function
+   *
+   * @param {object} id
+   *
+   * @returns {void}
+   */
+  handledownvote() {
+    this.props.apiDownVoteRecipe(this.props.recipe.id)
+      .then(() => {
+        this.props.onViewRecipe(this.props.recipe.id);
+      });
+  }
+  /**
+   *
+   * @param {object} id
+   *
+   * @returns {void}
+   */
+  handlefavorite() {
+    this.props.apifavoriteRecipe(this.props.recipe.id);
+  }
+  /**
+   * @description constructor Function
    * @param {any} props
    * @memberof Home
    * @return {void}
    */
   render() {
+    const { recipe } = this.props;
+    console.log('recipe is', recipe); //
     return (
       <div>
+        <RecipeHeader />
         <main page="details" className="row">
           <div className="dual col-xs-12 col-sm-6 col-md-6 col-lg-7">
-            <img src={Image} alt="German Salad" className="food" />
+            <img src={recipe.imageUrl || Image} alt={recipe.recipeName} className="food" />
             <h4>
-              <span className="food_name">German Salad</span>
+              <span className="food_name">{recipe.recipeName}</span>
             </h4>
             <div className="food_vote">
               <span className="vote_type">
-                <i className="fa fa-thumbs-o-up fa-2x" />
+                <i
+                  className="fa fa-thumbs-o-up fa-2x"
+                  role="button"
+                  tabIndex="-1"
+                  onKeyPress={this.handleKeyPress}
+                  // handleupvote={this.handleupvote}
+                  onClick={() => this.handleupvote()}
+                />
+                <span className="detail-value">{recipe.upvotes}</span>
                 <span>upvote</span>
               </span>
               <span className="vote_type">
-                <i className="fa fa-thumbs-o-down fa-2x" />
-                <span>downvote</span>
+                <i
+                  className="fa fa-thumbs-o-down fa-2x"
+                  role="button"
+                  tabIndex="-1"
+                  onKeyPress={this.handleKeyPress}
+                  // handledownvote={this.handledownvote}
+                  onClick={() => this.handledownvote()}
+                />
+                <span className="detail-value">{recipe.downvotes}</span>
+                <span>downvotes</span>
               </span>
               <span className="vote_type">
-                <i className="fa fa-comments-o fa-2x" />
-                <span>Reviews</span>
+                <i
+                  className="fa fa-heart-o fa-2x"
+                  role="button"
+                  tabIndex="-1"
+                  onKeyPress={this.handleKeyPress}
+                  onClick={() => this.handlefavorite()}
+                />
+                <span className="detail-value">{recipe.views}</span>
+                <span>favorites</span>
               </span>
             </div>
           </div>
           <div className="dual col-xs-12 col-sm-6 col-md-6 col-lg-5">
-            <ul className="nav nav-tabs white ">
-              <li className="nav-item">
-                <a className="nav-link" href="#ingredients" data-toggle="tab">Ingredients</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link active" href="#steps" data-toggle="tab">Directions</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#reviews" data-toggle="tab">Reviews</a>
-              </li>
-            </ul>
-            <div className="tab-content">
-              <div className="tab-pane steps active" id="steps">
-                <div className="step">
-                  <h5>Step 1</h5>
-                  <p className="step_details">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam totam eligendi ipsam distinctio numquam iste voluptate enim
-              aspernatur consequuntur, et quia illum error iure quibusdam ea perferendis ex voluptatem pariatur!
-                  </p>
-                </div>
-                <div className="step">
-                  <h5>Step 2</h5>
-                  <p className="step_details">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam totam eligendi ipsam distinctio numquam iste voluptate enim
-              aspernatur consequuntur, et quia illum error iure quibusdam ea perferendis ex voluptatem pariatur!
-                  </p>
-                </div>
-                <div className="step">
-                  <h5>Step 3</h5>
-                  <p className="step_details">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam totam eligendi ipsam distinctio numquam iste voluptate enim
-              aspernatur consequuntur, et quia illum error iure quibusdam ea perferendis ex voluptatem pariatur!
-                  </p>
-                </div>
-                <div className="step">
-                  <h5>Step 4</h5>
-                  <p className="step_details">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam totam eligendi ipsam distinctio numquam iste voluptate enim
-              aspernatur consequuntur, et quia illum error iure quibusdam ea perferendis ex voluptatem pariatur!
-                  </p>
-                </div>
-                <div className="step">
-                  <h5>Step 5</h5>
-                  <p className="step_details">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam totam eligendi ipsam distinctio numquam iste voluptate enim
-              aspernatur consequuntur, et quia illum error iure quibusdam ea perferendis ex voluptatem pariatur!
-                  </p>
-                </div>
-                <div className="step">
-                  <h5>Step 6</h5>
-                  <p className="step_details">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam totam eligendi ipsam distinctio numquam iste voluptate enim
-              aspernatur consequuntur, et quia illum error iure quibusdam ea perferendis ex voluptatem pariatur!
-                  </p>
-                </div>
-              </div>
-
-              <div className="tab-pane ingredients" id="ingredients">
-                <ul>
-                  <li>Water</li>
-                  <li>cabbage</li>
-                  <li>Tomato</li>
-                </ul>
-
-              </div>
-
-              <div className="tab-pane reviews" id="reviews">
-                <div>
-                  <input type="text" name="" id="" />
-                </div>
-              </div>
-            </div>
+            <Tabs
+              activeTab={this.state.activeTab}
+              changeTab={this.handleChangeTab}
+            />
+            <Content
+              recipe={this.props.recipe}
+              activeTab={this.state.activeTab}
+              recipeId={recipe.id} //
+            />
 
           </div>
         </main>
@@ -137,4 +169,33 @@ class MyRecipe extends React.Component {
   }
 }
 
-export default MyRecipe;
+MyRecipe.propTypes = {
+  onViewRecipe: PropTypes.func.isRequired,
+  apiUpVoteRecipe: PropTypes.func.isRequired,
+  apiDownVoteRecipe: PropTypes.func.isRequired,
+  apifavoriteRecipe: PropTypes.func.isRequired,
+  recipe: PropTypes.string.isRequired,
+  match: PropTypes.func.isRequired,
+};
+
+/**
+ *
+ * @param {object} state
+ *
+ * @returns {void}
+ */
+function mapStateToProps(state) {
+  return {
+    recipe: state.recipe.recipe,
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  {
+    onViewRecipe,
+    apiUpVoteRecipe,
+    apiDownVoteRecipe,
+    apifavoriteRecipe
+  }
+)(MyRecipe);
