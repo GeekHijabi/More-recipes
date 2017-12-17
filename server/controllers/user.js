@@ -36,8 +36,9 @@ export default {
             email: req.body.email,
             password: bcrypt
               .hashSync(req.body.password, salt, null)
+
           })
-          .then(detail => res.status(201).json(detail));
+          .then(Userdetail => res.status(201).json(Userdetail));
       }).catch(() => res.status(500).json('Internal server error'));
   },
 
@@ -65,7 +66,7 @@ export default {
         const token = jwt.sign(
           { userDetail }
           , secret
-          , { expiresIn: 60 * 60 * 24 }
+          , { expiresIn: '24h' }
         );
         const { password } = userDetail;
         if (!bcrypt.compareSync(req.body.password, password)) {
@@ -79,5 +80,51 @@ export default {
             token
           });
       });
-  }
+  },
+
+  updateuserprofile(req, res) {
+    const { userDetail } = req.decoded;
+    User
+      .findOne(({
+        where: {
+          $or: [
+            {
+              email: userDetail.email
+            },
+            {
+              userName: userDetail.userName
+            }
+          ]
+        },
+      })).then((Userfound) => {
+        if (Userfound) {
+          return Userfound
+            .update({
+              firstName: req.body.firstName || Userfound.firstName,
+              lastName: req.body.lastName || Userfound.lastName,
+              bio: req.body.bio || Userfound.bio,
+              summary: req.body.summary || Userfound.summary,
+              imageUrl: req.body.imageUrl || Userfound.imageUrl
+            }, {
+              where: {
+                id: req.params.userId,
+              }
+            })
+            .then(updatedProfile => res.status(200).json({
+              status: 'success',
+              updatedProfile
+            }));
+        }
+        if (!Userfound) {
+          return res.status(404).send({ error: 'User not found' });
+        }
+        return res.status(401)
+          .send({
+            error: 'You cannot update a profile that does not belong to you'
+          });
+      }).catch(() => res.status(400).json({
+        error: 'User not found'
+      }));
+  },
+
 };

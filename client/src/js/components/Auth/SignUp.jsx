@@ -247,7 +247,4 @@ SignUp.propTypes = {
   apiLoginUser: PropTypes.func.isRequired
 };
 
-export default connect(
-  null,
-  { apiRegisterUser, apiLoginUser }
-)(SignUp);
+export default connect(null, { apiRegisterUser, apiLoginUser })(SignUp);

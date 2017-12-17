@@ -5,9 +5,13 @@ import axios from 'axios';
  * @returns {null} description
  */
 export default function setToken(token) {
-  localStorage.setItem('token', token);
   if (token) {
-    axios.defaults.headers.common['x-token'] = `${token}`;
+    localStorage.setItem('token', token);
+    axios
+      .defaults
+      .headers
+      .post['Content-Type'] = 'application/x-www-form-urlencoded';
     return true;
   }
+  delete axios.defaults.headers.common['x-token'];
 }

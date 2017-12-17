@@ -4,7 +4,6 @@ const { Recipe, Review } = db;
 
 export default {
   create(req, res) {
-    const { userDetail } = req.decoded;
     Recipe.find({
       where: { id: req.params.recipeId }
     })
@@ -17,37 +16,34 @@ export default {
       });
     return Review
       .create({
-        recipeId: req.params.recipeId,
-        userId: userDetail.id,
-        review: req.body.review
+        reviews: req.body.reviews
       })
       .then(data => res.status(200).json({
         message: 'Your recipe has been reviewed',
-        review: {
-          userId: data.userId,
-          recipeId: data.recipeId,
-          review: data.review
-        }
+        review: data.reviews
       }))
       .catch(error => res.status(400).json({
         error: error.message
       }));
   },
 
-  list(req, res) {
-    return Review
-      .findAll({
-        where: { recipeId: req.params.recipeId }
+  getSingleReview(req, res) {
+    Review
+      .findOne({
+        where: {
+          id: req.params.recipeId
+        }
       })
-      .then((review) => {
-        if (review.length < 1) {
+      .then((singleReview) => {
+        if (!singleReview) {
           res.status(404).json({
             error: 'No review found'
           });
-        } else {
-          res.status(200).json({ review });
         }
+        return res.status(200).json({ singleReview });
       })
-      .catch(error => res.status(404).json(error.message));
-  }
+      .catch(error => res.status(404).json({
+        error: error.message
+      }));
+  },
 };
