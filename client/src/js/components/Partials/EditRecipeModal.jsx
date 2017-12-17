@@ -13,11 +13,11 @@ import imageUpload from '../../utils/imageUpload';
  * @class AddRecipeModal
  * @extends {React.Component}
  */
-class AddRecipeModal extends React.Component {
+class EditRecipeModal extends React.Component {
   /**
-   * @description constructor
+   * @description COnstructor Function
    * @param {any} props
-   * @memberof Home
+   * @memberof EditRecipeModal
    * @return {void}
    */
   constructor(props) {
@@ -26,7 +26,7 @@ class AddRecipeModal extends React.Component {
       recipeName: '',
       ingredients: '',
       description: '',
-      imageUrl: '',
+      imageUrl: ''
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -37,7 +37,7 @@ class AddRecipeModal extends React.Component {
  * @returns {void}
  *
  * @param {any} event
- * @memberof AddRecipeModal
+ * @memberof EditRecipeModal
  */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -47,16 +47,17 @@ class AddRecipeModal extends React.Component {
  * @returns {void}
  *
  * @param {any} event
- * @memberof AddRecipeModal
+ * @memberof EditRecipeModal
  */
   onSubmit(event) {
     event.preventDefault();
-    this.props.createRecipe(this.state).then(() => {
+    console.log('edit recipeId', this.props.recipeId);
+    this.props.editRecipe(this.props.recipeId, this.state).then(() => {
       toastr.options = {
         closeButton: true,
         progressBar: true
       };
-      toastr.success('Recipe Created Successfully');
+      toastr.success('Recipe edited Successfully');
       this.props.toggle();
     });
   }
@@ -65,7 +66,7 @@ class AddRecipeModal extends React.Component {
  * @returns {void}
  *
  * @param {any} files
- * @memberof AddRecipeModal
+ * @memberof EditRecipeModal
  */
   onDrop(files) {
     imageUpload(files)
@@ -81,15 +82,15 @@ class AddRecipeModal extends React.Component {
 
 
   /**
-   * @description constructor Function
+   * @description COnstructor Function
    * @param {any} props
-   * @memberof AddRecipeModal
+   * @memberof EditRecipeModal
    * @return {void}
    */
   render() {
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
-        <ModalHeader toggle={this.props.toggle}>Edit recipe</ModalHeader>
+        <ModalHeader toggle={this.props.toggle}>Add A recipe</ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup row>
@@ -146,7 +147,7 @@ class AddRecipeModal extends React.Component {
             <FormGroup check row>
               <Col sm={{ size: 10, offset: 2 }}>
                 <Button onClick={this.onSubmit}>
-                  Add a recipe
+                   Edit recipe
                 </Button>
               </Col>
             </FormGroup>
@@ -157,4 +158,4 @@ class AddRecipeModal extends React.Component {
   }
 }
 
-export default AddRecipeModal;
+export default EditRecipeModal;

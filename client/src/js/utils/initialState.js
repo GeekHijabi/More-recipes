@@ -7,5 +7,7 @@ export default {
   isLoadingRecipe: false,
   favoriteRecipes: [],
   myRecipes: [],
-  recipe: {}
+  recipe: {},
+  upvotes: 0,
+  downvotes: 0
 };

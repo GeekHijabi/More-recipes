@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-// import Button  from 'reactstrap';
+import { Link } from 'react-router-dom';
 /**
  *
  * *
@@ -28,9 +28,9 @@ class RecipeHeader extends React.Component {
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-        <a href="index.html" className="navbar-brand text-white">
+        <Link to="/" href="/" className="navbar-brand text-white">
           <i className="fa fa-eercast" /> More Recipe
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -42,26 +42,25 @@ class RecipeHeader extends React.Component {
         >
           <span className="navbar-toggler-icon" />
         </button>
+
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <a className="nav-link text-white" href="./favourite.html" title="favourite Recipes">
+              <Link to="/" className="nav-link text-white" href="/" title="favourite Recipes">
                 <i className="fa fa-cutlery fa-2x" />
-              </a>
+              </Link>
             </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+            <div className="nav-item dropdown">
+              <a href className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className="fa fa-user-circle-o fa-2x" />
               </a>
-              <ul className="dropdown-menu">
-                <li className="dropdown-item" aria-labelledby="dropdownMenuButton">
-                  <a className="" href="./profile.html">Profile</a>
-                </li>
-                <li className="dropdown-item" aria-labelledby="dropdownMenuButton">
-                  <a className="" href="./index.html">Logout</a>
-                </li>
-              </ul>
-            </li>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <Link to="/profile" className="dropdown-item" href="/profile">Profile</Link>
+                <Link to="/" className="dropdown-item" href="/">Logout</Link>
+                <Link to="/admin" className="dropdown-item" href="/profile">Admin</Link>
+              </div>
+            </div>
           </ul>
         </div>
       </nav>
