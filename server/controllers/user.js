@@ -36,22 +36,23 @@ export default {
             email: req.body.email,
             password: bcrypt
               .hashSync(req.body.password, salt, null)
+
           })
-          .then(detail => res.status(201).json(detail));
+          .then(Userdetail => res.status(201).json(Userdetail));
       }).catch(() => res.status(500).json('Internal server error'));
   },
 
   signin(req, res) {
-    const { userName, email } = req.body;
+    const { identifier } = req.body;
     User
       .findOne(({
         where: {
           $or: [
             {
-              email
+              email: identifier
             },
             {
-              userName
+              userName: identifier
             }
           ]
         },
@@ -59,13 +60,13 @@ export default {
       .then((userDetail) => {
         if (!userDetail) {
           return res.status(404).json({
-            message: 'User is not registered'
+            error: 'User is not registered'
           });
         }
         const token = jwt.sign(
           { userDetail }
           , secret
-          , { expiresIn: 60 * 60 * 24 }
+          , { expiresIn: '24h' }
         );
         const { password } = userDetail;
         if (!bcrypt.compareSync(req.body.password, password)) {
@@ -79,5 +80,71 @@ export default {
             token
           });
       });
+  },
+
+  updateuserprofile(req, res) {
+    const { userDetail } = req.decoded;
+    User
+      .findOne(({
+        where: {
+          $or: [
+            {
+              email: userDetail.email
+            },
+            {
+              userName: userDetail.userName
+            }
+          ]
+        },
+      })).then((Userfound) => {
+        if (!Userfound) {
+          return res.status(404).send({
+            error: 'User not found'
+          });
+        }
+        if (Userfound.id !== userDetail.id) {
+          return res.status(401)
+            .send({
+              error: 'You cannot update a profile that does not belong to you'
+            });
+        }
+        return Userfound
+          .update({
+            firstName: req.body.firstName || Userfound.firstName,
+            lastName: req.body.lastName || Userfound.lastName,
+            bio: req.body.bio || Userfound.bio,
+            summary: req.body.summary || Userfound.summary,
+            imageUrl: req.body.imageUrl || Userfound.imageUrl
+          }, {
+            where: {
+              id: userDetail.id,
+            }
+          })
+          .then(updatedProfile => res.status(200).json({
+            status: 'success',
+            updatedProfile
+          }));
+      }).catch(() => res.status(400).json({
+        error: 'User not found'
+      }));
+  },
+
+  getCurrentUser(req, res) {
+    const { userDetail } = req.decoded;
+    User
+      .findOne({
+        where: {
+          id: userDetail.id
+        }
+      })
+      .then((currentUser) => {
+        if (!currentUser) {
+          return res.status(404).json({
+            error: 'No currentUser'
+          });
+        }
+        return res.status(200).json(currentUser);
+      })
+      .catch(error => res.status(404).json({ error: error.message }));
   }
 };

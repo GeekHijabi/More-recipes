@@ -7,7 +7,9 @@ import {
   SET_CURRENT_USER,
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
-  REMOVE_CURRENT_USER } from '../constants';
+  REMOVE_CURRENT_USER,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAILURE } from '../constants';
 
 export const loginSuccess = message => ({
   type: LOGIN_USER_SUCCESS,
@@ -37,6 +39,14 @@ export const setCurrentUser = user => ({
   type: SET_CURRENT_USER,
   user
 });
+export const updateProfileSuccess = updatedUser => ({
+  type: UPDATE_PROFILE_SUCCESS,
+  updatedUser
+});
+export const updateProfileFailure = error => ({
+  type: UPDATE_PROFILE_FAILURE,
+  error
+});
 
 /**
  * Async action for Register user
@@ -54,10 +64,14 @@ export const apiRegisterUser = ({
       method: 'POST',
       url: '/api/v1/user/signup'
     });
-    request.then((response) => {
-      dispatch(signupSuccess(response.message));
-    }).catch((res) => {
-      dispatch(signupFailure(res.error));
+    request.then((res) => {
+      if (res && res.response) {
+        dispatch(signupSuccess(res.response.data.message));
+      }
+    }).catch((err) => {
+      if (err && err.response) {
+        dispatch(signupFailure(err.response.data.error));
+      }
     });
     return request;
   };
@@ -68,26 +82,81 @@ export const apiRegisterUser = ({
  * @param {object} options
  */
 export const apiLoginUser = ({
-  username, email, password
+  identifier, userName, email, password
 }) =>
   function action(dispatch) {
     const request = axios({
       data: {
-        username: username || null,
-        email: email || null,
+        identifier: identifier || userName || email,
         password
       },
       method: 'POST',
       url: '/api/v1/user/signin'
     });
     request.then((response) => {
-      const { token } = response;
+      const { token } = response.data;
       const decodedToken = jwt.decode(token);
       setToken(token);
-      dispatch(loginSuccess(response.message));
+      dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
-    }).catch((res) => {
-      dispatch(loginFailure(res.error));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(loginFailure(err.data.error));
+      }
+    });
+    return request;
+  };
+
+  /**
+ * Async action for profile
+ * @returns {promise} request
+ * @param {object} options
+ */
+export const apiGetCurrentUser = () =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'GET',
+      url: '/api/v1/current-user'
+    });
+    request.then((response) => {
+      console.log('currentuser', response);
+      dispatch(setCurrentUser(response.data));
+      // dispatch(updateProfileSuccess(response.data));
+    }).catch((error) => {
+      if (error && error.data) {
+        dispatch(updateProfileFailure(error.data.error));
+      }
+    });
+    return request;
+  };
+
+/**
+ * Async action for profile
+ * @returns {promise} request
+ * @param {object} options
+ */
+export const apiUpdateUserProfile = ({
+  firstName, lastName, bio, summary, imageUrl
+}) =>
+  function action(dispatch) {
+    const request = axios({
+      data: {
+        firstName,
+        lastName,
+        bio,
+        summary,
+        imageUrl
+      },
+      method: 'PUT',
+      url: '/api/v1/user/update-profile'
+    });
+    request.then((response) => {
+      console.log('res', response);
+      dispatch(updateProfileSuccess(response.data));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(updateProfileFailure(err.data.error));
+      }
     });
     return request;
   };

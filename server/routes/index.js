@@ -29,6 +29,18 @@ const routes = (app) => {
   );
 
   app.get(
+    '/api/v1/current-user',
+    authenticate,
+    user.getCurrentUser
+  );
+
+  app.put(
+    '/api/v1/user/update-profile',
+    authenticate,
+    user.updateuserprofile
+  );
+
+  app.get(
     '/api/v1/recipes',
     recipes.listAllRecipes
   );
@@ -49,13 +61,19 @@ const routes = (app) => {
   app.put(
     '/api/v1/recipes/:recipeId',
     authenticate,
-    recipeValidation,
     recipes.update
   );
+
   app.get(
     '/api/v1/recipes/myrecipes',
     authenticate,
     recipes.getUserRecipes
+  );
+
+  app.get(
+    '/api/v1/recipe/:recipeId',
+    authenticate,
+    recipes.getSingleRecipe
   );
 
   app.post(
@@ -65,16 +83,10 @@ const routes = (app) => {
     reviews.create
   );
   app.get(
-    '/api/v1/recipes/:recipeId/reviews',
+    '/api/v1/recipe/:recipeId/reviews',
     authenticate,
-    reviews.list
+    reviews.getSingleReview
   );
-  app.get(
-    '/api/v1/recipes/reviews',
-    authenticate,
-    reviews.list
-  );
-
   app.get(
     '/api/v1/user/:userId/favorites',
     authenticate,
