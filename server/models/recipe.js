@@ -4,6 +4,9 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    imageUrl: {
+      type: DataTypes.STRING
+    },
     ingredients: {
       type: DataTypes.STRING,
       allowNull: true,

@@ -1,6 +1,6 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import '../../../styles/index.scss';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const image = require('../../../assets/images/banner_bg.jpg');
 
@@ -20,9 +20,17 @@ class CardItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: true
+
     };
   }
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} event
+ * @memberof CardItem
+ */
+
   /**
    * @description COnstructor Function
    * @param {any} props
@@ -30,27 +38,45 @@ class CardItem extends React.Component {
    * @return {void}
    */
   render() {
+    const {
+      recipe: {
+        id,
+        recipeName,
+        imageUrl,
+        upvotes,
+        downvotes,
+        views
+      }
+    } = this.props;
     return (
-      <div className="row container-fluid mv-card">
-        <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-          <div className="card">
-            <img className="card-img-top" src={image} alt="Card cap" />
-            <div className="card-body">
-              <h4 className="card-title">German Sprinkle Sauce</h4>
-              <div className="row">
-                <div className="col-xs-12 col-sm-6">
-                  <a href="" className="btn btn-primary">view more</a>
-                </div>
-                <div className="col-xs-12 col-sm-6">
-                  <span className="ratings">
-                    <i className="fa fa-thumbs-o-up" />
-                    <span>233</span>
-                  </span>
-                  <span className="ratings">
-                    <i className="fa fa-thumbs-o-down" />
-                    <span>41</span>
-                  </span>
-                </div>
+      <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div className="card">
+          <img className="card-img-top food-image" src={imageUrl || image} alt="Card cap" />
+          <div className="card-body">
+            <h4 className="card-title">{recipeName}</h4>
+            <div className="row">
+              <div className="col-xs-12 col-sm-6">
+                <Link
+                  className="btn btn-primary"
+                  to={`/recipe/${id}`}
+                  href={`/recipe/${id}`}
+                >
+                  View More
+                </Link>
+              </div>
+              <div className="col-xs-12 col-sm-6">
+                <span className="ratings">
+                  <i className="fa fa-thumbs-o-up 2x" />
+                  <span>{upvotes || 0}</span>
+                </span>
+                <span className="ratings">
+                  <i className="fa fa-thumbs-o-down 2x" />
+                  <span>{downvotes || 0}</span>
+                </span>
+                <span className="ratings">
+                  <i className="fa fa-heart-o 2x" />
+                  <span>{views || 0}</span>
+                </span>
               </div>
             </div>
           </div>
@@ -59,6 +85,10 @@ class CardItem extends React.Component {
     );
   }
 }
+
+CardItem.propTypes = {
+  recipe: PropTypes.string.isRequired,
+};
 
 export default CardItem;
 

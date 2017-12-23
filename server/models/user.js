@@ -23,6 +23,18 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    bio: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    summary: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   });
   user.prototype.toJSON = function removePassword() {
     const values = Object.assign({}, this.get());

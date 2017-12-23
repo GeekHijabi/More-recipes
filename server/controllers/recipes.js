@@ -28,6 +28,7 @@ export default {
           .create({
             recipeName: req.body.recipeName,
             description: req.body.description,
+            imageUrl: req.body.imageUrl,
             ingredients: req.body.ingredients,
             userId: userDetail.id
           })
@@ -35,7 +36,8 @@ export default {
             recipeName: newRecipe.recipeName,
             description: newRecipe.description,
             ingredients: newRecipe.ingredients,
-            recipeId: newRecipe.id,
+            imageUrl: newRecipe.imageUrl,
+            id: newRecipe.id,
             userId: newRecipe.userId
           }));
       }).catch(() => {
@@ -82,7 +84,8 @@ export default {
             .update({
               recipeName: req.body.recipeName || Recipefound.recipeName,
               description: req.body.description || Recipefound.description,
-              ingredients: req.body.ingredients || Recipefound.ingredients
+              ingredients: req.body.ingredients || Recipefound.ingredients,
+              imageUrl: req.body.imageUrl || Recipefound.imageUrl
             }, {
               where: {
                 id: req.params.recipeId
@@ -158,6 +161,28 @@ export default {
           });
         }
         return res.status(200).json(myRecipes);
+      })
+      .catch(error => res.status(404).json({ error: error.message }));
+  },
+
+  getSingleRecipe(req, res) {
+    Recipe
+      .findOne({
+        where: {
+          id: req.params.recipeId
+        },
+        include: [{
+          model: Review,
+          attributes: ['reviews']
+        }]
+      })
+      .then((singleRecipe) => {
+        if (!singleRecipe) {
+          return res.status(404).json({
+            error: 'No Recipe found'
+          });
+        }
+        return res.status(200).json(singleRecipe);
       })
       .catch(error => res.status(404).json({ error: error.message }));
   }

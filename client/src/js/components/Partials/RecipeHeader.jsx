@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-// import Button  from 'reactstrap';
+import { Link } from 'react-router-dom';
 /**
  *
  * *
@@ -17,7 +17,7 @@ class RecipeHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: true
+
     };
   }
   /**
@@ -27,50 +27,43 @@ class RecipeHeader extends React.Component {
    */
   render() {
     return (
-      <div>
-        <section className="recipe-header">
-          <header>
-            <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-              <a href="index.html" className="navbar-brand text-white">
-                <i className="fa fa-eercast" /> More Recipe</a>
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="navbar-toggler-icon" />
-              </button>
-              <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav ml-auto">
-                  <li className="nav-item">
-                    <a className="nav-link text-white" href="./favourite.html" title="favourite Recipes">
-                      <i className="fa fa-cutlery fa-2x" />
-                    </a>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <a className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i className="fa fa-user-circle-o fa-2x" />
-                    </a>
-                    <ul className="dropdown-menu">
-                      <li className="dropdown-item" aria-labelledby="dropdownMenuButton">
-                        <a className="" href="./profile.html">Profile</a>
-                      </li>
-                      <li className="dropdown-item" aria-labelledby="dropdownMenuButton">
-                        <a className="" href="./index.html">Logout</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-          </header>
-        </section>
+      <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+        <Link to="/" href="/" className="navbar-brand text-white">
+          <i className="fa fa-eercast" /> More Recipe
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
 
-      </div>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item">
+              <Link to="/" className="nav-link text-white" href="/" title="favourite Recipes">
+                <i className="fa fa-cutlery fa-2x" />
+              </Link>
+            </li>
+
+            <div className="nav-item dropdown">
+              <a href className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i className="fa fa-user-circle-o fa-2x" />
+              </a>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <Link to="/profile" className="dropdown-item" href="/profile">Profile</Link>
+                <Link to="/" className="dropdown-item" href="/">Logout</Link>
+                <Link to="/admin" className="dropdown-item" href="/profile">Admin</Link>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </nav>
     );
   }
 }

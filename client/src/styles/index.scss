@@ -2,20 +2,18 @@
 @import url('https://fonts.googleapis.com/css?family=Tangerine');
 
 body {
-    color: $colorBlue;
-}
-
-body {
   overflow-x: hidden;
+  min-height: 700px;
 }
 
 ul.ml-auto {
   margin-right: 2em;
  }
 
- .btn, .font-up, footer.page-footer .title {
+ .font-up, footer.page-footer .title {
   text-transform: inherit;
   color: cornflowerblue !important;
+  bottom: 0;
 }
 
 #banner {
@@ -68,6 +66,7 @@ img.bg {
 
 #list {
   padding: 2em 2%;
+  min-height: 700px;
 }
 
 .card .ratings {
@@ -86,6 +85,14 @@ img.bg {
 .heading span {
   border-left: 2px solid;
   padding-left: 0.5em;
+}
+
+.heading i {
+  position: absolute;
+  top: 0;
+  right: 0.5em;
+  margin-top: -0.3em;
+  cursor: pointer;
 }
 
 main > div.dual {
@@ -141,7 +148,7 @@ main[page="details"] span.food_name {
 
 main[page="details"] .food_vote {
   position: absolute;
-  top: 10em;
+  top: 8em;
   right: 10%;
   background: rgba(0, 0, 0, 0.5);
   padding: 0 0.3em 2em;
@@ -174,10 +181,15 @@ main[page="details"] .vote_type * {
   margin-bottom: -1em;
 }
 
+span .detail-value {
+  font-size: x-large;
+}
+
 .nav.nav-tabs {
   position: fixed;
-  top: 0;
+  top: 4em;
   width: 100%;
+  background-color: white;
 }
 
 .nav-tabs .nav-link {
@@ -192,6 +204,10 @@ main[page="details"] .vote_type * {
 .nav-tabs .nav-link.active {
   border-top: 2px solid red;
   border-bottom: 1px solid #dddddd;
+}
+
+#myTabContent .tab-pane {
+  padding: 1em;
 }
 
 [page="profile"] div.dual {
@@ -220,6 +236,9 @@ main[page="details"] .vote_type * {
 h1.name {
   font-size: 4em;
   padding: 0.7em 0em;
+}
+.form-control {
+  padding-right: 8.7em !important;
 }
 
 .name-desc {
@@ -311,8 +330,9 @@ h1.name {
 
 .page-footer {
   text-align: center;
+  bottom: 0;
   padding-top: 2em !important;
-  padding-bottom: 2em;
+  // padding-bottom: 2em;
   color: wheat;
   background: -o-linear-gradient(50deg,#45cafc,#303f9f) ;
   background: -o-linear-gradient(50deg,#45cafc,#303f9f);
@@ -326,6 +346,8 @@ h1.name {
 
 .mv-card {
   padding-bottom: 2em;
+  height: -webkit-fill-available;
+  padding-top: 1em;
 }
 
 .recipe-header{
@@ -342,6 +364,40 @@ h1.name {
 .btn-white {
   color: white !important;
 }
+
+.food-image {
+  max-height: 300px;
+  max-width: auto;
+}
+
+// start - nest this in a div id or class
+.input-control {
+  margin: 0 auto;
+  width: 300px;
+}
+
+input[type='text'] {
+  outline: 0;
+  margin-bottom: 3em;
+  border: 0;
+  display: block;
+  width: 150%;
+  font-size: 1rem;
+  font-weight: 300;
+  padding: 0px 3px;
+  border-bottom: 2px solid #ccc;
+  transition: border ease-in-out .5s;
+}
+
+input[type="text"]:focus {
+  border-bottom-color: #4F99E2;
+}
+
+label {
+  text-transform: uppercase;
+  font-size: .6rem
+}
+ // end
 
 @media screen and (max-width: 576px) { 
   #banner {

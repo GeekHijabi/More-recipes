@@ -4,7 +4,11 @@ export default {
   successMessage: '',
   errorMessage: '',
   recipes: [],
+  isLoadingRecipe: false,
   favoriteRecipes: [],
-  myRecipe: [],
-  recipe: {}
+  myRecipes: [],
+  recipe: {},
+  upvotes: 0,
+  downvotes: 0,
+  reviews: ''
 };

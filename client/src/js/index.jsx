@@ -1,7 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { render } from 'react-dom';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import axios from 'axios';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'toastr/build/toastr.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 import configureStore from './store/configureStore';
 import './../styles/index.scss';
 
@@ -10,29 +14,95 @@ import NotFound from './components/NotFound';
 import Homepage from './components/Home';
 import SignIn from './components/Auth/SignIn';
 import SignUp from './components/Auth/SignUp';
-import Recipes from './components/DashBoard/Recipes/index';
-import MyProfile from './components/DashBoard/Profile/MyProfile';
-import MyRecipe from './components/DashBoard/Profile/MyRecipe';
-import AddRecipe from './components/DashBoard/RecipeAdmin/RecipeAdmin';
+import Recipes from './components/RecipeList';
+import Profile from './components/DashBoard/Profile';
+import RecipeDetail from './components/DashBoard/RecipeDetails';
+import MyRecipes from './components/DashBoard/MyRecipes';
 
 const store = configureStore();
 
+/**
+ * @param {void} void
+ * @return {object} date
+ */
+const isTokenExpired = () => {
+  const token = localStorage.getItem('token');
+  const date = new Date(0);
+  date.setUTCDate(token.exp);
+  return date < new Date();
+};
+
+/**
+ * @param {void} void
+ * @return {object} authState
+ */
+const isAuthenticated = () => {
+  axios.defaults.headers.common['x-token'] = localStorage.getItem('token');
+  const authState = localStorage.getItem('token') !== null &&
+    isTokenExpired !== true;
+  return authState;
+};
 
 render(
   <Provider store={store}>
-    <HashRouter>
+    <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/signin" component={SignIn} />
-        <Route exact path="/recipes" component={Recipes} />
-        <Route path="/recipes/detail/:id" component={MyRecipe} />
-        <Route exact path="/profile" component={MyProfile} />
-        <Route path="/admin" component={AddRecipe} />
+        <Route
+          exact
+          path="/"
+          render={props =>
+            (isAuthenticated() ?
+            (<Homepage {...props} />)
+            : (<Homepage {...props} />))}
+        />
+        <Route
+          path="/signup"
+          render={props =>
+            (isAuthenticated() ?
+            (<Redirect to={{ pathname: '/recipes' }} />)
+            : (<SignUp {...props} />))}
+        />
+        <Route
+          path="/signin"
+          render={props =>
+            (isAuthenticated() ?
+            (<Redirect to={{ pathname: '/recipes' }} />)
+            : (<SignIn {...props} />))}
+        />
+        <Route
+          exact
+          path="/recipes"
+          render={props =>
+            (isAuthenticated() ?
+            (<Recipes {...props} />)
+            : (<Recipes {...props} />))}
+        />
+        <Route
+          exact
+          path="/recipe/:id"
+          render={props =>
+            (isAuthenticated() ? (<RecipeDetail {...props} />)
+              : (<Redirect to={{ pathname: '/signin' }} />))}
+        />
+        <Route
+          exact
+          path="/profile"
+          render={props =>
+            (isAuthenticated() ? (<Profile {...props} />)
+              : (<Redirect to={{ pathname: '/' }} />))}
+        />
+        <Route
+          exact
+          path="/admin"
+          render={props =>
+            (isAuthenticated() ? (<MyRecipes {...props} />)
+              : (<Redirect to={{ pathname: '/signin' }} />))}
+        />
         <Route component={NotFound} />
       </Switch>
-    </HashRouter>
+    </BrowserRouter>
   </Provider>
   , document.getElementById('main')
+
 
 );
