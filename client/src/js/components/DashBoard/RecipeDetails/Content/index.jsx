@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Description from './Descriptions';
 import Ingredients from './Ingredients';
@@ -17,11 +18,17 @@ const Content = props => (
       activeTab={props.activeTab}
     />
     <Reviews
-      reviews={props.recipe.Reviews}
+      reviewedRecipe={props.reviewedRecipe}
       activeTab={props.activeTab}
       recipeId={props.recipeId} //
     />
   </div>
 );
+
+PropTypes.Content = {
+  recipe: PropTypes.objectOf(PropTypes.string).isRequired,
+  description: PropTypes.string.isRequired,
+
+};
 
 export default Content;

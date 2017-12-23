@@ -28,8 +28,14 @@ const routes = (app) => {
     user.signin
   );
 
+  app.get(
+    '/api/v1/current-user',
+    authenticate,
+    user.getCurrentUser
+  );
+
   app.put(
-    '/api/v1/user/:userId/profile',
+    '/api/v1/user/update-profile',
     authenticate,
     user.updateuserprofile
   );
@@ -77,7 +83,7 @@ const routes = (app) => {
     reviews.create
   );
   app.get(
-    '/api/v1/recipe/:recipeId/review',
+    '/api/v1/recipe/:recipeId/reviews',
     authenticate,
     reviews.getSingleReview
   );

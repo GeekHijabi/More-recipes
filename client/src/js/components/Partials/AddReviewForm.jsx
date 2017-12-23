@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import toastr from 'toastr';
 
-import { apireviewRecipe } from '../../actions/recipe';
+import { apiRecipeReview, onViewRecipe } from '../../actions/recipe';
 
 /**
  *
@@ -27,6 +26,18 @@ class AddReviewForm extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} void
+ * @memberof AddReviewForm
+ */
+  componentWillMount() {
+    this.props.onViewRecipe(this.props.recipeId);
+  }
+
+
   /**
  * @returns {void}
  *
@@ -47,8 +58,7 @@ class AddReviewForm extends React.Component {
   onClick(event) {
     const reviews = this.state.review;
     event.preventDefault();
-    console.log('review is', this.state.review);
-    this.props.apireviewRecipe(this.props.recipeId, reviews);
+    this.props.apiRecipeReview(this.props.recipeId, reviews);
   }
 
   /**
@@ -59,10 +69,10 @@ class AddReviewForm extends React.Component {
  */
   render() {
     return (
-      
+
       <div className="review-form" placeholder="Add review">
         <div className="input-control">
-          <label htmlFor="add-recipe" id="label">Add recipe</label>
+          <label htmlFor="add-review" id="label">Post review</label>
           <input
             type="text"
             placeholder="input your review"
@@ -84,7 +94,27 @@ class AddReviewForm extends React.Component {
   }
 }
 AddReviewForm.propTypes = {
-  apireviewRecipe: PropTypes.func.isRequired,
+  apiRecipeReview: PropTypes.func.isRequired,
+  onViewRecipe: PropTypes.func.isRequired,
+  recipeId: PropTypes.number.isRequired,
 };
 
-export default connect(null, { apireviewRecipe })(AddReviewForm);
+/**
+ *
+ * @param {object} state
+ *
+ * @returns {void}
+ */
+function mapStateToProps(state) {
+  return {
+    review: state.recipe.recipe.Reviews,
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  {
+    apiRecipeReview,
+    onViewRecipe
+  }
+)(AddReviewForm);

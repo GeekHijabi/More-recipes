@@ -97,34 +97,54 @@ export default {
           ]
         },
       })).then((Userfound) => {
-        if (Userfound) {
-          return Userfound
-            .update({
-              firstName: req.body.firstName || Userfound.firstName,
-              lastName: req.body.lastName || Userfound.lastName,
-              bio: req.body.bio || Userfound.bio,
-              summary: req.body.summary || Userfound.summary,
-              imageUrl: req.body.imageUrl || Userfound.imageUrl
-            }, {
-              where: {
-                id: req.params.userId,
-              }
-            })
-            .then(updatedProfile => res.status(200).json({
-              status: 'success',
-              updatedProfile
-            }));
-        }
         if (!Userfound) {
-          return res.status(404).send({ error: 'User not found' });
-        }
-        return res.status(401)
-          .send({
-            error: 'You cannot update a profile that does not belong to you'
+          return res.status(404).send({
+            error: 'User not found'
           });
+        }
+        if (Userfound.id !== userDetail.id) {
+          return res.status(401)
+            .send({
+              error: 'You cannot update a profile that does not belong to you'
+            });
+        }
+        return Userfound
+          .update({
+            firstName: req.body.firstName || Userfound.firstName,
+            lastName: req.body.lastName || Userfound.lastName,
+            bio: req.body.bio || Userfound.bio,
+            summary: req.body.summary || Userfound.summary,
+            imageUrl: req.body.imageUrl || Userfound.imageUrl
+          }, {
+            where: {
+              id: userDetail.id,
+            }
+          })
+          .then(updatedProfile => res.status(200).json({
+            status: 'success',
+            updatedProfile
+          }));
       }).catch(() => res.status(400).json({
         error: 'User not found'
       }));
   },
 
+  getCurrentUser(req, res) {
+    const { userDetail } = req.decoded;
+    User
+      .findOne({
+        where: {
+          id: userDetail.id
+        }
+      })
+      .then((currentUser) => {
+        if (!currentUser) {
+          return res.status(404).json({
+            error: 'No currentUser'
+          });
+        }
+        return res.status(200).json(currentUser);
+      })
+      .catch(error => res.status(404).json({ error: error.message }));
+  }
 };

@@ -6,12 +6,14 @@ import {
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
   SET_CURRENT_USER,
-  REMOVE_CURRENT_USER } from '../constants';
+  REMOVE_CURRENT_USER,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAILURE } from '../constants';
 
 export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
-    type, user, message, error
+    type, user, updatedUser, message, error
   } = action;
 
   switch (type) {
@@ -46,6 +48,17 @@ export default (state = initialState, action) => {
       return {
         ...newState,
         currentUser: {}
+      };
+    case UPDATE_PROFILE_SUCCESS:
+      return {
+        ...newState,
+        currentUser: updatedUser.updatedProfile,
+        successMessage: updatedUser.status
+      };
+    case UPDATE_PROFILE_FAILURE:
+      return {
+        ...newState,
+        errorMessage: error
       };
     default:
       return newState;
