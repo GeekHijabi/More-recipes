@@ -9,7 +9,8 @@ import Content from './Content';
 import { onViewRecipe,
   apiUpVoteRecipe,
   apiDownVoteRecipe,
-  apifavoriteRecipe } from '../../../actions/recipe';
+  apifavoriteRecipe,
+  apiGetRecipeReview } from '../../../actions/recipe';
 
 const Image = require('../../../../assets/images/banner_bg.jpg');
 
@@ -102,7 +103,7 @@ class MyRecipe extends React.Component {
    */
   render() {
     const { recipe } = this.props;
-    console.log('recipe is', recipe); //
+    console.log('review details', recipe); //
     return (
       <div>
         <RecipeHeader />
@@ -157,6 +158,7 @@ class MyRecipe extends React.Component {
             />
             <Content
               recipe={this.props.recipe}
+              reviewedRecipe={recipe}
               activeTab={this.state.activeTab}
               recipeId={recipe.id} //
             />
@@ -174,7 +176,7 @@ MyRecipe.propTypes = {
   apiUpVoteRecipe: PropTypes.func.isRequired,
   apiDownVoteRecipe: PropTypes.func.isRequired,
   apifavoriteRecipe: PropTypes.func.isRequired,
-  recipe: PropTypes.string.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.string).isRequired,
   match: PropTypes.func.isRequired,
 };
 
@@ -196,6 +198,7 @@ export default connect(
     onViewRecipe,
     apiUpVoteRecipe,
     apiDownVoteRecipe,
-    apifavoriteRecipe
+    apifavoriteRecipe,
+    apiGetRecipeReview
   }
 )(MyRecipe);

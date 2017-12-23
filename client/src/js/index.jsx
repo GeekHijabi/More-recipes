@@ -4,9 +4,10 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
- import configureStore from './store/configureStore';
+import 'toastr/build/toastr.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+import configureStore from './store/configureStore';
 import './../styles/index.scss';
-import '../../../node_modules/toastr/build/toastr.min.css';
 
 
 import NotFound from './components/NotFound';
@@ -14,7 +15,7 @@ import Homepage from './components/Home';
 import SignIn from './components/Auth/SignIn';
 import SignUp from './components/Auth/SignUp';
 import Recipes from './components/RecipeList';
-import MyProfile from './components/DashBoard/Profile/MyProfile';
+import Profile from './components/DashBoard/Profile';
 import RecipeDetail from './components/DashBoard/RecipeDetails';
 import MyRecipes from './components/DashBoard/MyRecipes';
 
@@ -87,7 +88,7 @@ render(
           exact
           path="/profile"
           render={props =>
-            (isAuthenticated() ? (<MyProfile {...props} />)
+            (isAuthenticated() ? (<Profile {...props} />)
               : (<Redirect to={{ pathname: '/' }} />))}
         />
         <Route
@@ -102,5 +103,6 @@ render(
     </BrowserRouter>
   </Provider>
   , document.getElementById('main')
+
 
 );

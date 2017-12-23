@@ -7,7 +7,9 @@ import {
   SET_CURRENT_USER,
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
-  REMOVE_CURRENT_USER } from '../constants';
+  REMOVE_CURRENT_USER,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAILURE } from '../constants';
 
 export const loginSuccess = message => ({
   type: LOGIN_USER_SUCCESS,
@@ -36,6 +38,14 @@ export const removeCurrentUser = () => ({
 export const setCurrentUser = user => ({
   type: SET_CURRENT_USER,
   user
+});
+export const updateProfileSuccess = updatedUser => ({
+  type: UPDATE_PROFILE_SUCCESS,
+  updatedUser
+});
+export const updateProfileFailure = error => ({
+  type: UPDATE_PROFILE_FAILURE,
+  error
 });
 
 /**
@@ -92,6 +102,60 @@ export const apiLoginUser = ({
     }).catch((err) => {
       if (err && err.data) {
         dispatch(loginFailure(err.data.error));
+      }
+    });
+    return request;
+  };
+
+  /**
+ * Async action for profile
+ * @returns {promise} request
+ * @param {object} options
+ */
+export const apiGetCurrentUser = () =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'GET',
+      url: '/api/v1/current-user'
+    });
+    request.then((response) => {
+      console.log('currentuser', response);
+      dispatch(setCurrentUser(response.data));
+      // dispatch(updateProfileSuccess(response.data));
+    }).catch((error) => {
+      if (error && error.data) {
+        dispatch(updateProfileFailure(error.data.error));
+      }
+    });
+    return request;
+  };
+
+/**
+ * Async action for profile
+ * @returns {promise} request
+ * @param {object} options
+ */
+export const apiUpdateUserProfile = ({
+  firstName, lastName, bio, summary, imageUrl
+}) =>
+  function action(dispatch) {
+    const request = axios({
+      data: {
+        firstName,
+        lastName,
+        bio,
+        summary,
+        imageUrl
+      },
+      method: 'PUT',
+      url: '/api/v1/user/update-profile'
+    });
+    request.then((response) => {
+      console.log('res', response);
+      dispatch(updateProfileSuccess(response.data));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(updateProfileFailure(err.data.error));
       }
     });
     return request;

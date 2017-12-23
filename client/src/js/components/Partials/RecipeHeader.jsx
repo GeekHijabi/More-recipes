@@ -17,7 +17,7 @@ class RecipeHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: true
+
     };
   }
   /**

@@ -9,5 +9,6 @@ export default {
   myRecipes: [],
   recipe: {},
   upvotes: 0,
-  downvotes: 0
+  downvotes: 0,
+  reviews: ''
 };
