@@ -1,6 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import '../../../styles/index.scss';
+import PropTypes from 'prop-types';
 
 const image = require('../../../assets/images/banner_bg.jpg');
 
@@ -21,6 +20,18 @@ class Banner extends React.Component {
     super(props);
     this.state = {
     };
+    this.onClick = this.onClick.bind(this);
+  }
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} event
+ * @memberof Banner
+ */
+  onClick(event) {
+    event.preventDefault();
+    this.context.router.transitionTo('/recipes');
   }
   /**
    * @description COnstructor Function
@@ -37,7 +48,7 @@ class Banner extends React.Component {
             <div className="card card-body">
               <h1>Life is too short for just a rough meal</h1>
               <p className="btn">
-                <a>Browse our collecton of Recipes</a>
+                <button onClick={this.onClick}>Browse our collecton of Recipes</button>
               </p>
             </div>
           </div>

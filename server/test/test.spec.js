@@ -103,7 +103,7 @@ describe('More Recipes', () => {
   });
   it('should check if password is supplied', (done) => {
     chai.request(app).post('/api/v1/user/signup')
-      .send(fakeData.noPasswordInput)
+      .send(fakeData.noPasswordSignupInput)
       .end((err, res) => {
         res.should.have.status(406);
         res.body.should.have
@@ -195,7 +195,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signin')
       .send(fakeData.newUser2)
       .end((err, res) => {
-        res.body.should.have.property('message')
+        res.body.should.have.property('error')
           .equal('User is not registered');
         done();
       });

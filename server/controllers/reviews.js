@@ -1,6 +1,6 @@
 import db from '../models';
 
-const { Recipe, Review } = db;
+const { Recipe, Review, User } = db;
 
 export default {
   create(req, res) {
@@ -17,37 +17,40 @@ export default {
       });
     return Review
       .create({
-        recipeId: req.params.recipeId,
         userId: userDetail.id,
-        review: req.body.review
+        recipeId: req.params.recipeId,
+        reviews: req.body.reviews
       })
       .then(data => res.status(200).json({
         message: 'Your recipe has been reviewed',
-        review: {
-          userId: data.userId,
-          recipeId: data.recipeId,
-          review: data.review
-        }
+        recipeReview: data
       }))
       .catch(error => res.status(400).json({
         error: error.message
       }));
   },
 
-  list(req, res) {
-    return Review
+  getSingleReview(req, res) {
+    Review
       .findAll({
-        where: { recipeId: req.params.recipeId }
+        where: {
+          recipeId: req.params.recipeId
+        },
+        include: [{
+          model: User,
+          attributes: ['userName', 'imageUrl']
+        }]
       })
-      .then((review) => {
-        if (review.length < 1) {
+      .then((reviews) => {
+        if (!reviews) {
           res.status(404).json({
             error: 'No review found'
           });
-        } else {
-          res.status(200).json({ review });
         }
+        return res.status(200).json(reviews);
       })
-      .catch(error => res.status(404).json(error.message));
-  }
+      .catch(error => res.status(404).json({
+        error: error.message
+      }));
+  },
 };

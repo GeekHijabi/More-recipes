@@ -1,5 +1,9 @@
 import React from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import toastr from 'toastr';
+import { apiLoginUser } from '../../actions/auth';
 
 const image = require('../../../assets/images/banner_bg.jpg');
 
@@ -13,37 +17,70 @@ class SignIn extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
-   * @memberof Home
+   * @memberof SignIn
    * @return {void}
    */
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: ''
-
+      identifier: '',
+      password: '',
+      errorMessage: '',
+      hasError: false
     };
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onDismiss = this.onDismiss.bind(this);
   }
   /**
  * @returns {void}
  *
- * @param {any} e
+ * @param {any} event
  * @memberof SignIn
  */
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
   /**
  * @returns {void}
  *
- * @param {any} e
+ * @param {any} event
  * @memberof SignIn
  */
-  onClick(e) {
-    e.preventDefault();
-    // axios.post('http://localhost:3000/api/v1/user/signin', { user: this.state });
+  onClick(event) {
+    event.preventDefault();
+    this.props.apiLoginUser(this.state)
+      .then((res) => {
+        if (res && res.data) {
+          toastr.options = {
+            closeButton: true,
+            progressBar: true
+          };
+          toastr.success(res.data.message);
+          this.props.history.push('/recipes');
+        }
+      }).catch((err) => {
+        if (err && err.response) {
+          this.setState({
+            hasError: true,
+            errorMessage: err.response.data.error
+          });
+        }
+      });
+  }
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} event
+ * @memberof SignUp
+ */
+  onDismiss(event) {
+    event.preventDefault();
+    this.setState({
+      hasError: false,
+      errorMessage: ''
+    });
   }
 
   /**
@@ -67,6 +104,23 @@ class SignIn extends React.Component {
                   <strong>Sign in</strong>
                 </h3>
               </div>
+              { this.state.hasError && (
+                <div
+                  className="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  {this.state.errorMessage}
+                  <button
+                    type="button"
+                    className="close"
+                    onClick={this.onDismiss}
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              )}
               <div className="md-form">
                 <label htmlFor="Form-email1">Username/Email
             <input
@@ -74,9 +128,10 @@ class SignIn extends React.Component {
               id="Form-email1"
               className="form-control"
               placeholder="username or Email"
-              name="username"
+              name="identifier"
               onChange={this.onChange}
-              value={this.state.username}
+              value={this.state.identifier}
+              required
             />
                 </label>
               </div>
@@ -90,9 +145,12 @@ class SignIn extends React.Component {
               name="password"
               onChange={this.onChange}
               value={this.state.password}
+              pattern="(?=^.{8,15}$)(?!.*\s).*$"
+              title="8 to 15 characters required"
+              required
             />
                   <p className="font-small blue-text d-flex justify-content-end">Forgot
-                <a href="" className="blue-text ml-1">Password?</a>
+                <Link to="/" href="/" className="blue-text ml-1">Password?</Link>
                   </p>
                 </label>
               </div>
@@ -131,5 +189,8 @@ class SignIn extends React.Component {
     );
   }
 }
+SignIn.propTypes = {
+  apiLoginUser: PropTypes.func.isRequired,
+};
 
-export default SignIn;
+export default connect(null, { apiLoginUser })(SignIn);

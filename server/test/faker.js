@@ -9,8 +9,7 @@ const fakeData = {
     password: 'fodddyyy',
   },
   newUser2: {
-    userName: faker.name.findName(),
-    email: faker.internet.email(),
+    identifier: faker.name.findName() || faker.internet.email(),
     password: 'tester123',
   },
 
@@ -44,9 +43,12 @@ const fakeData = {
     firstName: faker.name.firstName(),
     password: 'fodddyyy',
   },
-  
 
   noPasswordInput: {
+    identifier: faker.name.findName(),
+    email: faker.internet.email(),
+  },
+  noPasswordSignupInput: {
     userName: faker.name.findName(),
     email: faker.internet.email(),
   },

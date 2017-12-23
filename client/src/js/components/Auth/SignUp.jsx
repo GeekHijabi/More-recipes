@@ -1,8 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { apiRegisterUser } from '../../actions/auth';
+import toastr from 'toastr';
+import {
+  apiRegisterUser,
+  apiLoginUser } from '../../actions/auth';
 
 const image = require('../../../assets/images/banner_bg.jpg');
 
@@ -26,32 +28,76 @@ class SignUp extends React.Component {
       lastName: '',
       userName: '',
       email: '',
-      password: ''
+      errorMessage: '',
+      password: '',
+      hasError: false
     };
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onDismiss = this.onDismiss.bind(this);
   }
   /**
  * @returns {void}
  *
- * @param {any} e
+ * @param {any} event
  * @memberof SignUp
  */
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
  * @returns {void}
  *
- * @param {any} e
+ * @param {any} event
  * @memberof SignUp
  */
-  onClick(e) {
-    e.preventDefault();
-    // axios.post('http://localhost:3000/api/v1/user/signup', { user: this.state });
-    this.props.apiRegisterUser(this.state);
+  onClick(event) {
+    event.preventDefault();
+    this.props.apiRegisterUser(this.state).then(() => {
+      this.props.apiLoginUser(this.state)
+        .then((res) => {
+          if (res && res.data) {
+            toastr.options = {
+              closeButton: true,
+              progressBar: true
+            };
+            toastr.success(res.data.message);
+            this.props.history.push('/recipes');
+          }
+        })
+        .catch((err) => {
+          if (err && err.data) {
+            this.setState({
+              hasError: true,
+              errorMessage: err.data.error
+            });
+          }
+        });
+    }).catch((err) => {
+      if (err && err.response) {
+        this.setState({
+          hasError: true,
+          errorMessage: err.response.data.error
+        });
+      }
+    });
   }
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} event
+ * @memberof SignUp
+ */
+  onDismiss(event) {
+    event.preventDefault();
+    this.setState({
+      hasError: false,
+      errorMessage: ''
+    });
+  }
+
   /**
    * @description Constructor Function
    * @param {any} props
@@ -66,11 +112,32 @@ class SignUp extends React.Component {
           <div className="col-xs-12 col-sm-6 col-md-6 col-lg-7">
             <img src={image} alt="" className="bg" />
           </div>
-          <div className="col-xs-12 col-sm-6 col-md-6 col-lg-5 form-elegant card">
+          <div
+            className="col-xs-12 col-sm-6 col-md-6 col-lg-5 form-elegant card"
+          >
             <div className="card-body mx-4">
               <div className="text-center">
-                <h3 className="dark-grey-text mb-5"><strong>Sign up</strong></h3>
+                <h3 className="dark-grey-text mb-5">
+                  <strong>Sign up</strong>
+                </h3>
               </div>
+              { this.state.hasError && (
+                <div
+                  className="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  {this.state.errorMessage}
+                  <button
+                    type="button"
+                    className="close"
+                    onClick={this.onDismiss}
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              )}
               <div className="md-form">
                 <label htmlFor="Form-email1">firstname
                   <input
@@ -81,6 +148,7 @@ class SignUp extends React.Component {
                     name="firstName"
                     onChange={this.onChange}
                     value={this.state.firstName}
+                    required
                   />
                 </label>
               </div>
@@ -95,6 +163,7 @@ class SignUp extends React.Component {
                     name="lastName"
                     onChange={this.onChange}
                     value={this.state.lastName}
+                    required
                   />
                 </label>
               </div>
@@ -109,6 +178,7 @@ class SignUp extends React.Component {
                     name="email"
                     onChange={this.onChange}
                     value={this.state.email}
+                    required
                   />
                 </label>
               </div>
@@ -123,6 +193,9 @@ class SignUp extends React.Component {
                   name="userName"
                   onChange={this.onChange}
                   value={this.state.userName}
+                  pattern="(?=^.{2,15}$)(?!.*\s).*$"
+                  title="2 to 15 characters required"
+                  required
                 />
                 </label>
               </div>
@@ -137,6 +210,9 @@ class SignUp extends React.Component {
                     name="password"
                     onChange={this.onChange}
                     value={this.state.password}
+                    pattern="(?=^.{8,15}$)(?!.*\s).*$"
+                    title="8 to 15 characters required"
+                    required
                   />
                 </label>
               </div>
@@ -168,6 +244,7 @@ class SignUp extends React.Component {
 
 SignUp.propTypes = {
   apiRegisterUser: PropTypes.func.isRequired,
+  apiLoginUser: PropTypes.func.isRequired
 };
 
-export default connect(null, { apiRegisterUser })(SignUp);
+export default connect(null, { apiRegisterUser, apiLoginUser })(SignUp);

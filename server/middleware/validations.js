@@ -3,14 +3,8 @@ import dotenv from 'dotenv';
 dotenv.load();
 
 export const signInField = (req, res, next) => {
-  const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  if (!req.body.email && req.body.userName.trim() === '') {
-    return res.status(404).json({ error: 'Invalid username' });
-  }
-  if (req.body.email && !filter.test(req.body.email)) {
-    return res.status(400).json({
-      error: 'Please supply valid username / email address'
-    });
+  if (!req.body.identifier || req.body.identifier.trim() === '') {
+    return res.status(422).json({ error: 'Invalid credentials' });
   }
   if (!req.body.password || req.body.password.trim() === '') {
     return res.status(400).json({ error: 'Password is required' });
@@ -25,7 +19,7 @@ export const signUpField = (req, res, next) => {
     req.body.userName.length < 2 ||
     req.body.userName.toLowerCase().replace(/ +/g, '').trim() === '') {
     return res.status(411).json({
-      error: 'Please provide a valid username with atleast 5 characters.'
+      error: 'Please provide a valid username with atleast 2 characters.'
     });
   }
   if (!req.body.email || !filter.test(req.body.email)) {
