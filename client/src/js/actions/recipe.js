@@ -23,7 +23,9 @@ import {
   RECIPE_FAVORITE_SUCCESS,
   RECIPE_FAVORITE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
-  RECIPE_REVIEW_FAILURE
+  RECIPE_REVIEW_FAILURE,
+  GET_RECIPE_REVIEW_SUCCESS,
+  GET_RECIPE_REVIEW_FAILURE
 } from '../constants';
 
 export const createRecipe = () => ({
@@ -121,14 +123,22 @@ export const favoriteRecipeFailure = error => ({
   type: RECIPE_FAVORITE_FAILURE,
   error
 });
-export const reviewRecipeSuccess = (id, data) => ({
+export const reviewRecipeSuccess = recipeReview => ({
   type: RECIPE_REVIEW_SUCCESS,
-  recipeId: id,
-  data
+  recipeReview
 });
 export const reviewRecipeFailure = Error => ({
   type: RECIPE_REVIEW_FAILURE,
   Error
+});
+export const getRecipeReviewSuccess = id => ({
+  type: GET_RECIPE_REVIEW_SUCCESS,
+  recipeId: id,
+});
+
+export const getRecipeReviewFailure = error => ({
+  type: GET_RECIPE_REVIEW_FAILURE,
+  error
 });
 
 
@@ -346,7 +356,26 @@ export const apifavoriteRecipe = id =>
     });
     return request;
   };
-export const apireviewRecipe = (id, reviews) =>
+
+export const apiGetRecipeReview = id =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'GET',
+      url: `/api/v1/recipe/${id}/reviews`
+    });
+    request.then((response) => {
+      console.log('reviews of single recipe response', response.data);
+      dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
+      // dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
+    }).catch((error) => {
+      if (error && error.data) {
+        dispatch(getRecipeReviewFailure(error.data.error));
+      }
+    });
+    return request;
+  };
+
+export const apiRecipeReview = (id, reviews) =>
   function action(dispatch) {
     console.log('review in action is', reviews);
     const request = axios({
@@ -357,11 +386,11 @@ export const apireviewRecipe = (id, reviews) =>
       }
     });
     request.then((response) => {
-      console.log('review response', response);
-      dispatch(reviewRecipeSuccess(response.data));
-    }).catch((Error) => {
-      if (Error && Error.data) {
-        dispatch(reviewRecipeFailure(Error.data.error));
+      console.log('recipeReview for state', response.data.recipeReview);
+      dispatch(reviewRecipeSuccess(response.data.recipeReview));
+    }).catch((error) => {
+      if (error && error.data) {
+        dispatch(reviewRecipeFailure(error.data.error));
       }
     });
     return request;

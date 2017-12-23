@@ -45,54 +45,6 @@ const updateVoteCounts = (recipeId) => {
 };
 
 export default {
-  downvote(req, res) {
-    const { userDetail } = req.decoded;
-    return Vote
-      .findOne({
-        where: {
-          recipeId: req.params.recipeId,
-          userId: userDetail.id
-        }
-      }).then((foundVote) => {
-        if (!foundVote) {
-          return Vote.create({
-            userId: userDetail.id,
-            recipeId: req.params.recipeId,
-            downvotes: true,
-            upvotes: false
-          }).then(() => {
-            updateVoteCounts(req.params.recipeId);
-            return res.status(200).json({
-              message: 'Successfully downvoted'
-            });
-          });
-        } else if (foundVote.downvotes === false) {
-          return res.status(400).send({
-            message: 'you cannot downvote, please remove upvote'
-          });
-        } else if (foundVote.downvotes === true
-            && foundVote.upvotes === false) {
-          Vote.destroy({
-            where: {
-              $and: [
-                {
-                  recipeId: foundVote.recipeId
-                },
-                { userId: foundVote.userId }
-              ]
-            }
-          }).then(() => {
-            updateVoteCounts(req.params.recipeId);
-            return res.status(200).json({
-              message: 'downvote removed'
-            });
-          });
-        }
-      }).catch(() => {
-        res.status(500).json({ error: 'No recipe found' });
-      });
-  },
-
   upvote(req, res) {
     const { userDetail } = req.decoded;
     return Vote
@@ -114,21 +66,21 @@ export default {
               message: 'Successfully upvoted'
             });
           });
-        } else if (foundVote.upvotes === false) {
-          return res.status(400).send({
-            message: 'you cannot upvote, please remove downvote'
+        }
+        if (foundVote.upvotes) {
+          foundVote.updateAttributes({
+            upvotes: false,
+            downvotes: foundVote.downvotes
+          }).then(() => {
+            updateVoteCounts(req.params.recipeId);
+            return res.status(200).json({
+              message: 'upvote removed'
+            });
           });
-        } else if (foundVote.upvotes === true
-            && foundVote.downvotes === false) {
-          Vote.destroy({
-            where: {
-              $and: [
-                {
-                  recipeId: foundVote.recipeId
-                },
-                { userId: foundVote.userId }
-              ]
-            }
+        } else {
+          foundVote.updateAttributes({
+            upvotes: true,
+            downvotes: false
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).json({
@@ -136,8 +88,51 @@ export default {
             });
           });
         }
-      }).catch(() => {
-        res.status(500).json({ error: 'No recipe found' });
+      });
+  },
+  downvote(req, res) {
+    const { userDetail } = req.decoded;
+    return Vote
+      .findOne({
+        where: {
+          recipeId: req.params.recipeId,
+          userId: userDetail.id
+        }
+      }).then((foundVote) => {
+        if (!foundVote) {
+          return Vote.create({
+            userId: userDetail.id,
+            recipeId: req.params.recipeId,
+            downvotes: true,
+            upvotes: false
+          }).then(() => {
+            updateVoteCounts(req.params.recipeId);
+            return res.status(200).json({
+              message: 'Successfully upvoted'
+            });
+          });
+        }
+        if (foundVote.downvotes) {
+          foundVote.updateAttributes({
+            upvotes: foundVote.upvotes,
+            downvotes: false
+          }).then(() => {
+            updateVoteCounts(req.params.recipeId);
+            return res.status(200).json({
+              message: 'upvote removed'
+            });
+          });
+        } else {
+          foundVote.updateAttributes({
+            upvotes: false,
+            downvotes: true
+          }).then(() => {
+            updateVoteCounts(req.params.recipeId);
+            return res.status(200).json({
+              message: 'upvote removed'
+            });
+          });
+        }
       });
   }
 };

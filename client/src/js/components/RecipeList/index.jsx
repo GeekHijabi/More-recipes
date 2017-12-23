@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import RecipeHeader from '../Partials/RecipeHeader';
 import CardItem from '../Partials/CardItem';
 import Footer from '../Partials/Footer';
-import { apiGetRecipe, apiUpVoteRecipe } from '../../actions/recipe';
+import { apiGetRecipe } from '../../actions/recipe';
 
 /**
  *

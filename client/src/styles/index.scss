@@ -370,6 +370,7 @@ h1.name {
   max-width: auto;
 }
 
+// start - nest this in a div id or class
 .input-control {
   margin: 0 auto;
   width: 300px;
@@ -396,7 +397,7 @@ label {
   text-transform: uppercase;
   font-size: .6rem
 }
-
+ // end
 
 @media screen and (max-width: 576px) { 
   #banner {
