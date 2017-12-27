@@ -24,12 +24,15 @@ import {
   RECIPE_REVIEW_SUCCESS,
   RECIPE_REVIEW_FAILURE,
   GET_RECIPE_REVIEW_SUCCESS,
-  GET_RECIPE_REVIEW_FAILURE } from '../constants';
+  GET_RECIPE_REVIEW_FAILURE,
+  SEARCH_RECIPE_SUCCESS,
+  SEARCH_RECIPE_FAILURE } from '../constants';
 
 export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
-    type, recipe, recipeDetail, recipeReview, recipes, myRecipes, recipeId, error
+    type, recipe, recipeDetail, recipeReview,
+    recipes, myRecipes, recipeId, error, searchRecipeName
   } = action;
 
   switch (type) {
@@ -146,10 +149,9 @@ export default (state = initialState, action) => {
         errorMessage: error
       };
     case RECIPE_REVIEW_SUCCESS:
-      const reviewedRecipe = newState.recipe.Reviews.push(recipeReview.review);
+      newState.recipe.Reviews.unshift({ reviews: recipeReview.reviews });
       return {
-        ...newState,
-        recipe: reviewedRecipe
+        ...newState
       };
     case RECIPE_REVIEW_FAILURE:
       return {
@@ -161,6 +163,17 @@ export default (state = initialState, action) => {
       };
     case GET_RECIPE_REVIEW_FAILURE:
       return {
+        errorMessage: error,
+      };
+    case SEARCH_RECIPE_SUCCESS:
+      newState.SearchResults = searchRecipeName;
+      console.log('sess', newState.SearchResults);
+      return {
+        ...newState
+      };
+    case SEARCH_RECIPE_FAILURE:
+      return {
+        ...newState,
         errorMessage: error,
       };
     default:
