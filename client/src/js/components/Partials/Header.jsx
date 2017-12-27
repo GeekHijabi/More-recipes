@@ -28,14 +28,6 @@ const Header = () => (
             <Link to="/signup" className="nav-link btn cornflowerblue" href="/signup">Sign up</Link>
           </li>
         </ul>
-        <form className="form-inline">
-          <input
-            className="form-control mr-sm-2"
-            type="text"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </form>
       </div>
     </nav>
   </div>
