@@ -1,6 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link } from 'react-router-dom';
+// import SearchField from './SearchBox';
+
 /**
  *
  * *
@@ -52,7 +54,7 @@ class RecipeHeader extends React.Component {
             </li>
 
             <div className="nav-item dropdown">
-              <a href className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a href="/" className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className="fa fa-user-circle-o fa-2x" />
               </a>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -61,6 +63,7 @@ class RecipeHeader extends React.Component {
                 <Link to="/admin" className="dropdown-item" href="/profile">Admin</Link>
               </div>
             </div>
+            {/* <SearchField /> */}
           </ul>
         </div>
       </nav>

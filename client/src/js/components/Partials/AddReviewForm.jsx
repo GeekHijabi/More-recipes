@@ -27,15 +27,15 @@ class AddReviewForm extends React.Component {
   }
 
 
-  /**
- * @returns {void}
- *
- * @param {any} void
- * @memberof AddReviewForm
- */
-  componentWillMount() {
-    this.props.onViewRecipe(this.props.recipeId);
-  }
+//   /**
+//  * @returns {void}
+//  *
+//  * @param {any} void
+//  * @memberof AddReviewForm
+//  */
+//   componentWillMount() {
+//     this.props.onViewRecipe(this.props.recipeId);
+//   }
 
 
   /**

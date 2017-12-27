@@ -51,7 +51,6 @@ class EditRecipeModal extends React.Component {
  */
   onSubmit(event) {
     event.preventDefault();
-    console.log('edit recipeId', this.props.recipeId);
     this.props.editRecipe(this.props.recipeId, this.state).then(() => {
       toastr.options = {
         closeButton: true,
@@ -76,7 +75,6 @@ class EditRecipeModal extends React.Component {
         this.setState({
           imageUrl: fileURL
         });
-        console.log('our current image url', this.state.imageUrl);
       });
   }
 
