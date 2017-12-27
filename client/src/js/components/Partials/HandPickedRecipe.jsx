@@ -36,7 +36,8 @@ class HandPickedRecipe extends React.Component {
               <span>This Week&rsquo;s Handpicked Recipes</span>
             </h4>
           </div>
-          {/* <CardItem /> */}
+          {/* {recipes.map(recipe => */}
+          {/* <CardItem recipe={recipe} key={recipe.id} />)} */}
         </section>
       </div>
     );
