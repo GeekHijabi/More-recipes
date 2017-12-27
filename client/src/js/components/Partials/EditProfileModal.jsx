@@ -78,7 +78,6 @@ class EditProfileModal extends React.Component {
         this.setState({
           imageUrl: fileURL
         });
-        console.log('our current image url', this.state.imageUrl);
       });
   }
 
