@@ -43,12 +43,13 @@ class Recipes extends React.Component {
    * @return {void}
    */
   render() {
-    const { recipes } = this.props;
+    const { recipes, search } = this.props;
+    const recipeList = search.length === 0 ? recipes : search;
     return (
       <div>
         <RecipeHeader />
         <div className="row container-fluid mv-card">
-          {recipes.map(recipe =>
+          {recipeList.map(recipe =>
             <CardItem recipe={recipe} key={recipe.id} />)}
         </div>
         <Footer />
@@ -59,7 +60,8 @@ class Recipes extends React.Component {
 
 Recipes.propTypes = {
   apiGetRecipe: PropTypes.func.isRequired,
-  recipes: PropTypes.arrayOf(PropTypes.object)
+  recipes: PropTypes.arrayOf(PropTypes.object),
+  search: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 Recipes.defaultProps = {
@@ -74,7 +76,8 @@ Recipes.defaultProps = {
  */
 function mapStateToProps(state) {
   return {
-    recipes: state.recipe.recipes
+    recipes: state.recipe.recipes,
+    search: state.recipe.SearchResults
   };
 }
 
