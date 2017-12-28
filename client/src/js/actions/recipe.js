@@ -25,7 +25,9 @@ import {
   RECIPE_REVIEW_SUCCESS,
   RECIPE_REVIEW_FAILURE,
   GET_RECIPE_REVIEW_SUCCESS,
-  GET_RECIPE_REVIEW_FAILURE
+  GET_RECIPE_REVIEW_FAILURE,
+  SEARCH_RECIPE_SUCCESS,
+  SEARCH_RECIPE_FAILURE
 } from '../constants';
 
 export const createRecipe = () => ({
@@ -138,6 +140,15 @@ export const getRecipeReviewSuccess = id => ({
 
 export const getRecipeReviewFailure = error => ({
   type: GET_RECIPE_REVIEW_FAILURE,
+  error
+});
+export const searchRecipeSuccess = searchRecipeName => ({
+  type: SEARCH_RECIPE_SUCCESS,
+  searchRecipeName
+});
+
+export const searchRecipeFailure = error => ({
+  type: SEARCH_RECIPE_FAILURE,
   error
 });
 
@@ -364,7 +375,6 @@ export const apiGetRecipeReview = id =>
       url: `/api/v1/recipe/${id}/reviews`
     });
     request.then((response) => {
-      console.log('reviews of single recipe response', response.data);
       dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
       // dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
     }).catch((error) => {
@@ -377,7 +387,6 @@ export const apiGetRecipeReview = id =>
 
 export const apiRecipeReview = (id, reviews) =>
   function action(dispatch) {
-    console.log('review in action is', reviews);
     const request = axios({
       method: 'POST',
       url: `/api/v1/recipes/${id}/review`,
@@ -386,11 +395,33 @@ export const apiRecipeReview = (id, reviews) =>
       }
     });
     request.then((response) => {
-      console.log('recipeReview for state', response.data.recipeReview);
       dispatch(reviewRecipeSuccess(response.data.recipeReview));
     }).catch((error) => {
       if (error && error.data) {
         dispatch(reviewRecipeFailure(error.data.error));
+      }
+    });
+    return request;
+  };
+
+  /**
+ * Action for searchRecipe
+ *
+ * @returns {promise} request
+ * @param {object} recipeName
+ */
+export const apiSearchRecipe = recipeName =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'GET',
+      url: '/api/v1/search',
+      params: { search: recipeName }
+    });
+    request.then((response) => {
+      dispatch(searchRecipeSuccess(response.data.RecipeFound));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(searchRecipeFailure(err.data.error));
       }
     });
     return request;

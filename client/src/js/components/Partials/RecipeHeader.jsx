@@ -1,6 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar';
+
 /**
  *
  * *
@@ -31,6 +33,7 @@ class RecipeHeader extends React.Component {
         <Link to="/" href="/" className="navbar-brand text-white">
           <i className="fa fa-eercast" /> More Recipe
         </Link>
+        <SearchBar />
         <button
           className="navbar-toggler"
           type="button"
@@ -52,7 +55,7 @@ class RecipeHeader extends React.Component {
             </li>
 
             <div className="nav-item dropdown">
-              <a href className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a href="/" className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i className="fa fa-user-circle-o fa-2x" />
               </a>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
