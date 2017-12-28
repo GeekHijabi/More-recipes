@@ -76,6 +76,11 @@ const routes = (app) => {
     recipes.getSingleRecipe
   );
 
+  app.get(
+    '/api/v1/search',
+    recipes.searchRecipe
+  );
+
   app.post(
     '/api/v1/recipes/:recipeId/review',
     authenticate,

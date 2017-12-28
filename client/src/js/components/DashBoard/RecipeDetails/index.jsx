@@ -103,7 +103,6 @@ class MyRecipe extends React.Component {
    */
   render() {
     const { recipe } = this.props;
-    console.log('review details', recipe); //
     return (
       <div>
         <RecipeHeader />
