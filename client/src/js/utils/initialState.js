@@ -10,5 +10,6 @@ export default {
   recipe: {},
   upvotes: 0,
   downvotes: 0,
-  reviews: ''
+  reviews: '',
+  SearchResults: []
 };
