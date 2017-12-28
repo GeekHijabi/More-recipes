@@ -418,7 +418,6 @@ export const apiSearchRecipe = recipeName =>
       params: { search: recipeName }
     });
     request.then((response) => {
-      console.log('searched', response.data.RecipeFound);
       dispatch(searchRecipeSuccess(response.data.RecipeFound));
     }).catch((err) => {
       if (err && err.data) {
