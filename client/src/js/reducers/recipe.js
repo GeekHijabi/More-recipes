@@ -167,7 +167,6 @@ export default (state = initialState, action) => {
       };
     case SEARCH_RECIPE_SUCCESS:
       newState.SearchResults = searchRecipeName;
-      console.log('sess', newState.SearchResults);
       return {
         ...newState
       };

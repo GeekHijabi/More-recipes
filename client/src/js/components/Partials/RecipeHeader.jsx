@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link } from 'react-router-dom';
-import SearchField from './SearchBox';
+import SearchBar from './SearchBar';
 
 /**
  *
@@ -33,7 +33,7 @@ class RecipeHeader extends React.Component {
         <Link to="/" href="/" className="navbar-brand text-white">
           <i className="fa fa-eercast" /> More Recipe
         </Link>
-        <SearchField />
+        <SearchBar />
         <button
           className="navbar-toggler"
           type="button"
