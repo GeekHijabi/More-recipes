@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
     type, recipe, recipeDetail, recipeReview,
-    recipes, myRecipes, recipeId, error
+    recipes, myRecipes, recipeId, error, searchRecipeName
   } = action;
 
   switch (type) {
@@ -166,9 +166,9 @@ export default (state = initialState, action) => {
         errorMessage: error,
       };
     case SEARCH_RECIPE_SUCCESS:
+      newState.SearchResults = searchRecipeName;
       return {
-        ...newState,
-        recipes
+        ...newState
       };
     case SEARCH_RECIPE_FAILURE:
       return {
