@@ -64,6 +64,7 @@ class RecipeHeader extends React.Component {
                 <Link to="/admin" className="dropdown-item" href="/profile">Admin</Link>
               </div>
             </div>
+            {/* <SearchField /> */}
           </ul>
         </div>
       </nav>
