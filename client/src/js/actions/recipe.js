@@ -142,9 +142,9 @@ export const getRecipeReviewFailure = error => ({
   type: GET_RECIPE_REVIEW_FAILURE,
   error
 });
-export const searchRecipeSuccess = recipeName => ({
+export const searchRecipeSuccess = searchRecipeName => ({
   type: SEARCH_RECIPE_SUCCESS,
-  recipeName
+  searchRecipeName
 });
 
 export const searchRecipeFailure = error => ({
@@ -418,7 +418,7 @@ export const apiSearchRecipe = recipeName =>
       params: { search: recipeName }
     });
     request.then((response) => {
-      dispatch(searchRecipeSuccess(response.data.recipeName));
+      dispatch(searchRecipeSuccess(response.data.RecipeFound));
     }).catch((err) => {
       if (err && err.data) {
         dispatch(searchRecipeFailure(err.data.error));

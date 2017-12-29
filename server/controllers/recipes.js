@@ -196,7 +196,7 @@ export default {
             $ilike: `%${decodeURIComponent(req.query.search)}%`
           }
         }
-      }).then(searchFound => res.status(200).json(searchFound))
+      }).then(searchFound => res.status(200).json({ RecipeFound: searchFound }))
       .catch(error => res.status(404).json({ error: error.message }));
   },
 
