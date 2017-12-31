@@ -94,6 +94,9 @@ class MyRecipe extends React.Component {
    */
   handlefavorite() {
     this.props.apifavoriteRecipe(this.props.recipe.id);
+    this.setState({
+      bgColor: 'red'
+    });
   }
   /**
    * @description constructor Function
@@ -103,6 +106,7 @@ class MyRecipe extends React.Component {
    */
   render() {
     const { recipe } = this.props;
+    console.log('recipeDe', recipe);
     return (
       <div>
         <RecipeHeader />
@@ -131,7 +135,6 @@ class MyRecipe extends React.Component {
                   role="button"
                   tabIndex="-1"
                   onKeyPress={this.handleKeyPress}
-                  // handledownvote={this.handledownvote}
                   onClick={() => this.handledownvote()}
                 />
                 <span className="detail-value">{recipe.downvotes}</span>
@@ -144,8 +147,8 @@ class MyRecipe extends React.Component {
                   tabIndex="-1"
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handlefavorite()}
+                  style={{ color: this.state.bgColor }}
                 />
-                <span className="detail-value">{recipe.views}</span>
                 <span>favorites</span>
               </span>
             </div>

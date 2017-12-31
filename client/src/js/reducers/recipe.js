@@ -19,6 +19,10 @@ import {
   RECIPE_UPVOTE_FAILURE,
   RECIPE_DOWNVOTE_SUCCESS,
   RECIPE_DOWNVOTE_FAILURE,
+  RECIPE_FAVORITE_SUCCESS,
+  RECIPE_FAVORITE_FAILURE,
+  GET_RECIPE_FAVORITE_SUCCESS,
+  GET_RECIPE_FAVORITE_FAILURE,
   VIEW_RECIPE_SUCCESS,
   VIEW_RECIPE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
@@ -32,7 +36,7 @@ export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
     type, recipe, recipeDetail, recipeReview,
-    recipes, myRecipes, recipeId, error, searchRecipeName
+    recipes, myRecipes, recipeId, error, searchRecipeName, favoriteRecipes
   } = action;
 
   switch (type) {
@@ -147,6 +151,24 @@ export default (state = initialState, action) => {
     case RECIPE_DOWNVOTE_FAILURE:
       return {
         errorMessage: error
+      };
+    case RECIPE_FAVORITE_SUCCESS:
+      return {
+        ...newState
+      };
+    case RECIPE_FAVORITE_FAILURE:
+      return {
+        errorMessage: error
+      };
+    case GET_RECIPE_FAVORITE_SUCCESS:
+      return {
+        ...newState,
+        favorites: favoriteRecipes,
+      };
+    case GET_RECIPE_FAVORITE_FAILURE:
+      return {
+        ...newState,
+        errorMessage: error,
       };
     case RECIPE_REVIEW_SUCCESS:
       newState.recipe.Reviews.unshift({ reviews: recipeReview.reviews });
