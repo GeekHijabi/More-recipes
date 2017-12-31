@@ -18,6 +18,7 @@ import Recipes from './components/RecipeList';
 import Profile from './components/DashBoard/Profile';
 import RecipeDetail from './components/DashBoard/RecipeDetails';
 import MyRecipes from './components/DashBoard/MyRecipes';
+import FavoriteRecipe from './components/FavoriteRecipeList';
 
 const store = configureStore();
 
@@ -89,6 +90,13 @@ render(
           path="/profile"
           render={props =>
             (isAuthenticated() ? (<Profile {...props} />)
+              : (<Redirect to={{ pathname: '/' }} />))}
+        />
+        <Route
+          exact
+          path="/favorites"
+          render={props =>
+            (isAuthenticated() ? (<FavoriteRecipe {...props} />)
               : (<Redirect to={{ pathname: '/' }} />))}
         />
         <Route
