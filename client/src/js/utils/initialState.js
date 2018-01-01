@@ -11,5 +11,6 @@ export default {
   upvotes: 0,
   downvotes: 0,
   reviews: '',
-  SearchResults: []
+  SearchResults: [],
+  favorites: []
 };
