@@ -1,6 +1,6 @@
 import db from '../models';
 
-const { Recipe, Review } = db;
+const { Recipe, Review, Favorite } = db;
 
 export default {
   create(req, res) {
@@ -149,10 +149,12 @@ export default {
         where: {
           userId: userDetail.id
         },
-        include: [{
-          model: Review,
-          attributes: ['reviews']
-        }]
+        include: [
+          {
+            model: Review,
+            attributes: ['reviews']
+          }
+        ]
       })
       .then((myRecipes) => {
         if (!myRecipes) {
@@ -174,7 +176,12 @@ export default {
         include: [{
           model: Review,
           attributes: ['reviews']
-        }]
+        },
+        {
+          model: Favorite,
+          as: 'favorites'
+        }
+        ]
       })
       .then((singleRecipe) => {
         if (!singleRecipe) {

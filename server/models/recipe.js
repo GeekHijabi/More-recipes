@@ -46,6 +46,7 @@ export default (sequelize, DataTypes) => {
     });
     recipe.hasMany(models.Favorite, {
       foreignKey: 'recipeId',
+      as: 'favorites',
       onDelete: 'CASCADE',
     });
     recipe.hasMany(models.Vote, {
