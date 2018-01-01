@@ -22,6 +22,8 @@ import {
   RECIPE_DOWNVOTE_FAILURE,
   RECIPE_FAVORITE_SUCCESS,
   RECIPE_FAVORITE_FAILURE,
+  GET_RECIPE_FAVORITE_SUCCESS,
+  GET_RECIPE_FAVORITE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
   RECIPE_REVIEW_FAILURE,
   GET_RECIPE_REVIEW_SUCCESS,
@@ -123,6 +125,15 @@ export const favoriteRecipeSuccess = id => ({
 });
 export const favoriteRecipeFailure = error => ({
   type: RECIPE_FAVORITE_FAILURE,
+  error
+});
+export const getfavoriteRecipeSuccess = favoriteRecipes => ({
+  type: GET_RECIPE_FAVORITE_SUCCESS,
+  favoriteRecipes
+});
+
+export const getfavoriteRecipeFailure = error => ({
+  type: GET_RECIPE_FAVORITE_FAILURE,
   error
 });
 export const reviewRecipeSuccess = recipeReview => ({
@@ -359,10 +370,34 @@ export const apifavoriteRecipe = id =>
       url: `/api/v1/recipe/${id}/favorite`
     });
     request.then(() => {
+      console.log('favorited');
       dispatch(favoriteRecipeSuccess(id));
     }).catch((err) => {
       if (err && err.data) {
+        console.log('unfavorited');
         dispatch(favoriteRecipeFailure(err.data.error));
+      }
+    });
+    return request;
+  };
+
+  /**
+ * Action for getRecipe
+ *
+ * @returns {promise} request
+ * @param {object} id
+ */
+export const apiGetFavoriteRecipe = id =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'GET',
+      url: `/api/v1/user/${id}/favorites`
+    });
+    request.then((response) => {
+      dispatch(getfavoriteRecipeSuccess(response.data));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(getfavoriteRecipeFailure(err.data.error));
       }
     });
     return request;
