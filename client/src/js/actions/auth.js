@@ -120,7 +120,6 @@ export const apiGetCurrentUser = () =>
     });
     request.then((response) => {
       dispatch(setCurrentUser(response.data));
-      // dispatch(updateProfileSuccess(response.data));
     }).catch((error) => {
       if (error && error.data) {
         dispatch(updateProfileFailure(error.data.error));
@@ -150,6 +149,7 @@ export const apiUpdateUserProfile = ({
       url: '/api/v1/user/update-profile'
     });
     request.then((response) => {
+      console.log('profile', response.data);
       dispatch(updateProfileSuccess(response.data));
     }).catch((err) => {
       if (err && err.data) {

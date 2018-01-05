@@ -1,6 +1,8 @@
 import db from '../models';
 
-const { Recipe, Review, Favorite } = db;
+const {
+  Recipe, Review, Favorite, User
+} = db;
 
 export default {
   create(req, res) {
@@ -116,6 +118,7 @@ export default {
       })
       .then((Recipefound) => {
         if (Recipefound && Recipefound.userId === userDetail.id) {
+          console.log('id is', req.params.recipeId);
           return Recipefound
             .destroy({
               where: {
@@ -135,7 +138,8 @@ export default {
           error: 'You cannot delete a recipe that does not belong to you',
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log('error is', error);
         res.status(500).json({
           error: 'oops! something went wrong!'
         });
@@ -173,14 +177,17 @@ export default {
         where: {
           id: req.params.recipeId
         },
-        include: [{
-          model: Review,
-          attributes: ['reviews']
-        },
-        {
-          model: Favorite,
-          as: 'favorites'
-        }
+        include: [
+          {
+            model: Review,
+            // attributes: ['reviews']
+            include: [
+              { model: User }
+            ]
+          },
+          {
+            model: Favorite
+          }
         ]
       })
       .then((singleRecipe) => {
@@ -208,4 +215,3 @@ export default {
   },
 
 };
-

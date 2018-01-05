@@ -36,27 +36,27 @@ export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
     type, recipe, recipeDetail, recipeReview,
-    recipes, myRecipes, recipeId, error, searchRecipeName, favoriteRecipes
+    recipes, myRecipes, recipeId, error, searchRecipeName, favoriteRecipes, bool
   } = action;
 
   switch (type) {
     case CREATE_RECIPE:
       return {
         ...newState,
-        isLoadingRecipe: true
+        isLoadingRecipe: bool
       };
     case CREATE_RECIPE_SUCCESS:
       return {
         ...newState,
         recipes: [...newState.recipes, recipe],
         myRecipes: [...newState.myRecipes, recipe],
-        isLoadingRecipe: false
+        isLoadingRecipe: bool
       };
     case CREATE_RECIPE_FAILURE:
       return {
         ...newState,
         errorMessage: error,
-        isLoadingRecipe: false
+        isLoadingRecipe: bool
       };
     case GET_RECIPE:
       return {
@@ -128,6 +128,7 @@ export default (state = initialState, action) => {
         isLoadingRecipe: false
       };
     case VIEW_RECIPE_SUCCESS:
+    // console.log(recipeDetail)
       return {
         ...newState,
         recipe: recipeDetail
@@ -171,7 +172,8 @@ export default (state = initialState, action) => {
         errorMessage: error,
       };
     case RECIPE_REVIEW_SUCCESS:
-      newState.recipe.Reviews.unshift({ reviews: recipeReview.reviews });
+    console.log('state', recipeReview);
+      newState.recipe.Reviews.unshift(recipeReview);
       return {
         ...newState
       };

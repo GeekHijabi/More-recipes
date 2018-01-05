@@ -244,7 +244,8 @@ class SignUp extends React.Component {
 
 SignUp.propTypes = {
   apiRegisterUser: PropTypes.func.isRequired,
-  apiLoginUser: PropTypes.func.isRequired
+  apiLoginUser: PropTypes.func.isRequired,
+  history: PropTypes.objectOf.isRequired
 };
 
 export default connect(null, { apiRegisterUser, apiLoginUser })(SignUp);

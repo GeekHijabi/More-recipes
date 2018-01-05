@@ -44,7 +44,6 @@ class FavoriteRecipes extends React.Component {
    */
   render() {
     const { favorites } = this.props;
-    console.log('favorites', favorites);
     return (
       <div>
         <RecipeHeader />

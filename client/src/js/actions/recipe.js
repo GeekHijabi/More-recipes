@@ -187,9 +187,10 @@ export const apiCreateRecipe = ({
     });
     request.then((response) => {
       dispatch(createRecipeSuccess(response.data));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(createRecipeFailure(err.data.error));
+    }).catch((error) => {
+      if (error) {
+        console.log('error here', error.response.data.error);
+        dispatch(createRecipeFailure(error.response.data.error));
       }
     });
     return request;
@@ -199,14 +200,14 @@ export const apiCreateRecipe = ({
  * Action for getRecipe
  *
  * @returns {promise} request
- * @param {object} options
+ * @param {object} limit
  */
-export const apiGetRecipe = () =>
+export const apiGetRecipe = limit =>
   function action(dispatch) {
     dispatch(getRecipe());
     const request = axios({
       params: {
-        limit: 6
+        limit
       },
       method: 'GET',
       url: '/api/v1/recipes'
@@ -312,6 +313,7 @@ export const onViewRecipe = recipeId =>
       url: `/api/v1/recipe/${recipeId}`
     });
     request.then((response) => {
+      console.log(response)
       dispatch(viewRecipeSuccess(response.data));
     }).catch((err) => {
       if (err && err.data) {
@@ -410,6 +412,7 @@ export const apiGetRecipeReview = id =>
       url: `/api/v1/recipe/${id}/reviews`
     });
     request.then((response) => {
+      console.log('res', response);
       dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
       // dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
     }).catch((error) => {
@@ -430,7 +433,8 @@ export const apiRecipeReview = (id, reviews) =>
       }
     });
     request.then((response) => {
-      dispatch(reviewRecipeSuccess(response.data.recipeReview));
+      dispatch(reviewRecipeSuccess(response.data.review));
+      console.log('review', response);
     }).catch((error) => {
       if (error && error.data) {
         dispatch(reviewRecipeFailure(error.data.error));

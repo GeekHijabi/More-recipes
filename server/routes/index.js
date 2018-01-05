@@ -88,7 +88,7 @@ const routes = (app) => {
     reviews.create
   );
   app.get(
-    '/api/v1/recipe/:recipeId/reviews',
+    '/api/v1/recipe/:recipeId/review',
     authenticate,
     reviews.getSingleReview
   );

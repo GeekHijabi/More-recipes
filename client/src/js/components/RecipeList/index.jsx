@@ -32,8 +32,8 @@ class Recipes extends React.Component {
  * @param {any} void
  * @memberof Recipes
  */
-  componentWillMount() {
-    this.props.apiGetRecipe();
+  componentDidMount() {
+    this.props.apiGetRecipe(6);
   }
 
   /**
@@ -49,6 +49,8 @@ class Recipes extends React.Component {
       <div>
         <RecipeHeader />
         <div className="row container-fluid mv-card">
+
+          {recipeList.length === 0 && (<span>No recipe yet!</span>)}
           {recipeList.map(recipe =>
             <CardItem recipe={recipe} key={recipe.id} />)}
         </div>
