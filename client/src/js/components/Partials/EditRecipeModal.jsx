@@ -92,7 +92,7 @@ class EditRecipeModal extends React.Component {
         <ModalBody>
           <Form>
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>Name</Label>
+              <Label for="exampleEmail" sm={3}>Recipe Name</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -106,9 +106,9 @@ class EditRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>Ingredients</Label>
+              <Label for="exampleEmail" sm={3}>Ingredients</Label>
               <Col sm={8}>
-                <Input
+                <textarea
                   type="text"
                   name="ingredients"
                   id="exampleEmail"
@@ -120,9 +120,9 @@ class EditRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>description</Label>
+              <Label for="exampleEmail" sm={3}>Description</Label>
               <Col sm={8}>
-                <Input
+                <textarea
                   type="text"
                   name="description"
                   id="exampleEmail"
@@ -134,7 +134,7 @@ class EditRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleFile" sm={4}>File</Label>
+              <Label for="exampleFile" sm={3}>File</Label>
               <Col sm={8}>
                 <Dropzone onDrop={this.onDrop} />
                 <FormText color="muted" />
@@ -143,7 +143,7 @@ class EditRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup check row>
-              <Col sm={{ size: 10, offset: 2 }}>
+              <Col sm={{ size: 10, offset: 5 }}>
                 <Button onClick={this.onSubmit}>
                    Edit recipe
                 </Button>

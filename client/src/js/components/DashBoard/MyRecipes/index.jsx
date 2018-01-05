@@ -98,11 +98,12 @@ class RecipeAdmin extends React.Component {
               tabIndex="-1"
               onClick={this.toggle}
               onKeyPress={this.handleKeyPress}
-              className="fa fa-plus-circle fa-3x"
+              className="fa fa-plus-circle fa-2x"
             />
           </div>
           <AddRecipeModal
             isOpen={this.state.modal}
+            errorMessage={this.props.errorMessage}
             toggle={this.toggle}
             createRecipe={this.props.apiCreateRecipe}
           />
@@ -147,6 +148,7 @@ function mapStateToProps(state) {
   return {
     myRecipes: state.recipe.myRecipes,
     recipe: state.recipe.recipe,
+    errorMessage: state.recipe.errorMessage
   };
 }
 

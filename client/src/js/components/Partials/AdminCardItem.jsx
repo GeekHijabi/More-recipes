@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import EditRecipeModal from '../Partials/EditRecipeModal';
 
-const image = require('../../../assets/images/banner_bg.jpg');
+const defaultImage = require('../../../assets/images/no_image.png');
 
 /**
  *
@@ -66,27 +66,27 @@ class AdminCardItem extends React.Component {
     return (
       <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <div className="card">
-          <img className="card-img-top food-image" src={imageUrl || image} alt="Card cap" style={{ height: '200px' }} />
+          <img className="card-img-top food-image" src={imageUrl || defaultImage} alt="Card cap" style={{ height: '200px' }} />
           <div className="card-body">
             <h4 className="card-title">{recipeName}</h4>
             <div className="row">
               <div className="col-xs-12 col-sm-6">
                 <Link
-                  className="btn btn-primary"
+                  className="btn card-view"
                   to={`/recipe/${id}`}
                   href={`/recipe/${id}`}
                 >
-                  View More
+                  View Detail
                 </Link>
               </div>
               <div className="col-xs-12 col-sm-6">
-                <span className="edit">
+                <span className="edit padding">
                   <i
                     role="button"
                     tabIndex="-1"
                     onClick={this.toggle}
                     onKeyPress={this.handleKeyPress}
-                    className="fa fa-edit fa-3x"
+                    className="fa fa-edit fa-1x"
                   />
                 </span>
                 <EditRecipeModal
@@ -95,9 +95,9 @@ class AdminCardItem extends React.Component {
                   recipeId={id}
                   editRecipe={this.props.editRecipe}
                 />
-                <span className="delete">
+                <span className="delete paddings">
                   <i
-                    className="fa fa-trash fa-4x"
+                    className="fa fa-trash fa-1x"
                     role="button"
                     tabIndex="-1"
                     onKeyPress={this.onKeyPress}
@@ -114,10 +114,3 @@ class AdminCardItem extends React.Component {
 }
 
 export default AdminCardItem;
-
-{/* <button
-  className="btn btn-primary"
-  onClick={() => this.props.onViewRecipe(id)}
->
-  view more
-</button> */}

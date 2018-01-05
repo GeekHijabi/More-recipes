@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { apiGetRecipe } from '../../actions/recipe';
 import CardItem from '../Partials/CardItem';
-import '../../../styles/index.scss';
 
 /**
  *
@@ -18,8 +20,18 @@ class HandPickedRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: true
     };
+  }
+
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} void
+ * @memberof Recipes
+ */
+  componentWillMount() {
+    this.props.apiGetRecipe(4);
   }
   /**
    * @description COnstructor Function
@@ -28,6 +40,7 @@ class HandPickedRecipe extends React.Component {
    * @return {void}
    */
   render() {
+    const { recipes } = this.props;
     return (
       <div>
         <section id="list" className="row">
@@ -36,13 +49,33 @@ class HandPickedRecipe extends React.Component {
               <span>This Week&rsquo;s Handpicked Recipes</span>
             </h4>
           </div>
-          {/* {recipes.map(recipe => */}
-          {/* <CardItem recipe={recipe} key={recipe.id} />)} */}
+          {recipes.map(recipe =>
+            <CardItem recipe={recipe} key={recipe.id} />)}
         </section>
       </div>
     );
   }
 }
 
-export default HandPickedRecipe;
+HandPickedRecipe.propTypes = {
+  apiGetRecipe: PropTypes.func.isRequired,
+  recipes: PropTypes.arrayOf(PropTypes.object),
+};
 
+HandPickedRecipe.defaultProps = {
+  recipes: []
+};
+
+/**
+ *
+ * @param {object} state
+ *
+ * @returns {void}
+ */
+function mapStateToProps(state) {
+  return {
+    recipes: state.recipe.recipes,
+  };
+}
+
+export default connect(mapStateToProps, { apiGetRecipe })(HandPickedRecipe);
