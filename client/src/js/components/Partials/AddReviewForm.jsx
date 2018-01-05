@@ -27,17 +27,6 @@ class AddReviewForm extends React.Component {
   }
 
 
-//   /**
-//  * @returns {void}
-//  *
-//  * @param {any} void
-//  * @memberof AddReviewForm
-//  */
-//   componentWillMount() {
-//     this.props.onViewRecipe(this.props.recipeId);
-//   }
-
-
   /**
  * @returns {void}
  *
@@ -57,6 +46,7 @@ class AddReviewForm extends React.Component {
  */
   onClick(event) {
     const reviews = this.state.review;
+    console.log('reviewcomp', reviews);
     event.preventDefault();
     this.props.apiRecipeReview(this.props.recipeId, reviews);
   }
@@ -72,11 +62,13 @@ class AddReviewForm extends React.Component {
 
       <div className="review-form" placeholder="Add review">
         <div className="input-control">
-          <label htmlFor="add-review" id="label">Post review</label>
-          <input
+          <label htmlFor="review" id="label" />
+          <textarea
+            clasName="review-edit"
             type="text"
             placeholder="input your review"
             id="add-review"
+            col="3"
             name="review"
             onChange={this.onChange}
             value={this.state.review}
@@ -84,10 +76,9 @@ class AddReviewForm extends React.Component {
         </div>
         <button
           type="button"
-          className="btn blue-gradient btn-white btn-block btn-rounded z-depth-1a"
           onClick={this.onClick}
         >
-             Add review
+           Add review
         </button>
       </div>
     );
@@ -95,7 +86,6 @@ class AddReviewForm extends React.Component {
 }
 AddReviewForm.propTypes = {
   apiRecipeReview: PropTypes.func.isRequired,
-  onViewRecipe: PropTypes.func.isRequired,
   recipeId: PropTypes.number.isRequired,
 };
 

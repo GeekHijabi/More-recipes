@@ -54,17 +54,17 @@ class CardItem extends React.Component {
           <img className="card-img-top food-image" src={imageUrl || image} alt="Card cap" style={{ height: '200px' }} />
           <div className="card-body">
             <h4 className="card-title">{recipeName}</h4>
-            <div className="row">
-              <div className="col-xs-12 col-sm-6">
+            <div className="row row-card">
+              <div className="col-xs-12 col-sm-6 card-padding">
                 <Link
-                  className="btn btn-primary"
+                  className="btn card-view"
                   to={`/recipe/${id}`}
                   href={`/recipe/${id}`}
                 >
-                  View More
+                  View Details
                 </Link>
               </div>
-              <div className="col-xs-12 col-sm-6">
+              <div className="col-xs-12 col-sm-6 card-paddings">
                 <span className="ratings">
                   <i className="fa fa-thumbs-o-up 2x" />
                   <span>{upvotes || 0}</span>

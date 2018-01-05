@@ -65,6 +65,7 @@ class Profile extends React.Component {
     const {
       currentUser
     } = this.props;
+    console.log('current-user see me', currentUser);
     return (
       <div page="profile">
         <RecipeHeader />

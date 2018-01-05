@@ -21,6 +21,20 @@ class RecipeHeader extends React.Component {
     this.state = {
 
     };
+    this.onClick = this.onClick.bind(this);
+  }
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} event
+ * @memberof EditProfileModal
+ */
+  onClick(event) {
+    event.preventDefault();
+    // console.log(localStorage.token);
+    localStorage.removeItem('token')
+    window.location.href = '/'
   }
   /**
    *
@@ -29,7 +43,7 @@ class RecipeHeader extends React.Component {
    */
   render() {
     return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+      <nav className="navbar bg-success navbar-expand-lg">
         <Link to="/" href="/" className="navbar-brand text-white">
           <i className="fa fa-eercast" /> More Recipe
         </Link>
@@ -50,18 +64,28 @@ class RecipeHeader extends React.Component {
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
               <Link to="/" className="nav-link text-white" href="/" title="favourite Recipes">
-                <i className="fa fa-cutlery fa-2x" />
+                <i className="fa fa-gratipay fa-2x" />
               </Link>
             </li>
 
             <div className="nav-item dropdown">
               <a href="/" className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i className="fa fa-user-circle-o fa-2x" />
+                Menu
               </a>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <Link to="/profile" className="dropdown-item" href="/profile">Profile</Link>
-                <Link to="/" className="dropdown-item" href="/">Logout</Link>
-                <Link to="/admin" className="dropdown-item" href="/profile">Admin</Link>
+                <Link to="/profile" className="dropdown-item" href="/profile"><i className="fa fa-user-circle-o fa-1x" /> Profile</Link>
+                <Link to="/recipes" className="dropdown-item" href="/recipes"><i className="fa fa-cutlery fa-1x" /> Recipes</Link>
+                <Link
+                  to="/"
+                  className="dropdown-item"
+                  href="/"
+                  onClick={this.onClick}
+                >
+                  <i className="fa fa-sign-out"
+                  />
+                Logout
+                </Link>
+                <Link to="/admin" className="dropdown-item" href="/profile"><i className="fa fa-user-o fa-1x" /> MyRecipes</Link>
               </div>
             </div>
           </ul>

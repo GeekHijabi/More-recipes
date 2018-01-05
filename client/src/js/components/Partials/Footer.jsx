@@ -18,7 +18,6 @@ class Footer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: true
     };
   }
   /**
@@ -31,25 +30,20 @@ class Footer extends React.Component {
     return (
       <div>
         <footer className="page-footer">
-
           <div className="container">
-
             <div className="row">
-
               <div className="col-md-12">
-
                 <div className="footer-socials mb-5 flex-center">
-
-                  <a className="icons-sm fb-ic">
+                  <a className="icons-sm fb-ic" href="/">
                     <i className="fa fa-facebook fa-lg white-text mr-md-4" />
                   </a>
-                  <a className="icons-sm tw-ic">
+                  <a className="icons-sm tw-ic" href="/">
                     <i className="fa fa-twitter fa-lg white-text mr-md-4" />
                   </a>
-                  <a className="icons-sm ins-ic">
+                  <a className="icons-sm ins-ic" href="/">
                     <i className="fa fa-instagram fa-lg white-text mr-md-4" />
                   </a>
-                  <a className="icons-sm pin-ic">
+                  <a className="icons-sm pin-ic" href="/">
                     <i className="fa fa-pinterest fa-lg white-text" />
                   </a>
                 </div>

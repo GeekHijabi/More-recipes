@@ -1,11 +1,11 @@
 import React from 'react';
-import Dropzone from 'react-dropzone';
 import toastr from 'toastr';
 import {
   Button, Modal,
-  ModalHeader, ModalBody, Form, Label, Input, FormGroup, Col, FormText
+  ModalHeader, ModalBody, Form, Label, Input, FormGroup, Col
 } from 'reactstrap';
 import imageUpload from '../../utils/imageUpload';
+// import handleDrop from '../../utils/imageUpload';
 
 /**
  *
@@ -27,6 +27,8 @@ class AddRecipeModal extends React.Component {
       ingredients: '',
       description: '',
       imageUrl: '',
+      errorMessage: '',
+      hasError: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -51,13 +53,24 @@ class AddRecipeModal extends React.Component {
  */
   onSubmit(event) {
     event.preventDefault();
-    this.props.createRecipe(this.state).then(() => {
-      toastr.options = {
-        closeButton: true,
-        progressBar: true
-      };
-      toastr.success('Recipe Created Successfully');
-      this.props.toggle();
+    this.props.createRecipe(this.state).then((res) => {
+      if (res && res.data) {
+        this.setState({
+          hasError: false
+        });
+        toastr.options = {
+          closeButton: true,
+          progressBar: true
+        };
+        toastr.success('Recipe Created Successfully');
+        this.props.toggle();
+      }
+    }).catch((err) => {
+      if (err) {
+        this.setState({
+          hasError: true
+        });
+      }
     });
   }
 
@@ -70,15 +83,17 @@ class AddRecipeModal extends React.Component {
   onDrop(files) {
     imageUpload(files)
       .then((response) => {
+        console.log('getshere', response);
         const { body } = response;
         const fileURL = body.secure_url;
+
         this.setState({
           imageUrl: fileURL
         });
+      }).catch((err) => {
+        console.log('error', err);
       });
   }
-
-
   /**
    * @description constructor Function
    * @param {any} props
@@ -86,10 +101,28 @@ class AddRecipeModal extends React.Component {
    * @return {void}
    */
   render() {
+    const { imageUrl } = this.state;
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
-        <ModalHeader toggle={this.props.toggle}>Edit recipe</ModalHeader>
+        <ModalHeader toggle={this.props.toggle}>Add recipe</ModalHeader>
         <ModalBody>
+          { this.state.hasError && (
+          <div
+            className="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            {this.props.errorMessage}
+            <button
+              type="button"
+              className="close"
+              onClick={this.onDismiss}
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+              )}
           <Form>
             <FormGroup row>
               <Label for="exampleEmail" sm={4}>Name</Label>
@@ -108,7 +141,7 @@ class AddRecipeModal extends React.Component {
             <FormGroup row>
               <Label for="exampleEmail" sm={4}>Ingredients</Label>
               <Col sm={8}>
-                <Input
+                <textarea
                   type="text"
                   name="ingredients"
                   id="exampleEmail"
@@ -122,7 +155,7 @@ class AddRecipeModal extends React.Component {
             <FormGroup row>
               <Label for="exampleEmail" sm={4}>description</Label>
               <Col sm={8}>
-                <Input
+                <textarea
                   type="text"
                   name="description"
                   id="exampleEmail"
@@ -134,11 +167,21 @@ class AddRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleFile" sm={4}>File</Label>
+              <Label for="exampleFile" lg={4}>File</Label>
+              {/* <div> */}
               <Col sm={8}>
-                <Dropzone onDrop={this.onDrop} />
-                <FormText color="muted" />
-                {/* {this.state.imageUrl} */}
+                <input
+                  type="file"
+                  name="image"
+                  onChange={this.onDrop}
+                  accept="image/*"
+                />
+                <img
+                  src={imageUrl}
+                  alt="sample"
+                  height="400"
+                  width="100%"
+                />
               </Col>
             </FormGroup>
 
