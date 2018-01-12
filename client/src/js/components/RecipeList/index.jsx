@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import RecipeHeader from '../Partials/RecipeHeader';
 import CardItem from '../Partials/CardItem';
+import PopularRecipe from '../Partials/PopularRecipe';
 import Footer from '../Partials/Footer';
 import { apiGetRecipe } from '../../actions/recipe';
 
@@ -13,18 +14,18 @@ import { apiGetRecipe } from '../../actions/recipe';
  * @extends {React.Component}
  */
 class Recipes extends React.Component {
-  /**
-   * @description COnstructor Function
-   * @param {any} props
-   * @memberof Recipes
-   * @return {void}
-   */
-  constructor(props) {
-    super(props);
-    this.state = {
+  // /**
+  //  * @description COnstructor Function
+  //  * @param {any} props
+  //  * @memberof Recipes
+  //  * @return {void}
+  //  */
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
 
-    };
-  }
+  //   };
+  // }
 
   /**
  * @returns {void}
@@ -54,6 +55,7 @@ class Recipes extends React.Component {
           {recipeList.map(recipe =>
             <CardItem recipe={recipe} key={recipe.id} />)}
         </div>
+        <PopularRecipe />
         <Footer />
       </div>
     );
@@ -62,8 +64,8 @@ class Recipes extends React.Component {
 
 Recipes.propTypes = {
   apiGetRecipe: PropTypes.func.isRequired,
-  recipes: PropTypes.arrayOf(PropTypes.object),
-  search: PropTypes.arrayOf(PropTypes.object).isRequired
+  recipes: PropTypes.arrayOf(PropTypes.any),
+  search: PropTypes.arrayOf(PropTypes.any).isRequired
 };
 
 Recipes.defaultProps = {

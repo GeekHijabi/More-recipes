@@ -50,7 +50,7 @@ module.exports = {
         type: Sequelize.DATE
       },
     }),
-  down: queryInterface => queryInterface.dropTable('User', {
+  down: queryInterface => queryInterface.dropTable('Users', {
     force: true, cascade: true
   }),
 };

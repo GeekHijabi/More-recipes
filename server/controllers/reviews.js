@@ -59,4 +59,41 @@ export default {
         error: error.message
       }));
   },
+
+  destroySingleReview(req, res) {
+    const { userDetail } = req.decoded;
+    return Review
+      .findOne({
+        where: {
+          id: req.params.id,
+        },
+      })
+      .then((Reviewfound) => {
+        if (Reviewfound && Reviewfound.userId === userDetail.id) {
+          return Reviewfound
+            .destroy({
+              where: {
+                id: req.params.id,
+              },
+            })
+            .then(() => res.status(200).json({
+              message: 'Review deleted successfully'
+            }));
+        }
+        if (!Reviewfound) {
+          return res.status(404).send({
+            error: 'Review not found',
+          });
+        }
+        return res.status(401).send({
+          error: 'You cannot delete a review that does not belong to you',
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({
+          // error: 'oops! something went wrong!'
+          error: error.message
+        });
+      });
+  },
 };

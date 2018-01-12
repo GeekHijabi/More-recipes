@@ -131,7 +131,8 @@ RecipeAdmin.propTypes = {
   apiDeleteRecipe: PropTypes.func.isRequired,
   apiEditRecipe: PropTypes.func.isRequired,
   onViewRecipe: PropTypes.func.isRequired,
-  myRecipes: PropTypes.string.isRequired,
+  myRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
+  errorMessage: PropTypes.string.isRequired,
 };
 
 RecipeAdmin.contextTypes = {

@@ -23,10 +23,14 @@ import {
   RECIPE_FAVORITE_FAILURE,
   GET_RECIPE_FAVORITE_SUCCESS,
   GET_RECIPE_FAVORITE_FAILURE,
+  GET_ALL_FAVORITE_RECIPE_SUCCESS,
+  GET_ALL_FAVORITE_RECIPE_FAILURE,
   VIEW_RECIPE_SUCCESS,
   VIEW_RECIPE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
   RECIPE_REVIEW_FAILURE,
+  DELETE_RECIPE_REVIEW_SUCCESS,
+  DELETE_RECIPE_REVIEW_FAILURE,
   GET_RECIPE_REVIEW_SUCCESS,
   GET_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
@@ -36,7 +40,7 @@ export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
     type, recipe, recipeDetail, recipeReview,
-    recipes, myRecipes, recipeId, error, searchRecipeName, favoriteRecipes, bool
+    recipes, myRecipes, recipeId, error, searchRecipeName, favRecipes, favoriteRecipes, bool, deletedReviewId
   } = action;
 
   switch (type) {
@@ -128,7 +132,6 @@ export default (state = initialState, action) => {
         isLoadingRecipe: false
       };
     case VIEW_RECIPE_SUCCESS:
-    // console.log(recipeDetail)
       return {
         ...newState,
         recipe: recipeDetail
@@ -171,8 +174,17 @@ export default (state = initialState, action) => {
         ...newState,
         errorMessage: error,
       };
+    case GET_ALL_FAVORITE_RECIPE_SUCCESS:
+      return {
+        ...newState,
+        favRecipes
+      };
+    case GET_ALL_FAVORITE_RECIPE_FAILURE:
+      return {
+        ...newState,
+        errorMessage: error
+      };
     case RECIPE_REVIEW_SUCCESS:
-    console.log('state', recipeReview);
       newState.recipe.Reviews.unshift(recipeReview);
       return {
         ...newState
@@ -184,6 +196,24 @@ export default (state = initialState, action) => {
     case GET_RECIPE_REVIEW_SUCCESS:
       return {
         ...newState
+      };
+    case DELETE_RECIPE_REVIEW_SUCCESS:
+      // console.log('check me', newState.recipe.Reviews, deletedReviewId)
+      newState.recipe.Reviews
+        .filter((Review) => {
+          console.log(Review.id, deletedReviewId, 'see me')
+          return Review.id !== deletedReviewId;
+        });
+
+      console.log(newState, 'check all')
+      return {
+        ...newState,
+        // review: Reviews
+      };
+    case DELETE_RECIPE_REVIEW_FAILURE:
+      return {
+        ...newState,
+        errorMessage: error
       };
     case GET_RECIPE_REVIEW_FAILURE:
       return {

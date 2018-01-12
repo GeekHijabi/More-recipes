@@ -8,12 +8,20 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     ingredients: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
+    },
+    preptime: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    servings: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -29,7 +37,7 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
       defaultValue: 0
     },
-    views: {
+    favoriteCount: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
