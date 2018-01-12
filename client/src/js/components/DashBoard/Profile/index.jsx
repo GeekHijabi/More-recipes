@@ -65,6 +65,7 @@ class Profile extends React.Component {
     const {
       currentUser
     } = this.props;
+    console.log('cur', this.props.currentUser);
     return (
       <div page="profile">
         <RecipeHeader />
@@ -74,17 +75,17 @@ class Profile extends React.Component {
               <h1 className="name">{currentUser.firstName}
                 <br /> {currentUser.lastName}
               </h1>
-              <p className="name-desc">{currentUser.summary}</p>
-              <div className="red-border-line" />
-              <h4>Bio</h4>
-              <p>{currentUser.bio}</p>
               <i
                 role="button"
                 tabIndex="-1"
                 onClick={this.toggle}
                 onKeyPress={this.handleKeyPress}
-                className="fa fa-plus-circle fa-3x"
+                className="fa fa-edit fa-2x"
               />
+              <p className="name-desc">{currentUser.summary}</p>
+              <div className="red-border-line" />
+              <h4>Bio</h4>
+              <p>{currentUser.bio}</p>
               <EditProfileModal
                 user={currentUser}
                 isOpen={this.state.modal}
@@ -130,7 +131,7 @@ function mapStateToProps(state) {
 Profile.propTypes = {
   apiUpdateUserProfile: PropTypes.func.isRequired,
   apiGetCurrentUser: PropTypes.func.isRequired,
-  currentUser: PropTypes.objectOf(PropTypes.string).isRequired
+  currentUser: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 

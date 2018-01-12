@@ -24,10 +24,14 @@ import {
   RECIPE_FAVORITE_FAILURE,
   GET_RECIPE_FAVORITE_SUCCESS,
   GET_RECIPE_FAVORITE_FAILURE,
+  GET_ALL_FAVORITE_RECIPE_SUCCESS,
+  GET_ALL_FAVORITE_RECIPE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
   RECIPE_REVIEW_FAILURE,
   GET_RECIPE_REVIEW_SUCCESS,
   GET_RECIPE_REVIEW_FAILURE,
+  DELETE_RECIPE_REVIEW_SUCCESS,
+  DELETE_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
   SEARCH_RECIPE_FAILURE
 } from '../constants';
@@ -136,13 +140,31 @@ export const getfavoriteRecipeFailure = error => ({
   type: GET_RECIPE_FAVORITE_FAILURE,
   error
 });
+export const getAllFavoriteRecipeSuccess = favRecipes => ({
+  type: GET_ALL_FAVORITE_RECIPE_SUCCESS,
+  favRecipes
+});
+
+export const getAllFavoriteRecipeFailure = error => ({
+  type: GET_ALL_FAVORITE_RECIPE_FAILURE,
+  error
+});
 export const reviewRecipeSuccess = recipeReview => ({
   type: RECIPE_REVIEW_SUCCESS,
   recipeReview
 });
-export const reviewRecipeFailure = Error => ({
+export const reviewRecipeFailure = error => ({
   type: RECIPE_REVIEW_FAILURE,
-  Error
+  error
+});
+export const deleteRecipeReviewSuccess = id => ({
+  type: DELETE_RECIPE_REVIEW_SUCCESS,
+  deletedReviewId: id
+});
+
+export const deleteRecipeReviewFailure = error => ({
+  type: DELETE_RECIPE_REVIEW_FAILURE,
+  error
 });
 export const getRecipeReviewSuccess = id => ({
   type: GET_RECIPE_REVIEW_SUCCESS,
@@ -187,9 +209,9 @@ export const apiCreateRecipe = ({
     });
     request.then((response) => {
       dispatch(createRecipeSuccess(response.data));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(createRecipeFailure(err.data.error));
+    }).catch((error) => {
+      if (error) {
+        dispatch(createRecipeFailure(error.response.data.error));
       }
     });
     return request;
@@ -199,14 +221,14 @@ export const apiCreateRecipe = ({
  * Action for getRecipe
  *
  * @returns {promise} request
- * @param {object} options
+ * @param {object} limit
  */
-export const apiGetRecipe = () =>
+export const apiGetRecipe = limit =>
   function action(dispatch) {
     dispatch(getRecipe());
     const request = axios({
       params: {
-        limit: 6
+        limit
       },
       method: 'GET',
       url: '/api/v1/recipes'
@@ -385,6 +407,31 @@ export const apifavoriteRecipe = id =>
  * Action for getRecipe
  *
  * @returns {promise} request
+ * @param {object} limit
+ */
+export const apiGetAllFavoriteRecipes = limit =>
+  function action(dispatch) {
+    const request = axios({
+      params: {
+        limit
+      },
+      method: 'GET',
+      url: '/api/v1/favorites'
+    });
+    request.then((response) => {
+      dispatch(getAllFavoriteRecipeSuccess(response.data.favRecipes));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(getAllFavoriteRecipeFailure(err.data.error));
+      }
+    });
+    return request;
+  };
+
+  /**
+ * Action for getRecipe
+ *
+ * @returns {promise} request
  * @param {object} id
  */
 export const apiGetFavoriteRecipe = id =>
@@ -411,7 +458,6 @@ export const apiGetRecipeReview = id =>
     });
     request.then((response) => {
       dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
-      // dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
     }).catch((error) => {
       if (error && error.data) {
         dispatch(getRecipeReviewFailure(error.data.error));
@@ -430,10 +476,32 @@ export const apiRecipeReview = (id, reviews) =>
       }
     });
     request.then((response) => {
-      dispatch(reviewRecipeSuccess(response.data.recipeReview));
+      dispatch(reviewRecipeSuccess(response.data.review));
     }).catch((error) => {
       if (error && error.data) {
         dispatch(reviewRecipeFailure(error.data.error));
+      }
+    });
+    return request;
+  };
+
+/**
+ * Action for deleteRecipe
+ *
+ * @returns {promise} request
+ * @param {integer} id
+ */
+export const apiDeleteRecipeReview = id =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'DELETE',
+      url: `/api/v1/recipe/${id}/review`
+    });
+    request.then(() => {
+      dispatch(deleteRecipeReviewSuccess(id));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(deleteRecipeReviewFailure(err.data.error));
       }
     });
     return request;

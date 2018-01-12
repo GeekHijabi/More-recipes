@@ -56,17 +56,17 @@ export const signUpField = (req, res, next) => {
 
 export const validateGetRecipe = (req, res, next) => {
   if (!req.body.description) {
-    return res.status(400).json({
+    return res.status(406).json({
       error: 'Input a description for your recipe'
     });
   }
   if (!req.body.recipeName) {
-    return res.status(400).json({
+    return res.status(406).json({
       error: 'Input a name for your recipe'
     });
   }
   if (!req.body.ingredients) {
-    return res.status(400).json({
+    return res.status(406).json({
       error: 'Input ingredients for your recipes'
     });
   }
@@ -75,7 +75,7 @@ export const validateGetRecipe = (req, res, next) => {
 
 export const recipeValidation = (req, res, next) => {
   if (!req.body.description && !req.body.recipeName && !req.body.ingredients) {
-    return res.status(400).json({
+    return res.status(406).json({
       error: 'Input a valid recipe name'
     });
   }
@@ -84,7 +84,7 @@ export const recipeValidation = (req, res, next) => {
 
 export const reviewsValidation = (req, res, next) => {
   if (!req.body.reviews || req.body.reviews.trim() === '') {
-    return res.status(400).json({
+    return res.status(406).json({
       error: 'review cannot be empty'
     });
   }

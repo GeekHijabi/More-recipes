@@ -32,7 +32,8 @@ class MyRecipe extends React.Component {
     this.state = {
       activeTab: {
         name: 'Ingredients',
-        isActive: true
+        isActive: true,
+        userFavorited: false
       }
     };
     this.handleChangeTab = this.handleChangeTab.bind(this);
@@ -95,7 +96,7 @@ class MyRecipe extends React.Component {
   handlefavorite() {
     this.props.apifavoriteRecipe(this.props.recipe.id);
     this.setState({
-      bgColor: 'red'
+      userFavorited: !this.state.userFavorited
     });
   }
   /**
@@ -106,7 +107,7 @@ class MyRecipe extends React.Component {
    */
   render() {
     const { recipe } = this.props;
-    console.log('recipeDe', recipe);
+    console.log(recipe);
     return (
       <div>
         <RecipeHeader />
@@ -142,7 +143,7 @@ class MyRecipe extends React.Component {
               </span>
               <span className="vote_type">
                 <i
-                  className="fa fa-heart-o fa-2x"
+                  className={this.state.userFavorited ? 'fa fa-thumbs-o-down fa-2x' : 'fa fa-heart-o fa-2x'}
                   role="button"
                   tabIndex="-1"
                   onKeyPress={this.handleKeyPress}
@@ -178,8 +179,8 @@ MyRecipe.propTypes = {
   apiUpVoteRecipe: PropTypes.func.isRequired,
   apiDownVoteRecipe: PropTypes.func.isRequired,
   apifavoriteRecipe: PropTypes.func.isRequired,
-  recipe: PropTypes.objectOf(PropTypes.string).isRequired,
-  match: PropTypes.func.isRequired,
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 /**
@@ -189,6 +190,7 @@ MyRecipe.propTypes = {
  * @returns {void}
  */
 function mapStateToProps(state) {
+  console.log('recipestate', state);
   return {
     recipe: state.recipe.recipe,
   };

@@ -1,6 +1,9 @@
+import moment from 'moment';
 import db from '../models';
 
-const { Recipe, Review, Favorite } = db;
+const {
+  Recipe, Review, Favorite, User
+} = db;
 
 export default {
   create(req, res) {
@@ -30,6 +33,8 @@ export default {
             description: req.body.description,
             imageUrl: req.body.imageUrl,
             ingredients: req.body.ingredients,
+            preptime: req.body.preptime,
+            servings: req.body.servings,
             userId: userDetail.id
           })
           .then(newRecipe => res.status(201).json({
@@ -37,11 +42,14 @@ export default {
             description: newRecipe.description,
             ingredients: newRecipe.ingredients,
             imageUrl: newRecipe.imageUrl,
+            preptime: newRecipe.preptime,
+            servings: newRecipe.servings,
             id: newRecipe.id,
+            createdAt: moment().calendar(),
             userId: newRecipe.userId
           }));
-      }).catch(() => {
-        res.status(500).json({ error: 'oops something went wrong' });
+      }).catch((error) => {
+        res.status(500).json({ error: error.message });
       });
   },
 
@@ -52,7 +60,7 @@ export default {
       req.query.sort === 'downvotes' ?
       req.query.sort : 'upvotes';
     const order = req.query.order === 'des' ?
-      'DESC' : 'DESC';
+      'DESC' : 'ASC';
     Recipe
       .findAndCountAll({
         order: [
@@ -71,6 +79,24 @@ export default {
       .catch(() => res.status(422).json({ error: 'Recipe Not Created yet' }));
   },
 
+  listAllFavoriteRecipes(req, res) {
+    const limitValue = req.query.limit || 4;
+    const sort = 'favoriteCount';
+    const order = req.query.order === 'asc' ?
+      'ASC' : 'DESC';
+    Recipe
+      .findAndCountAll({
+        order: [
+          [sort, order]
+        ],
+        limit: limitValue
+      })
+      .then(favoriteRecipeList => res.status(200).json({
+        favRecipes: favoriteRecipeList.rows
+      }))
+      .catch(() => res.status(422).json({ error: 'Fav Recipe Not Created yet' }));
+  },
+
   update(req, res) {
     const { userDetail } = req.decoded;
     return Recipe
@@ -85,7 +111,9 @@ export default {
               recipeName: req.body.recipeName || Recipefound.recipeName,
               description: req.body.description || Recipefound.description,
               ingredients: req.body.ingredients || Recipefound.ingredients,
-              imageUrl: req.body.imageUrl || Recipefound.imageUrl
+              imageUrl: req.body.imageUrl || Recipefound.imageUrl,
+              preptime: req.body.preptime || Recipefound.preptime,
+              servings: req.body.servings || Recipefound.servings,
             }, {
               where: {
                 id: req.params.recipeId
@@ -173,14 +201,19 @@ export default {
         where: {
           id: req.params.recipeId
         },
-        include: [{
-          model: Review,
-          attributes: ['reviews']
-        },
-        {
-          model: Favorite,
-          as: 'favorites'
-        }
+        include: [
+          {
+            model: Review,
+            include: [
+              {
+                model: User,
+                attributes: ['userName', 'imageUrl']
+              }
+            ]
+          },
+          {
+            model: Favorite
+          }
         ]
       })
       .then((singleRecipe) => {
@@ -208,4 +241,3 @@ export default {
   },
 
 };
-

@@ -29,7 +29,7 @@ const routes = (app) => {
   );
 
   app.get(
-    '/api/v1/current-user',
+    '/api/v1/user',
     authenticate,
     user.getCurrentUser
   );
@@ -75,6 +75,11 @@ const routes = (app) => {
     authenticate,
     recipes.getSingleRecipe
   );
+  app.get(
+    '/api/v1/favorites',
+    authenticate,
+    recipes.listAllFavoriteRecipes
+  );
 
   app.get(
     '/api/v1/search',
@@ -88,9 +93,14 @@ const routes = (app) => {
     reviews.create
   );
   app.get(
-    '/api/v1/recipe/:recipeId/reviews',
+    '/api/v1/recipe/:recipeId/review',
     authenticate,
     reviews.getSingleReview
+  );
+  app.delete(
+    '/api/v1/recipe/:id/review',
+    authenticate,
+    reviews.destroySingleReview
   );
   app.get(
     '/api/v1/user/:userId/favorites',

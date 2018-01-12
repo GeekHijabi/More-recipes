@@ -20,6 +20,7 @@ const Header = () => (
         <span className="navbar-toggler-icon" />
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        {localStorage.getItem('token') ? '' :
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link to="/signin" className="nav-link btn cornflowerblue" href="/signin">Sign in</Link>
@@ -28,6 +29,7 @@ const Header = () => (
             <Link to="/signup" className="nav-link btn cornflowerblue" href="/signup">Sign up</Link>
           </li>
         </ul>
+        }
       </div>
     </nav>
   </div>
