@@ -1,7 +1,9 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import SearchBar from './SearchBar';
+import { LogoutUser } from '../../actions/auth';
 
 /**
  *
@@ -19,7 +21,6 @@ class RecipeHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
     };
     this.onClick = this.onClick.bind(this);
   }
@@ -32,9 +33,8 @@ class RecipeHeader extends React.Component {
  */
   onClick(event) {
     event.preventDefault();
-    // console.log(localStorage.token);
-    localStorage.removeItem('token')
-    window.location.href = '/'
+    this.props.LogoutUser();
+    // window.location.href = '/';
   }
   /**
    *
@@ -42,12 +42,15 @@ class RecipeHeader extends React.Component {
    *
    */
   render() {
+    const url = window.location.href;
+    const currentURL = url.split('/')[url.split('/').length - 1];
+
     return (
       <nav className="navbar bg-success navbar-expand-lg">
         <Link to="/" href="/" className="navbar-brand text-white">
           <i className="fa fa-eercast" /> More Recipe
         </Link>
-        <SearchBar />
+        {currentURL === 'recipes' ? <SearchBar /> : ''}
         <button
           className="navbar-toggler"
           type="button"
@@ -63,7 +66,7 @@ class RecipeHeader extends React.Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to="/" className="nav-link text-white" href="/" title="favourite Recipes">
+              <Link to="/favorites" className="nav-link text-white" href="/favorites" title="favourite Recipes">
                 <i className="fa fa-gratipay fa-2x" />
               </Link>
             </li>
@@ -81,8 +84,7 @@ class RecipeHeader extends React.Component {
                   href="/"
                   onClick={this.onClick}
                 >
-                  <i className="fa fa-sign-out"
-                  />
+                  <i className="fa fa-sign-out" />
                 Logout
                 </Link>
                 <Link to="/admin" className="dropdown-item" href="/profile"><i className="fa fa-user-o fa-1x" /> MyRecipes</Link>
@@ -94,5 +96,11 @@ class RecipeHeader extends React.Component {
     );
   }
 }
+RecipeHeader.propTypes = {
+  LogoutUser : PropTypes.func.isRequired,
+};
 
-export default RecipeHeader;
+export default connect(null, { LogoutUser })(RecipeHeader);
+
+
+// export default RecipeHeader;

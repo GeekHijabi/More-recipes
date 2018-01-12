@@ -1,6 +1,24 @@
 import db from '../models';
 
 const { Favorite, Recipe } = db;
+const updateFavoriteCounts = (recipeId) => {
+  Favorite
+    .count({
+      where: {
+        recipeId
+      }
+    }).then((totalFavorite) => {
+      Recipe.findOne({
+        where: {
+          id: recipeId
+        }
+      }).then((recipeFound) => {
+        recipeFound.updateAttributes({
+          favoriteCount: totalFavorite
+        });
+      });
+    });
+};
 
 export default {
   create(req, res) {
@@ -21,24 +39,30 @@ export default {
             .create({
               recipeId: req.params.recipeId,
               userId: userDetail.id
+            }).then(() => {
+              console.log('heloo')
+              updateFavoriteCounts(req.params.recipeId);
+              return res.status(201).json({
+                message: 'Recipe favorited'
+              });
             });
-          return res.status(201).json({
-            message: 'Recipe favorited'
+        } else {
+          Favorite.destroy({
+            where: {
+              $and: [
+                {
+                  recipeId: req.params.recipeId
+                },
+                { userId: userDetail.id }
+              ]
+            }
+          }).then(() => {
+            updateFavoriteCounts(req.params.recipeId);
+            return res.status(200).json({
+              message: 'Recipe unfavorited'
+            });
           });
         }
-        Favorite.destroy({
-          where: {
-            $and: [
-              {
-                recipeId: req.params.recipeId
-              },
-              { userId: userDetail.id }
-            ]
-          }
-        });
-        return res.status(409).json({
-          error: 'Recipe unfavorited'
-        });
       }).catch(() => {
         res.status(500).send({
           error: 'oops! something went wrong'
@@ -50,9 +74,9 @@ export default {
     const { userDetail } = req.decoded;
     return Favorite
       .findAll({
-        where: {
-          userId: userDetail.id
-        },
+        // where: {
+        //   userId: userDetail.id
+        // },
         include: [
           {
             model: Recipe

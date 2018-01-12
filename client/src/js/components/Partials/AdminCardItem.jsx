@@ -92,7 +92,7 @@ class AdminCardItem extends React.Component {
                 <EditRecipeModal
                   isOpen={this.state.modal}
                   toggle={this.toggle}
-                  recipeId={id}
+                  recipe={this.props.recipe}
                   editRecipe={this.props.editRecipe}
                 />
                 <span className="delete paddings">

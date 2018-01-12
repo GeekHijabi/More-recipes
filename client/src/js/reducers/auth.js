@@ -8,7 +8,8 @@ import {
   SET_CURRENT_USER,
   REMOVE_CURRENT_USER,
   UPDATE_PROFILE_SUCCESS,
-  UPDATE_PROFILE_FAILURE } from '../constants';
+  UPDATE_PROFILE_FAILURE,
+  LOGOUT_USER_SUCCESS } from '../constants';
 
 export default (state = initialState, action) => {
   const newState = cloneDeep(state);
@@ -48,6 +49,11 @@ export default (state = initialState, action) => {
       return {
         ...newState,
         currentUser: {}
+      };
+    case LOGOUT_USER_SUCCESS:
+      console.log('here', newState);
+      return {
+        ...newState
       };
     case UPDATE_PROFILE_SUCCESS:
       return {

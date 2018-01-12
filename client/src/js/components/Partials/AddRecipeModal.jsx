@@ -5,7 +5,6 @@ import {
   ModalHeader, ModalBody, Form, Label, Input, FormGroup, Col
 } from 'reactstrap';
 import imageUpload from '../../utils/imageUpload';
-// import handleDrop from '../../utils/imageUpload';
 
 /**
  *
@@ -54,6 +53,12 @@ class AddRecipeModal extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     this.props.createRecipe(this.state).then((res) => {
+      this.setState({
+        recipeName: '',
+        ingredients: '',
+        description: '',
+        imageUrl: ''
+      });
       if (res && res.data) {
         this.setState({
           hasError: false
@@ -83,15 +88,14 @@ class AddRecipeModal extends React.Component {
   onDrop(files) {
     imageUpload(files)
       .then((response) => {
-        console.log('getshere', response);
         const { body } = response;
         const fileURL = body.secure_url;
 
         this.setState({
           imageUrl: fileURL
         });
-      }).catch((err) => {
-        console.log('error', err);
+      }).catch(() => {
+        'unsuccessful upload';
       });
   }
   /**

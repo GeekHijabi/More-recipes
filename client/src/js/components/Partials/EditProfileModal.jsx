@@ -1,9 +1,8 @@
 import React from 'react';
-import Dropzone from 'react-dropzone';
 import toastr from 'toastr';
 import {
   Button, Modal,
-  ModalHeader, ModalBody, Form, Label, Input, FormGroup, Col, FormText
+  ModalHeader, ModalBody, Form, Label, Input, FormGroup, Col
 } from 'reactstrap';
 import imageUpload from '../../utils/imageUpload';
 
@@ -89,6 +88,7 @@ class EditProfileModal extends React.Component {
    * @return {void}
    */
   render() {
+    const { imageUrl } = this.state;
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
         <ModalHeader toggle={this.props.toggle}>Edit Profile</ModalHeader>
@@ -150,11 +150,21 @@ class EditProfileModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleFile" sm={4}>File</Label>
+              <Label for="exampleFile" lg={4}>File</Label>
+              {/* <div> */}
               <Col sm={8}>
-                <Dropzone onDrop={this.onDrop} />
-                <FormText color="muted" />
-                {/* {this.state.imageUrl} */}
+                <input
+                  type="file"
+                  name="image"
+                  onChange={this.onDrop}
+                  accept="image/*"
+                />
+                <img
+                  src={imageUrl}
+                  alt="sample"
+                  height="400"
+                  width="100%"
+                />
               </Col>
             </FormGroup>
 

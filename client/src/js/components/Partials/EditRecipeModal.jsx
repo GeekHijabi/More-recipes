@@ -1,32 +1,38 @@
 import React from 'react';
-import Dropzone from 'react-dropzone';
 import toastr from 'toastr';
 import {
   Button, Modal,
-  ModalHeader, ModalBody, Form, Label, Input, FormGroup, Col, FormText
+  ModalHeader, ModalBody, Form, Label, Input, FormGroup, Col
 } from 'reactstrap';
 import imageUpload from '../../utils/imageUpload';
 
 /**
  *
  *
- * @class AddRecipeModal
+ * @class EditRecipeModal
  * @extends {React.Component}
  */
 class EditRecipeModal extends React.Component {
   /**
-   * @description COnstructor Function
+   * @description constructor Function
    * @param {any} props
    * @memberof EditRecipeModal
    * @return {void}
    */
   constructor(props) {
     super(props);
+    const {
+      id,
+      recipeName,
+      ingredients,
+      description,
+      imageUrl
+    } = this.props.recipe;
     this.state = {
-      recipeName: '',
-      ingredients: '',
-      description: '',
-      imageUrl: ''
+      recipeName,
+      ingredients,
+      description,
+      imageUrl
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -51,7 +57,7 @@ class EditRecipeModal extends React.Component {
  */
   onSubmit(event) {
     event.preventDefault();
-    this.props.editRecipe(this.props.recipeId, this.state).then(() => {
+    this.props.editRecipe(this.props.recipe.id, this.state).then(() => {
       toastr.options = {
         closeButton: true,
         progressBar: true
@@ -75,9 +81,10 @@ class EditRecipeModal extends React.Component {
         this.setState({
           imageUrl: fileURL
         });
+      }).catch(() => {
+        'unsuccessful upload';
       });
   }
-
 
   /**
    * @description COnstructor Function
@@ -86,9 +93,10 @@ class EditRecipeModal extends React.Component {
    * @return {void}
    */
   render() {
+    const { imageUrl } = this.state;
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
-        <ModalHeader toggle={this.props.toggle}>Add A recipe</ModalHeader>
+        <ModalHeader toggle={this.props.toggle}>Edit recipe</ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup row>
@@ -134,11 +142,21 @@ class EditRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleFile" sm={3}>File</Label>
+              <Label for="exampleFile" lg={4}>File</Label>
+              {/* <div> */}
               <Col sm={8}>
-                <Dropzone onDrop={this.onDrop} />
-                <FormText color="muted" />
-                {/* {this.state.imageUrl} */}
+                <input
+                  type="file"
+                  name="image"
+                  onChange={this.onDrop}
+                  accept="image/*"
+                />
+                <img
+                  src={imageUrl}
+                  alt="sample"
+                  height="400"
+                  width="100%"
+                />
               </Col>
             </FormGroup>
 

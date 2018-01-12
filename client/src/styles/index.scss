@@ -29,7 +29,7 @@ img.bg {
   -o-object-fit: cover;
      object-fit: cover;
   -webkit-filter: brightness(0.8);
-          filter: brightness(0.8);
+          filter: brightness(0.8)
 }
 
 #banner>.container>.card {
@@ -64,7 +64,6 @@ img.bg {
 
 #list {
   padding: 2em 2%;
-  min-height: 700px;
 }
 
 .card .ratings {
@@ -341,6 +340,7 @@ h1.name {
 
 .mv-card {
   padding-bottom: 2em;
+  padding-left: 3em;
   height: -webkit-fill-available;
   padding-top: 1em;
 }
@@ -391,34 +391,36 @@ h1.name {
   margin-right: 15px;
 }
 
-// start - nest this in a div id or class
-.review-edit .input-control {
+.review-form {
+  padding-top: 5px;
+}
+
+.review-edit {
   margin: 0 auto;
-  width: 300px;
+  width: 600px;
+	height: 110px;
 }
 
-.review-edit input[type='text'] {
-  outline: 0;
-  margin-bottom: 3em;
-  border: 0;
-  display: block;
-  width: 150%;
-  font-size: 1rem;
-  font-weight: 300;
-  padding: 0px 3px;
-  border-bottom: 2px solid #ccc;
-  transition: border ease-in-out .5s;
+.review-btn {
+  background: #B0C038
 }
 
-.review-edit input[type="text"]:focus {
-  border-bottom-color: #4F99E2;
+.review-img {
+ width: 50px;
+ height: 50px; 
+ border-radius: 50%;
 }
 
-.review-edit label {
-  text-transform: uppercase;
-  font-size: .6rem
+.review-user {
+  margin-top: -2em;
+  margin-left: 4em;
 }
- // end
+
+.review-date {
+    margin-top: 0em;
+    margin-left: 28em;
+}
+
 
 @media screen and (max-width: 576px) { 
   #banner {
