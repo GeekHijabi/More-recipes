@@ -12,8 +12,6 @@ ul.ml-auto {
 
  .font-up, footer.page-footer .title {
   text-transform: inherit;
-  color: cornflowerblue !important;
-  bottom: 0;
 }
 
 #banner {
@@ -31,7 +29,7 @@ img.bg {
   -o-object-fit: cover;
      object-fit: cover;
   -webkit-filter: brightness(0.8);
-          filter: brightness(0.8);
+          filter: brightness(0.8)
 }
 
 #banner>.container>.card {
@@ -66,7 +64,6 @@ img.bg {
 
 #list {
   padding: 2em 2%;
-  min-height: 700px;
 }
 
 .card .ratings {
@@ -79,7 +76,7 @@ img.bg {
 }
 
 .heading {
-  padding-bottom: 1em;
+  padding-bottom: 2em;
 }
 
 .heading span {
@@ -128,7 +125,6 @@ main[page="details"] > div:nth-child(1):hover {
 
 main[page="details"] > div:nth-child(2) {
   overflow-y: scroll;
-  padding-top: 2.5em;
   margin-left: -0.8em;
 }
 
@@ -158,7 +154,6 @@ main[page="details"] .food_vote {
 main[page="details"] .vote_type {
   display: block;
   text-align: center;
-  margin-top: 2em;
 }
 
 main[page="details"] .vote_type:hover {
@@ -186,7 +181,6 @@ span .detail-value {
 }
 
 .nav.nav-tabs {
-  position: fixed;
   top: 4em;
   width: 100%;
   background-color: white;
@@ -227,10 +221,6 @@ span .detail-value {
   object-position: 0em -7em;
   -webkit-filter: grayscale(0.6);
           filter: grayscale(0.6);
-}
-
-.prof-up {
-  margin-top: -2em;
 }
 
 h1.name {
@@ -314,9 +304,9 @@ h1.name {
   height: calc(100vh - 70px);
 }
 
-#Form-pass1 {
-  margin-bottom: 1em;
-}
+// #Form-pass1 {
+//   margin-bottom: 1em;
+// }
 
 .form-elegant.btn {
   margin-top: -1.5em;
@@ -331,12 +321,16 @@ h1.name {
 .page-footer {
   text-align: center;
   bottom: 0;
-  padding-top: 2em !important;
+  padding-top: 1em !important;
   // padding-bottom: 2em;
-  color: wheat;
-  background: -o-linear-gradient(50deg,#45cafc,#303f9f) ;
-  background: -o-linear-gradient(50deg,#45cafc,#303f9f);
-  background: linear-gradient(40deg,#45cafc,#303f9f);
+  color: white;
+  background-color: #B0C038 !important;
+  // background: -o-linear-gradient(50deg,#45cafc,#303f9f) ;
+  // background: -o-linear-gradient(50deg,#45cafc,#303f9f);
+  // background: linear-gradient(40deg,#45cafc,#303f9f);
+}
+.icons-sm {
+  color: white
 }
 
 .dashboard {
@@ -346,6 +340,7 @@ h1.name {
 
 .mv-card {
   padding-bottom: 2em;
+  padding-left: 3em;
   height: -webkit-fill-available;
   padding-top: 1em;
 }
@@ -365,42 +360,85 @@ h1.name {
   color: white !important;
 }
 
+.card-view {
+  color: orangered !important;
+}
+
+.btn-block {
+  display: block;
+  width: 94%;
+}
+
 .food-image {
   max-height: 300px;
   max-width: auto;
 }
 
-// start - nest this in a div id or class
-.input-control {
+.bg-success {
+  background-color: #B0C038 !important;
+}
+
+.card-padding {
+  text-align: left;
+  padding: 0;
+}
+.card-paddings {
+  text-align: right;
+  padding: 0;
+}
+
+.edit {
+  margin-right: 15px;
+}
+
+.review-form {
+  padding-top: 5px;
+}
+
+.review-edit {
   margin: 0 auto;
-  width: 300px;
+  width: 600px;
+	height: 110px;
 }
 
-input[type='text'] {
-  outline: 0;
-  margin-bottom: 3em;
-  border: 0;
-  display: block;
-  width: 150%;
-  font-size: 1rem;
-  font-weight: 300;
-  padding: 0px 3px;
-  border-bottom: 2px solid #ccc;
-  transition: border ease-in-out .5s;
+.review-btn {
+  background: #B0C038
 }
 
-input[type="text"]:focus {
-  border-bottom-color: #4F99E2;
+.review-img {
+ width: 50px;
+ height: 50px; 
+ border-radius: 50%;
 }
 
-label {
-  text-transform: uppercase;
-  font-size: .6rem
+.review-user {
+  margin-top: -2em;
+  margin-left: 4em;
 }
- // end
+
+.review-date {
+    margin-top: 0em;
+    margin-left: 28em;
+}
+
 
 @media screen and (max-width: 576px) { 
   #banner {
     padding-top: 50%
+  }
+ }
+@media screen and (max-width: 860px) { 
+  .bg-size {
+    display: none
+  }
+
+  [page="signup"] {
+    padding: 5em 0em;
+  }
+  .form-elegant {
+    height: 100%
+  }
+  .form-control {
+    width: 100%
   }
  }

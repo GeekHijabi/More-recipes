@@ -11,7 +11,7 @@ const agent = superagentPromise(superagent, Promise);
 export default function handleDrop(files) {
   const unassignedPreset = 'ysyhxvyc';
   const formData = new FormData();
-  formData.append('file', files[0]);
+  formData.append('file', files.target.files[0]);
   formData.append('tags', 'morerecipe, food, checkpoint');
   formData.append('upload_preset', unassignedPreset);
   formData.append('api_key', '494855913673414');

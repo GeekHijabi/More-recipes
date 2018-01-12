@@ -7,10 +7,13 @@ export default {
   isLoadingRecipe: false,
   favoriteRecipes: [],
   myRecipes: [],
-  recipe: {},
+  recipe: {
+    ingredients: ''
+  },
   upvotes: 0,
   downvotes: 0,
   reviews: '',
   SearchResults: [],
-  favorites: []
+  favorites: [],
+  favRecipes: []
 };

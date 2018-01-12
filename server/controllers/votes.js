@@ -84,7 +84,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).json({
-              message: 'upvote removed'
+              message: 'upvote added'
             });
           });
         }
@@ -108,7 +108,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).json({
-              message: 'Successfully upvoted'
+              message: 'Successfully downvoted'
             });
           });
         }
@@ -119,7 +119,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).json({
-              message: 'upvote removed'
+              message: 'downvote removed'
             });
           });
         } else {
@@ -129,7 +129,7 @@ export default {
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
             return res.status(200).json({
-              message: 'upvote removed'
+              message: 'downvote added'
             });
           });
         }

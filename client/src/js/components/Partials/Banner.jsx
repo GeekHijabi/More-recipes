@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 const image = require('../../../assets/images/banner_bg.jpg');
 
@@ -13,6 +13,7 @@ class Banner extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
+   * @param {any} context
    * @memberof Home
    * @return {void}
    */
@@ -31,7 +32,7 @@ class Banner extends React.Component {
  */
   onClick(event) {
     event.preventDefault();
-    this.context.router.transitionTo('/recipes');
+    this.props.history.push('/recipes');
   }
   /**
    * @description COnstructor Function
@@ -48,7 +49,12 @@ class Banner extends React.Component {
             <div className="card card-body">
               <h1>Life is too short for just a rough meal</h1>
               <p className="btn">
-                <button onClick={this.onClick}>Browse our collecton of Recipes</button>
+                <button
+                  type="button"
+                  onClick={this.onClick}
+                >
+                Browse our collecton of Recipes
+                </button>
               </p>
             </div>
           </div>
@@ -58,4 +64,13 @@ class Banner extends React.Component {
   }
 }
 
-export default Banner;
+// Banner.contextTypes = {
+//   router: React.PropTypes.func.isRequired,
+// };
+
+// Banner.propTypes = {
+//   history: PropTypes.object.isRequired
+// }
+
+
+export default withRouter(Banner);
