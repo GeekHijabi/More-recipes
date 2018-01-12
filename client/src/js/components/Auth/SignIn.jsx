@@ -84,9 +84,9 @@ class SignIn extends React.Component {
   }
 
   /**
-   * @description COnstructor Function
+   * @description constructor Function
    * @param {any} props
-   * @memberof Home
+   * @memberof SignIn
    * @return {void}
    */
   render() {
@@ -94,10 +94,10 @@ class SignIn extends React.Component {
       <div page="signup">
         <div className="overlay" />
         <main className="row">
-          <div className="dual col-xs-12 col-sm-6 col-md-6 col-lg-7">
+          <div className="dual col-sm-6 col-md-6 col-lg-7 bg-size">
             <img src={image} alt="" className="bg" />
           </div>
-          <div className="dual col-xs-12 col-sm-6 col-md-6 col-lg-5 form-elegant card">
+          <div className="dual col-12 col-sm-12 col-md-12 col-lg-5 form-elegant">
             <div className="card-body mx-4">
               <div className="text-center">
                 <h3 className="dark-grey-text mb-5" >
@@ -149,8 +149,8 @@ class SignIn extends React.Component {
               title="8 to 15 characters required"
               required
             />
-                  <p className="font-small blue-text d-flex justify-content-end">Forgot
-                <Link to="/" href="/" className="blue-text ml-1">Password?</Link>
+                  <p className="font-small blue-text d-flex justify-content-end">
+                    <Link to="/" href="/" className="blue-text ml-1">Forgot Password?</Link>
                   </p>
                 </label>
               </div>
@@ -191,6 +191,7 @@ class SignIn extends React.Component {
 }
 SignIn.propTypes = {
   apiLoginUser: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 export default connect(null, { apiLoginUser })(SignIn);

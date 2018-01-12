@@ -4,7 +4,7 @@ const { Recipe, Review, User } = db;
 
 export default {
   create(req, res) {
-    const { userDetail } = req.decoded;
+    const { id, imageUrl, userName } = req.decoded.userDetail;
     Recipe.find({
       where: { id: req.params.recipeId }
     })
@@ -17,14 +17,20 @@ export default {
       });
     return Review
       .create({
-        userId: userDetail.id,
+        userId: id,
         recipeId: req.params.recipeId,
-        reviews: req.body.reviews
+        reviews: req.body.reviews,
       })
-      .then(data => res.status(200).json({
-        message: 'Your recipe has been reviewed',
-        recipeReview: data
-      }))
+      .then((data) => {
+        const review = data.get({
+          plain: true
+        });
+        review.User = { userName, imageUrl };
+        res.status(200).json({
+          message: 'Your recipe has been reviewed',
+          review
+        });
+      })
       .catch(error => res.status(400).json({
         error: error.message
       }));
@@ -52,5 +58,42 @@ export default {
       .catch(error => res.status(404).json({
         error: error.message
       }));
+  },
+
+  destroySingleReview(req, res) {
+    const { userDetail } = req.decoded;
+    return Review
+      .findOne({
+        where: {
+          id: req.params.id,
+        },
+      })
+      .then((Reviewfound) => {
+        if (Reviewfound && Reviewfound.userId === userDetail.id) {
+          return Reviewfound
+            .destroy({
+              where: {
+                id: req.params.id,
+              },
+            })
+            .then(() => res.status(200).json({
+              message: 'Review deleted successfully'
+            }));
+        }
+        if (!Reviewfound) {
+          return res.status(404).send({
+            error: 'Review not found',
+          });
+        }
+        return res.status(401).send({
+          error: 'You cannot delete a review that does not belong to you',
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({
+          // error: 'oops! something went wrong!'
+          error: error.message
+        });
+      });
   },
 };

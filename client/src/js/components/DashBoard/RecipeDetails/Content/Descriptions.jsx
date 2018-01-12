@@ -10,7 +10,7 @@ const Description = props => (
     aria-labelledby="directions-tab"
   >
     <div className="step">
-      <h5>Step 1</h5>
+      <h5>Steps</h5>
       <p className="step_details">
         {props.description}
       </p>

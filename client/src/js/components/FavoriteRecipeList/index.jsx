@@ -44,11 +44,11 @@ class FavoriteRecipes extends React.Component {
    */
   render() {
     const { favorites } = this.props;
-    console.log('favorites', favorites);
     return (
       <div>
         <RecipeHeader />
         <div className="row container-fluid mv-card">
+          {favorites.length === 0 && (<span>You do not have any favorite recipe yet!</span>)}
           {favorites.map(favorite =>
             <CardItem recipe={favorite.Recipe} key={favorite.Recipe.id} />)}
         </div>
@@ -60,7 +60,7 @@ class FavoriteRecipes extends React.Component {
 
 FavoriteRecipes.propTypes = {
   apiGetFavoriteRecipe: PropTypes.func.isRequired,
-  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 /**
