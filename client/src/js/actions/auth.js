@@ -7,6 +7,7 @@ import {
   SET_CURRENT_USER,
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
+  LOGOUT_USER_SUCCESS,
   REMOVE_CURRENT_USER,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAILURE } from '../constants';
@@ -33,6 +34,9 @@ export const signupFailure = error => ({
 
 export const removeCurrentUser = () => ({
   type: REMOVE_CURRENT_USER
+});
+export const logoutSuccess = () => ({
+  type: LOGOUT_USER_SUCCESS
 });
 
 export const setCurrentUser = user => ({
@@ -97,6 +101,7 @@ export const apiLoginUser = ({
       const { token } = response.data;
       const decodedToken = jwt.decode(token);
       setToken(token);
+      localStorage.setItem('userId', decodedToken.userDetail.id);
       dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
     }).catch((err) => {
@@ -116,7 +121,7 @@ export const apiGetCurrentUser = () =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: '/api/v1/current-user'
+      url: '/api/v1/user'
     });
     request.then((response) => {
       dispatch(setCurrentUser(response.data));
@@ -126,6 +131,16 @@ export const apiGetCurrentUser = () =>
       }
     });
     return request;
+  };
+
+/**
+ * @return {void}
+ */
+export const LogoutUser = () =>
+  function action(dispatch) {
+    localStorage.removeItem('token');
+    dispatch(logoutSuccess());
+    dispatch(removeCurrentUser());
   };
 
 /**
@@ -149,7 +164,6 @@ export const apiUpdateUserProfile = ({
       url: '/api/v1/user/update-profile'
     });
     request.then((response) => {
-      console.log('profile', response.data);
       dispatch(updateProfileSuccess(response.data));
     }).catch((err) => {
       if (err && err.data) {

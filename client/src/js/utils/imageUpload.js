@@ -9,7 +9,6 @@ const agent = superagentPromise(superagent, Promise);
  * @returns {null} description
  */
 export default function handleDrop(files) {
-  console.log('files', files.target.files[0]);
   const unassignedPreset = 'ysyhxvyc';
   const formData = new FormData();
   formData.append('file', files.target.files[0]);

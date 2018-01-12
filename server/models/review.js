@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     reviews: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false
     },
   });
