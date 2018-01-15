@@ -51,7 +51,7 @@ export const createRecipeFailure = error => ({
 });
 
 export const getRecipe = () => ({
-  type: GET_RECIPE
+  type: GET_RECIPE,
 });
 
 export const getRecipeSuccess = recipes => ({
@@ -222,19 +222,31 @@ export const apiCreateRecipe = ({
  *
  * @returns {promise} request
  * @param {object} limit
+ * @param {object} page
+ * @param {object} pageCount
+ * @param {object} order
  */
-export const apiGetRecipe = limit =>
+export const apiGetRecipe = (limit, page) =>
   function action(dispatch) {
     dispatch(getRecipe());
     const request = axios({
       params: {
-        limit
+        limit,
+        page
       },
       method: 'GET',
-      url: '/api/v1/recipes'
+      url: `/api/v1/recipes?page=${page || 1}`
     });
+
     request.then((response) => {
-      dispatch(getRecipeSuccess(response.data));
+      const {
+        allRecipes, pageSize, pageCount, page, totalCount
+      } = response.data;
+      const paginated = {
+        pageCount, pageSize, allRecipes, page, totalCount
+      };
+      console.log(paginated.page);
+      dispatch(getRecipeSuccess(paginated));
     }).catch((err) => {
       if (err && err.data) {
         dispatch(getRecipeFailure(err.data.error));

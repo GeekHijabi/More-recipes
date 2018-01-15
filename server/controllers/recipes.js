@@ -54,6 +54,7 @@ export default {
   },
 
   listAllRecipes(req, res) {
+    console.log('req', req.query);
     const limitValue = req.query.limit || 5;
     const pageValue = (req.query.page - 1) || 0;
     const sort = req.query.sort === 'upvotes' ||
