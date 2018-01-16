@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ReactPaginate from 'react-paginate';
 import RecipeHeader from '../../Partials/RecipeHeader';
 import Footer from '../../Partials/Footer';
 import AdminCardItem from '../../Partials/AdminCardItem';
@@ -28,11 +29,13 @@ class RecipeAdmin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      page: 1
     };
     this.toggle = this.toggle.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.viewRecipe = this.viewRecipe.bind(this);
+    this.onPageChange = this.onPageChange.bind(this);
   }
 
   /**
@@ -44,6 +47,30 @@ class RecipeAdmin extends React.Component {
   componentWillMount() {
     this.props.apiGetMyRecipe();
   }
+
+  /**
+   * @description COnstructor Function
+   * @param {any} nextProps
+   * @memberof Recipes
+   * @return {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      page: nextProps.pageCount,
+    });
+  }
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} current
+ * @memberof Recipes
+ */
+  onPageChange(current) {
+    current.selected += 1;
+    this.props.apiGetMyRecipe(current.selected);
+  }
+
 
   /**
    * @returns {void}
@@ -118,6 +145,23 @@ class RecipeAdmin extends React.Component {
               />))}
           </div>
         </section>
+        <ReactPaginate
+          pageCount={this.state.page}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={3}
+          previousLabel="Previous"
+          nextLabel="Next"
+          breakClassName="text-center"
+          containerClassName="container pagination justify-content-center"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          activeClassName="page-item active"
+          previousClassName="page-item"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          previousLinkClassName="page-link"
+          onPageChange={this.onPageChange}
+        />
         <Footer />
       </div>
     );
@@ -133,6 +177,7 @@ RecipeAdmin.propTypes = {
   onViewRecipe: PropTypes.func.isRequired,
   myRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
   errorMessage: PropTypes.string.isRequired,
+  pageCount: PropTypes.number
 };
 
 RecipeAdmin.contextTypes = {
@@ -149,7 +194,8 @@ function mapStateToProps(state) {
   return {
     myRecipes: state.recipe.myRecipes,
     recipe: state.recipe.recipe,
-    errorMessage: state.recipe.errorMessage
+    errorMessage: state.recipe.errorMessage,
+    pageCount: state.recipe.pageCount
   };
 }
 

@@ -40,27 +40,28 @@ export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
     type, recipe, recipeDetail, recipeReview,
-    recipes, myRecipes, recipeId, error, searchRecipeName, favRecipes, favoriteRecipes, bool, deletedReviewId
+    recipes, myRecipes, recipeId, error, searchRecipeName,
+    favRecipes, favoriteRecipes, deletedReviewId
   } = action;
 
   switch (type) {
     case CREATE_RECIPE:
       return {
         ...newState,
-        isLoadingRecipe: bool
+        isLoadingRecipe: true
       };
     case CREATE_RECIPE_SUCCESS:
       return {
         ...newState,
         recipes: [...newState.recipes, recipe],
         myRecipes: [...newState.myRecipes, recipe],
-        isLoadingRecipe: bool
+        isLoadingRecipe: true
       };
     case CREATE_RECIPE_FAILURE:
       return {
         ...newState,
         errorMessage: error,
-        isLoadingRecipe: bool
+        isLoadingRecipe: false
       };
     case GET_RECIPE:
       return {
@@ -68,10 +69,11 @@ export default (state = initialState, action) => {
         isLoadingRecipe: true
       };
     case GET_RECIPE_SUCCESS:
+      newState.recipes = recipes.allRecipes;
+      newState.pageCount = recipes.pageCount;
+      newState.isLoadingRecipe = false;
       return {
-        ...newState,
-        recipes: recipes.allRecipes,
-        isLoadingRecipe: false
+        ...newState
       };
     case GET_RECIPE_FAILURE:
       return {
@@ -85,10 +87,11 @@ export default (state = initialState, action) => {
         isLoadingRecipe: true
       };
     case GET_MY_RECIPE_SUCCESS:
+      newState.myRecipes = myRecipes.allMyRecipes;
+      newState.pageCount = myRecipes.pageCount;
+      newState.isLoadingRecipe = false;
       return {
-        ...newState,
-        myRecipes,
-        isLoadingRecipe: false
+        ...newState
       };
     case GET_MY_RECIPE_FAILURE:
       return {
@@ -200,12 +203,7 @@ export default (state = initialState, action) => {
     case DELETE_RECIPE_REVIEW_SUCCESS:
       // console.log('check me', newState.recipe.Reviews, deletedReviewId)
       newState.recipe.Reviews
-        .filter((Review) => {
-          console.log(Review.id, deletedReviewId, 'see me')
-          return Review.id !== deletedReviewId;
-        });
-
-      console.log(newState, 'check all')
+        .filter(Review => Review.id !== deletedReviewId);
       return {
         ...newState,
         // review: Reviews
@@ -220,7 +218,11 @@ export default (state = initialState, action) => {
         errorMessage: error,
       };
     case SEARCH_RECIPE_SUCCESS:
+      // newState.SearchResults = searchRecipeName;
       newState.SearchResults = searchRecipeName;
+      newState.pageCount = recipes.pageCount;
+      newState.isLoadingRecipe = false;
+      // console.log('stateSearch', newState);
       return {
         ...newState
       };
