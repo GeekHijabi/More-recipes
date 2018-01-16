@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ReactPaginate from 'react-paginate';
 import RecipeHeader from '../Partials/RecipeHeader';
 import CardItem from '../Partials/CardItem';
 import PopularRecipe from '../Partials/PopularRecipe';
@@ -14,18 +15,19 @@ import { apiGetRecipe } from '../../actions/recipe';
  * @extends {React.Component}
  */
 class Recipes extends React.Component {
-  // /**
-  //  * @description COnstructor Function
-  //  * @param {any} props
-  //  * @memberof Recipes
-  //  * @return {void}
-  //  */
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-
-  //   };
-  // }
+  /**
+   * @description COnstructor Function
+   * @param {any} props
+   * @memberof Recipes
+   * @return {void}
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: 1
+    };
+    this.onPageChange = this.onPageChange.bind(this);
+  }
 
   /**
  * @returns {void}
@@ -34,7 +36,31 @@ class Recipes extends React.Component {
  * @memberof Recipes
  */
   componentDidMount() {
-    this.props.apiGetRecipe(6);
+    this.props.apiGetRecipe();
+  }
+
+  /**
+   * @description COnstructor Function
+   * @param {any} nextProps
+   * @memberof Recipes
+   * @return {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      page: nextProps.pageCount,
+    });
+  }
+
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} current
+ * @memberof Recipes
+ */
+  onPageChange(current) {
+    current.selected += 1;
+    this.props.apiGetRecipe(current.selected);
   }
 
   /**
@@ -46,6 +72,8 @@ class Recipes extends React.Component {
   render() {
     const { recipes, search } = this.props;
     const recipeList = search.length === 0 ? recipes : search;
+    console.log(recipes, 'actual')
+    console.log(search, 'not wanted')
     return (
       <div>
         <RecipeHeader />
@@ -55,6 +83,24 @@ class Recipes extends React.Component {
           {recipeList.map(recipe =>
             <CardItem recipe={recipe} key={recipe.id} />)}
         </div>
+        <ReactPaginate
+          pageCount={this.state.page}
+          pageRangeDisplayed={5}
+          marginPagesDisplayed={3}
+          previousLabel="Previous"
+          nextLabel="Next"
+          breakClassName="text-center"
+          // initialPage={0}
+          containerClassName="container pagination justify-content-center"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          activeClassName="page-item active"
+          previousClassName="page-item"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          previousLinkClassName="page-link"
+          onPageChange={this.onPageChange}
+        />
         <PopularRecipe />
         <Footer />
       </div>
@@ -65,11 +111,13 @@ class Recipes extends React.Component {
 Recipes.propTypes = {
   apiGetRecipe: PropTypes.func.isRequired,
   recipes: PropTypes.arrayOf(PropTypes.any),
-  search: PropTypes.arrayOf(PropTypes.any).isRequired
+  search: PropTypes.arrayOf(PropTypes.any).isRequired,
+  pageCount: PropTypes.number
 };
 
 Recipes.defaultProps = {
-  recipes: []
+  recipes: [],
+  pageCount: 0
 };
 
 /**
@@ -81,7 +129,8 @@ Recipes.defaultProps = {
 function mapStateToProps(state) {
   return {
     recipes: state.recipe.recipes,
-    search: state.recipe.SearchResults
+    search: state.recipe.SearchResults,
+    pageCount: state.recipe.pageCount
   };
 }
 

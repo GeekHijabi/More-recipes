@@ -51,7 +51,7 @@ export const createRecipeFailure = error => ({
 });
 
 export const getRecipe = () => ({
-  type: GET_RECIPE
+  type: GET_RECIPE,
 });
 
 export const getRecipeSuccess = recipes => ({
@@ -221,20 +221,29 @@ export const apiCreateRecipe = ({
  * Action for getRecipe
  *
  * @returns {promise} request
+ * @param {object} page
  * @param {object} limit
  */
-export const apiGetRecipe = limit =>
+export const apiGetRecipe = (page, limit) =>
   function action(dispatch) {
+    page = page || 1;
     dispatch(getRecipe());
     const request = axios({
       params: {
         limit
       },
       method: 'GET',
-      url: '/api/v1/recipes'
+      url: `/api/v1/recipes?page=${page}`
     });
+
     request.then((response) => {
-      dispatch(getRecipeSuccess(response.data));
+      const {
+        allRecipes, pageSize, pageCount, totalCount
+      } = response.data;
+      const paginated = {
+        pageCount, pageSize, allRecipes, page, totalCount
+      };
+      dispatch(getRecipeSuccess(paginated));
     }).catch((err) => {
       if (err && err.data) {
         dispatch(getRecipeFailure(err.data.error));
@@ -247,17 +256,23 @@ export const apiGetRecipe = limit =>
  * Action for getMyRecipe
  *
  * @returns {promise} request
- * @param {object} options
+ * @param {object} page
  */
-export const apiGetMyRecipe = () =>
+export const apiGetMyRecipe = page =>
   function action(dispatch) {
     dispatch(getMyRecipe());
     const request = axios({
       method: 'GET',
-      url: '/api/v1/recipes/myrecipes'
+      url: `/api/v1/myrecipes?page=${page}`
     });
     request.then((response) => {
-      dispatch(getMyRecipeSuccess(response.data));
+      const {
+        allMyRecipes, pageSize, pageCount
+      } = response.data;
+      const paginated = {
+        pageCount, pageSize, allMyRecipes, page
+      };
+      dispatch(getMyRecipeSuccess(paginated));
     }).catch((err) => {
       if (err && err.data) {
         dispatch(getMyRecipeFailure(err.data.error));
@@ -521,7 +536,7 @@ export const apiSearchRecipe = recipeName =>
       params: { search: recipeName }
     });
     request.then((response) => {
-      dispatch(searchRecipeSuccess(response.data.RecipeFound));
+      dispatch(searchRecipeSuccess(response.data.searchFound));
     }).catch((err) => {
       if (err && err.data) {
         dispatch(searchRecipeFailure(err.data.error));
