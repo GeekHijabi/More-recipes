@@ -65,7 +65,7 @@ const routes = (app) => {
   );
 
   app.get(
-    '/api/v1/recipes/myrecipes',
+    '/api/v1/myrecipes',
     authenticate,
     recipes.getUserRecipes
   );

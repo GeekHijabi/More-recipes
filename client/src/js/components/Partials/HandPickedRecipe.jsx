@@ -31,7 +31,7 @@ class HandPickedRecipe extends React.Component {
  * @memberof Recipes
  */
   componentWillMount() {
-    this.props.apiGetRecipe(4);
+    this.props.apiGetRecipe(0, 4);
   }
   /**
    * @description COnstructor Function
