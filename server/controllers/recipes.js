@@ -54,13 +54,14 @@ export default {
   },
 
   listAllRecipes(req, res) {
-    const limitValue = req.query.limit || 5;
+    const limitValue = req.query.limit || 8;
     const pageValue = (req.query.page - 1) || 0;
-    const sort = req.query.sort === 'upvotes' ||
-      req.query.sort === 'downvotes' ?
-      req.query.sort : 'upvotes';
-    const order = req.query.order === 'des' ?
-      'DESC' : 'ASC';
+    // const sort = req.query.sort === 'upvotes' ||
+    //   req.query.sort === 'id' ?
+    //   req.query.sort : 'id';
+    const sort = req.query.sort ? req.query.sort : 'createdAt';
+    const order = req.query.order === 'asc' ?
+      'ASC' : 'DESC';
     Recipe
       .findAndCountAll({
         order: [
@@ -76,7 +77,7 @@ export default {
         pageSize: parseInt(recipeList.rows.length, 10),
         allRecipes: recipeList.rows
       }))
-      .catch(() => res.status(422).json({ error: 'Recipe Not Created yet' }));
+      .catch(() => res.status(200).json({ error: 'Recipe Not Created yet' }));
   },
 
   listAllFavoriteRecipes(req, res) {
@@ -171,9 +172,11 @@ export default {
   },
 
   getUserRecipes(req, res) {
+    const limitValue = req.query.limit || 8;
+    const pageValue = (req.query.page - 1) || 0;
     const { userDetail } = req.decoded;
     Recipe
-      .findAll({
+      .findAndCountAll({
         where: {
           userId: userDetail.id
         },
@@ -182,17 +185,18 @@ export default {
             model: Review,
             attributes: ['reviews']
           }
-        ]
+        ],
+        limit: limitValue,
+        offset: pageValue * limitValue
       })
-      .then((myRecipes) => {
-        if (!myRecipes) {
-          return res.status(404).json({
-            error: 'No Recipe found'
-          });
-        }
-        return res.status(200).json(myRecipes);
-      })
-      .catch(error => res.status(404).json({ error: error.message }));
+      .then(myRecipesList => res.status(200).json({
+        page: (pageValue + 1),
+        totalCount: myRecipesList.count,
+        pageCount: Math.ceil(myRecipesList.count / limitValue),
+        pageSize: parseInt(myRecipesList.rows.length, 10),
+        allMyRecipes: myRecipesList.rows
+      }))
+      .catch(error => res.status(200).json({ error: error.message }));
   },
 
   getSingleRecipe(req, res) {
@@ -229,14 +233,22 @@ export default {
 
 
   searchRecipe(req, res) {
+    const limitValue = req.query.limit || 8;
+    const pageValue = (req.query.page - 1) || 0;
     Recipe
       .findAll({
         where: {
           recipeName: {
             $ilike: `%${decodeURIComponent(req.query.search)}%`
           }
-        }
-      }).then(searchFound => res.status(200).json({ RecipeFound: searchFound }))
+        },
+        limit: limitValue
+      }).then(searchFound => res.status(200).json({
+        page: (pageValue + 1),
+        totalCount: searchFound.count,
+        pageCount: Math.ceil(searchFound.count / limitValue),
+        searchFound
+      }))
       .catch(error => res.status(404).json({ error: error.message }));
   },
 

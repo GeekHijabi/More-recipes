@@ -15,5 +15,5 @@ export default {
   reviews: '',
   SearchResults: [],
   favorites: [],
-  favRecipes: []
+  favRecipes: [],
 };
