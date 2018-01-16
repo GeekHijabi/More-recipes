@@ -5,7 +5,6 @@ import {
   CREATE_RECIPE_SUCCESS,
   CREATE_RECIPE_FAILURE,
   GET_RECIPE,
-  GET_RECIPE_COUNT,
   GET_RECIPE_SUCCESS,
   GET_RECIPE_FAILURE,
   GET_MY_RECIPE,
@@ -42,7 +41,7 @@ export default (state = initialState, action) => {
   const {
     type, recipe, recipeDetail, recipeReview,
     recipes, myRecipes, recipeId, error, searchRecipeName,
-    favRecipes, favoriteRecipes, deletedReviewId, page
+    favRecipes, favoriteRecipes, deletedReviewId
   } = action;
 
   switch (type) {
@@ -70,18 +69,12 @@ export default (state = initialState, action) => {
         isLoadingRecipe: true
       };
     case GET_RECIPE_SUCCESS:
-    console.log('ns', newState);
+      newState.recipes = recipes.allRecipes;
+      newState.pageCount = recipes.pageCount;
+      newState.isLoadingRecipe = false;
       return {
-        ...newState,
-        recipes: recipes.allRecipes,
-        page: recipes.pages,
-        isLoadingRecipe: false
+        ...newState
       };
-    // case GET_RECIPE_COUNT:
-    //   return {
-    //     ...newState,
-        
-    //   };
     case GET_RECIPE_FAILURE:
       return {
         ...newState,
@@ -94,10 +87,11 @@ export default (state = initialState, action) => {
         isLoadingRecipe: true
       };
     case GET_MY_RECIPE_SUCCESS:
+      newState.myRecipes = myRecipes.allMyRecipes;
+      newState.pageCount = myRecipes.pageCount;
+      newState.isLoadingRecipe = false;
       return {
-        ...newState,
-        myRecipes,
-        isLoadingRecipe: false
+        ...newState
       };
     case GET_MY_RECIPE_FAILURE:
       return {
@@ -209,12 +203,7 @@ export default (state = initialState, action) => {
     case DELETE_RECIPE_REVIEW_SUCCESS:
       // console.log('check me', newState.recipe.Reviews, deletedReviewId)
       newState.recipe.Reviews
-        .filter((Review) => {
-          console.log(Review.id, deletedReviewId, 'see me');
-          return Review.id !== deletedReviewId;
-        });
-
-      console.log(newState, 'check all');
+        .filter(Review => Review.id !== deletedReviewId);
       return {
         ...newState,
         // review: Reviews
@@ -229,7 +218,11 @@ export default (state = initialState, action) => {
         errorMessage: error,
       };
     case SEARCH_RECIPE_SUCCESS:
+      // newState.SearchResults = searchRecipeName;
       newState.SearchResults = searchRecipeName;
+      newState.pageCount = recipes.pageCount;
+      newState.isLoadingRecipe = false;
+      // console.log('stateSearch', newState);
       return {
         ...newState
       };

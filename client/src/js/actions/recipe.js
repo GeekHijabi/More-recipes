@@ -221,31 +221,28 @@ export const apiCreateRecipe = ({
  * Action for getRecipe
  *
  * @returns {promise} request
- * @param {object} limit
  * @param {object} page
- * @param {object} pageCount
- * @param {object} order
+ * @param {object} limit
  */
-export const apiGetRecipe = (limit, page) =>
+export const apiGetRecipe = (page, limit) =>
   function action(dispatch) {
+    page = page || 1;
     dispatch(getRecipe());
     const request = axios({
       params: {
-        limit,
-        page
+        limit
       },
       method: 'GET',
-      url: `/api/v1/recipes?page=${page || 1}`
+      url: `/api/v1/recipes?page=${page}`
     });
 
     request.then((response) => {
       const {
-        allRecipes, pageSize, pageCount, page, totalCount
+        allRecipes, pageSize, pageCount, totalCount
       } = response.data;
       const paginated = {
         pageCount, pageSize, allRecipes, page, totalCount
       };
-      console.log(paginated.page);
       dispatch(getRecipeSuccess(paginated));
     }).catch((err) => {
       if (err && err.data) {
@@ -259,17 +256,23 @@ export const apiGetRecipe = (limit, page) =>
  * Action for getMyRecipe
  *
  * @returns {promise} request
- * @param {object} options
+ * @param {object} page
  */
-export const apiGetMyRecipe = () =>
+export const apiGetMyRecipe = page =>
   function action(dispatch) {
     dispatch(getMyRecipe());
     const request = axios({
       method: 'GET',
-      url: '/api/v1/recipes/myrecipes'
+      url: `/api/v1/myrecipes?page=${page}`
     });
     request.then((response) => {
-      dispatch(getMyRecipeSuccess(response.data));
+      const {
+        allMyRecipes, pageSize, pageCount
+      } = response.data;
+      const paginated = {
+        pageCount, pageSize, allMyRecipes, page
+      };
+      dispatch(getMyRecipeSuccess(paginated));
     }).catch((err) => {
       if (err && err.data) {
         dispatch(getMyRecipeFailure(err.data.error));
@@ -533,7 +536,7 @@ export const apiSearchRecipe = recipeName =>
       params: { search: recipeName }
     });
     request.then((response) => {
-      dispatch(searchRecipeSuccess(response.data.RecipeFound));
+      dispatch(searchRecipeSuccess(response.data.searchFound));
     }).catch((err) => {
       if (err && err.data) {
         dispatch(searchRecipeFailure(err.data.error));

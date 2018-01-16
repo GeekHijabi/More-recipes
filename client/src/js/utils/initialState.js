@@ -16,6 +16,4 @@ export default {
   SearchResults: [],
   favorites: [],
   favRecipes: [],
-  page: 1
-
 };

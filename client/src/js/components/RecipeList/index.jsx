@@ -36,27 +36,31 @@ class Recipes extends React.Component {
  * @memberof Recipes
  */
   componentDidMount() {
-    this.props.apiGetRecipe(8);
+    this.props.apiGetRecipe();
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     recipes: nextProps.recipes,
-  //     page: nextProps.recipes.page,
-  //   });
-  // }
+  /**
+   * @description COnstructor Function
+   * @param {any} nextProps
+   * @memberof Recipes
+   * @return {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      page: nextProps.pageCount,
+    });
+  }
 
 
   /**
  * @returns {void}
  *
- * @param {any} data
+ * @param {any} current
  * @memberof Recipes
  */
   onPageChange(current) {
-    console.log('page', current);
     current.selected += 1;
-    this.props.apiGetRecipe(2);
+    this.props.apiGetRecipe(current.selected);
   }
 
   /**
@@ -66,8 +70,10 @@ class Recipes extends React.Component {
    * @return {void}
    */
   render() {
-    const { recipes, search, page } = this.props;
+    const { recipes, search } = this.props;
     const recipeList = search.length === 0 ? recipes : search;
+    console.log(recipes, 'actual')
+    console.log(search, 'not wanted')
     return (
       <div>
         <RecipeHeader />
@@ -84,7 +90,7 @@ class Recipes extends React.Component {
           previousLabel="Previous"
           nextLabel="Next"
           breakClassName="text-center"
-          initialPage={0}
+          // initialPage={0}
           containerClassName="container pagination justify-content-center"
           pageClassName="page-item"
           pageLinkClassName="page-link"
@@ -106,11 +112,12 @@ Recipes.propTypes = {
   apiGetRecipe: PropTypes.func.isRequired,
   recipes: PropTypes.arrayOf(PropTypes.any),
   search: PropTypes.arrayOf(PropTypes.any).isRequired,
-  page: PropTypes.number.isRequired
+  pageCount: PropTypes.number
 };
 
 Recipes.defaultProps = {
-  recipes: []
+  recipes: [],
+  pageCount: 0
 };
 
 /**
@@ -120,11 +127,10 @@ Recipes.defaultProps = {
  * @returns {void}
  */
 function mapStateToProps(state) {
-  console.log('msp', state);
   return {
     recipes: state.recipe.recipes,
     search: state.recipe.SearchResults,
-    page: state.recipe.page
+    pageCount: state.recipe.pageCount
   };
 }
 
