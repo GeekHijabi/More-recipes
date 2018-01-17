@@ -421,6 +421,15 @@ h1.name {
     margin-left: 28em;
 }
 
+.hide {
+  display: none;
+}
+
+.favRite {
+  position: absolute;
+  top: 2px;
+  right: 57.5px;
+}
 
 @media screen and (max-width: 576px) { 
   #banner {
