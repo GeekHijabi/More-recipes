@@ -218,11 +218,8 @@ export default (state = initialState, action) => {
         errorMessage: error,
       };
     case SEARCH_RECIPE_SUCCESS:
-      // newState.SearchResults = searchRecipeName;
       newState.SearchResults = searchRecipeName;
-      newState.pageCount = recipes.pageCount;
-      newState.isLoadingRecipe = false;
-      // console.log('stateSearch', newState);
+      // newState.pageCount = recipes.pageCount;
       return {
         ...newState
       };

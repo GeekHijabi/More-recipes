@@ -4,6 +4,8 @@ import {
   Button, Modal,
   ModalHeader, ModalBody, Form, Label, Input, FormGroup, Col
 } from 'reactstrap';
+import PropTypes from 'prop-types';
+import { RingLoader } from 'react-spinners';
 import imageUpload from '../../utils/imageUpload';
 
 /**
@@ -26,7 +28,7 @@ class AddRecipeModal extends React.Component {
       ingredients: '',
       description: '',
       imageUrl: '',
-      errorMessage: '',
+      isLoading: false,
       hasError: false
     };
     this.onChange = this.onChange.bind(this);
@@ -86,16 +88,19 @@ class AddRecipeModal extends React.Component {
  * @memberof AddRecipeModal
  */
   onDrop(files) {
+    this.setState({
+      isLoading: true
+    });
     imageUpload(files)
       .then((response) => {
         const { body } = response;
         const fileURL = body.secure_url;
-
-        this.setState({
-          imageUrl: fileURL
-        });
-      }).catch(() => {
-        'unsuccessful upload';
+        if (fileURL) {
+          this.setState({
+            imageUrl: fileURL,
+            isLoading: false
+          });
+        }
       });
   }
   /**
@@ -180,20 +185,27 @@ class AddRecipeModal extends React.Component {
                   onChange={this.onDrop}
                   accept="image/*"
                 />
-                <img
+                { this.state.isLoading ?
+                  <RingLoader
+                    color="#B0C038"
+                    loading={this.props.isLoadingRecipe}
+                  />
+                : <img
                   src={imageUrl}
                   alt="sample"
                   height="400"
                   width="100%"
-                />
+                />}
               </Col>
             </FormGroup>
 
             <FormGroup check row>
               <Col sm={{ size: 10, offset: 2 }}>
+                {this.state.isLoading ? 'please wait...' :
                 <Button onClick={this.onSubmit}>
-                  Add a recipe
+                 Add Recipe
                 </Button>
+              }
               </Col>
             </FormGroup>
           </Form>
@@ -202,5 +214,20 @@ class AddRecipeModal extends React.Component {
     );
   }
 }
+
+AddRecipeModal.defaultProps = {
+  isLoadingRecipe: true
+};
+
+AddRecipeModal.propTypes = {
+  createRecipe: PropTypes.func.isRequired,
+  errorMessage: PropTypes.string.isRequired,
+  toggle: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  isLoadingRecipe: PropTypes.bool
+
+
+};
+
 
 export default AddRecipeModal;
