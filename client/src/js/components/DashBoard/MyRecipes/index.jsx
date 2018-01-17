@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
+import { RingLoader } from 'react-spinners';
 import RecipeHeader from '../../Partials/RecipeHeader';
 import Footer from '../../Partials/Footer';
 import AdminCardItem from '../../Partials/AdminCardItem';
@@ -135,14 +136,21 @@ class RecipeAdmin extends React.Component {
             createRecipe={this.props.apiCreateRecipe}
           />
           <div className="row container-fluid mv-card">
-            {this.props.myRecipes.map(recipe =>
+            {this.props.isLoadingRecipe ? <RingLoader
+              color="#B0C038"
+              loading={this.props.isLoadingRecipe}
+            />
+              : this.props.myRecipes.map(recipe =>
               (<AdminCardItem
                 recipe={recipe}
                 key={recipe.id}
                 editRecipe={this.props.apiEditRecipe}
                 deleteRecipe={this.onDelete}
                 onViewRecipe={this.viewRecipe}
-              />))}
+              />))
+              }
+            {this.props.myRecipes.length === 0 && (<span>You Have not created any recipe yet!</span>)}
+
           </div>
         </section>
         <ReactPaginate
@@ -177,7 +185,8 @@ RecipeAdmin.propTypes = {
   onViewRecipe: PropTypes.func.isRequired,
   myRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
   errorMessage: PropTypes.string.isRequired,
-  pageCount: PropTypes.number
+  pageCount: PropTypes.number.isRequired,
+  isLoadingRecipe: PropTypes.bool.isRequired
 };
 
 RecipeAdmin.contextTypes = {

@@ -44,8 +44,7 @@ class CardItem extends React.Component {
         recipeName,
         imageUrl,
         upvotes,
-        downvotes,
-        views
+        downvotes
       }
     } = this.props;
     return (
@@ -73,9 +72,8 @@ class CardItem extends React.Component {
                   <i className="fa fa-thumbs-o-down 2x" />
                   <span>{downvotes || 0}</span>
                 </span>
-                <span className="ratings">
+                <span className="ratings favRite">
                   <i className="fa fa-heart-o 2x" />
-                  <span>{views || 0}</span>
                 </span>
               </div>
             </div>
