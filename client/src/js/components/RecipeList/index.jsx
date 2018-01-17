@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
+import { RingLoader } from 'react-spinners';
 import RecipeHeader from '../Partials/RecipeHeader';
 import CardItem from '../Partials/CardItem';
 import PopularRecipe from '../Partials/PopularRecipe';
@@ -72,16 +73,18 @@ class Recipes extends React.Component {
   render() {
     const { recipes, search } = this.props;
     const recipeList = search.length === 0 ? recipes : search;
-    console.log(recipes, 'actual')
-    console.log(search, 'not wanted')
     return (
       <div>
         <RecipeHeader />
         <div className="row container-fluid mv-card">
-
+          {this.props.isLoadingRecipe ? <RingLoader
+            color="#B0C038"
+            loading={this.props.isLoadingRecipe}
+          /> :
+          recipeList.map(recipe =>
+            <CardItem recipe={recipe} key={recipe.id} />)
+          }
           {recipeList.length === 0 && (<span>No recipe yet!</span>)}
-          {recipeList.map(recipe =>
-            <CardItem recipe={recipe} key={recipe.id} />)}
         </div>
         <ReactPaginate
           pageCount={this.state.page}
@@ -90,7 +93,6 @@ class Recipes extends React.Component {
           previousLabel="Previous"
           nextLabel="Next"
           breakClassName="text-center"
-          // initialPage={0}
           containerClassName="container pagination justify-content-center"
           pageClassName="page-item"
           pageLinkClassName="page-link"
@@ -112,12 +114,14 @@ Recipes.propTypes = {
   apiGetRecipe: PropTypes.func.isRequired,
   recipes: PropTypes.arrayOf(PropTypes.any),
   search: PropTypes.arrayOf(PropTypes.any).isRequired,
-  pageCount: PropTypes.number
+  pageCount: PropTypes.number,
+  isLoadingRecipe: PropTypes.bool,
 };
 
 Recipes.defaultProps = {
   recipes: [],
-  pageCount: 0
+  pageCount: 0,
+  isLoadingRecipe: true
 };
 
 /**
@@ -130,7 +134,8 @@ function mapStateToProps(state) {
   return {
     recipes: state.recipe.recipes,
     search: state.recipe.SearchResults,
-    pageCount: state.recipe.pageCount
+    pageCount: state.recipe.pageCount,
+    isLoadingRecipe: state.recipe.isLoadingRecipe
   };
 }
 
