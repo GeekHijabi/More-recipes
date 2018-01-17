@@ -190,7 +190,6 @@ MyRecipe.propTypes = {
  * @returns {void}
  */
 function mapStateToProps(state) {
-  console.log('recipestate', state);
   return {
     recipe: state.recipe.recipe,
   };

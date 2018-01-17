@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Proptypes from 'prop-types';
+import toastr from 'toastr';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import EditRecipeModal from '../Partials/EditRecipeModal';
 
 const defaultImage = require('../../../assets/images/no_image.png');
@@ -34,7 +38,14 @@ class AdminCardItem extends React.Component {
    * @memberof AdminCardItem
    */
   onDelete() {
-    this.props.deleteRecipe(this.props.recipe.id);
+    confirmAlert({
+      title: 'Confirm',
+      message: 'Are you sure you want to do this.',
+      confirmLabel: 'Confirm',
+      cancelLabel: 'Cancel',
+      onConfirm: () => this.props.deleteRecipe(this.props.recipe.id),
+      onCancel: () => toastr.success('thanks'),
+    });
   }
 
   /**
@@ -101,7 +112,7 @@ class AdminCardItem extends React.Component {
                     role="button"
                     tabIndex="-1"
                     onKeyPress={this.onKeyPress}
-                    onClick={() => this.onDelete()}
+                    onClick={this.onDelete}
                   />
                 </span>
               </div>
@@ -112,5 +123,10 @@ class AdminCardItem extends React.Component {
     );
   }
 }
+AdminCardItem.propTypes = {
+  deleteRecipe: Proptypes.func.isRequired,
+  editRecipe: Proptypes.func.isRequired,
+  recipe: Proptypes.objectOf(Proptypes.any).isRequired
+};
 
 export default AdminCardItem;
