@@ -176,6 +176,11 @@ class RecipeAdmin extends React.Component {
   }
 }
 
+RecipeAdmin.defaultProps = {
+  pageCount: 0,
+  isLoadingRecipe: false
+};
+
 
 RecipeAdmin.propTypes = {
   apiCreateRecipe: PropTypes.func.isRequired,
@@ -185,8 +190,8 @@ RecipeAdmin.propTypes = {
   onViewRecipe: PropTypes.func.isRequired,
   myRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
   errorMessage: PropTypes.string.isRequired,
-  pageCount: PropTypes.number.isRequired,
-  isLoadingRecipe: PropTypes.bool.isRequired
+  pageCount: PropTypes.number,
+  isLoadingRecipe: PropTypes.bool
 };
 
 RecipeAdmin.contextTypes = {
