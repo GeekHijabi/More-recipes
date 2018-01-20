@@ -9,7 +9,7 @@ import {
   apiGetCurrentUser
 } from '../../../actions/auth';
 
-const image = require('../../../../assets/images/beauty_profile.jpg');
+const image = require('../../../../assets/images/no_picture.png');
 
 /**
  *
@@ -56,7 +56,7 @@ class Profile extends React.Component {
   }
 
   /**
-   * @description COnstructor Function
+   * @description Constructor Function
    * @param {any} props
    * @memberof Profile
    * @return {void}
@@ -65,23 +65,24 @@ class Profile extends React.Component {
     const {
       currentUser
     } = this.props;
-    console.log('cur', this.props.currentUser);
     return (
       <div page="profile">
         <RecipeHeader />
         <main className="row prof-up">
           <div className="dual col-xs-12 col-sm-6 col-md-6 col-lg-5">
             <div className="container">
+              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-7">
+                <i
+                  role="button"
+                  tabIndex="-1"
+                  onClick={this.toggle}
+                  onKeyPress={this.handleKeyPress}
+                  className="fa fa-edit fa-2x"
+                />
+              </div>
               <h1 className="name">{currentUser.firstName}
                 <br /> {currentUser.lastName}
               </h1>
-              <i
-                role="button"
-                tabIndex="-1"
-                onClick={this.toggle}
-                onKeyPress={this.handleKeyPress}
-                className="fa fa-edit fa-2x"
-              />
               <p className="name-desc">{currentUser.summary}</p>
               <div className="red-border-line" />
               <h4>Bio</h4>

@@ -116,7 +116,6 @@ class EditRecipeModal extends React.Component {
                   id="exampleEmail"
                   value={this.state.recipeName}
                   onChange={this.onChange}
-                  placeholder="input Recipe name"
                 />
               </Col>
             </FormGroup>
@@ -128,9 +127,9 @@ class EditRecipeModal extends React.Component {
                   type="text"
                   name="ingredients"
                   id="exampleEmail"
+                  className="styledTextarea"
                   value={this.state.ingredients}
                   onChange={this.onChange}
-                  placeholder="input your recipe ingredients"
                 />
               </Col>
             </FormGroup>
@@ -142,16 +141,15 @@ class EditRecipeModal extends React.Component {
                   type="text"
                   name="description"
                   id="exampleEmail"
+                  className="styledTextarea"
                   value={this.state.description}
                   onChange={this.onChange}
-                  placeholder="Input a description for your recipe"
                 />
               </Col>
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleFile" lg={4}>File</Label>
-              {/* <div> */}
+              <Label for="exampleFile" lg={4}>Image</Label>
               <Col sm={8}>
                 <input
                   type="file"
@@ -167,17 +165,16 @@ class EditRecipeModal extends React.Component {
                   <img
                     src={imageUrl}
                     alt="sample"
-                    height="400"
-                    width="100%"
+                    className="styledImage"
                   />}
               </Col>
             </FormGroup>
 
-            <FormGroup check row>
+            <FormGroup check row className="editButton styleButton">
               <Col sm={{ size: 10, offset: 5 }}>
-                {this.state.isLoading ? 'please wait...' :
+                {this.state.isLoading ? 'please wait a few seconds...' :
                 <Button onClick={this.onSubmit}>
-               Edit Recipe
+               Edit
                 </Button>
             }
               </Col>

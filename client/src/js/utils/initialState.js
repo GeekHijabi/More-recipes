@@ -8,7 +8,8 @@ export default {
   favoriteRecipes: [],
   myRecipes: [],
   recipe: {
-    ingredients: ''
+    ingredients: '',
+    reviews: []
   },
   upvotes: 0,
   downvotes: 0,

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
+
 dotenv.load();
 
 const authenticate = (req, res, next) => {
@@ -11,7 +12,9 @@ const authenticate = (req, res, next) => {
     });
   }
 
-  jwt.verify(token, process.env.secretKey, (err, decoded) => {
+  console.log(token, 'teell me why')
+
+  jwt.verify(token, process.env.SECRETKEY, (err, decoded) => {
     if (err) {
       return res.status(403).send({
         error: 'Token could not be authenticated'

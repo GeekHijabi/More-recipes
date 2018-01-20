@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 const image = require('../../../assets/images/banner_bg.jpg');
@@ -68,9 +69,9 @@ class Banner extends React.Component {
 //   router: React.PropTypes.func.isRequired,
 // };
 
-// Banner.propTypes = {
-//   history: PropTypes.object.isRequired
-// }
+Banner.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired
+};
 
 
 export default withRouter(Banner);
