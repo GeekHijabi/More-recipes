@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
@@ -6,7 +7,6 @@ import {
   apiRegisterUser,
   apiLoginUser } from '../../actions/auth';
 
-const image = require('../../../assets/images/banner_bg.jpg');
 
 /**
  *
@@ -63,7 +63,7 @@ class SignUp extends React.Component {
               progressBar: true
             };
             toastr.success(res.data.message);
-            this.props.history.push('/recipes');
+            this.props.history.push('/profile');
           }
         })
         .catch((err) => {
@@ -108,12 +108,9 @@ class SignUp extends React.Component {
     return (
       <div page="signup">
         <div className="overlay" />
-        <main className="row">
-          <div className="col-xs-12 col-sm-6 col-md-6 col-lg-7">
-            <img src={image} alt="" className="bg" />
-          </div>
+        <div>
           <div
-            className="col-xs-12 col-sm-6 col-md-6 col-lg-5 form-elegant card"
+            className="card card-style"
           >
             <div className="card-body mx-4">
               <div className="text-center">
@@ -122,29 +119,28 @@ class SignUp extends React.Component {
                 </h3>
               </div>
               { this.state.hasError && (
-                <div
-                  className="alert alert-danger alert-dismissible fade show"
-                  role="alert"
+              <div
+                className="alert alert-danger alert-dismissible fade show"
+                role="alert"
+              >
+                {this.state.errorMessage}
+                <button
+                  type="button"
+                  className="close"
+                  onClick={this.onDismiss}
+                  data-dismiss="alert"
+                  aria-label="Close"
                 >
-                  {this.state.errorMessage}
-                  <button
-                    type="button"
-                    className="close"
-                    onClick={this.onDismiss}
-                    data-dismiss="alert"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
               )}
               <div className="md-form">
-                <label htmlFor="Form-email1">firstname
+                <label htmlFor="Form-email1">First name
                   <input
                     type="text"
-                    id="Form-email1"
-                    className="form-control"
-                    placeholder="First Name"
+                    className="Form-email1 form-control"
+                    placeholder="Jane"
                     name="firstName"
                     onChange={this.onChange}
                     value={this.state.firstName}
@@ -154,12 +150,11 @@ class SignUp extends React.Component {
               </div>
 
               <div className="md-form">
-                <label htmlFor="Form-email1">lastname
+                <label htmlFor="Form-email1">Last name
                   <input
                     type="text"
-                    id="Form-email1"
-                    className="form-control"
-                    placeholder="Last Name"
+                    className="Form-email1 form-control"
+                    placeholder="Doe"
                     name="lastName"
                     onChange={this.onChange}
                     value={this.state.lastName}
@@ -172,9 +167,8 @@ class SignUp extends React.Component {
                 <label htmlFor="Form-email1">email
                   <input
                     type="text"
-                    id="Form-email1"
-                    className="form-control"
-                    placeholder="email"
+                    className="Form-email1 form-control"
+                    placeholder="jane@doe.com"
                     name="email"
                     onChange={this.onChange}
                     value={this.state.email}
@@ -187,8 +181,7 @@ class SignUp extends React.Component {
                 <label htmlFor="Form-email1">username
                 <input
                   type="text"
-                  id="Form-email1"
-                  className="form-control"
+                  className="Form-email1 form-control"
                   placeholder="UserName"
                   name="userName"
                   onChange={this.onChange}
@@ -220,7 +213,7 @@ class SignUp extends React.Component {
               <div className="text-center mb-3">
                 <button
                   type="button"
-                  className="btn blue-gradient btn-white btn-block btn-rounded z-depth-1a"
+                  className="btn btn-white btn-rounded"
                   onClick={this.onClick}
                 >
                 Sign up
@@ -235,8 +228,16 @@ class SignUp extends React.Component {
               </div>
 
             </div>
+            <div className="modal-footer mx-5 pt-3 mb-1">
+              <p className="font-small grey-text d-flex justify-content-end">
+              Have an account?
+              <Link to="/signin" href="/signin" className="blue-text ml-1">
+              Sign In
+              </Link>
+              </p>
+            </div>
           </div>
-        </main>
+        </div>
       </div>
     );
   }
@@ -245,7 +246,7 @@ class SignUp extends React.Component {
 SignUp.propTypes = {
   apiRegisterUser: PropTypes.func.isRequired,
   apiLoginUser: PropTypes.func.isRequired,
-  history: PropTypes.objectOf.isRequired
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 export default connect(null, { apiRegisterUser, apiLoginUser })(SignUp);

@@ -20,49 +20,44 @@ const routes = (app) => {
   app.post(
     '/api/v1/user/signup',
     signUpField,
-    user.signup
+    user.signUp
   );
   app.post(
     '/api/v1/user/signin',
     signInField,
-    user.signin
+    user.signIn
   );
 
-  app.get(
-    '/api/v1/user',
-    authenticate,
-    user.getCurrentUser
-  );
+  app.route('/api/v1/user/:userId')
+    .get(
+      authenticate,
+      user.getCurrentUser
+    )
+    .put(
+      authenticate,
+      user.updateUserProfile
+    );
 
-  app.put(
-    '/api/v1/user/update-profile',
-    authenticate,
-    user.updateuserprofile
-  );
+  app
+    .route('/api/v1/recipes')
+    .get(recipes.listAllRecipes)
+    .post(
+      authenticate,
+      recipeValidation,
+      validateGetRecipe,
+      recipes.createRecipe
+    );
 
-  app.get(
-    '/api/v1/recipes',
-    recipes.listAllRecipes
-  );
-  app.post(
-    '/api/v1/recipes',
-    authenticate,
-    recipeValidation,
-    validateGetRecipe,
-    recipes.create
-  );
-
-  app.delete(
-    '/api/v1/recipes/:recipeId',
-    authenticate,
-    recipes.destroy
-  );
-
-  app.put(
-    '/api/v1/recipes/:recipeId',
-    authenticate,
-    recipes.update
-  );
+  app
+    .route('/api/v1/recipes/:recipeId')
+    .delete(
+      authenticate,
+      recipes.destroyRecipe
+    )
+    .put(
+      authenticate,
+      recipes.updateRecipe
+    );
 
   app.get(
     '/api/v1/myrecipes',
@@ -90,7 +85,7 @@ const routes = (app) => {
     '/api/v1/recipes/:recipeId/review',
     authenticate,
     reviewsValidation,
-    reviews.create
+    reviews.createReview
   );
   app.get(
     '/api/v1/recipe/:recipeId/review',

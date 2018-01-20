@@ -18,7 +18,7 @@
     "server:dev": "nodemon --watch server --exec babel-node server/app.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
-    "test": "nyc --reporter=html --reporter=text mocha ./server/test/ --compilers js:babel-register"
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha ./server/test/ --compilers js:babel-register"
   },
   "repository": {
     "type": "git",
@@ -99,6 +99,7 @@
     "superagent": "^3.8.1",
     "superagent-promise": "^1.1.0",
     "supertest": "^3.0.0",
+    "swagger-jsdoc": "^1.9.7",
     "toastr": "^2.1.2",
     "uglify-js": "^3.0.24",
     "url-loader": "^0.5.9",
