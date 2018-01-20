@@ -4,13 +4,36 @@ const fakeData = {
   newUser: {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
-    userName: faker.name.findName(),
-    email: faker.internet.email(),
+    userName: 'tester',
+    email: 'test@test.com',
+    password: 'fodddyyy',
+  },
+
+  signupUser: {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    userName: 'tester2',
+    email: 'test2@test.com',
     password: 'fodddyyy',
   },
   newUser2: {
-    identifier: faker.name.findName() || faker.internet.email(),
-    password: 'tester123',
+    identifier: faker.name.findName(),
+    password: 'fodddyyy',
+  },
+
+  signedInUser2: {
+    identifier: 'test@test.com' || 'tester',
+    password: 'fodddyyy',
+  },
+
+  signedInUser4: {
+    username: 'tester',
+    password: 'fodddyyy',
+  },
+
+  signedInUser3: {
+    identifier: 'test@test.com' || 'tester',
+    password: 'fodddyy',
   },
 
   noEmailInput: {

@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { RingLoader } from 'react-spinners';
 import imageUpload from '../../utils/imageUpload';
 
+const image = require('../../../assets/images/default_image.jpeg');
+
 /**
  *
  *
@@ -154,6 +156,7 @@ class AddRecipeModal extends React.Component {
                   type="text"
                   name="ingredients"
                   id="exampleEmail"
+                  className="styledTextarea"
                   value={this.state.ingredients}
                   onChange={this.onChange}
                   placeholder="input your recipe ingredients"
@@ -162,12 +165,13 @@ class AddRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>description</Label>
+              <Label for="exampleEmail" sm={4}>Description</Label>
               <Col sm={8}>
                 <textarea
                   type="text"
                   name="description"
                   id="exampleEmail"
+                  className="styledTextarea"
                   value={this.state.description}
                   onChange={this.onChange}
                   placeholder="Input a description for your recipe"
@@ -176,8 +180,7 @@ class AddRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleFile" lg={4}>File</Label>
-              {/* <div> */}
+              <Label for="exampleFile" lg={4}>Image</Label>
               <Col sm={8}>
                 <input
                   type="file"
@@ -191,19 +194,18 @@ class AddRecipeModal extends React.Component {
                     loading={this.props.isLoadingRecipe}
                   />
                 : <img
-                  src={imageUrl}
+                  src={imageUrl || image}
                   alt="sample"
-                  height="400"
-                  width="100%"
+                  className="styledImage"
                 />}
               </Col>
             </FormGroup>
 
-            <FormGroup check row>
-              <Col sm={{ size: 10, offset: 2 }}>
-                {this.state.isLoading ? 'please wait...' :
+            <FormGroup check row className="styleButton">
+              <Col sm={{ size: 10, offset: 5 }}>
+                {this.state.isLoading ? 'please wait a few seconds...' :
                 <Button onClick={this.onSubmit}>
-                 Add Recipe
+                 Submit
                 </Button>
               }
               </Col>

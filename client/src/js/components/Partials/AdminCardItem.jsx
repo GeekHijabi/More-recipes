@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Proptypes from 'prop-types';
-import toastr from 'toastr';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import EditRecipeModal from '../Partials/EditRecipeModal';
@@ -44,7 +43,7 @@ class AdminCardItem extends React.Component {
       confirmLabel: 'Confirm',
       cancelLabel: 'Cancel',
       onConfirm: () => this.props.deleteRecipe(this.props.recipe.id),
-      onCancel: () => toastr.success('thanks'),
+      onCancel: () => {},
     });
   }
 
@@ -77,27 +76,32 @@ class AdminCardItem extends React.Component {
     return (
       <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <div className="card">
-          <img className="card-img-top food-image" src={imageUrl || defaultImage} alt="Card cap" style={{ height: '200px' }} />
+          <img
+            className="card-img-top food-image"
+            src={imageUrl || defaultImage}
+            alt="Card cap"
+            style={{ height: '180px' }}
+          />
           <div className="card-body">
             <h4 className="card-title">{recipeName}</h4>
-            <div className="row">
-              <div className="col-xs-12 col-sm-6">
+            <div className="row row-card">
+              <div className="col-xs-12 col-sm-6 card-padding">
                 <Link
                   className="btn card-view"
                   to={`/recipe/${id}`}
                   href={`/recipe/${id}`}
                 >
-                  View Detail
+                  View More
                 </Link>
               </div>
-              <div className="col-xs-12 col-sm-6">
+              <div className="col-xs-12 col-sm-6 card-paddings">
                 <span className="edit padding">
                   <i
                     role="button"
                     tabIndex="-1"
                     onClick={this.toggle}
                     onKeyPress={this.handleKeyPress}
-                    className="fa fa-edit fa-1x"
+                    className="fa fa-edit fa-2x"
                   />
                 </span>
                 <EditRecipeModal
@@ -108,7 +112,7 @@ class AdminCardItem extends React.Component {
                 />
                 <span className="delete paddings">
                   <i
-                    className="fa fa-trash fa-1x"
+                    className="fa fa-trash fa-2x"
                     role="button"
                     tabIndex="-1"
                     onKeyPress={this.onKeyPress}
