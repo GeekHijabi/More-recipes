@@ -47,8 +47,15 @@ class FavoriteRecipes extends React.Component {
     return (
       <div>
         <RecipeHeader />
+        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
+          <h4>
+            <span>My Favorite Recipes</span>
+          </h4>
+        </div>
         <div className="row container-fluid mv-card">
-          {favorites.length === 0 && (<span>You do not have any favorite recipe yet!</span>)}
+          {favorites.length === 0 && (
+          <span className="styleText">You do not have any favorite recipe yet!
+          </span>)}
           {favorites.map(favorite =>
             <CardItem recipe={favorite.Recipe} key={favorite.Recipe.id} />)}
         </div>

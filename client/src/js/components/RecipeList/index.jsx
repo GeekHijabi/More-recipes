@@ -48,7 +48,7 @@ class Recipes extends React.Component {
    */
   componentWillReceiveProps(nextProps) {
     this.setState({
-      page: nextProps.pageCount,
+      page: nextProps.pageCount
     });
   }
 
@@ -76,6 +76,11 @@ class Recipes extends React.Component {
     return (
       <div>
         <RecipeHeader />
+        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 headings">
+          <h4>
+            <span>Recipes</span>
+          </h4>
+        </div>
         <div className="row container-fluid mv-card">
           {this.props.isLoadingRecipe ? <RingLoader
             color="#B0C038"
@@ -84,7 +89,11 @@ class Recipes extends React.Component {
           recipeList.map(recipe =>
             <CardItem recipe={recipe} key={recipe.id} />)
           }
-          {recipeList.length === 0 && (<span>No recipe yet!</span>)}
+          {recipeList.length === 0 && (
+          <span className="styleText">No recipes yet,
+          Come back soon for amazing recipes!
+          </span>
+          )}
         </div>
         <ReactPaginate
           pageCount={this.state.page}

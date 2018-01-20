@@ -104,10 +104,10 @@ export default (state = initialState, action) => {
         .filter(recipeItem => recipeItem.id !== recipeId);
       const myNewRecipes = newState.myRecipes
         .filter(recipeItem => recipeItem.id !== recipeId);
+      newState.recipes = newRecipes;
+      newState.myRecipes = myNewRecipes;
       return {
-        ...newState,
-        recipes: newRecipes,
-        myRecipes: myNewRecipes,
+        ...newState
       };
     case DELETE_RECIPE_FAILURE:
       return {
@@ -201,12 +201,11 @@ export default (state = initialState, action) => {
         ...newState
       };
     case DELETE_RECIPE_REVIEW_SUCCESS:
-      // console.log('check me', newState.recipe.Reviews, deletedReviewId)
-      newState.recipe.Reviews
+      const newReview = newState.recipe.Reviews
         .filter(Review => Review.id !== deletedReviewId);
+      newState.recipe.Reviews = newReview;
       return {
-        ...newState,
-        // review: Reviews
+        ...newState
       };
     case DELETE_RECIPE_REVIEW_FAILURE:
       return {
