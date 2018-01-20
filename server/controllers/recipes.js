@@ -1,4 +1,3 @@
-import moment from 'moment';
 import db from '../models';
 
 const {
@@ -6,12 +5,25 @@ const {
 } = db;
 
 export default {
-  create(req, res) {
-    const { userDetail } = req.decoded;
-    const { recipeName } = req.body;
-    const { id } = userDetail;
 
-    Recipe.findOne(({
+  /**
+   * function createRecipe
+   * @param {any} req
+   * @param {any} res
+   * @returns {object} recipe
+   */
+  createRecipe(req, res) {
+    const { id } = req.decoded;
+    const {
+      recipeName,
+      description,
+      imageUrl,
+      ingredients,
+      preptime,
+      servings
+    } = req.body;
+
+    Recipe.findOne({
       where: {
         $and: [
           {
@@ -20,48 +32,50 @@ export default {
           { userId: id }
         ]
       },
-    }))
-      .then((RecipeFound) => {
-        if (RecipeFound) {
+    })
+      .then((recipeFound) => {
+        if (recipeFound) {
           return res.status(409).json({
             error: 'You cannot create same recipe twice'
           });
         }
         return Recipe
           .create({
-            recipeName: req.body.recipeName,
-            description: req.body.description,
-            imageUrl: req.body.imageUrl,
-            ingredients: req.body.ingredients,
-            preptime: req.body.preptime,
-            servings: req.body.servings,
-            userId: userDetail.id
+            recipeName,
+            description,
+            imageUrl,
+            ingredients,
+            preptime,
+            servings,
+            userId: id
           })
-          .then(newRecipe => res.status(201).json({
-            recipeName: newRecipe.recipeName,
-            description: newRecipe.description,
-            ingredients: newRecipe.ingredients,
-            imageUrl: newRecipe.imageUrl,
-            preptime: newRecipe.preptime,
-            servings: newRecipe.servings,
-            id: newRecipe.id,
-            createdAt: moment().calendar(),
-            userId: newRecipe.userId
-          }));
+          .then(newRecipe =>
+            res.status(201).json({
+              recipeName: newRecipe.recipeName,
+              description: newRecipe.description,
+              ingredients: newRecipe.ingredients,
+              imageUrl: newRecipe.imageUrl,
+              preptime: newRecipe.preptime,
+              servings: newRecipe.servings,
+              id: newRecipe.id,
+              userId: newRecipe.userId
+            }));
       }).catch((error) => {
         res.status(500).json({ error: error.message });
       });
   },
 
+  /**
+   * function listAllRecipes
+   * @param {any} req
+   * @param {any} res
+   * @returns {array} all recipes
+   */
   listAllRecipes(req, res) {
     const limitValue = req.query.limit || 8;
     const pageValue = (req.query.page - 1) || 0;
-    // const sort = req.query.sort === 'upvotes' ||
-    //   req.query.sort === 'id' ?
-    //   req.query.sort : 'id';
     const sort = req.query.sort ? req.query.sort : 'createdAt';
-    const order = req.query.order === 'asc' ?
-      'ASC' : 'DESC';
+    const order = req.query.order ? req.query.order : 'DESC';
     Recipe
       .findAndCountAll({
         order: [
@@ -76,10 +90,15 @@ export default {
         pageCount: Math.ceil(recipeList.count / limitValue),
         pageSize: parseInt(recipeList.rows.length, 10),
         allRecipes: recipeList.rows
-      }))
-      .catch(() => res.status(200).json({ error: 'Recipe Not Created yet' }));
+      }));
   },
 
+  /**
+   * function listAllFavoriteRecipes
+   * @param {any} req
+   * @param {any} res
+   * @returns {array} favorite recipes created by user
+   */
   listAllFavoriteRecipes(req, res) {
     const limitValue = req.query.limit || 4;
     const sort = 'favoriteCount';
@@ -94,73 +113,85 @@ export default {
       })
       .then(favoriteRecipeList => res.status(200).json({
         favRecipes: favoriteRecipeList.rows
-      }))
-      .catch(() => res.status(422).json({ error: 'Fav Recipe Not Created yet' }));
+      }));
   },
 
-  update(req, res) {
-    const { userDetail } = req.decoded;
-    return Recipe
-      .find({
-        where: {
-          id: req.params.recipeId,
-        },
-      }).then((Recipefound) => {
-        if (Recipefound && Recipefound.userId === userDetail.id) {
-          return Recipefound
-            .update({
-              recipeName: req.body.recipeName || Recipefound.recipeName,
-              description: req.body.description || Recipefound.description,
-              ingredients: req.body.ingredients || Recipefound.ingredients,
-              imageUrl: req.body.imageUrl || Recipefound.imageUrl,
-              preptime: req.body.preptime || Recipefound.preptime,
-              servings: req.body.servings || Recipefound.servings,
-            }, {
-              where: {
-                id: req.params.recipeId
-              }
-            })
-            .then(updatedRecipe => res.status(200).json({
-              status: 'success',
-              updatedRecipe
-            }));
-        }
-        if (!Recipefound) {
-          return res.status(404).send({ error: 'Recipe not found' });
-        }
-        return res.status(401)
-          .send({
-            error: 'You cannot update a recipe that does not belong to you'
-          });
-      }).catch(() => res.status(400).json({ error: 'Recipe not found' }));
-  },
-
-  destroy(req, res) {
-    const { userDetail } = req.decoded;
+  /**
+   * function updateRecipe
+   * @param {any} req
+   * @param {any} res
+   * @returns {object} updated recipe
+   */
+  updateRecipe(req, res) {
+    const { id } = req.decoded;
+    const {
+      recipeName,
+      description,
+      ingredients,
+      imageUrl,
+      preptime,
+      servings
+    } = req.body;
     return Recipe
       .find({
         where: {
           id: req.params.recipeId,
         },
       })
-      .then((Recipefound) => {
-        if (Recipefound && Recipefound.userId === userDetail.id) {
-          return Recipefound
-            .destroy({
-              where: {
-                id: req.params.recipeId,
-              },
+      .then((recipeFound) => {
+        if (!recipeFound) {
+          res.status(404).send({ error: 'Recipe not found' });
+        }
+        if (recipeFound.userId === id) {
+          recipeFound
+            .update({
+              recipeName: recipeName || recipeFound.recipeName,
+              description: description || recipeFound.description,
+              ingredients: ingredients || recipeFound.ingredients,
+              imageUrl: imageUrl || recipeFound.imageUrl,
+              preptime: preptime || recipeFound.preptime,
+              servings: servings || recipeFound.servings,
             })
+            .then(updatedRecipe => res.status(200).json({
+              updatedRecipe
+            }));
+        } else {
+          res.status(403)
+            .send({
+              error: 'You cannot update a recipe that does not belong to you'
+            });
+        }
+      }).catch(() => res.status(500).json({ error: 'Internal server error' }));
+  },
+
+  /**
+   * function destroyRecipe
+   * @param {any} req
+   * @param {any} res
+   * @returns {null} void
+   */
+  destroyRecipe(req, res) {
+    const { id } = req.decoded;
+    return Recipe
+      .find({
+        where: {
+          id: req.params.recipeId,
+        },
+      })
+      .then((recipeFound) => {
+        if (!recipeFound) {
+          return res.status(404).send({
+            error: 'Recipe not found',
+          });
+        }
+        if (recipeFound.userId === id) {
+          return recipeFound
+            .destroy({ recipeFound })
             .then(() => res.status(200).json({
               message: 'Recipe deleted successfully'
             }));
         }
-        if (!Recipefound) {
-          return res.status(404).send({
-            error: 'recipe Not Found',
-          });
-        }
-        return res.status(401).send({
+        return res.status(403).send({
           error: 'You cannot delete a recipe that does not belong to you',
         });
       })
@@ -171,21 +202,21 @@ export default {
       });
   },
 
+  /**
+   * function getUserRecipes
+   * @param {any} req
+   * @param {any} res
+   * @returns {array} recipes
+   */
   getUserRecipes(req, res) {
     const limitValue = req.query.limit || 8;
     const pageValue = (req.query.page - 1) || 0;
-    const { userDetail } = req.decoded;
+    const { id } = req.decoded;
     Recipe
       .findAndCountAll({
         where: {
-          userId: userDetail.id
+          userId: id
         },
-        include: [
-          {
-            model: Review,
-            attributes: ['reviews']
-          }
-        ],
         limit: limitValue,
         offset: pageValue * limitValue
       })
@@ -195,10 +226,16 @@ export default {
         pageCount: Math.ceil(myRecipesList.count / limitValue),
         pageSize: parseInt(myRecipesList.rows.length, 10),
         allMyRecipes: myRecipesList.rows
-      }))
-      .catch(error => res.status(200).json({ error: error.message }));
+      }));
   },
 
+
+  /**
+   * function getSingleRecipe
+   * @param {any} req
+   * @param {any} res
+   * @returns {object} recipe created by user
+   */
   getSingleRecipe(req, res) {
     Recipe
       .findOne({
@@ -231,7 +268,12 @@ export default {
       .catch(error => res.status(404).json({ error: error.message }));
   },
 
-
+  /**
+   * function searchRecipe
+   * @param {any} req
+   * @param {any} res
+   * @returns {array} searched recipes
+   */
   searchRecipe(req, res) {
     const limitValue = req.query.limit || 8;
     const pageValue = (req.query.page - 1) || 0;
@@ -249,7 +291,6 @@ export default {
         pageCount: Math.ceil(searchFound.count / limitValue),
         searchFound
       }))
-      .catch(error => res.status(404).json({ error: error.message }));
+      .catch(() => res.status(500).json({ error: 'internal server error' }));
   },
-
 };

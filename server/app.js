@@ -19,8 +19,6 @@ if (env === 'production') {
   app.use('/', express.static(path.resolve(__dirname, '../client/dist')));
 }
 
-// process.env.secretKey;
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

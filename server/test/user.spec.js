@@ -1,16 +1,14 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-
-
 import fakeData from './faker';
 import app from '../app';
 import db from '../models';
 
-const should = chai.Should();
+chai.should();
 chai.use(chaiHttp);
 
-
 let token;
+// let userId;
 
 describe('More Recipes', () => {
   it('should get the home page', (done) => {
@@ -18,10 +16,7 @@ describe('More Recipes', () => {
       .request(app)
       .get('/api/v1')
       .end((err, res) => {
-        res
-          .should
-          .have
-          .status(200);
+        res.should.have.status(200);
         done();
       });
   });
@@ -33,7 +28,6 @@ describe('More Recipes', () => {
         done();
       });
   });
-
   describe('User', () => {
     db.User.destroy({
       cascade: true,
@@ -56,16 +50,6 @@ describe('More Recipes', () => {
         res.body.should.have
           .property('error')
           .equal('User already exists');
-        done();
-      });
-  });
-  it('should not let user sign up with the same email/username', (done) => {
-    chai.request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.newuser)
-      .end((err, res) => {
-        res.should.have.status(411);
-        res.body.should.be.a('object');
         done();
       });
   });
@@ -105,7 +89,7 @@ describe('More Recipes', () => {
     chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.noPasswordSignupInput)
       .end((err, res) => {
-        res.should.have.status(406);
+        res.should.have.status(422);
         res.body.should.have
           .property('error')
           .equal('password cannot be empty');
@@ -116,7 +100,7 @@ describe('More Recipes', () => {
     chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.lenPasswordShort)
       .end((err, res) => {
-        res.should.have.status(411);
+        res.should.have.status(422);
         res.body.should.have
           .property('error')
           .equal('password must be 8 characters or more');
@@ -129,7 +113,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signup')
       .send(fakeData.noFirstNameInput)
       .end((err, res) => {
-        res.should.have.status(406);
+        res.should.have.status(422);
         done();
       });
   });
@@ -139,7 +123,7 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signup')
       .send(fakeData.nolastNameInput)
       .end((err, res) => {
-        res.should.have.status(411);
+        res.should.have.status(422);
         done();
       });
   });
@@ -149,10 +133,23 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signup')
       .send(fakeData.IncorrectFirstNameInput)
       .end((err, res) => {
-        res.should.have.status(406);
+        res.should.have.status(422);
         res.body.should.have
           .property('error')
           .equal('Input a valid first Name');
+        done();
+      });
+  });
+  it('should not create same user twice', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/user/signup')
+      .send(fakeData.newUser)
+      .end((err, res) => {
+        res.should.have.status(409);
+        res.body.should.have
+          .property('error')
+          .equal('User already exists');
         done();
       });
   });
@@ -162,44 +159,26 @@ describe('More Recipes', () => {
       .post('/api/v1/user/signup')
       .send(fakeData.IncorrectLastNameInput)
       .end((err, res) => {
-        res.should.have.status(406);
+        res.should.have.status(422);
         res.body.should.have
           .property('error')
           .equal('Input a valid last Name');
         done();
       });
   });
-  it('should not create user without last name', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.nolastNameInput)
-      .end((err, res) => {
-        res.should.have.status(411);
-        done();
-      });
-  });
-  it('should not signin user not registered', (done) => {
+  it('should not allow unregistered sign In', (done) => {
     chai
       .request(app)
       .post('/api/v1/user/signin')
       .send(fakeData.newUser2)
       .end((err, res) => {
         res.should.have.status(404);
-        done();
-      });
-  });
-  it('should not signin user not registered', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signin')
-      .send(fakeData.newUser2)
-      .end((err, res) => {
         res.body.should.have.property('error')
           .equal('User is not registered');
         done();
       });
   });
+
   it('should not let user sign in without password ', (done) => {
     chai
       .request(app)
@@ -214,121 +193,56 @@ describe('More Recipes', () => {
   it('should let user sign in', (done) => {
     chai.request(app)
       .post('/api/v1/user/signin')
-      .send(fakeData.newUser)
+      .send(fakeData.signedInUser2)
       .end((err, res) => {
         token = { token };
         res.body.should.be.a('object');
+        res.body.should.have.property('message')
+          .equal('You have successfully signed in!');
         done();
       });
   });
-  it('should not let user with un-verified user create recipe', (done) => {
+  it('should check that email/username and password match', (done) => {
     chai.request(app)
-      .post('/api/v1/recipes')
-      .send(fakeData.recipe1)
-      .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
+      .post('/api/v1/user/signin')
+      .send(fakeData.signedInUser3)
       .end((err, res) => {
-        res.should.have.status(403);
+        token = { token };
         res.body.should.be.a('object');
+        res.body.should.have.property('error')
+          .equal('Email/Username and password mismatch');
         done();
       });
   });
-  it('should not let user with un-verified Token create new recipe', (done) => {
+  it('should check that correct email/username is supplied', (done) => {
     chai.request(app)
-      .post('/api/v1/recipes')
-      .send(fakeData.recipe1)
-      .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
+      .post('/api/v1/user/signin')
+      .send(fakeData.signedInUser4)
       .end((err, res) => {
-        res.should.have.status(403);
+        token = { token };
+        res.body.should.be.a('object');
+        res.should.have.status(422);
         res.body.should.have.property('error')
-          .equal('Token could not be authenticated');
+          .equal('Invalid credentials');
+        done();
+      });
+  });
+  it('should not allow unauthorized user to current user details', (done) => {
+    chai.request(app)
+      .get('/api/v1/user/:userId')
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.should.have.status(401);
+        done();
+      });
+  });
+  it('should not allow unauthorized user to view profile', (done) => {
+    chai.request(app)
+      .put('/api/v1/user/:userId')
+      .end((err, res) => {
+        res.body.should.be.a('object');
+        res.should.have.status(401);
         done();
       });
   });
 });
-
-describe('Recipes', () => {
-  it('should get all recipe', (done) => {
-    chai.request(app)
-      .get('/api/v1/recipes')
-      .end((err, res) => {
-        res.should.have.status(200);
-        done();
-      });
-  });
-  it('should not let unauthorized user delete a recipe', (done) => {
-    chai.request(app)
-      .delete('/api/v1/recipes/:recipeId')
-      .end((err, res) => {
-        res.body.should.have.property('error').equal('Unauthorised User!');
-        done();
-      });
-  });
-  it('should not let unauthorized user add a recipe', (done) => {
-    chai.request(app)
-      .post('/api/v1/recipes')
-      .end((err, res) => {
-        res.body.should.have.property('error').equal('Unauthorised User!');
-        done();
-      });
-  });
-  it('should not let unauthorized user put a recipe', (done) => {
-    chai.request(app)
-      .put('/api/v1/recipes/:recipeId')
-      .end((err, res) => {
-        res.body.should.have.property('error').equal('Unauthorised User!');
-        done();
-      });
-  });
-  it('should not let unauthorized user review a recipe', (done) => {
-    chai.request(app)
-      .post('/api/v1/recipes/:recipeId/review')
-      .end((err, res) => {
-        res.body.should.have.property('error').equal('Unauthorised User!');
-        done();
-      });
-  });
-});
-
-describe('Votes', () => {
-  it('should not let unauthenticated user upvote a recipe', (done) => {
-    chai.request(app)
-      .post('/api/v1/recipe/:recipeId/upvote')
-      .end((err, res) => {
-        res.body.should.have.property('error').equal('Unauthorised User!');
-        done();
-      });
-  });
-  it('should not let unauthenticated user downvote a recipe', (done) => {
-    chai.request(app)
-      .post('/api/v1/recipe/:recipeId/downvote')
-      .end((err, res) => {
-        res.body.should.have.property('error').equal('Unauthorised User!');
-        done();
-      });
-  });
-  it('should not let user with un-verified Token upvote a recipe', (done) => {
-    chai.request(app)
-      .post('/api/v1/recipe/:recipeId/upvote')
-      .send(fakeData.recipe1)
-      .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
-      .end((err, res) => {
-        res.should.have.status(403);
-        res.body.should.have.property('error')
-          .equal('Token could not be authenticated');
-        done();
-      });
-  });
-  it('should not let user with un-verified Token downvote a recipe', (done) => {
-    chai.request(app)
-      .post('/api/v1/recipe/:recipeId/downvote')
-      .send(fakeData.recipe1)
-      .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
-      .end((err, res) => {
-        res.should.have.status(403);
-        res.body.should.have.property('error')
-          .equal('Token could not be authenticated');
-        done();
-      });
-  });
-});
-

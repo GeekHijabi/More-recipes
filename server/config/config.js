@@ -8,6 +8,7 @@ module.exports = {
     database: 'morerecipes',
     host: '127.0.0.1',
     port: '5432',
+    secret_key: process.env.SECRET_KEY,
     dialect: 'postgres'
   },
   test: {
@@ -16,6 +17,7 @@ module.exports = {
     database: 'morerecipes',
     host: '127.0.0.1',
     port: '5432',
+    secret_key: process.env.SECRET_KEY,
     dialect: 'postgres'
   },
   production: {
