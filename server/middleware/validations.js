@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.load();
 
 export const signInField = (req, res, next) => {
+  console.log("************",req.body);
   if (!req.body.identifier || req.body.identifier.trim() === '') {
     return res.status(422).json({ error: 'Invalid credentials' });
   }
