@@ -140,7 +140,7 @@ export default {
       })
       .then((recipeFound) => {
         if (!recipeFound) {
-          res.status(404).send({ error: 'Recipe not found' });
+          return res.status(404).send({ error: 'Recipe not found' });
         }
         if (recipeFound.userId === id) {
           recipeFound
