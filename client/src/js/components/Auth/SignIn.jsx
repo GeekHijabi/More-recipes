@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import toastr from 'toastr';
 import { apiLoginUser } from '../../actions/auth';
 
-const image = require('../../../assets/images/banner_bg.jpg');
 
 /**
  *
@@ -91,52 +90,47 @@ class SignIn extends React.Component {
    */
   render() {
     return (
-      <div page="signup">
+      <div page="signin">
         <div className="overlay" />
-        <main className="row">
-          <div className="dual col-sm-6 col-md-6 col-lg-7 bg-size">
-            <img src={image} alt="" className="bg" />
-          </div>
-          <div className="dual col-12 col-sm-12 col-md-12 col-lg-5 form-elegant">
-            <div className="card-body mx-4">
-              <div className="text-center">
-                <h3 className="dark-grey-text mb-5" >
-                  <strong>Sign in</strong>
-                </h3>
-              </div>
-              { this.state.hasError && (
-                <div
-                  className="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  {this.state.errorMessage}
-                  <button
-                    type="button"
-                    className="close"
-                    onClick={this.onDismiss}
-                    data-dismiss="alert"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+        <div className="card card-style">
+          <div className="card-body mx-4">
+            <div className="text-center">
+              <h3 className="dark-grey-text mb-5" >
+                <strong>Sign in</strong>
+              </h3>
+            </div>
+            { this.state.hasError && (
+            <div
+              className="alert alert-danger alert-dismissible fade show"
+              role="alert"
+            >
+              {this.state.errorMessage}
+              <button
+                type="button"
+                className="close"
+                onClick={this.onDismiss}
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
               )}
-              <div className="md-form">
-                <label htmlFor="Form-email1">Username/Email
+            <div className="md-form">
+              <label htmlFor="Form-email1">Username/Email
             <input
               type="text"
-              id="Form-email1"
-              className="form-control"
+              className="Form-email1 form-control"
               placeholder="username or Email"
               name="identifier"
               onChange={this.onChange}
               value={this.state.identifier}
               required
             />
-                </label>
-              </div>
-              <div className="md-form pb-3">
-                <label htmlFor="Form-pass1">Password
+              </label>
+            </div>
+            <div className="md-form pb-3">
+              <label htmlFor="Form-pass1">Password
             <input
               type="password"
               id="Form-pass1"
@@ -149,42 +143,41 @@ class SignIn extends React.Component {
               title="8 to 15 characters required"
               required
             />
-                  <p className="font-small blue-text d-flex justify-content-end">
-                    <Link to="/" href="/" className="blue-text ml-1">Forgot Password?</Link>
-                  </p>
-                </label>
-              </div>
-              <div className="text-center mb-3">
-                <button
-                  type="button"
-                  className="btn blue-gradient btn-white btn-block btn-rounded z-depth-1a"
-                  onClick={this.onClick}
-                >
-              Sign in
-                </button>
-              </div>
-              <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
-            or Sign in with:
-              </p>
-              <div className="row my-3 d-flex justify-content-center">
-                <button type="button" className="btn btn-rounded mr-md-3 z-depth-1a">
-                  <i className="fa fa-facebook blue-text text-center" />
-                </button>
-                <button type="button" className="btn btn-rounded mr-md-3 z-depth-1a">
-                  <i className="fa fa-twitter blue-text" />
-                </button>
-                <button type="button" className="btn btn-rounded z-depth-1a">
-                  <i className="fa fa-google-plus blue-text" />
-                </button>
-              </div>
+                <p className="font-small blue-text d-flex justify-content-end">
+                  <Link to="/" href="/" className="blue-text ml-1">Forgot Password?</Link>
+                </p>
+              </label>
             </div>
-            <div className="modal-footer mx-5 pt-3 mb-1">
-              <p className="font-small grey-text d-flex justify-content-end">Not a member?
-              <a href="./signup.html" className="blue-text ml-1">Sign Up</a>
-              </p>
+            <div className="text-center mb-3">
+              <button
+                type="button"
+                className="btn btn-white btn-rounded"
+                onClick={this.onClick}
+              >
+              Sign in
+              </button>
+            </div>
+            <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2">
+            or Sign in with:
+            </p>
+            <div className="row my-3 d-flex justify-content-center">
+              <button type="button" className="btn btn-rounded mr-md-3 z-depth-1a">
+                <i className="fa fa-facebook blue-text text-center" />
+              </button>
+              <button type="button" className="btn btn-rounded mr-md-3 z-depth-1a">
+                <i className="fa fa-twitter blue-text" />
+              </button>
+              <button type="button" className="btn btn-rounded z-depth-1a">
+                <i className="fa fa-google-plus blue-text" />
+              </button>
             </div>
           </div>
-        </main>
+          <div className="modal-footer mx-5 pt-3 mb-1">
+            <p className="font-small grey-text d-flex justify-content-end">Not a member?
+              <Link to="/signup" href="./signup.html" className="blue-text ml-1">Sign Up</Link>
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
