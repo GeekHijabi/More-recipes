@@ -8,7 +8,6 @@ chai.should();
 chai.use(chaiHttp);
 
 let token;
-// let userId;
 
 describe('User', () => {
   before((done) => {
@@ -20,11 +19,10 @@ describe('User', () => {
           .post('/api/v1/user/signin')
           .send(fakeData.signedInUser2)
           .end((err, res) => {
-            // console.log(res.body, 'see me here')
-            // token = { token };
             res.body.should.be.a('object');
             res.body.should.have.property('message')
               .equal('You have successfully signed in!');
+
             done();
           });
       });
@@ -34,24 +32,6 @@ describe('User', () => {
     truncate: true,
     restartIdentity: true
   }));
-  // });
-  // it('should get the home page', (done) => {
-  //   chai
-  //     .request(app)
-  //     .get('/api/v1')
-  //     .end((err, res) => {
-  //       res.should.have.status(200);
-  //       done();
-  //     });
-  // });
-  // it('should get 404 page', (done) => {
-  //   chai.request(app)
-  //     .get('/ap')
-  //     .end((err, res) => {
-  //       res.should.have.status(404);
-  //       done();
-  //     });
-  // });
   it('should create a new User', (done) => {
     chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.signupUser)
@@ -60,6 +40,7 @@ describe('User', () => {
         done();
       });
   });
+
   it('should not create user with details that exists already', (done) => {
     chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.newUser)
@@ -70,6 +51,7 @@ describe('User', () => {
         done();
       });
   });
+
   it('should create object response for user signup', (done) => {
     chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.newUser)
@@ -78,6 +60,7 @@ describe('User', () => {
         done();
       });
   });
+
   it('should not create User with invalid email', (done) => {
     chai
       .request(app)

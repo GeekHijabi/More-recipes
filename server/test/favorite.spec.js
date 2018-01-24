@@ -7,8 +7,6 @@ import db from '../models';
 const should = chai.Should();
 chai.use(chaiHttp);
 
-let token;
-
 describe('Favorites', () => {
   it('should let unauthorized user access the favorite route', (done) => {
     chai.request(app)
