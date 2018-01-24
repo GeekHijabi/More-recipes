@@ -10,7 +10,6 @@ import configureStore from './store/configureStore';
 import './../styles/index.scss';
 
 
-import NotFound from './components/NotFound';
 import Homepage from './components/Home';
 import SignIn from './components/Auth/SignIn';
 import SignUp from './components/Auth/SignUp';
