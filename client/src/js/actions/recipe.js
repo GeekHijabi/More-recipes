@@ -235,9 +235,8 @@ export const apiGetRecipe = (page, limit) =>
       method: 'GET',
       url: `/api/v1/recipes?page=${page}`
     });
-    
+
     request.then((response) => {
-      console.log("**********",response.data);
       const {
         allRecipes, pageSize, pageCount, totalCount
       } = response.data;
@@ -408,11 +407,9 @@ export const apifavoriteRecipe = id =>
       url: `/api/v1/recipe/${id}/favorite`
     });
     request.then(() => {
-      console.log('favorited');
       dispatch(favoriteRecipeSuccess(id));
     }).catch((err) => {
       if (err && err.data) {
-        console.log('unfavorited');
         dispatch(favoriteRecipeFailure(err.data.error));
       }
     });

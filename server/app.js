@@ -10,6 +10,15 @@ const app = express();
 const port = process.env.PORT || 3000;
 app.set('port', port);
 
+const env = process.env.NODE_ENV || 'development';
+if (env === 'production') {
+  // for serving static react client app on heroku
+  app.use('/', express.static(path.resolve(__dirname, '../../client/dist')));
+} else {
+  // for serving static react client app on server localhost:port
+  app.use('/', express.static(path.resolve(__dirname, '../client/dist')));
+}
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
