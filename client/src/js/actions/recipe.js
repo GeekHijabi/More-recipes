@@ -407,11 +407,9 @@ export const apifavoriteRecipe = id =>
       url: `/api/v1/recipe/${id}/favorite`
     });
     request.then(() => {
-      console.log('favorited');
       dispatch(favoriteRecipeSuccess(id));
     }).catch((err) => {
       if (err && err.data) {
-        console.log('unfavorited');
         dispatch(favoriteRecipeFailure(err.data.error));
       }
     });
