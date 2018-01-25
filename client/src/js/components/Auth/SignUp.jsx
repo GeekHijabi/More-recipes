@@ -136,7 +136,7 @@ class SignUp extends React.Component {
               </div>
               )}
               <div className="md-form">
-                <label htmlFor="Form-email1">First name
+                <label htmlFor="Form-email1" className="form-label">First name
                   <input
                     type="text"
                     className="Form-email1 form-control"
@@ -150,7 +150,7 @@ class SignUp extends React.Component {
               </div>
 
               <div className="md-form">
-                <label htmlFor="Form-email1">Last name
+                <label htmlFor="Form-email1" className="form-label">Last name
                   <input
                     type="text"
                     className="Form-email1 form-control"
@@ -164,7 +164,7 @@ class SignUp extends React.Component {
               </div>
 
               <div className="md-form">
-                <label htmlFor="Form-email1">email
+                <label htmlFor="Form-email1" className="form-label">Email
                   <input
                     type="text"
                     className="Form-email1 form-control"
@@ -178,11 +178,11 @@ class SignUp extends React.Component {
               </div>
 
               <div className="md-form">
-                <label htmlFor="Form-email1">username
+                <label htmlFor="Form-email1" className="form-label">Username
                 <input
                   type="text"
                   className="Form-email1 form-control"
-                  placeholder="UserName"
+                  placeholder="janedoe"
                   name="userName"
                   onChange={this.onChange}
                   value={this.state.userName}
@@ -194,12 +194,12 @@ class SignUp extends React.Component {
               </div>
 
               <div className="md-form pb-3">
-                <label htmlFor="Form-pass1">password
+                <label htmlFor="Form-pass1" className="form-label">Password
                   <input
                     type="password"
                     id="Form-pass1"
                     className="form-control"
-                    placeholder="Password"
+                    placeholder="********"
                     name="password"
                     onChange={this.onChange}
                     value={this.state.password}
@@ -219,21 +219,13 @@ class SignUp extends React.Component {
                 Sign up
                 </button>
               </div>
-              <p className="font-small dark-grey-text text-right d-flex justify-content-center mb-3 pt-2"> or Sign up with:</p>
-
-              <div className="row my-3 d-flex justify-content-center">
-                <button type="button" className="btn btn-rounded mr-md-3 z-depth-1a"><i className="fa fa-facebook blue-text text-center" /></button>
-                <button type="button" className="btn btn-rounded mr-md-3 z-depth-1a"><i className="fa fa-twitter blue-text" /></button>
-                <button type="button" className="btn btn-rounded z-depth-1a"><i className="fa fa-google-plus blue-text" /></button>
-              </div>
-
             </div>
             <div className="modal-footer mx-5 pt-3 mb-1">
-              <p className="font-small grey-text d-flex justify-content-end">
-              Have an account?
-              <Link to="/signin" href="/signin" className="blue-text ml-1">
-              Sign In
-              </Link>
+              <p className="font-small">
+                Have an account?
+                <Link to="/signin" href="/signin" className="blue-text ml-1">
+                  Sign In
+                </Link>
               </p>
             </div>
           </div>

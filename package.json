@@ -7,7 +7,7 @@
   "description": "connect people to recipes they love",
   "main": "index.jsx",
   "scripts": {
-    "start": "node ./server/dist/app.js",
+    "start": "npm run heroku-postbuild && node ./server/dist/app.js",
     "heroku-postbuild": "concurrently \"npm run build:server\" \"npm run build:client\"",
     "build:server": "rimraf server/dist/ && babel ./server --out-dir server/dist/ --copy-files",
     "client:dev": "webpack-dev-server --hot",

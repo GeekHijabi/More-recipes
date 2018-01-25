@@ -6,11 +6,7 @@ export default {
   createReview(req, res) {
     const { id } = req.decoded;
     Recipe.find({
-      where: { id: req.params.recipeId },
-      include: [{
-        model: User,
-        attributes: ['userName', 'imageUrl']
-      }]
+      where: { id: req.params.recipeId }
     })
       .then((foundRecipe) => {
         if (!foundRecipe) {
@@ -28,13 +24,17 @@ export default {
             const review = data.get({
               plain: true
             });
-            review.User = {
-              userName: foundRecipe.User.userName,
-              imageUrl: foundRecipe.User.imageUrl
-            };
-            res.status(200).json({
-              message: 'Your recipe has been reviewed',
-              review
+            User.findOne({
+              where: { id: review.userId }
+            }).then((reviewer) => {
+              review.User = {
+                userName: reviewer.userName,
+                imageUrl: reviewer.imageUrl
+              };
+              res.status(200).json({
+                message: 'Your recipe has been reviewed',
+                review
+              });
             });
           });
       })

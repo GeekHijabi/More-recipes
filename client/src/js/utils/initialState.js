@@ -13,6 +13,7 @@ export default {
   },
   upvotes: 0,
   downvotes: 0,
+  favoriteCount: 0,
   reviews: '',
   SearchResults: [],
   favorites: [],

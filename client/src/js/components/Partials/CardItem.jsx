@@ -45,7 +45,7 @@ class CardItem extends React.Component {
         imageUrl,
         upvotes,
         downvotes,
-        favoriteCount
+        favoriteCount,
       }
     } = this.props;
     return (
@@ -78,7 +78,7 @@ class CardItem extends React.Component {
                   <i className="fa fa-thumbs-o-down 2x" />
                   <span>{downvotes || 0}</span>
                 </span>
-                <span className="ratings favRite">
+                <span className="ratings">
                   <i className="fa fa-heart-o 2x" />
                   <span>{favoriteCount || 0}</span>
                 </span>

@@ -211,12 +211,17 @@ export default {
   getUserRecipes(req, res) {
     const limitValue = req.query.limit || 8;
     const pageValue = (req.query.page - 1) || 0;
+    const sort = req.query.sort ? req.query.sort : 'createdAt';
+    const order = req.query.order ? req.query.order : 'DESC';
     const { id } = req.decoded;
     Recipe
       .findAndCountAll({
         where: {
           userId: id
         },
+        order: [
+          [sort, order]
+        ],
         limit: limitValue,
         offset: pageValue * limitValue
       })
@@ -240,7 +245,7 @@ export default {
     Recipe
       .findOne({
         where: {
-          id: req.params.recipeId
+          id: req.params.recipeId,
         },
         include: [
           {
