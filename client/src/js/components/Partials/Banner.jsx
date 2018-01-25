@@ -47,16 +47,19 @@ class Banner extends React.Component {
         <section id="banner" className="row">
           <img src={image} alt="" className="bg" />
           <div className="container">
-            <div className="card card-body">
-              <h1>Life is too short for just a rough meal</h1>
-              <p className="btn">
+            <div className="card card-body body-title-card">
+              <h1 className="body-title">
+              Life is too short for just a rough meal
+              </h1>
+              <div>
                 <button
+                  className="body-title-button"
                   type="button"
                   onClick={this.onClick}
                 >
-                Browse our collecton of Recipes
+                  Try out one of our awesome recipes
                 </button>
-              </p>
+              </div>
             </div>
           </div>
         </section>
@@ -64,11 +67,6 @@ class Banner extends React.Component {
     );
   }
 }
-
-// Banner.contextTypes = {
-//   router: React.PropTypes.func.isRequired,
-// };
-
 Banner.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired
 };

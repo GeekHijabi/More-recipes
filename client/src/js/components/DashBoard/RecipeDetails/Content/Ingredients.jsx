@@ -16,12 +16,14 @@ const Ingredients = ((props) => {
         Ingredients
         </div>
         <ul className="list-group list-group-flush">
-          {SplitIngredients.map((item, i) => (
-            <li
-              key={`ingredient ${i + 1}`}
-              className="list-group-item"
-            >{item}
-            </li>))}
+          {
+            SplitIngredients.map((item, i) => (
+              <li
+                key={`ingredient ${i + 1}`}
+                className="list-group-item"
+              >{item}
+              </li>))
+          }
         </ul>
       </div>
     </div>
