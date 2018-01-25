@@ -33,7 +33,6 @@ class MyRecipe extends React.Component {
       activeTab: {
         name: 'Ingredients',
         isActive: true,
-        userFavorited: false
       }
     };
     this.handleChangeTab = this.handleChangeTab.bind(this);
@@ -94,10 +93,10 @@ class MyRecipe extends React.Component {
    * @returns {void}
    */
   handlefavorite() {
-    this.props.apifavoriteRecipe(this.props.recipe.id);
-    this.setState({
-      userFavorited: !this.state.userFavorited
-    });
+    this.props.apifavoriteRecipe(this.props.recipe.id)
+      .then(() => {
+        this.props.onViewRecipe(this.props.recipe.id);
+      });
   }
   /**
    * @description constructor Function
@@ -130,7 +129,7 @@ class MyRecipe extends React.Component {
                   onClick={() => this.handleupvote()}
                 />
                 <span className="detail-value">{recipe.upvotes}</span>
-                <span>upvote</span>
+                <span>upvote(s)</span>
               </span>
               <span className="vote_type">
                 <i
@@ -141,18 +140,18 @@ class MyRecipe extends React.Component {
                   onClick={() => this.handledownvote()}
                 />
                 <span className="detail-value">{recipe.downvotes}</span>
-                <span>downvotes</span>
+                <span>downvote(s)</span>
               </span>
               <span className="vote_type">
                 <i
-                  className={this.state.userFavorited ? 'fa fa-heart fa-2x'
-                  : 'fa fa-heart-o fa-2x'}
+                  className="fa fa-heart fa-2x"
                   role="button"
                   tabIndex="-1"
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handlefavorite()}
                 />
-                <span>favorites</span>
+                <span className="detail-value">{recipe.favoriteCount}</span>
+                <span>favorite(s)</span>
               </span>
             </div>
           </div>

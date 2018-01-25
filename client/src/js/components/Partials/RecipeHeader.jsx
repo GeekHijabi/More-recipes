@@ -96,23 +96,21 @@ class RecipeHeader extends React.Component {
                   className="dropdown-item"
                   href="/recipes"
                 >
-                  <i className="fa fa-cutlery fa-1x" />
-                Recipes
+                  <i className="fa fa-cutlery fa-1x" /> Recipes
                 </Link>
                 <Link
                   to="/admin"
                   className="dropdown-item"
                   href="/profile"
                 >
-                  <i className="fa fa-user-o fa-1x" />
-                  MyRecipes
+                  <i className="fa fa-user-o fa-1x" /> MyRecipes
                 </Link>
                 <Link
                   to="/favorites"
                   className="dropdown-item"
                   href="/favorites"
                 >
-                  <i className="fa fa-gratipay fa-1x" />My favorites
+                  <i className="fa fa-gratipay fa-1x" /> My favorites
                 </Link>
                 <Link
                   to="/"
@@ -120,8 +118,7 @@ class RecipeHeader extends React.Component {
                   href="/"
                   onClick={this.onClick}
                 >
-                  <i className="fa fa-sign-out" />
-                Logout
+                  <i className="fa fa-sign-out" /> Logout
                 </Link>
               </div>
             </div>
