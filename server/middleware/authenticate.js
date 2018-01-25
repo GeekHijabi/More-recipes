@@ -12,8 +12,6 @@ const authenticate = (req, res, next) => {
     });
   }
 
-  console.log(token, 'teell me why')
-
   jwt.verify(token, process.env.SECRETKEY, (err, decoded) => {
     if (err) {
       return res.status(403).send({

@@ -98,11 +98,10 @@ export const apiLoginUser = ({
       url: '/api/v1/user/signin'
     });
     request.then((response) => {
-      console.log(response.data);
       const { token } = response.data;
       const decodedToken = jwt.decode(token);
       setToken(token);
-      localStorage.setItem('userId', decodedToken.userDetail.id);
+      localStorage.setItem('userId', decodedToken.id);
       dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
     }).catch((err) => {

@@ -1,5 +1,6 @@
 @import "./variables";
 @import url('https://fonts.googleapis.com/css?family=Tangerine');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 body {
   overflow-x: hidden;
@@ -16,54 +17,64 @@ ul.ml-auto {
 
 #banner {
   position: relative;
-  height: calc(100vh - 58px);
+  height: calc(90vh - 50px);
   padding-top: 18%;
+  img.bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-filter: brightness(0.8);
+            filter: brightness(0.8)
+  }
 }
 
-img.bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -webkit-filter: brightness(0.8);
-          filter: brightness(0.8)
-}
+ img.bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-filter: brightness(0.8);
+            filter: brightness(0.8)
+  }
 
-#banner>.container>.card {
-  max-width: 35em;
-  margin: auto;
-  background: rgba(255, 255, 255, 0.91);
+#banner>.container>.body-title-card {
+  background: none;
   text-align: center;
+  margin: -24px;
   font-family: 'Tangerine', cursive;
-}
+  h1.body-title {
+    font-size: 6rem;
+    color: floralwhite
+  }
+  .body-title-button {
+    width: 40rem;
+    cursor: pointer;
+    padding: 1rem 0;
+    background: #B0C038;
+    outline: none;
+    color: white;
+    font-size: 25px;
+    font-family: 'Montserrat', cursive;
+    -webkit-transition: all ease-in-out .3s;
+      -o-transition: all ease-in-out .3s;
+      transition: all ease-in-out .3s;
 
-#banner>.container>.card p.btn {
-  outline: 1px solid #B0C038 !important;
-  color: #B0C038 !important;
-  font-size: 1.4em;
-  -webkit-transition: all ease-in-out .3s;
-  -o-transition: all ease-in-out .3s;
-  transition: all ease-in-out .3s;
-}
-
-#banner>.container>.card p.btn:hover {
-  background: #B0C038;
-  color: white !important;
-}
-
-#banner>.container>.card p.btn a {
-  color: inherit;
-}
-
-#banner>.container>.card p.btn:active {
-  border: 1px solid;
+  }
 }
 
 #list {
   padding: 2em 2%;
+}
+
+.form-label{
+  width: 100%
 }
 
 .card .ratings {
@@ -236,9 +247,9 @@ h1.name {
   font-size: 4em;
   padding: 0.7em 0em;
 }
-.form-control {
-  padding-right: 8.7em !important;
-}
+// .form-control {
+//   padding-right: 8.7em !important;
+// }
 
 .name-desc {
   margin-top: -1em;
@@ -263,24 +274,15 @@ h1.name {
 }
 
 [page="signup"] {
-  padding: 6em 36em;
+  padding: 10em 36em;
   background-image: url(../assets/images/banner_bg.jpg);
   background-size: cover;
 }
 [page="signin"] {
-  padding: 13em 36em;
+  padding: 18em 36em;
   background-image: url(../assets/images/banner_bg.jpg);
   background-size: cover;
 }
-
-// [page="signup"] .dual {
-//   height: 80vh;
-// }
-
-// [page="signup"] .dual:nth-child(2) {
-//   background: gainsboro;
-//   padding-top: 0em;
-// }
 
 .overlay {
   position: absolute;
@@ -311,10 +313,10 @@ h1.name {
   cursor: pointer !important;
 }
 
-.grey-text {
-    margin-top: -2em;
-    margin-right: 4em;
-}
+// .grey-text {
+//     margin-top: -2em;
+//     margin-right: 4em;
+// }
  
 .sign{
   margin-top: -2em;
@@ -326,12 +328,12 @@ h1.name {
 
 } 
 
-.mb-3 {
-    margin-top: -2em;
-    padding-bottom: 1em;
-}
+// .mb-3 {
+//     margin-top: -2em;
+//     padding-bottom: 1em;
+// }
 
-.card-style {
+.style {
   background: floralwhite;
 }
 
@@ -380,6 +382,11 @@ h1.name {
 .btn-block {
   display: block;
   width: 94%;
+}
+
+.delete-review {
+  padding-right: 10px;
+  cursor: pointer;
 }
 
 .food-image {
@@ -484,19 +491,21 @@ h1.name {
   margin-right: 50px
 }
 
-
 @media screen and (max-width: 576px) { 
   #banner {
     padding-top: 50%
   }
  }
-@media screen and (max-width: 860px) { 
+@media screen and (max-width: 1400px) {
   .bg-size {
     display: none
   }
 
   [page="signup"] {
-    padding: 5em 0em;
+    padding: 20em 0em;
+  }
+  [page="signin"] {
+    padding: 30em 0em;
   }
   .form-elegant {
     height: 100%
@@ -505,3 +514,4 @@ h1.name {
     width: 100%
   }
  }
+
