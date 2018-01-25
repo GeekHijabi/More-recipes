@@ -33,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     });
     vote.belongsTo(models.Recipe, {
-      foreignKey: 'recipeId'
+      foreignKey: 'recipeId',
+      onDelete: 'CASCADE'
     });
   };
   return vote;

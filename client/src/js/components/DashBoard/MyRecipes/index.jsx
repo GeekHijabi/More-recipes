@@ -149,7 +149,11 @@ class RecipeAdmin extends React.Component {
                 onViewRecipe={this.viewRecipe}
               />))
               }
-            {this.props.myRecipes.length === 0 && (<span>You Have not created any recipe yet!</span>)}
+            {this.props.myRecipes.length === 0
+              && (
+              <span className="styleText">
+              You have not created any recipe yet!
+              </span>)}
 
           </div>
         </section>

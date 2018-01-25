@@ -11,7 +11,7 @@ const authenticate = (req, res, next) => {
     });
   }
 
-  jwt.verify(token, process.env.secretKey, (err, decoded) => {
+  jwt.verify(token, process.env.SECRETKEY, (err, decoded) => {
     if (err) {
       return res.status(403).send({
         error: 'Token could not be authenticated'

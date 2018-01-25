@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { RingLoader } from 'react-spinners';
 import imageUpload from '../../utils/imageUpload';
 
+const profile = require('../../../assets/images/profile.png');
+
 
 /**
  *
@@ -103,7 +105,7 @@ class EditProfileModal extends React.Component {
         <ModalBody>
           <Form>
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>firstName</Label>
+              <Label for="exampleEmail" sm={4}>First Name</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -117,7 +119,7 @@ class EditProfileModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>lastName</Label>
+              <Label for="exampleEmail" sm={4}>Last Name</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -131,7 +133,7 @@ class EditProfileModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>bio</Label>
+              <Label for="exampleEmail" sm={4}>Bio</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -144,7 +146,7 @@ class EditProfileModal extends React.Component {
               </Col>
             </FormGroup>
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>summary</Label>
+              <Label for="exampleEmail" sm={4}>Summary</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -158,7 +160,7 @@ class EditProfileModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleFile" lg={4}>File</Label>
+              <Label for="exampleFile" lg={4}>Image</Label>
               <Col sm={8}>
                 <input
                   type="file"
@@ -172,19 +174,18 @@ class EditProfileModal extends React.Component {
                     loading={this.props.isLoadingRecipe}
                   />
                 : <img
-                  src={imageUrl}
+                  src={imageUrl || profile}
                   alt="sample"
-                  height="400"
-                  width="100%"
+                  className="styledImage"
                 />}
               </Col>
             </FormGroup>
 
             <FormGroup check row>
               <Col sm={{ size: 10, offset: 2 }}>
-                {this.state.isLoading ? 'please wait...' :
+                {this.state.isLoading ? 'please wait a few seconds...' :
                 <Button onClick={this.onSubmit}>
-                   Edit Profile
+                   Edit
                 </Button>
             }
               </Col>

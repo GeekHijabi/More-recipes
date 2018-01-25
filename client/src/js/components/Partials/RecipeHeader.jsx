@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SearchBar from './SearchBar';
@@ -34,7 +34,7 @@ class RecipeHeader extends React.Component {
   onClick(event) {
     event.preventDefault();
     this.props.LogoutUser();
-    // window.location.href = '/';
+    this.props.history.push('/');
   }
   /**
    *
@@ -66,28 +66,60 @@ class RecipeHeader extends React.Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to="/favorites" className="nav-link text-white" href="/favorites" title="favourite Recipes">
-                <i className="fa fa-gratipay fa-2x" />
+              <Link
+                to="/profile"
+                className="nav-link text-white"
+                href="/profile"
+                title="User's profile"
+              >
+                <i className="fa fa-user-circle-o fa-2x" />
               </Link>
             </li>
 
             <div className="nav-item dropdown">
-              <a href="/" className="nav-link text-white dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a
+                href="/"
+                className="nav-link text-white dropdown-toggle"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
                 Menu
               </a>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <Link to="/profile" className="dropdown-item" href="/profile"><i className="fa fa-user-circle-o fa-1x" /> Profile</Link>
-                <Link to="/recipes" className="dropdown-item" href="/recipes"><i className="fa fa-cutlery fa-1x" /> Recipes</Link>
+              <div
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <Link
+                  to="/recipes"
+                  className="dropdown-item"
+                  href="/recipes"
+                >
+                  <i className="fa fa-cutlery fa-1x" /> Recipes
+                </Link>
+                <Link
+                  to="/admin"
+                  className="dropdown-item"
+                  href="/profile"
+                >
+                  <i className="fa fa-user-o fa-1x" /> MyRecipes
+                </Link>
+                <Link
+                  to="/favorites"
+                  className="dropdown-item"
+                  href="/favorites"
+                >
+                  <i className="fa fa-gratipay fa-1x" /> My favorites
+                </Link>
                 <Link
                   to="/"
                   className="dropdown-item"
                   href="/"
                   onClick={this.onClick}
                 >
-                  <i className="fa fa-sign-out" />
-                Logout
+                  <i className="fa fa-sign-out" /> Logout
                 </Link>
-                <Link to="/admin" className="dropdown-item" href="/profile"><i className="fa fa-user-o fa-1x" /> MyRecipes</Link>
               </div>
             </div>
           </ul>
@@ -97,10 +129,9 @@ class RecipeHeader extends React.Component {
   }
 }
 RecipeHeader.propTypes = {
-  LogoutUser : PropTypes.func.isRequired,
+  LogoutUser: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired
+
 };
 
-export default connect(null, { LogoutUser })(RecipeHeader);
-
-
-// export default RecipeHeader;
+export default withRouter(connect(null, { LogoutUser })(RecipeHeader));

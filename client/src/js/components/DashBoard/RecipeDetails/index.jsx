@@ -33,7 +33,6 @@ class MyRecipe extends React.Component {
       activeTab: {
         name: 'Ingredients',
         isActive: true,
-        userFavorited: false
       }
     };
     this.handleChangeTab = this.handleChangeTab.bind(this);
@@ -94,10 +93,10 @@ class MyRecipe extends React.Component {
    * @returns {void}
    */
   handlefavorite() {
-    this.props.apifavoriteRecipe(this.props.recipe.id);
-    this.setState({
-      userFavorited: !this.state.userFavorited
-    });
+    this.props.apifavoriteRecipe(this.props.recipe.id)
+      .then(() => {
+        this.props.onViewRecipe(this.props.recipe.id);
+      });
   }
   /**
    * @description constructor Function
@@ -107,13 +106,16 @@ class MyRecipe extends React.Component {
    */
   render() {
     const { recipe } = this.props;
-    console.log(recipe);
     return (
       <div>
         <RecipeHeader />
         <main page="details" className="row">
           <div className="dual col-xs-12 col-sm-6 col-md-6 col-lg-7">
-            <img src={recipe.imageUrl || Image} alt={recipe.recipeName} className="food" />
+            <img
+              src={recipe.imageUrl || Image}
+              alt={recipe.recipeName}
+              className="food"
+            />
             <h4>
               <span className="food_name">{recipe.recipeName}</span>
             </h4>
@@ -124,11 +126,10 @@ class MyRecipe extends React.Component {
                   role="button"
                   tabIndex="-1"
                   onKeyPress={this.handleKeyPress}
-                  // handleupvote={this.handleupvote}
                   onClick={() => this.handleupvote()}
                 />
                 <span className="detail-value">{recipe.upvotes}</span>
-                <span>upvote</span>
+                <span>upvote(s)</span>
               </span>
               <span className="vote_type">
                 <i
@@ -139,18 +140,18 @@ class MyRecipe extends React.Component {
                   onClick={() => this.handledownvote()}
                 />
                 <span className="detail-value">{recipe.downvotes}</span>
-                <span>downvotes</span>
+                <span>downvote(s)</span>
               </span>
               <span className="vote_type">
                 <i
-                  className={this.state.userFavorited ? 'fa fa-thumbs-o-down fa-2x' : 'fa fa-heart-o fa-2x'}
+                  className="fa fa-heart fa-2x"
                   role="button"
                   tabIndex="-1"
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handlefavorite()}
-                  style={{ color: this.state.bgColor }}
                 />
-                <span>favorites</span>
+                <span className="detail-value">{recipe.favoriteCount}</span>
+                <span>favorite(s)</span>
               </span>
             </div>
           </div>
@@ -163,7 +164,7 @@ class MyRecipe extends React.Component {
               recipe={this.props.recipe}
               reviewedRecipe={recipe}
               activeTab={this.state.activeTab}
-              recipeId={recipe.id} //
+              recipeId={recipe.id}
             />
 
           </div>

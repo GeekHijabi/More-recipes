@@ -11,9 +11,21 @@ const Ingredients = ((props) => {
       role="tabpanel"
       aria-labelledby="ingredients-tab"
     >
-      {SplitIngredients.map((item, i) => (
-        <li key={`ingredient ${i + 1}`}>{item}
-        </li>))}
+      <div className="card">
+        <div className="card-header">
+        Ingredients
+        </div>
+        <ul className="list-group list-group-flush">
+          {
+            SplitIngredients.map((item, i) => (
+              <li
+                key={`ingredient ${i + 1}`}
+                className="list-group-item"
+              >{item}
+              </li>))
+          }
+        </ul>
+      </div>
     </div>
   );
 });

@@ -1,5 +1,6 @@
 @import "./variables";
 @import url('https://fonts.googleapis.com/css?family=Tangerine');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 body {
   overflow-x: hidden;
@@ -16,54 +17,64 @@ ul.ml-auto {
 
 #banner {
   position: relative;
-  height: calc(100vh - 58px);
+  height: calc(90vh - 50px);
   padding-top: 18%;
+  img.bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-filter: brightness(0.8);
+            filter: brightness(0.8)
+  }
 }
 
-img.bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -webkit-filter: brightness(0.8);
-          filter: brightness(0.8)
-}
+ img.bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-filter: brightness(0.8);
+            filter: brightness(0.8)
+  }
 
-#banner>.container>.card {
-  max-width: 35em;
-  margin: auto;
-  background: rgba(255, 255, 255, 0.91);
+#banner>.container>.body-title-card {
+  background: none;
   text-align: center;
+  margin: -24px;
   font-family: 'Tangerine', cursive;
-}
+  h1.body-title {
+    font-size: 6rem;
+    color: floralwhite
+  }
+  .body-title-button {
+    width: 40rem;
+    cursor: pointer;
+    padding: 1rem 0;
+    background: #B0C038;
+    outline: none;
+    color: white;
+    font-size: 25px;
+    font-family: 'Montserrat', cursive;
+    -webkit-transition: all ease-in-out .3s;
+      -o-transition: all ease-in-out .3s;
+      transition: all ease-in-out .3s;
 
-#banner>.container>.card p.btn {
-  outline: 1px solid cornflowerblue !important;
-  color: cornflowerblue !important;
-  font-size: 1.4em;
-  -webkit-transition: all ease-in-out .3s;
-  -o-transition: all ease-in-out .3s;
-  transition: all ease-in-out .3s;
-}
-
-#banner>.container>.card p.btn:hover {
-  background: cornflowerblue;
-  color: white !important;
-}
-
-#banner>.container>.card p.btn a {
-  color: inherit;
-}
-
-#banner>.container>.card p.btn:active {
-  border: 1px solid;
+  }
 }
 
 #list {
   padding: 2em 2%;
+}
+
+.form-label{
+  width: 100%
 }
 
 .card .ratings {
@@ -77,6 +88,16 @@ img.bg {
 
 .heading {
   padding-bottom: 2em;
+  margin-top: 33px;
+}
+.headings {
+  margin-top: 31px;
+  margin-left: 29px;
+}
+
+.headings span {
+  border-left: 2px solid;
+  padding-left: 0.5em;
 }
 
 .heading span {
@@ -147,16 +168,10 @@ main[page="details"] .food_vote {
   top: 8em;
   right: 10%;
   background: rgba(0, 0, 0, 0.5);
-  padding: 0 0.3em 2em;
-  border-radius: 4px;
-}
-
-main[page="details"] .vote_type {
+  padding: 2em 0.3em 2em;
+  border-radius: 15px;
   display: block;
   text-align: center;
-}
-
-main[page="details"] .vote_type:hover {
   cursor: pointer;
 }
 
@@ -195,6 +210,11 @@ span .detail-value {
   padding: 0.8em 2em;
 }
 
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding-right: 2.5rem;
+ 
+}
+
 .nav-tabs .nav-link.active {
   border-top: 2px solid red;
   border-bottom: 1px solid #dddddd;
@@ -216,20 +236,20 @@ span .detail-value {
   width: 80%;
 }
 
-[page="profile"] img.bg {
-  -o-object-position: 0em -7em;
-  object-position: 0em -7em;
-  -webkit-filter: grayscale(0.6);
-          filter: grayscale(0.6);
-}
+// [page="profile"] img.bg {
+//   -o-object-position: 0em -7em;
+//   object-position: 0em -7em;
+//   -webkit-filter: grayscale(0.6);
+//           filter: grayscale(0.6);
+// }
 
 h1.name {
   font-size: 4em;
   padding: 0.7em 0em;
 }
-.form-control {
-  padding-right: 8.7em !important;
-}
+// .form-control {
+//   padding-right: 8.7em !important;
+// }
 
 .name-desc {
   margin-top: -1em;
@@ -254,18 +274,14 @@ h1.name {
 }
 
 [page="signup"] {
-  padding: 4em 15em;
+  padding: 10em 36em;
   background-image: url(../assets/images/banner_bg.jpg);
   background-size: cover;
 }
-
-[page="signup"] .dual {
-  height: 80vh;
-}
-
-[page="signup"] .dual:nth-child(2) {
-  background: gainsboro;
-  padding-top: 0em;
+[page="signin"] {
+  padding: 18em 36em;
+  background-image: url(../assets/images/banner_bg.jpg);
+  background-size: cover;
 }
 
 .overlay {
@@ -285,49 +301,48 @@ h1.name {
     margin-bottom: 1em;
  }
 
- .btn.blue-gradient {
-  background: -o-linear-gradient(50deg,#45cafc,#303f9f);
-  background: linear-gradient(40deg,#45cafc,#303f9f);
+ .btn-white {
+  background: #B0C038;
+  background: #B0C038;
   -webkit-transition: .3s ease-in-out;
   -o-transition: .3s ease-in-out;
   -webkit-transition: .3s ease-in-out;
   transition: .3s ease-in-out;
 }
-
-.grey-text {
-    margin-top: -2em;
-    margin-right: 4em;
+.btn-rounded {
+  cursor: pointer !important;
 }
+
+// .grey-text {
+//     margin-top: -2em;
+//     margin-right: 4em;
+// }
  
 .sign{
   margin-top: -2em;
   height: calc(100vh - 70px);
 }
 
-// #Form-pass1 {
-//   margin-bottom: 1em;
-// }
-
 .form-elegant.btn {
   margin-top: -1.5em;
 
 } 
 
-.mb-3 {
-    margin-top: -2em;
-    padding-bottom: 1em;
+// .mb-3 {
+//     margin-top: -2em;
+//     padding-bottom: 1em;
+// }
+
+.style {
+  background: floralwhite;
 }
 
 .page-footer {
   text-align: center;
   bottom: 0;
   padding-top: 1em !important;
-  // padding-bottom: 2em;
   color: white;
   background-color: #B0C038 !important;
-  // background: -o-linear-gradient(50deg,#45cafc,#303f9f) ;
-  // background: -o-linear-gradient(50deg,#45cafc,#303f9f);
-  // background: linear-gradient(40deg,#45cafc,#303f9f);
 }
 .icons-sm {
   color: white
@@ -369,6 +384,11 @@ h1.name {
   width: 94%;
 }
 
+.delete-review {
+  padding-right: 10px;
+  cursor: pointer;
+}
+
 .food-image {
   max-height: 300px;
   max-width: auto;
@@ -402,7 +422,7 @@ h1.name {
 }
 
 .review-btn {
-  background: #B0C038
+  background: #B0C038;
 }
 
 .review-img {
@@ -425,10 +445,50 @@ h1.name {
   display: none;
 }
 
-.favRite {
-  position: absolute;
-  top: 2px;
-  right: 57.5px;
+.modal-dialog {
+  max-width: 600px !important;
+}
+
+.modal-content {
+  width: 100%;
+}
+
+.modal-title {
+  margin-left: 40%;
+}
+
+.modal-header{
+  background: #B0C038;
+}
+
+.styledTextarea{
+  width: 368px;
+  height: 100px;
+}
+
+.btn-secondary {
+  background-color: #B0C038 !important;
+}
+
+.styledImage {
+  width: 100%;
+  height: 100%;
+}
+.styleButton {
+  padding-top: 20px;
+  padding-left: 30%;
+}
+
+.styleText{
+  font-size: 40px;
+  font-family: Tangerine;
+  color: #B0C038;
+  margin-left: 35%;
+  margin-right: 50px
+}
+
+.edit-button{
+  margin-right: 50px
 }
 
 @media screen and (max-width: 576px) { 
@@ -436,13 +496,16 @@ h1.name {
     padding-top: 50%
   }
  }
-@media screen and (max-width: 860px) { 
+@media screen and (max-width: 1400px) {
   .bg-size {
     display: none
   }
 
   [page="signup"] {
-    padding: 5em 0em;
+    padding: 20em 0em;
+  }
+  [page="signin"] {
+    padding: 30em 0em;
   }
   .form-elegant {
     height: 100%

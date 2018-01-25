@@ -3,8 +3,8 @@ import db from '../models';
 const { Recipe, Review, User } = db;
 
 export default {
-  create(req, res) {
-    const { id, imageUrl, userName } = req.decoded.userDetail;
+  createReview(req, res) {
+    const { id } = req.decoded;
     Recipe.find({
       where: { id: req.params.recipeId }
     })
@@ -14,24 +14,31 @@ export default {
             error: 'recipe not found'
           });
         }
-      });
-    return Review
-      .create({
-        userId: id,
-        recipeId: req.params.recipeId,
-        reviews: req.body.reviews,
+        return Review
+          .create({
+            userId: id,
+            recipeId: req.params.recipeId,
+            reviews: req.body.reviews,
+          })
+          .then((data) => {
+            const review = data.get({
+              plain: true
+            });
+            User.findOne({
+              where: { id: review.userId }
+            }).then((reviewer) => {
+              review.User = {
+                userName: reviewer.userName,
+                imageUrl: reviewer.imageUrl
+              };
+              res.status(200).json({
+                message: 'Your recipe has been reviewed',
+                review
+              });
+            });
+          });
       })
-      .then((data) => {
-        const review = data.get({
-          plain: true
-        });
-        review.User = { userName, imageUrl };
-        res.status(200).json({
-          message: 'Your recipe has been reviewed',
-          review
-        });
-      })
-      .catch(error => res.status(400).json({
+      .catch(error => res.status(500).json({
         error: error.message
       }));
   },
@@ -55,13 +62,13 @@ export default {
         }
         return res.status(200).json(reviews);
       })
-      .catch(error => res.status(404).json({
+      .catch(error => res.status(500).json({
         error: error.message
       }));
   },
 
   destroySingleReview(req, res) {
-    const { userDetail } = req.decoded;
+    const { id } = req.decoded;
     return Review
       .findOne({
         where: {
@@ -69,30 +76,27 @@ export default {
         },
       })
       .then((Reviewfound) => {
-        if (Reviewfound && Reviewfound.userId === userDetail.id) {
-          return Reviewfound
-            .destroy({
-              where: {
-                id: req.params.id,
-              },
-            })
-            .then(() => res.status(200).json({
-              message: 'Review deleted successfully'
-            }));
-        }
         if (!Reviewfound) {
           return res.status(404).send({
             error: 'Review not found',
           });
         }
-        return res.status(401).send({
+        if (Reviewfound.userId === id) {
+          return Reviewfound
+            .destroy({
+              Reviewfound
+            })
+            .then(() => res.status(200).json({
+              message: 'Review deleted successfully'
+            }));
+        }
+        return res.status(403).send({
           error: 'You cannot delete a review that does not belong to you',
         });
       })
-      .catch((error) => {
+      .catch(() => {
         res.status(500).json({
-          // error: 'oops! something went wrong!'
-          error: error.message
+          error: 'oops! something went wrong!'
         });
       });
   },
