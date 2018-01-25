@@ -46,17 +46,17 @@ const updateVoteCounts = (recipeId) => {
 
 export default {
   upvote(req, res) {
-    const { userDetail } = req.decoded;
+    const { id } = req.decoded;
     return Vote
       .findOne({
         where: {
           recipeId: req.params.recipeId,
-          userId: userDetail.id
+          userId: id
         }
       }).then((foundVote) => {
         if (!foundVote) {
           return Vote.create({
-            userId: userDetail.id,
+            userId: id,
             recipeId: req.params.recipeId,
             downvotes: false,
             upvotes: true
@@ -91,17 +91,17 @@ export default {
       });
   },
   downvote(req, res) {
-    const { userDetail } = req.decoded;
+    const { id } = req.decoded;
     return Vote
       .findOne({
         where: {
           recipeId: req.params.recipeId,
-          userId: userDetail.id
+          userId: id
         }
       }).then((foundVote) => {
         if (!foundVote) {
           return Vote.create({
-            userId: userDetail.id,
+            userId: id,
             recipeId: req.params.recipeId,
             downvotes: true,
             upvotes: false

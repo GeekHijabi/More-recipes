@@ -101,7 +101,7 @@ export const apiLoginUser = ({
       const { token } = response.data;
       const decodedToken = jwt.decode(token);
       setToken(token);
-      localStorage.setItem('userId', decodedToken.userDetail.id);
+      localStorage.setItem('userId', decodedToken.id);
       dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
     }).catch((err) => {
@@ -121,7 +121,7 @@ export const apiGetCurrentUser = () =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: '/api/v1/user'
+      url: '/api/v1/user/:userId'
     });
     request.then((response) => {
       dispatch(setCurrentUser(response.data));
@@ -161,7 +161,7 @@ export const apiUpdateUserProfile = ({
         imageUrl
       },
       method: 'PUT',
-      url: '/api/v1/user/update-profile'
+      url: '/api/v1/user/:userId'
     });
     request.then((response) => {
       dispatch(updateProfileSuccess(response.data));

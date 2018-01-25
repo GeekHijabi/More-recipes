@@ -1,10 +1,9 @@
 import React from 'react';
 import Tab from './Tab';
-// import Content from '../Content';
 
 const tabOptions = [
-  { id: 1, name: 'Ingredients', isActive: true },
-  { id: 2, name: 'Descriptions', isActive: false },
+  { id: 1, name: 'Ingredients', isActive: false },
+  { id: 2, name: 'Descriptions', isActive: true },
   { id: 3, name: 'Reviews', isActive: false }
 ];
 
@@ -19,7 +18,7 @@ const Tabs = props => (
         <Tab
           tabOption={tab}
           key={tab.id}
-          isActive={(props.activeTab === tab)}
+          isActive={(props.activeTab === tab[0])}
           handleClick={() => props.changeTab(tab)}
         />
       ))

@@ -9,7 +9,9 @@ const configureStore = (initialState =>
     compose(
       applyMiddleware(thunk),
       // eslint-disable-next-line
-      window.__REDUX_DEVTOOLS_EXTENSION__&& window.__REDUX_DEVTOOLS_EXTENSION__()
+      window.devToolsExtension 
+        ? window.devToolsExtension() : f => f
+      // window.__REDUX_DEVTOOLS_EXTENSION__&& window.__REDUX_DEVTOOLS_EXTENSION__()
     )
   ));
 

@@ -44,13 +44,19 @@ class CardItem extends React.Component {
         recipeName,
         imageUrl,
         upvotes,
-        downvotes
+        downvotes,
+        favoriteCount,
       }
     } = this.props;
     return (
       <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <div className="card">
-          <img className="card-img-top food-image" src={imageUrl || image} alt="Card cap" style={{ height: '200px' }} />
+        <div className="card card-shape">
+          <img
+            className="card-img-top food-image"
+            src={imageUrl || image}
+            alt="Card cap"
+            style={{ height: '180px' }}
+          />
           <div className="card-body">
             <h4 className="card-title">{recipeName}</h4>
             <div className="row row-card">
@@ -72,8 +78,9 @@ class CardItem extends React.Component {
                   <i className="fa fa-thumbs-o-down 2x" />
                   <span>{downvotes || 0}</span>
                 </span>
-                <span className="ratings favRite">
+                <span className="ratings">
                   <i className="fa fa-heart-o 2x" />
+                  <span>{favoriteCount || 0}</span>
                 </span>
               </div>
             </div>

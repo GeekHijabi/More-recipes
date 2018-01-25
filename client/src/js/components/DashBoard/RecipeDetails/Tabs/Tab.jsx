@@ -12,7 +12,7 @@ const Tab = props => (
     aria-controls="ingredients"
     aria-selected="false"
     onClick={props.handleClick}
-    href={`#${props.tabOption.name}`}
+    href={`#${props.tabOption}`}
   >
     {props.tabOption.name}
   </a>

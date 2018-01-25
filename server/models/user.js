@@ -36,11 +36,6 @@ export default (sequelize, DataTypes) => {
       allowNull: true
     },
   });
-  user.prototype.toJSON = function removePassword() {
-    const values = Object.assign({}, this.get());
-    delete values.password;
-    return values;
-  };
   user.associate = (models) => {
     user.hasMany(models.Recipe, {
       foreignKey: 'userId',

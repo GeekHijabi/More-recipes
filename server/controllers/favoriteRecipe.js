@@ -22,14 +22,14 @@ const updateFavoriteCounts = (recipeId) => {
 
 export default {
   create(req, res) {
-    const { userDetail } = req.decoded;
+    const { id } = req.decoded;
     Favorite.findOne(({
       where: {
         $and: [
           {
             recipeId: req.params.recipeId
           },
-          { userId: userDetail.id }
+          { userId: id }
         ]
       },
     }))
@@ -38,9 +38,8 @@ export default {
           Favorite
             .create({
               recipeId: req.params.recipeId,
-              userId: userDetail.id
+              userId: id
             }).then(() => {
-              console.log('heloo')
               updateFavoriteCounts(req.params.recipeId);
               return res.status(201).json({
                 message: 'Recipe favorited'
@@ -53,7 +52,7 @@ export default {
                 {
                   recipeId: req.params.recipeId
                 },
-                { userId: userDetail.id }
+                { userId: id }
               ]
             }
           }).then(() => {
@@ -71,12 +70,12 @@ export default {
   },
 
   list(req, res) {
-    const { userDetail } = req.decoded;
+    const { id } = req.decoded;
     return Favorite
       .findAll({
-        // where: {
-        //   userId: userDetail.id
-        // },
+        where: {
+          userId: id
+        },
         include: [
           {
             model: Recipe
