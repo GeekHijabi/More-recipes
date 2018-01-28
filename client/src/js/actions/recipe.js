@@ -6,6 +6,8 @@ import {
   GET_RECIPE,
   GET_RECIPE_SUCCESS,
   GET_RECIPE_FAILURE,
+  GET_FAVORITE_RECIPE_SUCCESS,
+  GET_FAVORITE_RECIPE_FAILURE,
   GET_MY_RECIPE,
   GET_MY_RECIPE_SUCCESS,
   GET_MY_RECIPE_FAILURE,
@@ -33,7 +35,8 @@ import {
   DELETE_RECIPE_REVIEW_SUCCESS,
   DELETE_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
-  SEARCH_RECIPE_FAILURE
+  SEARCH_RECIPE_FAILURE,
+  GET_SEARCH_ITEM
 } from '../constants';
 
 export const createRecipe = () => ({
@@ -56,6 +59,14 @@ export const getRecipe = () => ({
 
 export const getRecipeSuccess = recipes => ({
   type: GET_RECIPE_SUCCESS,
+  recipes
+});
+export const getFavoriteRecipeSuccess = recipes => ({
+  type: GET_FAVORITE_RECIPE_SUCCESS,
+  recipes
+});
+export const getFavoriteRecipeFailure = recipes => ({
+  type: GET_FAVORITE_RECIPE_FAILURE,
   recipes
 });
 
@@ -407,11 +418,9 @@ export const apifavoriteRecipe = id =>
       url: `/api/v1/recipe/${id}/favorite`
     });
     request.then(() => {
-      console.log('favorited');
       dispatch(favoriteRecipeSuccess(id));
     }).catch((err) => {
       if (err && err.data) {
-        console.log('unfavorited');
         dispatch(favoriteRecipeFailure(err.data.error));
       }
     });
@@ -544,3 +553,21 @@ export const apiSearchRecipe = recipeName =>
     });
     return request;
   };
+  /**
+ * Action for searchRecipe
+ *
+ * @returns {promise} request
+ * @param {object} recipeName
+ */
+// export const searchItem = () =>
+//   function action(dispatch) {
+//     dispatch(searchRecipeSuccess());
+//     return request;
+//   };
+
+export const searchItem = search => (dispatch) => {
+  dispatch({
+    type: GET_SEARCH_ITEM,
+    searchItem: search
+  });
+};

@@ -9,46 +9,81 @@ import db from '../models';
 const should = chai.Should();
 chai.use(chaiHttp);
 
+let token;
 
-describe('Votes', () => {
-  it('should not let unauthenticated user upvote a recipe', (done) => {
-    chai.request(app)
-      .post('/api/v1/recipe/:recipeId/upvote')
+describe('Vote', () => {
+  beforeEach((done) => {
+    chai.request(app).post('/api/v1/user/signup')
+      .send(fakeData.newUser)
       .end((err, res) => {
-        res.body.should.have.property('error').equal('Unauthorised User!');
-        done();
+        res.should.have.status(201);
+        chai.request(app)
+          .post('/api/v1/user/signin')
+          .send(fakeData.signedInUser2)
+          .end((err, res) => {
+            token = res.body.token;
+            done();
+          });
       });
   });
-  it('should not let unauthenticated user downvote a recipe', (done) => {
+  afterEach(() => db.User.destroy({
+    cascade: true,
+    truncate: true,
+    restartIdentity: true
+  }));
+  it('should let user add a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/recipe/:recipeId/downvote')
-      .end((err, res) => {
-        res.body.should.have.property('error').equal('Unauthorised User!');
-        done();
-      });
-  });
-  it('should not let user with un-verified Token upvote a recipe', (done) => {
-    chai.request(app)
-      .post('/api/v1/recipe/:recipeId/upvote')
+      .post('/api/v1/recipes')
+      .set('x-token', token)
       .send(fakeData.recipe1)
-      .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
       .end((err, res) => {
-        res.should.have.status(403);
-        res.body.should.have.property('error')
-          .equal('Token could not be authenticated');
+        if (err) {
+          return done(err);
+        }
+        res.should.have.status(201);
+        res.body.should.have.property('recipeName');
         done();
       });
   });
-  it('should not let user with un-verified Token downvote a recipe', (done) => {
-    chai.request(app)
-      .post('/api/v1/recipe/:recipeId/downvote')
-      .send(fakeData.recipe1)
-      .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
-      .end((err, res) => {
-        res.should.have.status(403);
-        res.body.should.have.property('error')
-          .equal('Token could not be authenticated');
-        done();
-      });
+  describe('Votes', () => {
+    beforeEach((done) => {
+      chai.request(app)
+        .post('/api/v1/recipes')
+        .set('x-token', token)
+        .send(fakeData.recipe1)
+        .end(() => {
+          done();
+        });
+    });
+    it('should let user upvote a recipe', (done) => {
+      chai.request(app)
+        .post('/api/v1/recipe/1/upvote')
+        .set('x-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('message').equal('Successfully upvoted');
+          done();
+        });
+    });
+    it('should let user remove upvote', (done) => {
+      chai.request(app)
+        .post('/api/v1/recipe/1/upvote')
+        .set('x-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+    it('should let user downvote a recipe', (done) => {
+      chai.request(app)
+        .post('/api/v1/recipe/1/downvote')
+        .set('x-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property('message').equal('Successfully downvoted');
+          done();
+        });
+    });
   });
 });
+

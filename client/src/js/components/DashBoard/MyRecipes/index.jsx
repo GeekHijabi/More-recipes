@@ -125,8 +125,10 @@ class RecipeAdmin extends React.Component {
               role="button"
               tabIndex="-1"
               onClick={this.toggle}
+              data-toggle="tooltip"
+              title="Add recipe"
               onKeyPress={this.handleKeyPress}
-              className="fa fa-plus-circle fa-2x"
+              className="fa fa-plus-circle fa-2x fa-icons"
             />
           </div>
           <AddRecipeModal

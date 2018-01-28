@@ -10,7 +10,7 @@ export default {
     })
       .then((foundRecipe) => {
         if (!foundRecipe) {
-          res.status(404).json({
+          return res.status(404).json({
             error: 'recipe not found'
           });
         }
