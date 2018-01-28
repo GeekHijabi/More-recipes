@@ -6,7 +6,8 @@ import fakeData from './faker';
 import app from '../app';
 import db from '../models';
 
-const should = chai.Should();
+// const should = chai.Should();
+chai.should();
 chai.use(chaiHttp);
 
 let token;
@@ -31,14 +32,12 @@ describe('Recipes', () => {
     truncate: true,
     restartIdentity: true
   }));
-  // afterEach(() => db.User.truncate())
   it('should let user add a recipe', (done) => {
     chai.request(app)
       .post('/api/v1/recipes')
       .set('x-token', token)
       .send(fakeData.recipe1)
       .end((err, res) => {
-        console.log('res', res.body);
         if (err) {
           return done(err);
         }
@@ -47,9 +46,10 @@ describe('Recipes', () => {
         done();
       });
   });
-  describe('rolls eyes', () => {
+  describe('Recipe', () => {
     beforeEach((done) => {
-      chai.request(app).post('/api/v1/recipes')
+      chai.request(app)
+        .post('/api/v1/recipes')
         .set('x-token', token)
         .send(fakeData.recipe1)
         .end(() => {
@@ -77,6 +77,17 @@ describe('Recipes', () => {
           done();
         });
     });
+    it('should return 404 when recipe is not available', (done) => {
+      chai.request(app)
+        .delete('/api/v1/recipes/2')
+        .set('x-token', token)
+        .end((err, res) => {
+          res.body.should.have.property('error')
+            .equal('Recipe not found');
+          res.should.have.status(404);
+          done();
+        });
+    });
     it('should let user edit a recipe', (done) => {
       chai.request(app)
         .put('/api/v1/recipes/1')
@@ -99,6 +110,43 @@ describe('Recipes', () => {
           done();
         });
     });
+    it('should list all favorite recipe of a user', (done) => {
+      chai.request(app)
+        .get('/api/v1/favorites?page=1&limit=4&order=asc')
+        .set('x-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+    it('should get current user recipe', (done) => {
+      chai.request(app)
+        .get('/api/v1/myrecipes?page=1&limit=4&order=asc')
+        .set('x-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          done();
+        });
+    });
+    it('should get single recipe detail', (done) => {
+      chai.request(app)
+        .get('/api/v1/recipe/1')
+        .set('x-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          done();
+        });
+    });
+    it('should return 404 for recipe detail not available', (done) => {
+      chai.request(app)
+        .get('/api/v1/recipe/2')
+        .set('x-token', token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          done();
+        });
+    });
   });
 
   it('should not let unverified user create recipe', (done) => {
@@ -114,7 +162,16 @@ describe('Recipes', () => {
   });
   it('should get all recipe', (done) => {
     chai.request(app)
-      .get('/api/v1/recipes?page=1&limit=8')
+      .get('/api/v1/recipes?page=1&limit=8&sort=createdAt&order=desc')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.should.be.an('Object');
+        done();
+      });
+  });
+  it('should search all recipe', (done) => {
+    chai.request(app)
+      .get('/api/v1/search?page=1')
       .end((err, res) => {
         res.should.have.status(200);
         res.should.be.an('Object');

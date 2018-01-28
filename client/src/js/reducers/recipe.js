@@ -34,14 +34,15 @@ import {
   GET_RECIPE_REVIEW_SUCCESS,
   GET_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
-  SEARCH_RECIPE_FAILURE } from '../constants';
+  SEARCH_RECIPE_FAILURE,
+  GET_SEARCH_ITEM } from '../constants';
 
 export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
     type, recipe, recipeDetail, recipeReview,
     recipes, myRecipes, recipeId, error, searchRecipeName,
-    favRecipes, favoriteRecipes, deletedReviewId
+    favRecipes, favoriteRecipes, deletedReviewId, searchItem
   } = action;
 
   switch (type) {
@@ -226,6 +227,12 @@ export default (state = initialState, action) => {
       return {
         ...newState,
         errorMessage: error,
+      };
+    case GET_SEARCH_ITEM:
+      console.log(searchItem, 'search item');
+      return {
+        ...newState,
+        searchItem
       };
     default:
       return newState;

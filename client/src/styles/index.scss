@@ -130,19 +130,19 @@ main[page="details"] > div:nth-child(1) img.food {
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  -webkit-filter: brightness(0.8);
-          filter: brightness(0.8);
-  -webkit-transition: all ease-in-out .3s;
-  -o-transition: all ease-in-out .3s;
-  transition: all ease-in-out .3s;
+  // -webkit-filter: brightness(0.8);
+  //         filter: brightness(0.8);
+  // -webkit-transition: all ease-in-out .3s;
+  // -o-transition: all ease-in-out .3s;
+  // transition: all ease-in-out .3s;
   z-index: -1;
   overflow-y: hidden
 }
 
-main[page="details"] > div:nth-child(1):hover {
-  -webkit-filter: brightness(0.75);
-          filter: brightness(0.75);
-}
+// main[page="details"] > div:nth-child(1):hover {
+//   -webkit-filter: brightness(0.75);
+//           filter: brightness(0.75);
+// }
 
 main[page="details"] > div:nth-child(2) {
   overflow-y: scroll;
@@ -157,8 +157,10 @@ main[page="details"] a.navbar-brand {
 
 main[page="details"] span.food_name {
   position: absolute;
-  bottom: 8em;
-  left: 0em;
+  bottom: 10em;
+  font-family: 'Montserrat', cursive;
+  font-size: 36px;
+  // left: 0em;
   background: rgba(0, 0, 0, 0.59);
   padding: 0.5em 1em;
 }
@@ -177,6 +179,10 @@ main[page="details"] .food_vote {
 
 main[page="details"] .vote_type * {
   display: block;
+}
+
+.detail-value{
+  padding-bottom: 1em;
 }
 
 .steps .step_details {
@@ -235,13 +241,6 @@ span .detail-value {
 [page="profile"] div.dual:first-child >.container {
   width: 80%;
 }
-
-// [page="profile"] img.bg {
-//   -o-object-position: 0em -7em;
-//   object-position: 0em -7em;
-//   -webkit-filter: grayscale(0.6);
-//           filter: grayscale(0.6);
-// }
 
 h1.name {
   font-size: 4em;
@@ -312,11 +311,6 @@ h1.name {
 .btn-rounded {
   cursor: pointer !important;
 }
-
-// .grey-text {
-//     margin-top: -2em;
-//     margin-right: 4em;
-// }
  
 .sign{
   margin-top: -2em;
@@ -327,11 +321,6 @@ h1.name {
   margin-top: -1.5em;
 
 } 
-
-// .mb-3 {
-//     margin-top: -2em;
-//     padding-bottom: 1em;
-// }
 
 .style {
   background: floralwhite;
@@ -490,6 +479,15 @@ h1.name {
 .edit-button{
   margin-right: 50px
 }
+
+.fa-icons{
+  cursor: pointer;
+}
+.profile-edit{
+    float: right;
+    padding: 84px 20px;
+}
+
 
 @media screen and (max-width: 576px) { 
   #banner {

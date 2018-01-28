@@ -7,7 +7,7 @@ import RecipeHeader from '../Partials/RecipeHeader';
 import CardItem from '../Partials/CardItem';
 import PopularRecipe from '../Partials/PopularRecipe';
 import Footer from '../Partials/Footer';
-import { apiGetRecipe } from '../../actions/recipe';
+import { apiGetRecipe, searchItem } from '../../actions/recipe';
 
 /**
  *
@@ -71,8 +71,8 @@ class Recipes extends React.Component {
    * @return {void}
    */
   render() {
-    const { recipes, search } = this.props;
-    const recipeList = search.length === 0 ? recipes : search;
+    const { recipes, search, searchValue } = this.props;
+    const recipeList = (search.length === 0) && !searchValue ? recipes : search;
     return (
       <div>
         <RecipeHeader />
@@ -89,11 +89,16 @@ class Recipes extends React.Component {
           recipeList.map(recipe =>
             <CardItem recipe={recipe} key={recipe.id} />)
           }
-          {recipeList.length === 0 && (
-          <span className="styleText">No recipes yet,
-          Come back soon for amazing recipes!
-          </span>
-          )}
+          {
+            recipeList.length === 0 && (search.length === 0 && searchValue ?
+              <span className="styleText">
+                No search found! Clear the seach bar to get more recipes
+              </span>
+          :
+              <span className="styleText">
+                No recipes yet, Come back soon for amazing recipes!
+              </span>)
+          }
         </div>
         <ReactPaginate
           pageCount={this.state.page}
@@ -125,6 +130,7 @@ Recipes.propTypes = {
   search: PropTypes.arrayOf(PropTypes.any).isRequired,
   pageCount: PropTypes.number,
   isLoadingRecipe: PropTypes.bool,
+  searchValue: PropTypes.string.isRequired
 };
 
 Recipes.defaultProps = {
@@ -144,8 +150,10 @@ function mapStateToProps(state) {
     recipes: state.recipe.recipes,
     search: state.recipe.SearchResults,
     pageCount: state.recipe.pageCount,
-    isLoadingRecipe: state.recipe.isLoadingRecipe
+    isLoadingRecipe: state.recipe.isLoadingRecipe,
+    searchValue: state.recipe.searchItem
   };
 }
+
 
 export default connect(mapStateToProps, { apiGetRecipe })(Recipes);

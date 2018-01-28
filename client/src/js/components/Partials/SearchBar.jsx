@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { apiSearchRecipe } from '../../actions/recipe';
+import { apiSearchRecipe, searchItem } from '../../actions/recipe';
 
 
 /**
@@ -33,6 +33,7 @@ class SearchBar extends React.Component {
  */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+    this.props.searchItem(event.target.value);
     this.props.apiSearchRecipe(event.target.value);
   }
 
@@ -64,6 +65,7 @@ class SearchBar extends React.Component {
 }
 SearchBar.propTypes = {
   apiSearchRecipe: PropTypes.func.isRequired,
+  searchItem: PropTypes.func.isRequired
 };
 
 /**
@@ -82,6 +84,7 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   {
-    apiSearchRecipe
+    apiSearchRecipe,
+    searchItem
   }
 )(SearchBar);

@@ -128,8 +128,8 @@ class MyRecipe extends React.Component {
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handleupvote()}
                 />
-                <span className="detail-value">{recipe.upvotes}</span>
                 <span>upvote(s)</span>
+                <span className="detail-value">{recipe.upvotes}</span>
               </span>
               <span className="vote_type">
                 <i
@@ -139,8 +139,8 @@ class MyRecipe extends React.Component {
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handledownvote()}
                 />
-                <span className="detail-value">{recipe.downvotes}</span>
                 <span>downvote(s)</span>
+                <span className="detail-value">{recipe.downvotes}</span>
               </span>
               <span className="vote_type">
                 <i
@@ -150,8 +150,8 @@ class MyRecipe extends React.Component {
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handlefavorite()}
                 />
-                <span className="detail-value">{recipe.favoriteCount}</span>
                 <span>favorite(s)</span>
+                <span className="detail-value">{recipe.favoriteCount}</span>
               </span>
             </div>
           </div>

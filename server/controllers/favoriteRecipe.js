@@ -13,9 +13,11 @@ const updateFavoriteCounts = (recipeId) => {
           id: recipeId
         }
       }).then((recipeFound) => {
-        recipeFound.updateAttributes({
-          favoriteCount: totalFavorite
-        });
+        if (recipeFound) {
+          recipeFound.updateAttributes({
+            favoriteCount: totalFavorite
+          });
+        }
       });
     });
 };

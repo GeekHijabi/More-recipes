@@ -102,31 +102,23 @@ class Reviews extends React.Component {
               <span className="float-right review-time">
                 {moment(new Date(review.createdAt)).fromNow()}
               </span>
-              <span className="float-right delete-review">
-                <i
-                  className="fa fa-trash fa-1x text-danger"
-                  role="button"
-                  tabIndex="-1"
-                  onKeyPress={this.onKeyPress}
-                  onClick={() => this.onDelete(review.id)}
-                />
-              </span>
+              { review.userId === parseInt(localStorage.getItem('userId'), 10) ?
+                <span className="float-right delete-review">
+                  <i
+                    className="fa fa-trash fa-1x text-danger"
+                    role="button"
+                    tabIndex="-1"
+                    onKeyPress={this.onKeyPress}
+                    onClick={() => this.onDelete(review.id)}
+                  />
+                </span>
+              : ''}
               <div style={{ clear: 'both' }} />
             </div>
-            <p style={{ marginTop: '9px', fontSize: '24px', fontWeight: 200 }}>{review.reviews}</p>
+            <p style={{ marginTop: '9px', fontSize: '24px', fontWeight: 200 }}>
+              {review.reviews}
+            </p>
           </div>
-          {/* <span className="delete-review">
-            <i
-              className="fa fa-trash fa-1x text-danger"
-              role="button"
-              tabIndex="-1"
-              onKeyPress={this.onKeyPress}
-              onClick={() => {
-                this.onDelete(review.id);
-              }}
-            />
-          </span> */}
-
         </li>))
       : 'This recipe has not been reviewed yet' }
         </ul>

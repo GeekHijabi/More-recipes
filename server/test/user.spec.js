@@ -8,7 +8,6 @@ chai.should();
 chai.use(chaiHttp);
 
 let token;
-// let userId;
 
 describe('User', () => {
   before((done) => {
@@ -20,8 +19,6 @@ describe('User', () => {
           .post('/api/v1/user/signin')
           .send(fakeData.signedInUser2)
           .end((err, res) => {
-            // console.log(res.body, 'see me here')
-            // token = { token };
             res.body.should.be.a('object');
             res.body.should.have.property('message')
               .equal('You have successfully signed in!');
@@ -34,24 +31,6 @@ describe('User', () => {
     truncate: true,
     restartIdentity: true
   }));
-  // });
-  // it('should get the home page', (done) => {
-  //   chai
-  //     .request(app)
-  //     .get('/api/v1')
-  //     .end((err, res) => {
-  //       res.should.have.status(200);
-  //       done();
-  //     });
-  // });
-  // it('should get 404 page', (done) => {
-  //   chai.request(app)
-  //     .get('/ap')
-  //     .end((err, res) => {
-  //       res.should.have.status(404);
-  //       done();
-  //     });
-  // });
   it('should create a new User', (done) => {
     chai.request(app).post('/api/v1/user/signup')
       .send(fakeData.signupUser)
@@ -261,7 +240,6 @@ describe('User', () => {
         .send(fakeData.signedInUser2)
         .end((err, res) => {
           token = res.body.token;
-          console.log(token, 'hello again');
           done();
         });
     });
@@ -270,7 +248,17 @@ describe('User', () => {
         .get('/api/v1/user/1')
         .set('x-token', token)
         .end((err, res) => {
-          console.log(res.body, 'see token');
+          res.body.should.be.a('object');
+          res.should.have.status(200);
+          done();
+        });
+    });
+    it('should be able to update profile', (done) => {
+      chai.request(app)
+        .put('/api/v1/user/1')
+        .send(fakeData.updateProfile)
+        .set('x-token', token)
+        .end((err, res) => {
           res.body.should.be.a('object');
           res.should.have.status(200);
           done();
