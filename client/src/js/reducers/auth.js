@@ -51,7 +51,6 @@ export default (state = initialState, action) => {
         currentUser: {}
       };
     case LOGOUT_USER_SUCCESS:
-      console.log('here', newState);
       return {
         ...newState
       };

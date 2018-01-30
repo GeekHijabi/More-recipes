@@ -13,9 +13,11 @@ const updateFavoriteCounts = (recipeId) => {
           id: recipeId
         }
       }).then((recipeFound) => {
-        recipeFound.updateAttributes({
-          favoriteCount: totalFavorite
-        });
+        if (recipeFound) {
+          recipeFound.updateAttributes({
+            favoriteCount: totalFavorite
+          });
+        }
       });
     });
 };
@@ -88,6 +90,28 @@ export default {
         return res.status(404).json({
           error: 'You have no favorite recipe yet'
         });
+      });
+  },
+
+  destroyFavorite(req, res) {
+    const { recipeId } = req.params;
+    return Favorite
+      .find({
+        where: {
+          recipeId
+        }
+      })
+      .then((recipeFound) => {
+        if (!recipeFound) {
+          return res.status(400).send({
+            error: 'Recipe not found',
+          });
+        }
+        return recipeFound
+          .destroy()
+          .then(() => res.status(200).json({
+            message: 'Recipe deleted successfully'
+          }));
       });
   }
 };

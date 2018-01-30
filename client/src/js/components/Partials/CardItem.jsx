@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import swal from 'sweetalert';
+import { connect } from 'react-redux';
+import { apiDeleteFavoriteRecipe } from '../../actions/recipe';
 
 const image = require('../../../assets/images/banner_bg.jpg');
 
@@ -22,14 +25,32 @@ class CardItem extends React.Component {
     this.state = {
 
     };
+    this.onDelete = this.onDelete.bind(this);
   }
 
   /**
- * @returns {void}
- *
- * @param {any} event
- * @memberof CardItem
- */
+   * @returns {void}
+   *
+   * @param {integer} id
+   * @memberof RecipeAdmin
+   */
+  onDelete() {
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will need to add to favorite again!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.props.apiDeleteFavoriteRecipe(this.props.recipe.id);
+          swal('Recipe removed from favorite!', {
+            icon: 'success',
+          });
+        }
+      });
+  }
 
   /**
    * @description COnstructor Function
@@ -46,16 +67,18 @@ class CardItem extends React.Component {
         upvotes,
         downvotes,
         favoriteCount,
+        views
       }
     } = this.props;
+    const url = window.location.href;
+    const currentURL = url.split('/')[url.split('/').length - 1];
     return (
       <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <div className="card card-shape">
           <img
-            className="card-img-top food-image"
+            className="card-img-top card-height"
             src={imageUrl || image}
             alt="Card cap"
-            style={{ height: '180px' }}
           />
           <div className="card-body">
             <h4 className="card-title">{recipeName}</h4>
@@ -69,20 +92,38 @@ class CardItem extends React.Component {
                   View Details
                 </Link>
               </div>
-              <div className="col-xs-12 col-sm-6 card-paddings">
-                <span className="ratings">
-                  <i className="fa fa-thumbs-o-up 2x" />
-                  <span>{upvotes || 0}</span>
+              {currentURL === 'favorites' ?
+                <span className="delete paddings">
+                  <i
+                    className="fa fa-trash fa-2x fa-icons"
+                    role="button"
+                    tabIndex="-1"
+                    data-toggle="tooltip"
+                    title="Remove from favorite"
+                    onKeyPress={this.onKeyPress}
+                    onClick={this.onDelete}
+                  />
                 </span>
-                <span className="ratings">
-                  <i className="fa fa-thumbs-o-down 2x" />
-                  <span>{downvotes || 0}</span>
-                </span>
-                <span className="ratings">
-                  <i className="fa fa-heart-o 2x" />
-                  <span>{favoriteCount || 0}</span>
-                </span>
-              </div>
+                :
+                <div className="col-xs-12 col-sm-6 card-paddings">
+                  <span className="ratings">
+                    <i className="fa fa-thumbs-o-up 2x" />
+                    <span>{upvotes || 0}</span>
+                  </span>
+                  <span className="ratings">
+                    <i className="fa fa-thumbs-o-down 2x" />
+                    <span>{downvotes || 0}</span>
+                  </span>
+                  <span className="ratings">
+                    <i className="fa fa-heart-o 2x" />
+                    <span>{favoriteCount || 0}</span>
+                  </span>
+                  <span className="ratings">
+                    <i className="fa fa-eye 2x" />
+                    <span>{views || 0}</span>
+                  </span>
+                </div>
+          }
             </div>
           </div>
         </div>
@@ -93,7 +134,22 @@ class CardItem extends React.Component {
 
 CardItem.propTypes = {
   recipe: PropTypes.objectOf(String).isRequired,
+  apiDeleteFavoriteRecipe: PropTypes.func.isRequired
 };
 
-export default CardItem;
+/**
+ *
+ * @param {object} state
+ *
+ * @returns {void}
+ */
+function mapStateToProps(state) {
+  return {
+    favorites: state.recipe.favorites,
+  };
+}
 
+export default connect(
+  mapStateToProps,
+  { apiDeleteFavoriteRecipe }
+)(CardItem);

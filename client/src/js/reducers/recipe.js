@@ -25,6 +25,8 @@ import {
   GET_RECIPE_FAVORITE_FAILURE,
   GET_ALL_FAVORITE_RECIPE_SUCCESS,
   GET_ALL_FAVORITE_RECIPE_FAILURE,
+  DELETE_FAVORITE_RECIPE_SUCCESS,
+  DELETE_FAVORITE_RECIPE_FAILURE,
   VIEW_RECIPE_SUCCESS,
   VIEW_RECIPE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
@@ -34,14 +36,15 @@ import {
   GET_RECIPE_REVIEW_SUCCESS,
   GET_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
-  SEARCH_RECIPE_FAILURE } from '../constants';
+  SEARCH_RECIPE_FAILURE,
+  GET_SEARCH_ITEM } from '../constants';
 
 export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
     type, recipe, recipeDetail, recipeReview,
     recipes, myRecipes, recipeId, error, searchRecipeName,
-    favRecipes, favoriteRecipes, deletedReviewId
+    favRecipes, favoriteRecipes, deletedReviewId, searchItem, deletedFavoriteId
   } = action;
 
   switch (type) {
@@ -187,6 +190,21 @@ export default (state = initialState, action) => {
         ...newState,
         errorMessage: error
       };
+    case DELETE_FAVORITE_RECIPE_SUCCESS:
+      const newFavorite = newState.favorites
+        .filter(favorite => favorite.recipeId !== deletedFavoriteId);
+      newState.favorites = newFavorite;
+      return {
+        ...newState,
+        // recipe: {
+        //   Favorites: newFavorite
+        // }
+      };
+    case DELETE_FAVORITE_RECIPE_FAILURE:
+      return {
+        ...newState,
+        errorMessage: error
+      };
     case RECIPE_REVIEW_SUCCESS:
       newState.recipe.Reviews.unshift(recipeReview);
       return {
@@ -226,6 +244,11 @@ export default (state = initialState, action) => {
       return {
         ...newState,
         errorMessage: error,
+      };
+    case GET_SEARCH_ITEM:
+      return {
+        ...newState,
+        searchItem
       };
     default:
       return newState;

@@ -100,6 +100,7 @@
     "superagent-promise": "^1.1.0",
     "supertest": "^3.0.0",
     "swagger-jsdoc": "^1.9.7",
+    "sweetalert": "^2.1.0",
     "toastr": "^2.1.2",
     "uglify-js": "^3.0.24",
     "url-loader": "^0.5.9",

@@ -76,8 +76,10 @@ class Profile extends React.Component {
                   role="button"
                   tabIndex="-1"
                   onClick={this.toggle}
+                  data-toggle="tooltip"
+                  title="Edit profile"
                   onKeyPress={this.handleKeyPress}
-                  className="fa fa-edit fa-2x"
+                  className="fa fa-edit fa-2x fa-icons profile-edit"
                 />
               </div>
               <h1 className="name">{currentUser.firstName}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { confirmAlert } from 'react-confirm-alert';
+import swal from 'sweetalert';
 import moment from 'moment';
 import AddReviewForm from '../../../Partials/AddReviewForm';
 import { apiDeleteRecipeReview } from '../../../../actions/recipe';
@@ -37,9 +37,11 @@ class Reviews extends React.Component {
    * @memberof RecipeAdmin
    */
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      availableReview: nextProps.reviewedRecipe.Reviews.length
-    });
+    if (nextProps.reviewedRecipe.Reviews) {
+      this.setState({
+        availableReview: nextProps.reviewedRecipe.Reviews.length
+      });
+    }
   }
 
   /**
@@ -49,18 +51,25 @@ class Reviews extends React.Component {
    * @memberof RecipeAdmin
    */
   onDelete(id) {
-    confirmAlert({
-      title: 'Confirm',
-      message: 'Are you sure you want to delete?',
-      confirmLabel: 'Confirm',
-      cancelLabel: 'Cancel',
-      onConfirm: () => this.props.apiDeleteRecipeReview(id),
-      onCancel: () => {},
-    });
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this review!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          this.props.apiDeleteRecipeReview(id);
+          swal('Poof! Your review has been deleted!', {
+            icon: 'success',
+          });
+        }
+      });
   }
 
   /**
-   * @description COnstructor Function
+   * @description Constructor Function
    * @param {any} props
    * @memberof Home
    * @return {void}
@@ -88,7 +97,7 @@ class Reviews extends React.Component {
         <li key={review.id} className="list-group-item">
           <div className="item">
             <div>
-              <div style={{ display: 'inline-block' }} className="float-left review-avatar">
+              <div className="float-left review-avatar">
                 <img
                   src={review.User.imageUrl || image}
                   alt="img"
@@ -96,37 +105,33 @@ class Reviews extends React.Component {
                 />
               </div>
 
-              <span style={{ margin: '12px 0 0 7px' }} className="float-left">
+              <span className="float-left review-user">
                 {review.User.userName}
               </span>
               <span className="float-right review-time">
                 {moment(new Date(review.createdAt)).fromNow()}
               </span>
-              <span className="float-right delete-review">
-                <i
-                  className="fa fa-trash fa-1x text-danger"
-                  role="button"
-                  tabIndex="-1"
-                  onKeyPress={this.onKeyPress}
-                  onClick={() => this.onDelete(review.id)}
-                />
-              </span>
-              <div style={{ clear: 'both' }} />
+              { review.userId === parseInt(localStorage.getItem('userId'), 10) ?
+                <span
+                  className="float-right delete-review"
+                  data-toggle="tooltip"
+                  title="Delete review"
+                >
+                  <i
+                    className="fa fa-trash fa-1x text-danger"
+                    role="button"
+                    tabIndex="-1"
+                    onKeyPress={this.onKeyPress}
+                    onClick={() => this.onDelete(review.id)}
+                  />
+                </span>
+              : ''}
+              <div className="clear-float" />
             </div>
-            <p style={{ marginTop: '9px', fontSize: '24px', fontWeight: 200 }}>{review.reviews}</p>
+            <p className="reviews">
+              {review.reviews}
+            </p>
           </div>
-          {/* <span className="delete-review">
-            <i
-              className="fa fa-trash fa-1x text-danger"
-              role="button"
-              tabIndex="-1"
-              onKeyPress={this.onKeyPress}
-              onClick={() => {
-                this.onDelete(review.id);
-              }}
-            />
-          </span> */}
-
         </li>))
       : 'This recipe has not been reviewed yet' }
         </ul>

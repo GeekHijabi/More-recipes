@@ -15,30 +15,32 @@ const updateVoteCounts = (recipeId) => {
             id: recipeId
           }
         }).then((recipeFound) => {
-          recipeFound.updateAttributes({
-            downvotes: totalDownVotes
-          }).then(() => {
-            Vote
-              .count({
-                where: {
-                  recipeId,
-                  upvotes: true
-                }
-              }).then((totalUpVotes) => {
-                if (totalUpVotes >= 0) {
-                  Recipe.findOne({
-                    where: {
-                      id: recipeId
-                    }
-                  }).then((foundRecipe) => {
-                    foundRecipe.updateAttributes({
-                      upvotes: totalUpVotes,
-                      downvotes: totalDownVotes
-                    }).then(updatedRecipe => updatedRecipe);
-                  });
-                }
-              });
-          });
+          if (recipeFound) {
+            recipeFound.updateAttributes({
+              downvotes: totalDownVotes
+            }).then(() => {
+              Vote
+                .count({
+                  where: {
+                    recipeId,
+                    upvotes: true
+                  }
+                }).then((totalUpVotes) => {
+                  if (totalUpVotes >= 0) {
+                    Recipe.findOne({
+                      where: {
+                        id: recipeId
+                      }
+                    }).then((foundRecipe) => {
+                      foundRecipe.updateAttributes({
+                        upvotes: totalUpVotes,
+                        downvotes: totalDownVotes
+                      }).then(updatedRecipe => updatedRecipe);
+                    });
+                  }
+                });
+            });
+          }
         });
       }
     });
