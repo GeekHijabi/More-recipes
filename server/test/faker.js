@@ -25,6 +25,10 @@ const fakeData = {
     identifier: 'test@test.com' || 'tester',
     password: 'fodddyyy',
   },
+  signedInUser5: {
+    identifier: 'hamdalah',
+    password: 'hamdalah',
+  },
 
   signedInUser4: {
     username: 'tester',
@@ -34,6 +38,12 @@ const fakeData = {
   signedInUser3: {
     identifier: 'test@test.com' || 'tester',
     password: 'fodddyy',
+  },
+
+  updateProfile: {
+    bio: 'nice, sweet, good',
+    summary: 'I love food',
+    imageUrl: 'https://res.cloudinary.com/geek-hijabi/image/upload/v1516811745/Photo_on_15-12-2017_at_11.18_alidfo.jpg'
   },
 
   noEmailInput: {
@@ -96,6 +106,11 @@ const fakeData = {
     recipeName: 'Beans',
     ingredients: 'water, beans',
     description: 'fry beans'
+  },
+  reviews: {
+    reviews: 'Very nice recipe'
+  },
+  reviews2: {
   },
 };
 

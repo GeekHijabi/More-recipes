@@ -45,7 +45,7 @@ class MyRecipe extends React.Component {
  * @param {any} void
  * @memberof RecipeAdmin
  */
-  componentWillMount() {
+  componentDidMount() {
     const recipeId = this.props.match.params.id;
     this.props.onViewRecipe(recipeId);
   }
@@ -124,34 +124,49 @@ class MyRecipe extends React.Component {
                 <i
                   className="fa fa-thumbs-o-up fa-2x"
                   role="button"
+                  data-toggle="tool-tip"
+                  title="upvote recipe"
                   tabIndex="-1"
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handleupvote()}
                 />
-                <span className="detail-value">{recipe.upvotes}</span>
                 <span>upvote(s)</span>
+                <span className="detail-value">{recipe.upvotes}</span>
               </span>
               <span className="vote_type">
                 <i
                   className="fa fa-thumbs-o-down fa-2x"
                   role="button"
+                  data-toggle="tool-tip"
+                  title="downvote recipe"
                   tabIndex="-1"
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handledownvote()}
                 />
-                <span className="detail-value">{recipe.downvotes}</span>
                 <span>downvote(s)</span>
+                <span className="detail-value">{recipe.downvotes}</span>
               </span>
               <span className="vote_type">
                 <i
                   className="fa fa-heart fa-2x"
+                  data-toggle="tool-tip"
+                  title="add to favorites"
                   role="button"
                   tabIndex="-1"
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handlefavorite()}
                 />
-                <span className="detail-value">{recipe.favoriteCount}</span>
                 <span>favorite(s)</span>
+                <span className="detail-value">{recipe.favoriteCount}</span>
+              </span>
+              <span className="vote_type">
+                <i
+                  className="fa fa-eye fa-2x"
+                  data-toggle="tool-tip"
+                  title="number of views"
+                />
+                <span>views(s)</span>
+                <span className="detail-value">{recipe.views}</span>
               </span>
             </div>
           </div>

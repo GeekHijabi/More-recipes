@@ -19,7 +19,6 @@ before_script:
   - npm install -g sequelize-cli@2.8.0
   - psql -c 'create database morerecipes_test;' -U postgres
   - psql -c "create user hamdalah with password 'hamdalah';" -U postgres
-  - npm run build
   - sequelize db:migrate
 after_success: 
   - npm run coverage

@@ -104,14 +104,13 @@ export default {
         },
         attributes: { exclude: ['password'] }
       })
-      .then((currentUser) => {
-        if (!currentUser) {
-          return res.status(404).json({
-            error: 'No current user'
-          });
-        }
-        return res.status(200).json(currentUser);
-      })
+      .then(currentUser =>
+        // if (!currentUser) {
+        //   return res.status(404).json({
+        //     error: 'No current user'
+        //   });
+        // }
+        res.status(200).json(currentUser))
       .catch(() => res.status(500).json({ error: 'Internal server error' }));
   },
 
@@ -139,7 +138,7 @@ export default {
         if (id !== userProfile.id) {
           return res.status(403)
             .json({
-              error: 'You cannot update a profile that does not belong to you'
+              error: 'You are not authorized to perform this action'
             });
         }
         return userProfile

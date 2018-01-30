@@ -16,11 +16,23 @@
   "tags": [
     {
       "name": "users",
-      "description": "User related routes"
+      "description": "Users related routes"
     },
     {
       "name": "/recipes",
-      "description": "Recipe related routes"
+      "description": "Recipes related routes"
+    },
+    {
+      "name": "/reviews",
+      "description": "Reviews related routes"
+    },
+    {
+      "name": "/favorites",
+      "description": "Favorites related routes"
+    },
+    {
+      "name": "/votes",
+      "description": "votes related routes"
     }
   ],
   "schemes": [
@@ -127,7 +139,6 @@
         }
       }
     },
-
     "/user/{userId}": {
       "get": {
         "tags": [
@@ -210,7 +221,8 @@
             "schema": {
               "$ref": "#/definitions/UserResponse"
             }
-          }],
+          }
+        ],
         "responses": {
           "200": {
             "schema": {
@@ -516,7 +528,428 @@
           }
         }
       }
+    },
+    "/search": {
+      "get": {
+        "tags": [
+          "/recipes"
+        ],
+        "summary": "search for a particular recipe",
+        "description": "Fetch all recipes that matches the search result",
+        "operationId": "searchRecipes",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "recipe",
+            "in": "path",
+            "description": "search parameter",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetRecipes"
+              }
+            }
+          },
+          "default": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/favorites": {
+      "get": {
+        "tags": [
+          "/recipes"
+        ],
+        "summary": "list all the favorite recipes available",
+        "description": "Fetch the top 4 favorite recipe",
+        "operationId": "listFavoritedRecipe",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Authentication Token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetRecipes"
+              }
+            }
+          },
+          "default": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/recipes/{recipeId}/review": {
+      "post": {
+        "tags": [
+          "/reviews"
+        ],
+        "summary": "Post review to a recipe",
+        "description": "Add a review to a recipe",
+        "operationId": "createReview",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Authentication Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Review"
+            }
+          },
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "Id of recipe to be reviewed",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "description": "Review created",
+              "$ref": "#/definitions/Review"
+            }
+          },
+          "400": {
+            "description": "Validation exception",
+            "schema": {
+              "$ref": "#/definitions/ReviewValidation"
+            }
+          },
+          "default": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/recipe/{recipeId}/review": {
+      "get": {
+        "tags": [
+          "/reviews"
+        ],
+        "summary": "Get reviews in a recipe",
+        "description": "Get the reviews in a recipe",
+        "operationId": "viewRecipeReviews",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Authentication Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "ID of recipe",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ViewRecipe"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/RecipeNotFound"
+            }
+          },
+          "403": {
+            "description": "Invalid recipeId parameter",
+            "schema": {
+              "$ref": "#/definitions/RecipeNotFound"
+            }
+          },
+          "default": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/recipe/{id}/review": {
+      "delete": {
+        "tags": [
+          "/reviews"
+        ],
+        "summary": "Delete review",
+        "description": "Delete review posted on a recipe",
+        "operationId": "deleteReview",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-token",
+            "in": "header",
+            "description": "Authentication Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "Id of review to be deleted",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/DeleteRecipe"
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {
+              "$ref": "#/definitions/RecipeNotFound"
+            }
+          },
+          "403": {
+            "description": "Invalid recipeId",
+            "schema": {
+              "$ref": "#/definitions/RecipeNotFound"
+            }
+          },
+          "default": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/user/{userId}/favorites": {
+      "get": {
+        "tags": [
+          "/favorites"
+        ],
+        "summary": "Gets all recipes favorited by authenticated user",
+        "description": "Displays all user's favorite recipes",
+        "operationId": "getFavorites",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GetRecipes"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/{recipeId}/favorite": {
+      "delete": {
+      "tags": [
+        "/favorites"
+      ],
+      "summary": "Add recipe as favorite",
+      "description": "This method allows authenticated user add recipe as favorite",
+      "operationId": "createFavorite",
+      "consumes": [
+        "application/json"
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "x-token",
+          "in": "header",
+          "description": "Authentication Token",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "in": "body",
+          "name": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Recipe"
+          }
+        }
+      ],
+      "responses": {
+        "201": {
+          "schema": {
+            "description": "Responds with a recipe instance",
+            "$ref": "#/definitions/CreatedRecipe"
+          }
+        },
+        "400": {
+          "description": "Validation exception",
+          "schema": {
+            "$ref": "#/definitions/RecipeValidation"
+          }
+        },
+        "default": {
+          "description": "An error occured"
+        }
+      }
     }
+    },
+    "/recipe/{recipeId}/upvote": {
+      "post": {
+      "tags": [
+        "/votes"
+      ],
+      "summary": "Upvote a recipe",
+      "description": "User can upvote recipe of choice",
+      "operationId": "UpvoteRecipe",
+      "consumes": [
+        "application/json"
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "x-token",
+          "in": "header",
+          "description": "Authentication Token",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "in": "body",
+          "name": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Recipe"
+          }
+        }
+      ],
+      "responses": {
+        "201": {
+          "schema": {
+            "description": "Responds with a recipe instance",
+            "$ref": "#/definitions/CreatedRecipe"
+          }
+        },
+        "400": {
+          "description": "Validation exception",
+          "schema": {
+            "$ref": "#/definitions/RecipeValidation"
+          }
+        },
+        "default": {
+          "description": "An error occured"
+        }
+      }
+    }
+    },
+    "/recipe/{recipeId}/downvote": {
+      "post": {
+      "tags": [
+        "/votes"
+      ],
+      "summary": "Downvote a recipe",
+      "description": "User can downvote recipe of choice",
+      "operationId": "DownvoteRecipe",
+      "consumes": [
+        "application/json"
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "x-token",
+          "in": "header",
+          "description": "Authentication Token",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "in": "body",
+          "name": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Recipe"
+          }
+        }
+      ],
+      "responses": {
+        "201": {
+          "schema": {
+            "description": "Responds with a recipe instance",
+            "$ref": "#/definitions/CreatedRecipe"
+          }
+        },
+        "400": {
+          "description": "Validation exception",
+          "schema": {
+            "$ref": "#/definitions/RecipeValidation"
+          }
+        },
+        "default": {
+          "description": "An error occured"
+        }
+      }
+    }
+  }
   },
   "definitions": {
     "User": {
@@ -609,7 +1042,7 @@
             "email": "jane@doe.com",
             "firstName": "jane",
             "lastName": "doe"
-        }
+          }
         }
       }
     },
@@ -651,7 +1084,9 @@
         "error": {
           "type": "object",
           "error": "User is not registered!",
-          "example": {"error": "User is not registered"}
+          "example": {
+            "error": "User is not registered"
+          }
         }
       }
     },
@@ -660,7 +1095,9 @@
       "properties": {
         "error": {
           "type": "object",
-          "example": {"error": "Email/Username and password mismatch"}
+          "example": {
+            "error": "Email/Username and password mismatch"
+          }
         }
       }
     },
@@ -669,7 +1106,9 @@
       "properties": {
         "error": {
           "type": "object",
-          "example": {"error": "Password is required"}
+          "example": {
+            "error": "Password is required"
+          }
         }
       }
     },
@@ -767,6 +1206,10 @@
         }
       }
     },
+    "Review": {
+      "type": "string",
+      "required": "review"
+    },
     "CreatedRecipe": {
       "type": "object",
       "required": [
@@ -788,6 +1231,18 @@
         "message": {
           "type": "string",
           "example": "Please enter a valid recipe name"
+        }
+      }
+    },
+    "ReviewValidation": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Review cannot be empty"
         }
       }
     },
@@ -831,7 +1286,7 @@
             "views": 0,
             "createdAt": "2018-01-24T22:04:01.944Z",
             "updatedAt": "2018-01-25T00:09:15.483Z"
-        }
+          }
         },
         "recipe": {
           "$ref": "#/definitions/Recipe"
@@ -847,6 +1302,18 @@
         "message": {
           "type": "string",
           "example": "Recipe Deleted!"
+        }
+      }
+    },
+    "CreatedReview": {
+      "type": "object",
+      "required": [
+        "message",
+        "review"
+      ],
+      "properties": {
+        "review": {
+          "$ref": "#/definitions/Review"
         }
       }
     }

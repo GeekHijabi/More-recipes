@@ -106,6 +106,11 @@ const routes = (app) => {
     '/api/v1/recipe/:recipeId/favorite',
     authenticate, favoriteRecipe.create
   );
+  app.delete(
+    '/api/v1/recipe/:recipeId/favorite',
+    authenticate,
+    favoriteRecipe.destroyFavorite
+  );
 
   app.post(
     '/api/v1/recipe/:recipeId/upvote',
