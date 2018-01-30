@@ -191,8 +191,6 @@ describe('User', () => {
       .post('/api/v1/user/signin')
       .send(fakeData.signedInUser2)
       .end((err, res) => {
-        // console.log(res.body, 'see me here')
-        // token = { token };
         res.body.should.be.a('object');
         res.body.should.have.property('message')
           .equal('You have successfully signed in!');

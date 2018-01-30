@@ -77,10 +77,9 @@ class AdminCardItem extends React.Component {
       <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <div className="card">
           <img
-            className="card-img-top food-image"
+            className="card-img-top card-height"
             src={imageUrl || defaultImage}
             alt="Card cap"
-            style={{ height: '180px' }}
           />
           <div className="card-body">
             <h4 className="card-title">{recipeName}</h4>

@@ -91,7 +91,7 @@ export default {
             }));
         }
         return res.status(403).send({
-          error: 'You cannot delete a review that does not belong to you',
+          error: 'You are not authorized to perform this action',
         });
       })
       .catch(() => {

@@ -82,4 +82,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { apiGetFavoriteRecipe })(FavoriteRecipes);
+export default connect(
+  mapStateToProps,
+  { apiGetFavoriteRecipe }
+)(FavoriteRecipes);

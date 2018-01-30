@@ -25,6 +25,8 @@ import {
   GET_RECIPE_FAVORITE_FAILURE,
   GET_ALL_FAVORITE_RECIPE_SUCCESS,
   GET_ALL_FAVORITE_RECIPE_FAILURE,
+  DELETE_FAVORITE_RECIPE_SUCCESS,
+  DELETE_FAVORITE_RECIPE_FAILURE,
   VIEW_RECIPE_SUCCESS,
   VIEW_RECIPE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
@@ -42,7 +44,7 @@ export default (state = initialState, action) => {
   const {
     type, recipe, recipeDetail, recipeReview,
     recipes, myRecipes, recipeId, error, searchRecipeName,
-    favRecipes, favoriteRecipes, deletedReviewId, searchItem
+    favRecipes, favoriteRecipes, deletedReviewId, searchItem, deletedFavoriteId
   } = action;
 
   switch (type) {
@@ -188,6 +190,21 @@ export default (state = initialState, action) => {
         ...newState,
         errorMessage: error
       };
+    case DELETE_FAVORITE_RECIPE_SUCCESS:
+      const newFavorite = newState.favorites
+        .filter(favorite => favorite.recipeId !== deletedFavoriteId);
+      newState.favorites = newFavorite;
+      return {
+        ...newState,
+        // recipe: {
+        //   Favorites: newFavorite
+        // }
+      };
+    case DELETE_FAVORITE_RECIPE_FAILURE:
+      return {
+        ...newState,
+        errorMessage: error
+      };
     case RECIPE_REVIEW_SUCCESS:
       newState.recipe.Reviews.unshift(recipeReview);
       return {
@@ -229,7 +246,6 @@ export default (state = initialState, action) => {
         errorMessage: error,
       };
     case GET_SEARCH_ITEM:
-      console.log(searchItem, 'search item');
       return {
         ...newState,
         searchItem

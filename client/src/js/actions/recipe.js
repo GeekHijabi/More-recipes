@@ -28,6 +28,8 @@ import {
   GET_RECIPE_FAVORITE_FAILURE,
   GET_ALL_FAVORITE_RECIPE_SUCCESS,
   GET_ALL_FAVORITE_RECIPE_FAILURE,
+  DELETE_FAVORITE_RECIPE_SUCCESS,
+  DELETE_FAVORITE_RECIPE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
   RECIPE_REVIEW_FAILURE,
   GET_RECIPE_REVIEW_SUCCESS,
@@ -61,10 +63,12 @@ export const getRecipeSuccess = recipes => ({
   type: GET_RECIPE_SUCCESS,
   recipes
 });
+
 export const getFavoriteRecipeSuccess = recipes => ({
   type: GET_FAVORITE_RECIPE_SUCCESS,
   recipes
 });
+
 export const getFavoriteRecipeFailure = recipes => ({
   type: GET_FAVORITE_RECIPE_FAILURE,
   recipes
@@ -102,46 +106,57 @@ export const deleteRecipeFailure = error => ({
 export const editRecipe = () => ({
   type: EDIT_RECIPE,
 });
+
 export const editRecipeSuccess = recipe => ({
   type: EDIT_RECIPE_SUCCESS,
   recipe
 });
+
 export const editRecipeFailure = error => ({
   type: EDIT_RECIPE_FAILURE,
   error
 });
+
 export const viewRecipeSuccess = recipe => ({
   type: VIEW_RECIPE_SUCCESS,
   recipeDetail: recipe
 });
+
 export const viewRecipeFailure = error => ({
   type: VIEW_RECIPE_FAILURE,
   error
 });
+
 export const upVoteRecipeSuccess = id => ({
   type: RECIPE_UPVOTE_SUCCESS,
   recipeId: id
 });
+
 export const upVoteRecipeFailure = error => ({
   type: RECIPE_UPVOTE_FAILURE,
   error
 });
+
 export const downVoteRecipeSuccess = id => ({
   type: RECIPE_DOWNVOTE_SUCCESS,
   recipeId: id
 });
+
 export const downVoteRecipeFailure = error => ({
   type: RECIPE_DOWNVOTE_FAILURE,
   error
 });
+
 export const favoriteRecipeSuccess = id => ({
   type: RECIPE_FAVORITE_SUCCESS,
   recipeId: id
 });
+
 export const favoriteRecipeFailure = error => ({
   type: RECIPE_FAVORITE_FAILURE,
   error
 });
+
 export const getfavoriteRecipeSuccess = favoriteRecipes => ({
   type: GET_RECIPE_FAVORITE_SUCCESS,
   favoriteRecipes
@@ -151,6 +166,7 @@ export const getfavoriteRecipeFailure = error => ({
   type: GET_RECIPE_FAVORITE_FAILURE,
   error
 });
+
 export const getAllFavoriteRecipeSuccess = favRecipes => ({
   type: GET_ALL_FAVORITE_RECIPE_SUCCESS,
   favRecipes
@@ -160,14 +176,27 @@ export const getAllFavoriteRecipeFailure = error => ({
   type: GET_ALL_FAVORITE_RECIPE_FAILURE,
   error
 });
+
+export const deleteFavoriteRecipeSuccess = id => ({
+  type: DELETE_FAVORITE_RECIPE_SUCCESS,
+  deletedFavoriteId: id
+});
+
+export const deleteFavoriteRecipeFailure = error => ({
+  type: DELETE_FAVORITE_RECIPE_FAILURE,
+  error
+});
+
 export const reviewRecipeSuccess = recipeReview => ({
   type: RECIPE_REVIEW_SUCCESS,
   recipeReview
 });
+
 export const reviewRecipeFailure = error => ({
   type: RECIPE_REVIEW_FAILURE,
   error
 });
+
 export const deleteRecipeReviewSuccess = id => ({
   type: DELETE_RECIPE_REVIEW_SUCCESS,
   deletedReviewId: id
@@ -177,6 +206,7 @@ export const deleteRecipeReviewFailure = error => ({
   type: DELETE_RECIPE_REVIEW_FAILURE,
   error
 });
+
 export const getRecipeReviewSuccess = id => ({
   type: GET_RECIPE_REVIEW_SUCCESS,
   recipeId: id,
@@ -186,6 +216,7 @@ export const getRecipeReviewFailure = error => ({
   type: GET_RECIPE_REVIEW_FAILURE,
   error
 });
+
 export const searchRecipeSuccess = searchRecipeName => ({
   type: SEARCH_RECIPE_SUCCESS,
   searchRecipeName
@@ -195,7 +226,6 @@ export const searchRecipeFailure = error => ({
   type: SEARCH_RECIPE_FAILURE,
   error
 });
-
 
   /**
  * Action for createRecipe
@@ -234,14 +264,16 @@ export const apiCreateRecipe = ({
  * @returns {promise} request
  * @param {object} page
  * @param {object} limit
+ * @param {object} sort
  */
-export const apiGetRecipe = (page, limit) =>
+export const apiGetRecipe = (page, limit, sort) =>
   function action(dispatch) {
     page = page || 1;
     dispatch(getRecipe());
     const request = axios({
       params: {
-        limit
+        limit,
+        sort
       },
       method: 'GET',
       url: `/api/v1/recipes?page=${page}`
@@ -314,7 +346,6 @@ export const apiDeleteRecipe = id =>
     return request;
   };
 
-
 /**
  * Action for editRecipe
  *
@@ -345,7 +376,6 @@ export const apiEditRecipe = (recipeId, {
     });
     return request;
   };
-
 
   /**
    * Action to view single Recipe
@@ -390,6 +420,7 @@ export const apiUpVoteRecipe = id =>
     });
     return request;
   };
+
   /**
    * Action to downvote recipe
    *
@@ -411,6 +442,13 @@ export const apiDownVoteRecipe = id =>
     });
     return request;
   };
+
+/**
+ * Action for apifavoriteRecipe
+ *
+ * @returns {promise} request
+ * @param {number} id
+ */
 export const apifavoriteRecipe = id =>
   function action(dispatch) {
     const request = axios({
@@ -427,7 +465,7 @@ export const apifavoriteRecipe = id =>
     return request;
   };
 
-  /**
+/**
  * Action for getRecipe
  *
  * @returns {promise} request
@@ -473,6 +511,29 @@ export const apiGetFavoriteRecipe = id =>
     });
     return request;
   };
+
+/**
+ * Action for deleteRecipe
+ *
+ * @returns {promise} request
+ * @param {integer} id
+ */
+export const apiDeleteFavoriteRecipe = id =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'POST',
+      url: `/api/v1/recipe/${id}/favorite`
+    });
+    request.then(() => {
+      dispatch(deleteFavoriteRecipeSuccess(id));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(deleteFavoriteRecipeFailure(err.data.error));
+      }
+    });
+    return request;
+  };
+
 
 export const apiGetRecipeReview = id =>
   function action(dispatch) {

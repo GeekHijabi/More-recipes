@@ -8,10 +8,10 @@ body {
 }
 
 ul.ml-auto {
-  margin-right: 2em;
+  margin-right: 2rem;
  }
 
- .font-up, footer.page-footer .title {
+.font-up, footer.page-footer .title {
   text-transform: inherit;
 }
 
@@ -32,17 +32,17 @@ ul.ml-auto {
   }
 }
 
- img.bg{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    -o-object-fit: cover;
-       object-fit: cover;
-    -webkit-filter: brightness(0.8);
-            filter: brightness(0.8)
-  }
+img.bg{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  -o-object-fit: cover;
+      object-fit: cover;
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8)
+}
 
 #banner>.container>.body-title-card {
   background: none;
@@ -70,7 +70,7 @@ ul.ml-auto {
 }
 
 #list {
-  padding: 2em 2%;
+  padding: 2rem 2%;
 }
 
 .form-label{
@@ -80,14 +80,14 @@ ul.ml-auto {
 .card .ratings {
   text-align: center;
   display: inline-block;
-  margin-right: 1em;
+  margin-right: 1rem;
 }
 .card .ratings * {
   display: block;
 }
 
 .heading {
-  padding-bottom: 2em;
+  padding-bottom: 2rem;
   margin-top: 33px;
 }
 .headings {
@@ -102,14 +102,14 @@ ul.ml-auto {
 
 .heading span {
   border-left: 2px solid;
-  padding-left: 0.5em;
+  padding-left: 0.5rem;
 }
 
 .heading i {
   position: absolute;
   top: 0;
-  right: 0.5em;
-  margin-top: -0.3em;
+  right: 0.5rem;
+  margin-top: -0.3rem;
   cursor: pointer;
 }
 
@@ -130,39 +130,30 @@ main[page="details"] > div:nth-child(1) img.food {
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  // -webkit-filter: brightness(0.8);
-  //         filter: brightness(0.8);
-  // -webkit-transition: all ease-in-out .3s;
-  // -o-transition: all ease-in-out .3s;
-  // transition: all ease-in-out .3s;
   z-index: -1;
   overflow-y: hidden
 }
 
-// main[page="details"] > div:nth-child(1):hover {
-//   -webkit-filter: brightness(0.75);
-//           filter: brightness(0.75);
-// }
-
 main[page="details"] > div:nth-child(2) {
   overflow-y: scroll;
-  margin-left: -0.8em;
+  margin-left: -0.8rem;
 }
 
 main[page="details"] a.navbar-brand {
   color: white;
-  font-size: 1.5em;
-  margin: 1em 1em;
+  font-size: 1.5rem;
+  margin: 1rem 1rem;
 }
 
 main[page="details"] span.food_name {
   position: absolute;
-  bottom: 10em;
+  bottom: 19rem;
   font-family: 'Montserrat', cursive;
   font-size: 36px;
-  // left: 0em;
-  background: rgba(0, 0, 0, 0.59);
-  padding: 0.5em 1em;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 1.5rem;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 main[page="details"] .food_vote {
@@ -170,7 +161,7 @@ main[page="details"] .food_vote {
   top: 8em;
   right: 10%;
   background: rgba(0, 0, 0, 0.5);
-  padding: 2em 0.3em 2em;
+  padding: 2.5rem 0.3rem 0.3rem;
   border-radius: 15px;
   display: block;
   text-align: center;
@@ -182,19 +173,19 @@ main[page="details"] .vote_type * {
 }
 
 .detail-value{
-  padding-bottom: 1em;
+  padding-bottom: 1rem;
 }
 
 .steps .step_details {
   padding: 0 2em;
   border-left: 2px solid black;
-  margin: 2em 0 2em 2em;
+  margin: 2rem 0 2rem 2rem;
 }
 
 .step h5 {
-  margin-top: 1em;
-  margin-left: 0.5em;
-  margin-bottom: -1em;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  margin-bottom: -1rem;
 }
 
 span .detail-value {
@@ -202,7 +193,7 @@ span .detail-value {
 }
 
 .nav.nav-tabs {
-  top: 4em;
+  top: 4rem;
   width: 100%;
   background-color: white;
 }
@@ -212,8 +203,8 @@ span .detail-value {
   border-bottom: 1px;
   border-left: 0;
   border-right: 0;
-  font-size: 0.9em;
-  padding: 0.8em 2em;
+  font-size: 0.9rem;
+  padding: 0.8rem 2rem;
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
@@ -227,7 +218,7 @@ span .detail-value {
 }
 
 #myTabContent .tab-pane {
-  padding: 1em;
+  padding: 1rem;
 }
 
 [page="profile"] div.dual {
@@ -243,42 +234,39 @@ span .detail-value {
 }
 
 h1.name {
-  font-size: 4em;
-  padding: 0.7em 0em;
+  font-size: 4rem;
+  padding: 0.7rem 0rem;
 }
-// .form-control {
-//   padding-right: 8.7em !important;
-// }
 
 .name-desc {
-  margin-top: -1em;
-  font-size: 2em;
+  margin-top: -1rem;
+  font-size: 2rem;
   font-family: tangerine;
 }
 
 .red-border-line {
-  width: 10em;
+  width: 10rem;
   height: 3px;
   background: #E91E63;
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
 }
 
 .social-icons {
-  margin-top: 1.5em;
+  margin-top: 1.5rem;
 }
 
 .social-icons a {
-  margin-right: 1em;
+  margin-right: 1rem;
   color: #424242;
 }
 
 [page="signup"] {
-  padding: 10em 36em;
+  padding: 10rem 36rem;
   background-image: url(../assets/images/banner_bg.jpg);
   background-size: cover;
 }
 [page="signin"] {
-  padding: 18em 36em;
+  padding: 18rem 36rem;
   background-image: url(../assets/images/banner_bg.jpg);
   background-size: cover;
 }
@@ -297,7 +285,7 @@ h1.name {
   font-size: 0.8rem }
 
  .md-form {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
  }
 
  .btn-white {
@@ -313,12 +301,12 @@ h1.name {
 }
  
 .sign{
-  margin-top: -2em;
+  margin-top: -2rem;
   height: calc(100vh - 70px);
 }
 
 .form-elegant.btn {
-  margin-top: -1.5em;
+  margin-top: -1.5rem;
 
 } 
 
@@ -329,7 +317,7 @@ h1.name {
 .page-footer {
   text-align: center;
   bottom: 0;
-  padding-top: 1em !important;
+  padding-top: 1rem !important;
   color: white;
   background-color: #B0C038 !important;
 }
@@ -338,24 +326,24 @@ h1.name {
 }
 
 .dashboard {
-  padding-top: 2em;
-  padding-bottom: 2em;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .mv-card {
-  padding-bottom: 2em;
-  padding-left: 3em;
+  padding-bottom: 2rem;
+  padding-left: 3rem;
   height: -webkit-fill-available;
-  padding-top: 1em;
+  padding-top: 1rem;
 }
 
 .recipe-header{
-  padding-bottom: 2em;
+  padding-bottom: 2rem;
 }
 
 .details-card {
-  padding-top: 5em;
-  padding-bottom: 10em;
+  padding-top: 5rem;
+  padding-bottom: 10rem;
   padding-left: -2px;
   padding-right: -2px;
 }
@@ -378,9 +366,8 @@ h1.name {
   cursor: pointer;
 }
 
-.food-image {
-  max-height: 300px;
-  max-width: auto;
+.card-height{
+  height: 180px;
 }
 
 .bg-success {
@@ -421,13 +408,12 @@ h1.name {
 }
 
 .review-user {
-  margin-top: -2em;
-  margin-left: 4em;
+  margin: 12px 0 0 7px
 }
 
 .review-date {
-    margin-top: 0em;
-    margin-left: 28em;
+    margin-top: 0rem;
+    margin-left: 28rem;
 }
 
 .hide {
@@ -488,6 +474,19 @@ h1.name {
     padding: 84px 20px;
 }
 
+.review-avatar{
+  display: inline-block;
+}
+
+.reviews{
+  margin-top: 9px; 
+  font-size: 24px; 
+  font-weight: 200
+}
+
+.clear-float{
+  clear: both;
+}
 
 @media screen and (max-width: 576px) { 
   #banner {
@@ -500,10 +499,10 @@ h1.name {
   }
 
   [page="signup"] {
-    padding: 20em 0em;
+    padding: 20rem 0rem;
   }
   [page="signin"] {
-    padding: 30em 0em;
+    padding: 30rem 0rem;
   }
   .form-elegant {
     height: 100%
