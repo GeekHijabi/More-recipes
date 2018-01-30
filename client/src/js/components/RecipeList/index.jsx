@@ -52,6 +52,17 @@ class Recipes extends React.Component {
     });
   }
 
+  /**
+ * @returns {void}
+ *
+ * @param {any} void
+ * @memberof RecipeAdmin
+ */
+  componentWillUnmount() {
+    this.props.searchItem('');
+    console.log(this.props.searchValue);
+  }
+
 
   /**
  * @returns {void}
@@ -72,7 +83,7 @@ class Recipes extends React.Component {
    */
   render() {
     const { recipes, search, searchValue } = this.props;
-    const recipeList = (search.length === 0) && !searchValue ? recipes : search;
+    const recipeList = !searchValue || ((search.length === 0) && !searchValue) ? recipes : search;
     return (
       <div>
         <RecipeHeader />
@@ -156,4 +167,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { apiGetRecipe })(Recipes);
+export default connect(mapStateToProps, { apiGetRecipe, searchItem })(Recipes);

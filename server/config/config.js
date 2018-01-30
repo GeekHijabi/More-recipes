@@ -1,23 +1,24 @@
 const dotenv = require('dotenv');
 
 dotenv.config();
+const {
+  USERNAME, PASSWORD, DATABASE, DATABASE_TEST
+} = process.env;
 module.exports = {
   development: {
-    username: 'hamdalah',
-    password: 'hamdalah',
-    database: 'morerecipes',
+    username: USERNAME,
+    password: PASSWORD,
+    database: DATABASE,
     host: '127.0.0.1',
     port: '5432',
-    secret_key: process.env.SECRET_KEY,
     dialect: 'postgres'
   },
   test: {
-    username: 'hamdalah',
-    password: 'hamdalah',
-    database: 'morerecipes_test',
+    username: USERNAME,
+    password: PASSWORD,
+    database: DATABASE_TEST,
     host: '127.0.0.1',
     port: '5432',
-    secret_key: process.env.SECRET_KEY,
     dialect: 'postgres'
   },
   production: {

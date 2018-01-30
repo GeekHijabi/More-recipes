@@ -106,6 +106,10 @@ export default {
       'ASC' : 'DESC';
     Recipe
       .findAndCountAll({
+        where: {
+          favoriteCount:
+          { $gt: 0 }
+        },
         order: [
           [sort, order]
         ],
@@ -158,7 +162,7 @@ export default {
         } else {
           res.status(403)
             .send({
-              error: 'You cannot update a recipe that does not belong to you'
+              error: 'You are not authorized to perform this action'
             });
         }
       }).catch(() => res.status(500).json({ error: 'Internal server error' }));
@@ -192,7 +196,7 @@ export default {
             }));
         }
         return res.status(403).send({
-          error: 'You cannot delete a recipe that does not belong to you',
+          error: 'You are not authorized to perform this action',
         });
       })
       .catch(() => {
@@ -242,6 +246,7 @@ export default {
    * @returns {object} recipe created by user
    */
   getSingleRecipe(req, res) {
+    const { id } = req.decoded;
     Recipe
       .findOne({
         where: {
@@ -268,6 +273,10 @@ export default {
             error: 'No Recipe found'
           });
         }
+        if (singleRecipe.userId !== id) {
+          singleRecipe
+            .update({ views: singleRecipe.views + 1 });
+        }
         return res.status(200).json(singleRecipe);
       })
       .catch(error => res.status(404).json({ error: error.message }));
@@ -285,9 +294,18 @@ export default {
     Recipe
       .findAll({
         where: {
-          recipeName: {
-            $ilike: `%${decodeURIComponent(req.query.search)}%`
-          }
+          $or: [
+            {
+              recipeName: {
+                $ilike: `%${decodeURIComponent(req.query.search)}%`
+              }
+            },
+            {
+              ingredients: {
+                $ilike: `%${decodeURIComponent(req.query.search)}%`
+              }
+            }
+          ]
         },
         limit: limitValue
       }).then(searchFound => res.status(200).json({

@@ -130,15 +130,15 @@ export default {
         },
         attributes: { exclude: ['password'] }
       })).then((userProfile) => {
-        // if (!userProfile) {
-        //   return res.status(404).json({
-        //     error: 'User not found'
-        //   });
-        // }
+        if (!userProfile) {
+          return res.status(404).json({
+            error: 'User not found'
+          });
+        }
         if (id !== userProfile.id) {
           return res.status(403)
             .json({
-              error: 'You cannot update a profile that does not belong to you'
+              error: 'You are not authorized to perform this action'
             });
         }
         return userProfile

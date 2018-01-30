@@ -91,5 +91,27 @@ export default {
           error: 'You have no favorite recipe yet'
         });
       });
+  },
+
+  destroyFavorite(req, res) {
+    const { recipeId } = req.params;
+    return Favorite
+      .find({
+        where: {
+          recipeId
+        }
+      })
+      .then((recipeFound) => {
+        if (!recipeFound) {
+          return res.status(400).send({
+            error: 'Recipe not found',
+          });
+        }
+        return recipeFound
+          .destroy()
+          .then(() => res.status(200).json({
+            message: 'Recipe deleted successfully'
+          }));
+      });
   }
 };
