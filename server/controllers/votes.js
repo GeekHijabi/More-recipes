@@ -49,6 +49,7 @@ const updateVoteCounts = (recipeId) => {
 export default {
   upvote(req, res) {
     const { id } = req.decoded;
+    const { recipeId } = req.params;
     return Vote
       .findOne({
         where: {
@@ -64,8 +65,14 @@ export default {
             upvotes: true
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).json({
-              message: 'Successfully upvoted'
+            Recipe.findOne({
+              id: recipeId
+            }).then((recipeFound) => {
+              const data = recipeFound.get({ plain: true });
+              return res.status(200).json({
+                downvotes: data.downvotes,
+                upvotes: data.upvotes
+              });
             });
           });
         }
@@ -75,8 +82,14 @@ export default {
             downvotes: foundVote.downvotes
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).json({
-              message: 'upvote removed'
+            Recipe.findOne({
+              id: recipeId
+            }).then((recipeFound) => {
+              const data = recipeFound.get({ plain: true });
+              return res.status(200).json({
+                downvotes: data.downvotes,
+                upvotes: data.upvotes
+              });
             });
           });
         } else {
@@ -85,8 +98,14 @@ export default {
             downvotes: false
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).json({
-              message: 'upvote added'
+            Recipe.findOne({
+              id: recipeId
+            }).then((recipeFound) => {
+              const data = recipeFound.get({ plain: true });
+              return res.status(200).json({
+                downvotes: data.downvotes,
+                upvotes: data.upvotes
+              });
             });
           });
         }
@@ -94,6 +113,7 @@ export default {
   },
   downvote(req, res) {
     const { id } = req.decoded;
+    const { recipeId } = req.params;
     return Vote
       .findOne({
         where: {
@@ -109,8 +129,14 @@ export default {
             upvotes: false
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).json({
-              message: 'Successfully downvoted'
+            Recipe.findOne({
+              id: recipeId
+            }).then((recipeFound) => {
+              const data = recipeFound.get({ plain: true });
+              return res.status(200).json({
+                downvotes: data.downvotes,
+                upvotes: data.upvotes
+              });
             });
           });
         }
@@ -120,8 +146,14 @@ export default {
             downvotes: false
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).json({
-              message: 'downvote removed'
+            Recipe.findOne({
+              id: recipeId
+            }).then((recipeFound) => {
+              const data = recipeFound.get({ plain: true });
+              return res.status(200).json({
+                downvotes: data.downvotes,
+                upvotes: data.upvotes
+              });
             });
           });
         } else {
@@ -130,8 +162,14 @@ export default {
             downvotes: true
           }).then(() => {
             updateVoteCounts(req.params.recipeId);
-            return res.status(200).json({
-              message: 'downvote added'
+            Recipe.findOne({
+              id: recipeId
+            }).then((recipeFound) => {
+              const data = recipeFound.get({ plain: true });
+              return res.status(200).json({
+                downvotes: data.downvotes,
+                upvotes: data.upvotes
+              });
             });
           });
         }

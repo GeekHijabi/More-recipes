@@ -41,6 +41,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      reset_password_token: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

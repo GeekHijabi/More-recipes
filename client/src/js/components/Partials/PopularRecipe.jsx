@@ -25,11 +25,11 @@ class PopularRecipe extends React.Component {
 
 
   /**
- * @returns {void}
- *
- * @param {any} void
- * @memberof Recipes
- */
+   * @returns {void}
+   *
+   * @param {any} void
+   * @memberof Recipes
+   */
   componentDidMount() {
     this.props.apiGetAllFavoriteRecipes(4);
   }
