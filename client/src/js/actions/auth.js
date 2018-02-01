@@ -69,9 +69,9 @@ export const apiRegisterUser = ({
       url: '/api/v1/user/signup'
     });
     request.then((res) => {
-      if (res && res.response) {
+      // if (res && res.response) {
         dispatch(signupSuccess(res.response.data.message));
-      }
+      // }
     }).catch((err) => {
       if (err && err.response) {
         dispatch(signupFailure(err.response.data.error));
@@ -102,6 +102,7 @@ export const apiLoginUser = ({
       const decodedToken = jwt.decode(token);
       setToken(token);
       localStorage.setItem('userId', decodedToken.id);
+
       dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
     }).catch((err) => {

@@ -38,6 +38,12 @@ const routes = (app) => {
       user.updateUserProfile
     );
 
+  app.route('/api/v1/:userId/forgot-password')
+    .post(authenticate, user.forgotPassword);
+
+  app.route('/api/v1/:userId/reset-password')
+    .post(authenticate, user.resetPassword);
+
   app
     .route('/api/v1/recipes')
     .get(recipes.listAllRecipes)
@@ -69,6 +75,11 @@ const routes = (app) => {
     '/api/v1/recipe/:recipeId',
     authenticate,
     recipes.getSingleRecipe
+  );
+  app.post(
+    '/api/v1/recipe/:recipeId/views',
+    authenticate,
+    recipes.updateRecipeView
   );
   app.get(
     '/api/v1/favorites',

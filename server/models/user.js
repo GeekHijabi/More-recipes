@@ -35,6 +35,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
+    reset_password_token: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    }
   });
   user.associate = (models) => {
     user.hasMany(models.Recipe, {

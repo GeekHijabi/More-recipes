@@ -77,7 +77,7 @@ module.exports = {
     HtmlWebpackPluginConfig,
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin({
-      filename: 'bundle.css',
+      filename: 'bundle.css', 
       allChunks: true
     }),
     new webpack.ProvidePlugin({

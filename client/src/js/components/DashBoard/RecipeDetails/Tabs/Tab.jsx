@@ -3,7 +3,7 @@ import React from 'react';
 const Tab = props => (
   <a
     className={
-        props.isActive ?
+      props.isActive ?
         'nav-item nav-link active' :
         'nav-item nav-link'}
     id="ingredients-tab"

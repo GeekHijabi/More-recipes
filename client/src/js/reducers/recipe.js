@@ -37,14 +37,17 @@ import {
   GET_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
   SEARCH_RECIPE_FAILURE,
-  GET_SEARCH_ITEM } from '../constants';
+  GET_SEARCH_ITEM,
+  RECIPE_VIEW_COUNT_SUCCESS,
+  RECIPE_VIEW_COUNT_FAILURE } from '../constants';
 
 export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
     type, recipe, recipeDetail, recipeReview,
     recipes, myRecipes, recipeId, error, searchRecipeName,
-    favRecipes, favoriteRecipes, deletedReviewId, searchItem, deletedFavoriteId
+    favRecipes, favoriteRecipes, deletedReviewId, searchItem,
+    deletedFavoriteId, views, upvotes, downvotes
   } = action;
 
   switch (type) {
@@ -138,6 +141,7 @@ export default (state = initialState, action) => {
         isLoadingRecipe: false
       };
     case VIEW_RECIPE_SUCCESS:
+      // console.log(recipeDetail, 'recipe detail');
       return {
         ...newState,
         recipe: recipeDetail
@@ -147,6 +151,9 @@ export default (state = initialState, action) => {
         errorMessage: error
       };
     case RECIPE_UPVOTE_SUCCESS:
+      console.log(upvotes, downvotes, 'upvotes');
+      newState.recipe.upvotes = upvotes;
+      newState.recipe.downvotes = downvotes;
       return {
         ...newState
       };
@@ -155,6 +162,9 @@ export default (state = initialState, action) => {
         errorMessage: error
       };
     case RECIPE_DOWNVOTE_SUCCESS:
+      console.log(upvotes, downvotes, 'upvotes');
+      newState.recipe.downvotes = downvotes;
+      newState.recipe.upvotes = upvotes;
       return {
         ...newState
       };
@@ -249,6 +259,17 @@ export default (state = initialState, action) => {
       return {
         ...newState,
         searchItem
+      };
+    case RECIPE_VIEW_COUNT_SUCCESS:
+      // const newView = newState.recipe.views;
+      newState.views = views;
+      console.log('ns', newState);
+      return {
+        ...newState
+      };
+    case RECIPE_VIEW_COUNT_FAILURE:
+      return {
+        errorMessage: error
       };
     default:
       return newState;
