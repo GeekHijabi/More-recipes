@@ -955,21 +955,11 @@
     "User": {
       "type": "object",
       "required": [
-        "firstName",
-        "lastName",
         "userName",
         "email",
         "password"
       ],
       "properties": {
-        "firstName": {
-          "type": "string",
-          "example": "josh"
-        },
-        "lastName": {
-          "type": "string",
-          "example": "ford"
-        },
         "userName": {
           "type": "string",
           "example": "joshford"
@@ -987,20 +977,10 @@
     "UserResponse": {
       "type": "object",
       "required": [
-        "firstName",
-        "lastName",
         "userName",
         "email"
       ],
       "properties": {
-        "firstName": {
-          "type": "string",
-          "example": "josh"
-        },
-        "lastName": {
-          "type": "string",
-          "example": "ford"
-        },
         "userName": {
           "type": "string",
           "example": "janeDoe"
@@ -1039,9 +1019,7 @@
           "type": "object",
           "example": {
             "userName": "janedoe",
-            "email": "jane@doe.com",
-            "firstName": "jane",
-            "lastName": "doe"
+            "email": "jane@doe.com"
           }
         }
       }

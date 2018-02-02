@@ -170,7 +170,7 @@ class EditRecipeModal extends React.Component {
               </Col>
             </FormGroup>
 
-            <FormGroup check row className="editButton styleButton">
+            <FormGroup check row className="modal-button">
               <Col sm={{ size: 10, offset: 5 }}>
                 {this.state.isLoading ? 'please wait a few seconds...' :
                 <Button onClick={this.onSubmit}>
@@ -199,5 +199,4 @@ EditRecipeModal.propTypes = {
 
 
 };
-
 export default EditRecipeModal;

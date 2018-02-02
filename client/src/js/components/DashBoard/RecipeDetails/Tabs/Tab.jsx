@@ -4,12 +4,12 @@ const Tab = props => (
   <a
     className={
         props.isActive ?
-        'nav-item nav-link active' :
+        'nav-item nav-link' :
         'nav-item nav-link'}
-    id="ingredients-tab"
+    id="tab"
     data-toggle="tab"
     role="tab"
-    aria-controls="ingredients"
+    aria-controls="tab"
     aria-selected="false"
     onClick={props.handleClick}
     href={`#${props.tabOption}`}

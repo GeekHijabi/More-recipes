@@ -73,57 +73,59 @@ class CardItem extends React.Component {
     const url = window.location.href;
     const currentURL = url.split('/')[url.split('/').length - 1];
     return (
-      <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <div className="card card-shape">
-          <img
-            className="card-img-top card-height"
-            src={imageUrl || image}
-            alt="Card cap"
-          />
-          <div className="card-body">
-            <h4 className="card-title">{recipeName}</h4>
-            <div className="row row-card">
-              <div className="col-xs-12 col-sm-6 card-padding">
-                <Link
-                  className="btn card-view"
-                  to={`/recipe/${id}`}
-                  href={`/recipe/${id}`}
-                >
+      <div className="col-xs-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+        <div className="card-style">
+          <div className="card">
+            <img
+              className="card-img-top card-height"
+              src={imageUrl || image}
+              alt="Card cap"
+            />
+            <div className="card-body">
+              <h4 className="card-title">{recipeName}</h4>
+              <div className="row row-card">
+                <div className="col-xs-12 col-sm-6 card-padding">
+                  <Link
+                    className="btn card-view"
+                    to={`/recipe/${id}`}
+                    href={`/recipe/${id}`}
+                  >
                   View Details
-                </Link>
-              </div>
-              {currentURL === 'favorites' ?
-                <span className="delete paddings">
-                  <i
-                    className="fa fa-trash fa-2x fa-icons"
-                    role="button"
-                    tabIndex="-1"
-                    data-toggle="tooltip"
-                    title="Remove from favorite"
-                    onKeyPress={this.onKeyPress}
-                    onClick={this.onDelete}
-                  />
-                </span>
-                :
-                <div className="col-xs-12 col-sm-6 card-paddings">
-                  <span className="ratings">
-                    <i className="fa fa-thumbs-o-up 2x" />
-                    <span>{upvotes || 0}</span>
-                  </span>
-                  <span className="ratings">
-                    <i className="fa fa-thumbs-o-down 2x" />
-                    <span>{downvotes || 0}</span>
-                  </span>
-                  <span className="ratings">
-                    <i className="fa fa-heart-o 2x" />
-                    <span>{favoriteCount || 0}</span>
-                  </span>
-                  <span className="ratings">
-                    <i className="fa fa-eye 2x" />
-                    <span>{views || 0}</span>
-                  </span>
+                  </Link>
                 </div>
+                {currentURL === 'favorites' ?
+                  <span className="remove-fav">
+                    <i
+                      className="fa fa-trash fa-2x fa-icons"
+                      role="button"
+                      tabIndex="-1"
+                      data-toggle="tooltip"
+                      title="Remove from favorite"
+                      onKeyPress={this.onKeyPress}
+                      onClick={this.onDelete}
+                    />
+                  </span>
+                :
+                  <div className="col-xs-12 col-sm-6 card-paddings">
+                    <span className="ratings">
+                      <i className="fa fa-thumbs-o-up 2x" />
+                      <span>{upvotes || 0}</span>
+                    </span>
+                    <span className="ratings">
+                      <i className="fa fa-thumbs-o-down 2x" />
+                      <span>{downvotes || 0}</span>
+                    </span>
+                    <span className="ratings">
+                      <i className="fa fa-heart-o 2x" />
+                      <span>{favoriteCount || 0}</span>
+                    </span>
+                    <span className="ratings">
+                      <i className="fa fa-eye 2x" />
+                      <span>{views || 0}</span>
+                    </span>
+                  </div>
           }
+              </div>
             </div>
           </div>
         </div>

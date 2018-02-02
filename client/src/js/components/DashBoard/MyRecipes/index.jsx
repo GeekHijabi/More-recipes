@@ -118,32 +118,34 @@ class RecipeAdmin extends React.Component {
     return (
       <div>
         <RecipeHeader />
-        <section id="list" className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
-            <h4>
-              <span>My Recipe</span>
-            </h4>
-            <i
-              role="button"
-              tabIndex="-1"
-              onClick={this.toggle}
-              data-toggle="tooltip"
-              title="Add recipe"
-              onKeyPress={this.handleKeyPress}
-              className="fa fa-plus-circle fa-2x fa-icons"
+        <div style={{ width: '85%', margin: '0 auto', minHeight: '700px' }}>
+          <section id="list" className="row">
+            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
+              <h4>
+                <span>My Recipe</span>
+              </h4>
+              <i
+                role="button"
+                tabIndex="-1"
+                onClick={this.toggle}
+                data-toggle="tooltip"
+                title="Add recipe"
+                onKeyPress={this.handleKeyPress}
+                className="fa fa-plus-circle fa-2x fa-icons"
+              />
+            </div>
+            <AddRecipeModal
+              isOpen={this.state.modal}
+              errorMessage={this.props.errorMessage}
+              toggle={this.toggle}
+              createRecipe={this.props.apiCreateRecipe}
             />
-          </div>
-          <AddRecipeModal
-            isOpen={this.state.modal}
-            errorMessage={this.props.errorMessage}
-            toggle={this.toggle}
-            createRecipe={this.props.apiCreateRecipe}
-          />
-          <div className="row container-fluid mv-card">
-            {this.props.isLoadingRecipe ? <RingLoader
-              color="#B0C038"
-              loading={this.props.isLoadingRecipe}
-            />
+            <div className="container-fluid">
+              <div className="row">
+                {this.props.isLoadingRecipe ? <RingLoader
+                  color="#B0C038"
+                  loading={this.props.isLoadingRecipe}
+                />
               : this.props.myRecipes.map(recipe =>
               (<AdminCardItem
                 recipe={recipe}
@@ -153,31 +155,36 @@ class RecipeAdmin extends React.Component {
                 onViewRecipe={this.viewRecipe}
               />))
               }
-            {this.props.myRecipes.length === 0
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  {this.props.myRecipes.length === 0
               && (
               <span className="styleText">
-              You have not created any recipe yet!
+              You have not created any recipe yet!, click
+              the button to add a new recipe
               </span>)}
-
-          </div>
-        </section>
-        <ReactPaginate
-          pageCount={this.state.page}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={3}
-          previousLabel="Previous"
-          nextLabel="Next"
-          breakClassName="text-center"
-          containerClassName="container pagination justify-content-center"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          activeClassName="page-item active"
-          previousClassName="page-item"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          previousLinkClassName="page-link"
-          onPageChange={this.onPageChange}
-        />
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        {this.props.myRecipes.length > 0 ?
+          <ReactPaginate
+            pageCount={this.state.page}
+            pageRangeDisplayed={5}
+            marginPagesDisplayed={3}
+            previousLabel="Previous"
+            nextLabel="Next"
+            breakClassName="text-center"
+            containerClassName="container pagination justify-content-center"
+            pageClassName="page-item"
+            pageLinkClassName="page-link"
+            activeClassName="page-item active"
+            previousClassName="page-item"
+            nextClassName="page-item"
+            nextLinkClassName="page-link"
+            previousLinkClassName="page-link"
+            onPageChange={this.onPageChange}
+          /> : ''}
         <Footer />
       </div>
     );

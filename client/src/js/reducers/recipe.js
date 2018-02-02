@@ -33,8 +33,6 @@ import {
   RECIPE_REVIEW_FAILURE,
   DELETE_RECIPE_REVIEW_SUCCESS,
   DELETE_RECIPE_REVIEW_FAILURE,
-  GET_RECIPE_REVIEW_SUCCESS,
-  GET_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
   SEARCH_RECIPE_FAILURE,
   GET_SEARCH_ITEM } from '../constants';
@@ -194,11 +192,9 @@ export default (state = initialState, action) => {
       const newFavorite = newState.favorites
         .filter(favorite => favorite.recipeId !== deletedFavoriteId);
       newState.favorites = newFavorite;
+
       return {
-        ...newState,
-        // recipe: {
-        //   Favorites: newFavorite
-        // }
+        ...newState
       };
     case DELETE_FAVORITE_RECIPE_FAILURE:
       return {
@@ -212,11 +208,7 @@ export default (state = initialState, action) => {
       };
     case RECIPE_REVIEW_FAILURE:
       return {
-        errorMessage: Error
-      };
-    case GET_RECIPE_REVIEW_SUCCESS:
-      return {
-        ...newState
+        errorMessage: error
       };
     case DELETE_RECIPE_REVIEW_SUCCESS:
       const newReview = newState.recipe.Reviews
@@ -230,10 +222,7 @@ export default (state = initialState, action) => {
         ...newState,
         errorMessage: error
       };
-    case GET_RECIPE_REVIEW_FAILURE:
-      return {
-        errorMessage: error,
-      };
+
     case SEARCH_RECIPE_SUCCESS:
       newState.SearchResults = searchRecipeName;
       // newState.pageCount = recipes.pageCount;

@@ -136,7 +136,9 @@ class AddRecipeModal extends React.Component {
               )}
           <Form>
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>Name</Label>
+              <Label for="exampleEmail" sm={4}>Name
+              <span style={{ color: 'red' }} > *</span>
+              </Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -150,7 +152,9 @@ class AddRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>Ingredients</Label>
+              <Label for="exampleEmail" sm={4}>Ingredients
+              <span style={{ color: 'red' }} > *</span>
+              </Label>
               <Col sm={8}>
                 <textarea
                   type="text"
@@ -165,7 +169,9 @@ class AddRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>Description</Label>
+              <Label for="exampleEmail" sm={4}>Description
+              <span style={{ color: 'red' }} > *</span>
+              </Label>
               <Col sm={8}>
                 <textarea
                   type="text"
@@ -201,7 +207,7 @@ class AddRecipeModal extends React.Component {
               </Col>
             </FormGroup>
 
-            <FormGroup check row className="styleButton">
+            <FormGroup check row className="modal-button">
               <Col sm={{ size: 10, offset: 5 }}>
                 {this.state.isLoading ? 'please wait a few seconds...' :
                 <Button onClick={this.onSubmit}>

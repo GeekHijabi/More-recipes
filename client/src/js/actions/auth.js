@@ -22,9 +22,9 @@ export const loginFailure = error => ({
   error
 });
 
-export const signupSuccess = message => ({
+export const signupSuccess = user => ({
   type: SIGNUP_USER_SUCCESS,
-  message
+  user
 });
 
 export const signupFailure = error => ({
@@ -58,23 +58,23 @@ export const updateProfileFailure = error => ({
  * @param {object} options
  */
 export const apiRegisterUser = ({
-  userName, email, password, firstName, lastName
+  userName, email, password
 }) =>
   function action(dispatch) {
     const request = axios({
       data: {
-        userName, email, password, firstName, lastName
+        userName, email, password
       },
       method: 'POST',
       url: '/api/v1/user/signup'
     });
     request.then((res) => {
-      if (res && res.response) {
-        dispatch(signupSuccess(res.response.data.message));
+      if (res) {
+        dispatch(signupSuccess(res.data));
       }
     }).catch((err) => {
-      if (err && err.response) {
-        dispatch(signupFailure(err.response.data.error));
+      if (err) {
+        dispatch(signupFailure(err.response.data));
       }
     });
     return request;
@@ -86,12 +86,12 @@ export const apiRegisterUser = ({
  * @param {object} options
  */
 export const apiLoginUser = ({
-  identifier, userName, email, password
+  identifier, password, email, userName
 }) =>
   function action(dispatch) {
     const request = axios({
       data: {
-        identifier: identifier || userName || email,
+        identifier: identifier || email || userName,
         password
       },
       method: 'POST',
@@ -115,13 +115,13 @@ export const apiLoginUser = ({
   /**
  * Async action for profile
  * @returns {promise} request
- * @param {object} options
+ * @param {object} userId
  */
-export const apiGetCurrentUser = () =>
+export const apiGetCurrentUser = userId =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: '/api/v1/user/:userId'
+      url: `/api/v1/user/${userId}`
     });
     request.then((response) => {
       dispatch(setCurrentUser(response.data));
@@ -149,18 +149,17 @@ export const LogoutUser = () =>
  * @param {object} options
  */
 export const apiUpdateUserProfile = ({
-  firstName, lastName, bio, summary, imageUrl
+  userName, bio, summary, imageUrl
 }) =>
   function action(dispatch) {
     const request = axios({
       data: {
-        firstName,
-        lastName,
+        userName,
         bio,
         summary,
         imageUrl
       },
-      method: 'PUT',
+      method: 'PATCH',
       url: '/api/v1/user/:userId'
     });
     request.then((response) => {

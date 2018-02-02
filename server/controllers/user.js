@@ -12,8 +12,6 @@ const salt = bcrypt.genSaltSync(5);
 export default {
   signUp(req, res) {
     const {
-      firstName,
-      lastName,
       userName,
       email
     } = req.body;
@@ -36,8 +34,6 @@ export default {
         }
         return User
           .create({
-            firstName,
-            lastName,
             userName,
             email,
             password: bcrypt
@@ -46,13 +42,11 @@ export default {
           .then((user) => {
             const userDetail = {
               userName: user.userName,
-              email: user.email,
-              firstName: user.firstName,
-              lastName: user.lastName
+              email: user.email
             };
             res.status(201).json({ userDetail });
           });
-      }).catch(() => res.status(500).json('Internal server error'));
+      }).catch(error => res.status(500).json({ error: error.message }));
   },
 
   signIn(req, res) {
@@ -72,8 +66,8 @@ export default {
       })
       .then((userDetail) => {
         if (!userDetail) {
-          return res.status(404).json({
-            error: 'User is not registered'
+          return res.status(401).json({
+            error: 'Email/Username and password mismatch'
           });
         }
         const { password } = userDetail;
@@ -92,33 +86,45 @@ export default {
             message: 'You have successfully signed in!',
             token
           });
-      });
+      }).catch(error => res.status(500).json({
+        error: error.message
+      }));
   },
 
   getCurrentUser(req, res) {
     const { id } = req.decoded;
+    const { userId } = req.params;
     User
       .findOne({
         where: {
-          id
+          id: userId
         },
         attributes: { exclude: ['password'] }
       })
-      .then(currentUser =>
-        // if (!currentUser) {
-        //   return res.status(404).json({
-        //     error: 'No current user'
-        //   });
-        // }
-        res.status(200).json(currentUser))
-      .catch(() => res.status(500).json({ error: 'Internal server error' }));
+      .then((currentUser) => {
+        if (!currentUser) {
+          return res.status(404).json({
+            error: 'No current user'
+          });
+        }
+        if (currentUser.id === id) {
+          return res.status(200).json(currentUser);
+        }
+        if (currentUser.id !== id) {
+          return res.status(403).json({
+            error: 'You cannot perform this action'
+          });
+        }
+      })
+      .catch(() => res.status(500).json({
+        error: 'Internal server error'
+      }));
   },
 
   updateUserProfile(req, res) {
     const { id } = req.decoded;
     const {
-      firstName,
-      lastName,
+      userName,
       bio,
       summary,
       imageUrl
@@ -143,8 +149,7 @@ export default {
         }
         return userProfile
           .update({
-            firstName: firstName || userProfile.firstName,
-            lastName: lastName || userProfile.lastName,
+            userName: userName || userProfile.userName,
             bio: bio || userProfile.bio,
             summary: summary || userProfile.summary,
             imageUrl: imageUrl || userProfile.imageUrl

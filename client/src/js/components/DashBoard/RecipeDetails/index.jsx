@@ -9,8 +9,8 @@ import Content from './Content';
 import { onViewRecipe,
   apiUpVoteRecipe,
   apiDownVoteRecipe,
-  apifavoriteRecipe,
-  apiGetRecipeReview } from '../../../actions/recipe';
+  apifavoriteRecipe
+} from '../../../actions/recipe';
 
 const Image = require('../../../../assets/images/banner_bg.jpg');
 
@@ -31,7 +31,7 @@ class MyRecipe extends React.Component {
     super(props);
     this.state = {
       activeTab: {
-        name: 'Ingredients',
+        name: 'Descriptions',
         isActive: true,
       }
     };
@@ -217,7 +217,6 @@ export default connect(
     onViewRecipe,
     apiUpVoteRecipe,
     apiDownVoteRecipe,
-    apifavoriteRecipe,
-    apiGetRecipeReview
+    apifavoriteRecipe
   }
 )(MyRecipe);

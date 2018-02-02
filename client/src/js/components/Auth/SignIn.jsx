@@ -72,7 +72,7 @@ class SignIn extends React.Component {
  * @returns {void}
  *
  * @param {any} event
- * @memberof SignUp
+ * @memberof SignIn
  */
   onDismiss(event) {
     event.preventDefault();
@@ -92,79 +92,85 @@ class SignIn extends React.Component {
     return (
       <div page="signin">
         <div className="overlay" />
-        <div className="card card-style">
-          <div className="card-body mx-4">
-            <div className="text-center">
-              <h3 className="dark-grey-text mb-5" >
-                <strong>Sign in</strong>
-              </h3>
-            </div>
-            { this.state.hasError && (
-            <div
-              className="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              {this.state.errorMessage}
-              <button
-                type="button"
-                className="close"
-                onClick={this.onDismiss}
-                data-dismiss="alert"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+        <div className="row">
+          <div className="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+            <div className="card card-style">
+              <div className="card-body mx-4">
+                <div className="text-center">
+                  <h3 className="dark-grey-text mb-5" >
+                    <strong>Sign in</strong>
+                  </h3>
+                </div>
+                { this.state.hasError && (
+                <div
+                  className="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  {this.state.errorMessage}
+                  <button
+                    type="button"
+                    className="close"
+                    onClick={this.onDismiss}
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
               )}
-            <div className="md-form">
-              <label htmlFor="Form-email1" className="form-label">Username/Email
-            <input
-              type="text"
-              className="Form-email1 form-control"
-              placeholder="username or Email"
-              name="identifier"
-              onChange={this.onChange}
-              value={this.state.identifier}
-              required
-            />
-              </label>
-            </div>
-            <div className="md-form pb-3">
-              <label htmlFor="Form-pass1" className="form-label">Password
-            <input
-              type="password"
-              id="Form-pass1"
-              className="form-control"
-              placeholder="password"
-              name="password"
-              onChange={this.onChange}
-              value={this.state.password}
-              pattern="(?=^.{8,15}$)(?!.*\s).*$"
-              title="8 to 15 characters required"
-              required
-            />
-                <p className="font-small blue-text d-flex justify-content-end">
-                  <Link to="/" href="/" className="blue-text ml-1">
+                <div className="md-form">
+                  <label htmlFor="Form-email1" className="form-label">Username/Email
+              <span style={{ color: 'red' }} > *</span>
+                    <input
+                      type="text"
+                      className="Form-email1 form-control required"
+                      placeholder="username or Email"
+                      name="identifier"
+                      onChange={this.onChange}
+                      value={this.state.identifier}
+                      required
+                    />
+                  </label>
+                </div>
+                <div className="md-form pb-3">
+                  <label htmlFor="Form-pass1" className="form-label">Password
+              <span style={{ color: 'red' }} > *</span>
+                    <input
+                      type="password"
+                      id="Form-pass1"
+                      className="form-control"
+                      placeholder="password"
+                      name="password"
+                      onChange={this.onChange}
+                      value={this.state.password}
+                      pattern="(?=^.{8,15}$)(?!.*\s).*$"
+                      title="8 to 15 characters required"
+                      required
+                    />
+                    <p className="font-small blue-text d-flex justify-content-end">
+                      <Link to="/" href="/" className="blue-text ml-1">
                   Forgot Password?
-                  </Link>
-                </p>
-              </label>
-            </div>
-            <div className="text-center mb-3">
-              <button
-                type="button"
-                className="btn btn-white btn-rounded"
-                onClick={this.onClick}
-              >
+                      </Link>
+                    </p>
+                  </label>
+                </div>
+                <div className="text-center mb-3">
+                  <button
+                    type="button"
+                    className="btn btn-white btn-rounded"
+                    onClick={this.onClick}
+                  >
               Sign in
-              </button>
-            </div>
-          </div>
-          <div className="modal-footer mx-5 pt-3 mb-1">
-            <p className="font-small">Yet to Register?
+                  </button>
+                </div>
+              </div>
+              <div className="modal-footer mx-5 pt-3 mb-1">
+                <p className="font-small">Yet to Register?
 
               <Link to="/signup" href="./signup"> Sign Up</Link>
-            </p>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

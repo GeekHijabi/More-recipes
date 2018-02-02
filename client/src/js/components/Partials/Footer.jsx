@@ -28,36 +28,34 @@ class Footer extends React.Component {
    */
   render() {
     return (
-      <div>
-        <footer className="page-footer">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="footer-socials mb-5 flex-center">
-                  <a className="icons-sm fb-ic" href="/">
-                    <i className="fa fa-facebook fa-lg white-text mr-md-4" />
-                  </a>
-                  <a className="icons-sm tw-ic" href="/">
-                    <i className="fa fa-twitter fa-lg white-text mr-md-4" />
-                  </a>
-                  <a className="icons-sm ins-ic" href="/">
-                    <i className="fa fa-instagram fa-lg white-text mr-md-4" />
-                  </a>
-                  <a className="icons-sm pin-ic" href="/">
-                    <i className="fa fa-pinterest fa-lg white-text" />
-                  </a>
-                </div>
+      <footer className="page-footer">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="footer-socials mb-5 flex-center">
+                <a className="icons-sm fb-ic" href="/">
+                  <i className="fa fa-facebook fa-lg white-text mr-md-4" />
+                </a>
+                <a className="icons-sm tw-ic" href="/">
+                  <i className="fa fa-twitter fa-lg white-text mr-md-4" />
+                </a>
+                <a className="icons-sm ins-ic" href="/">
+                  <i className="fa fa-instagram fa-lg white-text mr-md-4" />
+                </a>
+                <a className="icons-sm pin-ic" href="/">
+                  <i className="fa fa-pinterest fa-lg white-text" />
+                </a>
               </div>
             </div>
           </div>
+        </div>
 
-          <div className="footer-copyright">
-            <div className="container-fluid">
+        <div className="footer-copyright">
+          <div className="container-fluid">
               © 2017 Copyright: Morerecipes.com
-            </div>
           </div>
-        </footer>
-      </div>
+        </div>
+      </footer>
     );
   }
 }

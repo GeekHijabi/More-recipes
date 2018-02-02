@@ -103,74 +103,29 @@ describe('User', () => {
         done();
       });
   });
-  it('should not create user without first name', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.noFirstNameInput)
-      .end((err, res) => {
-        res.should.have.status(422);
-        done();
-      });
-  });
-  it('should not create user without last name', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.nolastNameInput)
-      .end((err, res) => {
-        res.should.have.status(422);
-        done();
-      });
-  });
-  it('should not create user with empty first name', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.IncorrectFirstNameInput)
-      .end((err, res) => {
-        res.should.have.status(422);
-        res.body.should.have
-          .property('error')
-          .equal('Input a valid first Name');
-        done();
-      });
-  });
-  it('should not create same user twice', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.newUser)
-      .end((err, res) => {
-        res.should.have.status(409);
-        res.body.should.have
-          .property('error')
-          .equal('User already exists');
-        done();
-      });
-  });
-  it('should not create user with empty last name', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.IncorrectLastNameInput)
-      .end((err, res) => {
-        res.should.have.status(422);
-        res.body.should.have
-          .property('error')
-          .equal('Input a valid last Name');
-        done();
-      });
-  });
-  it('should not allow unregistered sign In', (done) => {
+
+  // it('should not create same user twice', (done) => {
+  //   chai
+  //     .request(app)
+  //     .post('/api/v1/user/signup')
+  //     .send(fakeData.newUser)
+  //     .end((err, res) => {
+  //       res.should.have.status(409);
+  //       res.body.should.have
+  //         .property('error')
+  //         .equal('User already exists');
+  //       done();
+  //     });
+  // });
+  it('should not allow unregistered sign in', (done) => {
     chai
       .request(app)
       .post('/api/v1/user/signin')
       .send(fakeData.newUser2)
       .end((err, res) => {
-        res.should.have.status(404);
+        res.should.have.status(401);
         res.body.should.have.property('error')
-          .equal('User is not registered');
+          .equal('Email/Username and password mismatch');
         done();
       });
   });
@@ -253,7 +208,7 @@ describe('User', () => {
     });
     it('should be able to update profile', (done) => {
       chai.request(app)
-        .put('/api/v1/user/1')
+        .patch('/api/v1/user/1')
         .send(fakeData.updateProfile)
         .set('x-token', token)
         .end((err, res) => {
@@ -265,7 +220,7 @@ describe('User', () => {
   });
   it('should not allow unauthorized user to view profile', (done) => {
     chai.request(app)
-      .put('/api/v1/user/:userId')
+      .patch('/api/v1/user/:userId')
       .end((err, res) => {
         res.body.should.be.a('object');
         res.should.have.status(401);

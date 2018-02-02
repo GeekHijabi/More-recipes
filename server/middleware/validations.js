@@ -36,18 +36,18 @@ export const signUpField = (req, res, next) => {
         error: 'password cannot be empty'
       });
   }
-  if (!req.body.firstName || req.body.firstName.trim() === '') {
-    return res.status(422)
-      .json({
-        error: 'Input a valid first Name'
-      });
-  }
-  if (!req.body.lastName || req.body.lastName.trim() === '') {
-    return res.status(422)
-      .json({
-        error: 'Input a valid last Name'
-      });
-  }
+  // if (!req.body.firstName || req.body.firstName.trim() === '') {
+  //   return res.status(422)
+  //     .json({
+  //       error: 'Input a valid first Name'
+  //     });
+  // }
+  // if (!req.body.lastName || req.body.lastName.trim() === '') {
+  //   return res.status(422)
+  //     .json({
+  //       error: 'Input a valid last Name'
+  //     });
+  // }
   if (req.body.password.length < 8) {
     return res.status(422).json({
       error: 'password must be 8 characters or more'

@@ -32,8 +32,6 @@ import {
   DELETE_FAVORITE_RECIPE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
   RECIPE_REVIEW_FAILURE,
-  GET_RECIPE_REVIEW_SUCCESS,
-  GET_RECIPE_REVIEW_FAILURE,
   DELETE_RECIPE_REVIEW_SUCCESS,
   DELETE_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
@@ -207,16 +205,6 @@ export const deleteRecipeReviewFailure = error => ({
   error
 });
 
-export const getRecipeReviewSuccess = id => ({
-  type: GET_RECIPE_REVIEW_SUCCESS,
-  recipeId: id,
-});
-
-export const getRecipeReviewFailure = error => ({
-  type: GET_RECIPE_REVIEW_FAILURE,
-  error
-});
-
 export const searchRecipeSuccess = searchRecipeName => ({
   type: SEARCH_RECIPE_SUCCESS,
   searchRecipeName
@@ -250,10 +238,8 @@ export const apiCreateRecipe = ({
     });
     request.then((response) => {
       dispatch(createRecipeSuccess(response.data));
-    }).catch((error) => {
-      if (error) {
-        dispatch(createRecipeFailure(error.response.data.error));
-      }
+    }).catch(() => {
+      dispatch(createRecipeFailure('unable to create recipe'));
     });
     return request;
   };
@@ -287,10 +273,8 @@ export const apiGetRecipe = (page, limit, sort) =>
         pageCount, pageSize, allRecipes, page, totalCount
       };
       dispatch(getRecipeSuccess(paginated));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(getRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(getRecipeFailure('unable to get recipe'));
     });
     return request;
   };
@@ -316,10 +300,8 @@ export const apiGetMyRecipe = page =>
         pageCount, pageSize, allMyRecipes, page
       };
       dispatch(getMyRecipeSuccess(paginated));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(getMyRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(getMyRecipeFailure('unable to get user recipe'));
     });
     return request;
   };
@@ -338,10 +320,8 @@ export const apiDeleteRecipe = id =>
     });
     request.then(() => {
       dispatch(deleteRecipeSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(deleteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(deleteRecipeFailure('recipe cannot be deleted at this time'));
     });
     return request;
   };
@@ -364,15 +344,13 @@ export const apiEditRecipe = (recipeId, {
         ingredients,
         description
       },
-      method: 'PUT',
+      method: 'PATCH',
       url: `/api/v1/recipes/${recipeId}`
     });
     request.then((response) => {
       dispatch(editRecipeSuccess(response.data.updatedRecipe));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(editRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(editRecipeFailure('recipe cannot be edited at this time'));
     });
     return request;
   };
@@ -391,10 +369,8 @@ export const onViewRecipe = recipeId =>
     });
     request.then((response) => {
       dispatch(viewRecipeSuccess(response.data));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(viewRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(viewRecipeFailure('unable to get recipe detail'));
     });
     return request;
   };
@@ -413,10 +389,8 @@ export const apiUpVoteRecipe = id =>
     });
     request.then(() => {
       dispatch(upVoteRecipeSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(upVoteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(upVoteRecipeFailure('upvote not recorded'));
     });
     return request;
   };
@@ -435,10 +409,8 @@ export const apiDownVoteRecipe = id =>
     });
     request.then(() => {
       dispatch(downVoteRecipeSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(downVoteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(downVoteRecipeFailure('downvote not recorded'));
     });
     return request;
   };
@@ -457,10 +429,8 @@ export const apifavoriteRecipe = id =>
     });
     request.then(() => {
       dispatch(favoriteRecipeSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(favoriteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(favoriteRecipeFailure('cannot create favorite yet'));
     });
     return request;
   };
@@ -482,10 +452,8 @@ export const apiGetAllFavoriteRecipes = limit =>
     });
     request.then((response) => {
       dispatch(getAllFavoriteRecipeSuccess(response.data.favRecipes));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(getAllFavoriteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(getAllFavoriteRecipeFailure('unable to get favorite recipe'));
     });
     return request;
   };
@@ -504,10 +472,8 @@ export const apiGetFavoriteRecipe = id =>
     });
     request.then((response) => {
       dispatch(getfavoriteRecipeSuccess(response.data));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(getfavoriteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(getfavoriteRecipeFailure('unable to get favorite recipe list'));
     });
     return request;
   };
@@ -526,27 +492,8 @@ export const apiDeleteFavoriteRecipe = id =>
     });
     request.then(() => {
       dispatch(deleteFavoriteRecipeSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(deleteFavoriteRecipeFailure(err.data.error));
-      }
-    });
-    return request;
-  };
-
-
-export const apiGetRecipeReview = id =>
-  function action(dispatch) {
-    const request = axios({
-      method: 'GET',
-      url: `/api/v1/recipe/${id}/reviews`
-    });
-    request.then((response) => {
-      dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
-    }).catch((error) => {
-      if (error && error.data) {
-        dispatch(getRecipeReviewFailure(error.data.error));
-      }
+    }).catch(() => {
+      dispatch(deleteFavoriteRecipeFailure('favorite recipe cannot be deleted at this time'));
     });
     return request;
   };
@@ -562,16 +509,14 @@ export const apiRecipeReview = (id, reviews) =>
     });
     request.then((response) => {
       dispatch(reviewRecipeSuccess(response.data.review));
-    }).catch((error) => {
-      if (error && error.data) {
-        dispatch(reviewRecipeFailure(error.data.error));
-      }
+    }).catch(() => {
+      dispatch(reviewRecipeFailure('reviews not created'));
     });
     return request;
   };
 
 /**
- * Action for deleteRecipe
+ * Action for delete recipe review
  *
  * @returns {promise} request
  * @param {integer} id
@@ -584,10 +529,8 @@ export const apiDeleteRecipeReview = id =>
     });
     request.then(() => {
       dispatch(deleteRecipeReviewSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(deleteRecipeReviewFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(deleteRecipeReviewFailure('review cannot be deleted at this time'));
     });
     return request;
   };
@@ -607,24 +550,18 @@ export const apiSearchRecipe = recipeName =>
     });
     request.then((response) => {
       dispatch(searchRecipeSuccess(response.data.searchFound));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(searchRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(searchRecipeFailure('search result not found'));
     });
     return request;
   };
+
   /**
- * Action for searchRecipe
+ * Action for search Item
  *
  * @returns {promise} request
  * @param {object} recipeName
  */
-// export const searchItem = () =>
-//   function action(dispatch) {
-//     dispatch(searchRecipeSuccess());
-//     return request;
-//   };
 
 export const searchItem = search => (dispatch) => {
   dispatch({

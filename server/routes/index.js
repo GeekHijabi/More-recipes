@@ -33,7 +33,7 @@ const routes = (app) => {
       authenticate,
       user.getCurrentUser
     )
-    .put(
+    .patch(
       authenticate,
       user.updateUserProfile
     );
@@ -54,7 +54,7 @@ const routes = (app) => {
       authenticate,
       recipes.destroyRecipe
     )
-    .put(
+    .patch(
       authenticate,
       recipes.updateRecipe
     );

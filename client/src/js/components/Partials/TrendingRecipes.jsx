@@ -10,7 +10,7 @@ import CardItem from '../Partials/CardItem';
  * @class HandPickedRecipe
  * @extends {React.Component}
  */
-class HandPickedRecipe extends React.Component {
+class TrendingRecipe extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
@@ -31,7 +31,7 @@ class HandPickedRecipe extends React.Component {
  * @memberof Recipes
  */
   componentWillMount() {
-    this.props.apiGetRecipe(0, 4, 'upvotes');
+    this.props.apiGetRecipe(0, 3, 'upvotes');
   }
   /**
    * @description COnstructor Function
@@ -42,27 +42,27 @@ class HandPickedRecipe extends React.Component {
   render() {
     const { recipes } = this.props;
     return (
-      <div>
-        <section id="list" className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
-            <h4>
-              <span>This Week&rsquo;s Handpicked Recipes</span>
-            </h4>
+      <div style={{ width: '85%', margin: '0 2em' }}>
+        <h4 className="heading">
+          <span>Currently Trending</span>
+        </h4>
+        <div className="container-fluid">
+          <div className="row">
+            {recipes.map(recipe =>
+              <CardItem recipe={recipe} key={recipe.id} />)}
           </div>
-          {recipes.map(recipe =>
-            <CardItem recipe={recipe} key={recipe.id} />)}
-        </section>
+        </div>
       </div>
     );
   }
 }
 
-HandPickedRecipe.propTypes = {
+TrendingRecipe.propTypes = {
   apiGetRecipe: PropTypes.func.isRequired,
   recipes: PropTypes.arrayOf(PropTypes.any),
 };
 
-HandPickedRecipe.defaultProps = {
+TrendingRecipe.defaultProps = {
   recipes: []
 };
 
@@ -78,4 +78,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { apiGetRecipe })(HandPickedRecipe);
+export default connect(mapStateToProps, { apiGetRecipe })(TrendingRecipe);

@@ -60,7 +60,14 @@ class RecipeHeader extends React.Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon" />
+          <span
+            className="navbar-toggler-icon"
+            style={{ cursor: 'pointer', color: 'white' }}
+          >
+            <i
+              className="fa fa-bars 4x"
+            />
+          </span>
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -103,7 +110,7 @@ class RecipeHeader extends React.Component {
                   className="dropdown-item"
                   href="/profile"
                 >
-                  <i className="fa fa-user-o fa-1x" /> MyRecipes
+                  <i className="fa fa-user-o fa-1x" /> My Recipes
                 </Link>
                 <Link
                   to="/favorites"

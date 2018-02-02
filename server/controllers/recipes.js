@@ -72,7 +72,7 @@ export default {
    * @returns {array} all recipes
    */
   listAllRecipes(req, res) {
-    const limitValue = req.query.limit || 8;
+    const limitValue = req.query.limit || 6;
     const pageValue = (req.query.page - 1) || 0;
     const sort = req.query.sort ? req.query.sort : 'createdAt';
     const order = req.query.order ? req.query.order : 'DESC';
@@ -213,7 +213,7 @@ export default {
    * @returns {array} recipes
    */
   getUserRecipes(req, res) {
-    const limitValue = req.query.limit || 8;
+    const limitValue = req.query.limit || 6;
     const pageValue = (req.query.page - 1) || 0;
     const sort = req.query.sort ? req.query.sort : 'createdAt';
     const order = req.query.order ? req.query.order : 'DESC';
@@ -289,7 +289,7 @@ export default {
    * @returns {array} searched recipes
    */
   searchRecipe(req, res) {
-    const limitValue = req.query.limit || 8;
+    const limitValue = req.query.limit || 6;
     const pageValue = (req.query.page - 1) || 0;
     Recipe
       .findAll({

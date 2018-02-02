@@ -90,7 +90,7 @@ describe('Recipes', () => {
     });
     it('should let user edit a recipe', (done) => {
       chai.request(app)
-        .put('/api/v1/recipes/1')
+        .patch('/api/v1/recipes/1')
         .send(fakeData.recipe2)
         .set('x-token', token)
         .end((err, res) => {
@@ -101,7 +101,7 @@ describe('Recipes', () => {
     });
     it('should check if the recipe is available for editing', (done) => {
       chai.request(app)
-        .put('/api/v1/recipes/2')
+        .patch('/api/v1/recipes/2')
         .set('x-token', token)
         .send(fakeData.recipe2)
         .end((err, res) => {

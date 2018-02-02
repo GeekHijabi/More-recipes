@@ -24,8 +24,6 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
       userName: '',
       email: '',
       errorMessage: '',
@@ -108,125 +106,102 @@ class SignUp extends React.Component {
     return (
       <div page="signup">
         <div className="overlay" />
-        <div>
-          <div
-            className="card card-style"
-          >
-            <div className="card-body mx-4">
-              <div className="text-center">
-                <h3 className="dark-grey-text mb-5">
-                  <strong>Sign up</strong>
-                </h3>
-              </div>
-              { this.state.hasError && (
-              <div
-                className="alert alert-danger alert-dismissible fade show"
-                role="alert"
-              >
-                {this.state.errorMessage}
-                <button
-                  type="button"
-                  className="close"
-                  onClick={this.onDismiss}
-                  data-dismiss="alert"
-                  aria-label="Close"
+        <div className="row">
+          <div className="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+            <div
+              className="card card-style"
+            >
+              <div className="card-body mx-4">
+                <div className="text-center">
+                  <h3 className="dark-grey-text mb-5">
+                    <strong>Sign up</strong>
+                  </h3>
+                </div>
+                { this.state.hasError && (
+                <div
+                  className="alert alert-danger alert-dismissible fade show"
+                  role="alert"
                 >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
+                  {this.state.errorMessage}
+                  <button
+                    type="button"
+                    className="close"
+                    onClick={this.onDismiss}
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
               )}
-              <div className="md-form">
-                <label htmlFor="Form-email1" className="form-label">First name
-                  <input
-                    type="text"
-                    className="Form-email1 form-control"
-                    placeholder="Jane"
-                    name="firstName"
-                    onChange={this.onChange}
-                    value={this.state.firstName}
-                    required
-                  />
-                </label>
-              </div>
+                <div className="md-form">
+                  <label htmlFor="Form-email1" className="form-label">Username
+                <span style={{ color: 'red' }} > *</span>
+                    <input
+                      type="text"
+                      className="Form-email1 form-control"
+                      placeholder="janedoe"
+                      name="userName"
+                      onChange={this.onChange}
+                      value={this.state.userName}
+                      pattern="(?=^.{2,15}$)(?!.*\s).*$"
+                      title="2 to 15 characters required"
+                      required
+                    />
+                  </label>
+                </div>
 
-              <div className="md-form">
-                <label htmlFor="Form-email1" className="form-label">Last name
-                  <input
-                    type="text"
-                    className="Form-email1 form-control"
-                    placeholder="Doe"
-                    name="lastName"
-                    onChange={this.onChange}
-                    value={this.state.lastName}
-                    required
-                  />
-                </label>
-              </div>
+                <div className="md-form">
+                  <label htmlFor="Form-email1" className="form-label">Email
+                <span style={{ color: 'red' }} > *</span>
+                    <input
+                      type="text"
+                      className="Form-email1 form-control"
+                      placeholder="jane@doe.com"
+                      name="email"
+                      onChange={this.onChange}
+                      value={this.state.email}
+                      required
+                    />
+                  </label>
+                </div>
 
-              <div className="md-form">
-                <label htmlFor="Form-email1" className="form-label">Email
-                  <input
-                    type="text"
-                    className="Form-email1 form-control"
-                    placeholder="jane@doe.com"
-                    name="email"
-                    onChange={this.onChange}
-                    value={this.state.email}
-                    required
-                  />
-                </label>
-              </div>
+                <div className="md-form pb-3">
+                  <label htmlFor="Form-pass1" className="form-label">Password
+                <span style={{ color: 'red' }} > *</span>
+                    <input
+                      type="password"
+                      id="Form-pass1"
+                      className="form-control"
+                      placeholder="********"
+                      name="password"
+                      onChange={this.onChange}
+                      value={this.state.password}
+                      pattern="(?=^.{8,15}$)(?!.*\s).*$"
+                      title="8 to 15 characters required"
+                      required
+                    />
+                  </label>
+                </div>
 
-              <div className="md-form">
-                <label htmlFor="Form-email1" className="form-label">Username
-                <input
-                  type="text"
-                  className="Form-email1 form-control"
-                  placeholder="janedoe"
-                  name="userName"
-                  onChange={this.onChange}
-                  value={this.state.userName}
-                  pattern="(?=^.{2,15}$)(?!.*\s).*$"
-                  title="2 to 15 characters required"
-                  required
-                />
-                </label>
-              </div>
-
-              <div className="md-form pb-3">
-                <label htmlFor="Form-pass1" className="form-label">Password
-                  <input
-                    type="password"
-                    id="Form-pass1"
-                    className="form-control"
-                    placeholder="********"
-                    name="password"
-                    onChange={this.onChange}
-                    value={this.state.password}
-                    pattern="(?=^.{8,15}$)(?!.*\s).*$"
-                    title="8 to 15 characters required"
-                    required
-                  />
-                </label>
-              </div>
-
-              <div className="text-center mb-3">
-                <button
-                  type="button"
-                  className="btn btn-white btn-rounded"
-                  onClick={this.onClick}
-                >
+                <div className="text-center mb-3">
+                  <button
+                    type="button"
+                    className="btn btn-white btn-rounded"
+                    onClick={this.onClick}
+                  >
                 Sign up
-                </button>
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="modal-footer mx-5 pt-3 mb-1">
-              <p className="font-small">
+              <div className="modal-footer mx-5 pt-3 mb-1">
+                <p className="font-small">
                 Have an account?
                 <Link to="/signin" href="/signin" className="blue-text ml-1">
                   Sign In
                 </Link>
-              </p>
+                </p>
+              </div>
             </div>
           </div>
         </div>

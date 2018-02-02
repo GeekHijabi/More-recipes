@@ -62,17 +62,18 @@ class AddReviewForm extends React.Component {
 
       <div className="review-form" placeholder="Add review">
         <div className="input-control add-review">
-          <label htmlFor="review" id="label" />
-          <textarea
-            className="review-edit"
-            type="text"
-            placeholder="input your review"
-            id="add-review"
-            col="3"
-            name="review"
-            onChange={this.onChange}
-            value={this.state.review}
-          />
+          <label htmlFor="review" id="label" style={{ width: '100%', margin: '0 auto' }}>
+            <textarea
+              className="review-edit"
+              type="text"
+              placeholder="input your review"
+              id="add-review"
+              col="3"
+              name="review"
+              onChange={this.onChange}
+              value={this.state.review}
+            />
+          </label>
         </div>
         <button
           type="button"

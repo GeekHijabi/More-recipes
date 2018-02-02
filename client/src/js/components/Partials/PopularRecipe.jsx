@@ -43,15 +43,17 @@ class PopularRecipe extends React.Component {
     const { favRecipes } = this.props;
     return (
       <div>
-        <section id="list" className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
-            <h4>
-              <span>See what People Love this week</span>
-            </h4>
-          </div>
-          {favRecipes.map(recipe =>
-            <CardItem recipe={recipe} key={recipe.id} />)}
-        </section>
+        {favRecipes.length > 0 ?
+          <section id="list" className="row">
+            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
+              <h4>
+                <span>Popular Recipes</span>
+              </h4>
+            </div>
+            {favRecipes.map(recipe =>
+              <CardItem recipe={recipe} key={recipe.id} />)}
+          </section>
+        : ''}
       </div>
     );
   }
