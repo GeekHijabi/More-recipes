@@ -38,7 +38,9 @@ import {
   DELETE_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
   SEARCH_RECIPE_FAILURE,
-  GET_SEARCH_ITEM
+  GET_SEARCH_ITEM,
+  RECIPE_VIEW_COUNT_SUCCESS,
+  RECIPE_VIEW_COUNT_FAILURE
 } from '../constants';
 
 export const createRecipe = () => ({
@@ -127,9 +129,11 @@ export const viewRecipeFailure = error => ({
   error
 });
 
-export const upVoteRecipeSuccess = id => ({
+export const upVoteRecipeSuccess = (id, upvotes, downvotes) => ({
   type: RECIPE_UPVOTE_SUCCESS,
-  recipeId: id
+  recipeId: id,
+  upvotes,
+  downvotes
 });
 
 export const upVoteRecipeFailure = error => ({
@@ -137,9 +141,11 @@ export const upVoteRecipeFailure = error => ({
   error
 });
 
-export const downVoteRecipeSuccess = id => ({
+export const downVoteRecipeSuccess = (id, upvotes, downvotes) => ({
   type: RECIPE_DOWNVOTE_SUCCESS,
-  recipeId: id
+  recipeId: id,
+  upvotes,
+  downvotes
 });
 
 export const downVoteRecipeFailure = error => ({
@@ -224,6 +230,17 @@ export const searchRecipeSuccess = searchRecipeName => ({
 
 export const searchRecipeFailure = error => ({
   type: SEARCH_RECIPE_FAILURE,
+  error
+});
+
+export const recipeViewCountSuccess = (id, views) => ({
+  type: RECIPE_VIEW_COUNT_SUCCESS,
+  recipeId: id,
+  views
+});
+
+export const recipeViewCountFailure = error => ({
+  type: RECIPE_VIEW_COUNT_FAILURE,
   error
 });
 
@@ -411,8 +428,8 @@ export const apiUpVoteRecipe = id =>
       method: 'POST',
       url: `/api/v1/recipe/${id}/upvote`
     });
-    request.then(() => {
-      dispatch(upVoteRecipeSuccess(id));
+    request.then((response) => {
+      dispatch(upVoteRecipeSuccess(id, response.data.upvotes, response.data.downvotes));
     }).catch((err) => {
       if (err && err.data) {
         dispatch(upVoteRecipeFailure(err.data.error));
@@ -433,8 +450,9 @@ export const apiDownVoteRecipe = id =>
       method: 'POST',
       url: `/api/v1/recipe/${id}/downvote`
     });
-    request.then(() => {
-      dispatch(downVoteRecipeSuccess(id));
+    request.then((response) => {
+      console.log('vote res', response);
+      dispatch(downVoteRecipeSuccess(id, response.data.upvotes, response.data.downvotes));
     }).catch((err) => {
       if (err && err.data) {
         dispatch(downVoteRecipeFailure(err.data.error));
@@ -618,17 +636,33 @@ export const apiSearchRecipe = recipeName =>
  * Action for searchRecipe
  *
  * @returns {promise} request
- * @param {object} recipeName
+ * @param {object} search
  */
-// export const searchItem = () =>
-//   function action(dispatch) {
-//     dispatch(searchRecipeSuccess());
-//     return request;
-//   };
-
 export const searchItem = search => (dispatch) => {
   dispatch({
     type: GET_SEARCH_ITEM,
     searchItem: search
   });
 };
+
+  /**
+   * Action to post recipe count
+   *
+   * @param {object} id
+   * @returns {void}
+   */
+export const apiRecipeViewCount = id =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'POST',
+      url: `/api/v1/recipe/${id}/views`
+    });
+    request.then((response) => {
+      dispatch(recipeViewCountSuccess(id, response.data.views));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(recipeViewCountFailure(err.data.error));
+      }
+    });
+    return request;
+  };

@@ -70,6 +70,8 @@
     "moment": "^2.20.1",
     "morgan": "^1.9.0",
     "node-sass": "^4.5.3",
+    "nodemailer": "^4.4.2",
+    "nodemailer-express-handlebars": "^2.0.0",
     "nodemon": "^1.11.0",
     "nyc": "^11.0.3",
     "optimize-css-assets-webpack-plugin": "^2.0.0",

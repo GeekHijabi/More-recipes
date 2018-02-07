@@ -1,30 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import 'bootstrap/dist/css/bootstrap.css';
 import RecipeHeader from '../../Partials/RecipeHeader';
 import Footer from '../../Partials/Footer';
 import Tabs from './Tabs';
 import Content from './Content';
-import { onViewRecipe,
+import {
+  onViewRecipe,
   apiUpVoteRecipe,
   apiDownVoteRecipe,
   apifavoriteRecipe,
-  apiGetRecipeReview } from '../../../actions/recipe';
+  apiGetRecipeReview,
+  apiRecipeViewCount
+} from '../../../actions/recipe';
 
 const Image = require('../../../../assets/images/banner_bg.jpg');
 
 /**
  *
  *
- * @class MyProfile
+ * @class MyRecipe
  * @extends {React.Component}
  */
 class MyRecipe extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
-   * @memberof Home
+   * @memberof MyRecipe
    * @return {void}
    */
   constructor(props) {
@@ -33,6 +35,8 @@ class MyRecipe extends React.Component {
       activeTab: {
         name: 'Ingredients',
         isActive: true,
+        upvotes: false,
+        downvotes: false
       }
     };
     this.handleChangeTab = this.handleChangeTab.bind(this);
@@ -48,6 +52,15 @@ class MyRecipe extends React.Component {
   componentDidMount() {
     const recipeId = this.props.match.params.id;
     this.props.onViewRecipe(recipeId);
+    this.props.apiRecipeViewCount(this.props.match.params.id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps, 'new props');
+    this.setState({
+      upvotes: nextProps.upvotes,
+      downvotes: nextProps.downvotes
+    });
   }
 
   /**
@@ -69,10 +82,11 @@ class MyRecipe extends React.Component {
    * @returns {void}
    */
   handleupvote() {
-    this.props.apiUpVoteRecipe(this.props.recipe.id)
-      .then(() => {
-        this.props.onViewRecipe(this.props.recipe.id);
-      });
+    this.props.apiUpVoteRecipe(this.props.recipe.id);
+    // .then((data) => {
+    //   console.log(data, 'data');
+    //   this.props.onViewRecipe(this.props.recipe.id);
+    // });
   }
   /**
    *
@@ -81,10 +95,10 @@ class MyRecipe extends React.Component {
    * @returns {void}
    */
   handledownvote() {
-    this.props.apiDownVoteRecipe(this.props.recipe.id)
-      .then(() => {
-        this.props.onViewRecipe(this.props.recipe.id);
-      });
+    this.props.apiDownVoteRecipe(this.props.recipe.id);
+    // .then(() => {
+    //   this.props.onViewRecipe(this.props.recipe.id);
+    // });
   }
   /**
    *
@@ -98,6 +112,7 @@ class MyRecipe extends React.Component {
         this.props.onViewRecipe(this.props.recipe.id);
       });
   }
+
   /**
    * @description constructor Function
    * @param {any} props
@@ -105,7 +120,9 @@ class MyRecipe extends React.Component {
    * @return {void}
    */
   render() {
-    const { recipe } = this.props;
+    const {
+      recipe, views, upvotes, downvotes
+    } = this.props;
     return (
       <div>
         <RecipeHeader />
@@ -131,7 +148,7 @@ class MyRecipe extends React.Component {
                   onClick={() => this.handleupvote()}
                 />
                 <span>upvote(s)</span>
-                <span className="detail-value">{recipe.upvotes}</span>
+                <span className="detail-value">{this.state.upvotes}</span>
               </span>
               <span className="vote_type">
                 <i
@@ -144,7 +161,7 @@ class MyRecipe extends React.Component {
                   onClick={() => this.handledownvote()}
                 />
                 <span>downvote(s)</span>
-                <span className="detail-value">{recipe.downvotes}</span>
+                <span className="detail-value">{this.state.downvotes}</span>
               </span>
               <span className="vote_type">
                 <i
@@ -166,7 +183,7 @@ class MyRecipe extends React.Component {
                   title="number of views"
                 />
                 <span>views(s)</span>
-                <span className="detail-value">{recipe.views}</span>
+                <span className="detail-value">{views}</span>
               </span>
             </div>
           </div>
@@ -195,8 +212,10 @@ MyRecipe.propTypes = {
   apiUpVoteRecipe: PropTypes.func.isRequired,
   apiDownVoteRecipe: PropTypes.func.isRequired,
   apifavoriteRecipe: PropTypes.func.isRequired,
+  apiRecipeViewCount: PropTypes.func.isRequired,
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  views: PropTypes.number.isRequired
 };
 
 /**
@@ -208,6 +227,9 @@ MyRecipe.propTypes = {
 function mapStateToProps(state) {
   return {
     recipe: state.recipe.recipe,
+    views: state.recipe.views,
+    upvotes: state.recipe.recipe.upvotes,
+    downvotes: state.recipe.recipe.downvotes
   };
 }
 
@@ -218,6 +240,7 @@ export default connect(
     apiUpVoteRecipe,
     apiDownVoteRecipe,
     apifavoriteRecipe,
-    apiGetRecipeReview
+    apiGetRecipeReview,
+    apiRecipeViewCount
   }
 )(MyRecipe);

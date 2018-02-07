@@ -22,6 +22,7 @@ describe('Recipes', () => {
           .post('/api/v1/user/signin')
           .send(fakeData.signedInUser2)
           .end((err, res) => {
+            console.log('error', err);
             token = res.body.token;
             done();
           });

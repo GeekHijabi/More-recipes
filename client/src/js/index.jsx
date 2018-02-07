@@ -19,6 +19,7 @@ import Profile from './components/DashBoard/Profile';
 import RecipeDetail from './components/DashBoard/RecipeDetails';
 import MyRecipes from './components/DashBoard/MyRecipes';
 import FavoriteRecipe from './components/FavoriteRecipeList';
+import ForgotPassword from './components/Auth/ForgotPassword';
 
 const store = configureStore();
 
@@ -71,6 +72,10 @@ render(
             : (<SignIn {...props} />))}
         />
         <Route
+          path="/forgot-password"
+          render={props => (<ForgotPassword {...props} />)}
+        />
+        <Route
           exact
           path="/recipes"
           render={props =>
@@ -109,8 +114,6 @@ render(
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
-  </Provider>
-  , document.getElementById('main')
-
-
+  </Provider>,
+  document.getElementById('main')
 );
