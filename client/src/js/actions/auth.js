@@ -52,6 +52,8 @@ export const updateProfileFailure = error => ({
   error
 });
 
+const baseUrl = '/api/v1';
+
 /**
  * Async action for Register user
  * @returns {promise} request
@@ -66,7 +68,7 @@ export const apiRegisterUser = ({
         userName, email, password
       },
       method: 'POST',
-      url: '/api/v1/user/signup'
+      url: `${baseUrl}/user/signup`
     });
     request.then((res) => {
       if (res) {
@@ -82,8 +84,8 @@ export const apiRegisterUser = ({
 
 /**
  * Async action for Login
- * @returns {promise} request
  * @param {object} options
+ * @returns {promise} request
  */
 export const apiLoginUser = ({
   identifier, password, email, userName
@@ -95,13 +97,14 @@ export const apiLoginUser = ({
         password
       },
       method: 'POST',
-      url: '/api/v1/user/signin'
+      url: `${baseUrl}/user/signin`
     });
     request.then((response) => {
       const { token } = response.data;
       const decodedToken = jwt.decode(token);
       setToken(token);
       localStorage.setItem('userId', decodedToken.id);
+
       dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
     }).catch((err) => {
@@ -114,14 +117,14 @@ export const apiLoginUser = ({
 
   /**
  * Async action for profile
- * @returns {promise} request
  * @param {object} userId
+ * @returns {promise} request
  */
 export const apiGetCurrentUser = userId =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: `/api/v1/user/${userId}`
+      url: `${baseUrl}/user/${userId}`
     });
     request.then((response) => {
       dispatch(setCurrentUser(response.data));
@@ -144,9 +147,9 @@ export const LogoutUser = () =>
   };
 
 /**
- * Async action for profile
- * @returns {promise} request
+ * Async action for update profile
  * @param {object} options
+ * @returns {promise} request
  */
 export const apiUpdateUserProfile = ({
   userName, bio, summary, imageUrl
@@ -160,7 +163,7 @@ export const apiUpdateUserProfile = ({
         imageUrl
       },
       method: 'PATCH',
-      url: '/api/v1/user/:userId'
+      url: `${baseUrl}/user/:userId`
     });
     request.then((response) => {
       dispatch(updateProfileSuccess(response.data));

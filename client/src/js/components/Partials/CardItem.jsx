@@ -75,7 +75,7 @@ class CardItem extends React.Component {
     return (
       <div className="col-xs-12 col-sm-6 col-md-6 col-lg-4 mb-3">
         <div className="card-style">
-          <div className="card">
+          <div className="card card-size">
             <img
               className="card-img-top card-height"
               src={imageUrl || image}

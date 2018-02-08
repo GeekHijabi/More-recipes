@@ -80,58 +80,54 @@ class AdminCardItem extends React.Component {
       }
     } = this.props;
     return (
-      <div className="row">
-        <div className="col-xs-12 col-sm-6 col-md-3 col-lg-4">
-          <div className="card-style">
-            <div className="card">
-              <img
-                className="card-img-top card-height"
-                src={imageUrl || defaultImage}
-                alt="Card cap"
-              />
-              <div className="card-body">
-                <h4 className="card-title">{recipeName}</h4>
-                <div className="row row-card">
-                  <div className="col-xs-12 col-sm-6 card-padding">
-                    <Link
-                      className="btn card-view"
-                      to={`/recipe/${id}`}
-                      href={`/recipe/${id}`}
-                    >
+      <div className="col-xs-12 col-sm-6 col-md-3 col-lg-4 mb-3">
+        <div className="card card-size">
+          <img
+            className="card-img-top card-height"
+            src={imageUrl || defaultImage}
+            alt="Card cap"
+          />
+          <div className="card-body">
+            <h4 className="card-title">{recipeName}</h4>
+            <div className="row row-card">
+              <div className="col-xs-12 col-sm-6 card-padding">
+                <Link
+                  className="btn card-view"
+                  to={`/recipe/${id}`}
+                  href={`/recipe/${id}`}
+                >
                   View More
-                    </Link>
-                  </div>
-                  <div className="col-xs-12 col-sm-6 card-paddings">
-                    <span className="edit padding">
-                      <i
-                        role="button"
-                        tabIndex="-1"
-                        onClick={this.toggle}
-                        data-toggle="tooltip"
-                        title="Edit recipe"
-                        onKeyPress={this.handleKeyPress}
-                        className="fa fa-edit fa-2x fa-icons"
-                      />
-                    </span>
-                    <EditRecipeModal
-                      isOpen={this.state.modal}
-                      toggle={this.toggle}
-                      recipe={this.props.recipe}
-                      editRecipe={this.props.editRecipe}
-                    />
-                    <span className="delete paddings">
-                      <i
-                        className="fa fa-trash fa-2x fa-icons"
-                        role="button"
-                        tabIndex="-1"
-                        data-toggle="tooltip"
-                        title="Delete profile"
-                        onKeyPress={this.onKeyPress}
-                        onClick={this.onDelete}
-                      />
-                    </span>
-                  </div>
-                </div>
+                </Link>
+              </div>
+              <div className="col-xs-12 col-sm-6 card-paddings">
+                <span className="edit padding">
+                  <i
+                    role="button"
+                    tabIndex="-1"
+                    onClick={this.toggle}
+                    data-toggle="tooltip"
+                    title="Edit recipe"
+                    onKeyPress={this.handleKeyPress}
+                    className="fa fa-edit fa-2x fa-icons"
+                  />
+                </span>
+                <EditRecipeModal
+                  isOpen={this.state.modal}
+                  toggle={this.toggle}
+                  recipe={this.props.recipe}
+                  editRecipe={this.props.editRecipe}
+                />
+                <span className="delete paddings">
+                  <i
+                    className="fa fa-trash fa-2x fa-icons"
+                    role="button"
+                    tabIndex="-1"
+                    data-toggle="tooltip"
+                    title="Delete profile"
+                    onKeyPress={this.onKeyPress}
+                    onClick={this.onDelete}
+                  />
+                </span>
               </div>
             </div>
           </div>

@@ -105,12 +105,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Hammer: 'hammerjs/hammer',
-      createDayLabel: 'jquery',
-      createWeekdayLabel: 'jquery',
-      activateOption: 'jquery',
-      leftPosition: 'jquery'
+      'window.jQuery': 'jquery'
     })
     ], // plugins
   devServer: {

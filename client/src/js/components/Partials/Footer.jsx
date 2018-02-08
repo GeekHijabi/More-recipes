@@ -1,5 +1,4 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import '../../../styles/index.scss';
 
 /**
@@ -8,7 +7,7 @@ import '../../../styles/index.scss';
  * @class Footer
  * @extends {React.Component}
  */
-class Footer extends React.Component {
+export class Footer extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props

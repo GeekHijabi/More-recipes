@@ -36,7 +36,9 @@ import {
   DELETE_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
   SEARCH_RECIPE_FAILURE,
-  GET_SEARCH_ITEM
+  GET_SEARCH_ITEM,
+  RECIPE_VIEW_COUNT_SUCCESS,
+  RECIPE_VIEW_COUNT_FAILURE
 } from '../constants';
 
 export const createRecipe = () => ({
@@ -125,9 +127,11 @@ export const viewRecipeFailure = error => ({
   error
 });
 
-export const upVoteRecipeSuccess = id => ({
+export const upVoteRecipeSuccess = (id, upvotes, downvotes) => ({
   type: RECIPE_UPVOTE_SUCCESS,
-  recipeId: id
+  recipeId: id,
+  upvotes,
+  downvotes
 });
 
 export const upVoteRecipeFailure = error => ({
@@ -135,9 +139,11 @@ export const upVoteRecipeFailure = error => ({
   error
 });
 
-export const downVoteRecipeSuccess = id => ({
+export const downVoteRecipeSuccess = (id, upvotes, downvotes) => ({
   type: RECIPE_DOWNVOTE_SUCCESS,
-  recipeId: id
+  recipeId: id,
+  upvotes,
+  downvotes
 });
 
 export const downVoteRecipeFailure = error => ({
@@ -215,11 +221,24 @@ export const searchRecipeFailure = error => ({
   error
 });
 
-  /**
- * Action for createRecipe
+export const recipeViewCountSuccess = (id, views) => ({
+  type: RECIPE_VIEW_COUNT_SUCCESS,
+  recipeId: id,
+  views
+});
+
+export const recipeViewCountFailure = error => ({
+  type: RECIPE_VIEW_COUNT_FAILURE,
+  error
+});
+
+const baseUrl = '/api/v1';
+
+/**
+ * Action for create recipe
  *
- * @returns {promise} request
  * @param {object} options
+ * @returns {promise} request
  */
 export const apiCreateRecipe = ({
   recipeName, imageUrl, ingredients, description
@@ -234,7 +253,7 @@ export const apiCreateRecipe = ({
         description
       },
       method: 'POST',
-      url: '/api/v1/recipes'
+      url: `${baseUrl}/recipes`
     });
     request.then((response) => {
       dispatch(createRecipeSuccess(response.data));
@@ -246,11 +265,10 @@ export const apiCreateRecipe = ({
 
 /**
  * Action for getRecipe
- *
- * @returns {promise} request
  * @param {object} page
  * @param {object} limit
  * @param {object} sort
+ * @returns {promise} request
  */
 export const apiGetRecipe = (page, limit, sort) =>
   function action(dispatch) {
@@ -262,7 +280,7 @@ export const apiGetRecipe = (page, limit, sort) =>
         sort
       },
       method: 'GET',
-      url: `/api/v1/recipes?page=${page}`
+      url: `${baseUrl}/recipes?page=${page}`
     });
 
     request.then((response) => {
@@ -281,16 +299,15 @@ export const apiGetRecipe = (page, limit, sort) =>
 
   /**
  * Action for getMyRecipe
- *
- * @returns {promise} request
  * @param {object} page
+ * @returns {promise} request
  */
 export const apiGetMyRecipe = page =>
   function action(dispatch) {
     dispatch(getMyRecipe());
     const request = axios({
       method: 'GET',
-      url: `/api/v1/myrecipes?page=${page}`
+      url: `${baseUrl}/myrecipes?page=${page}`
     });
     request.then((response) => {
       const {
@@ -316,7 +333,7 @@ export const apiDeleteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'DELETE',
-      url: `/api/v1/recipes/${id}`
+      url: `${baseUrl}/recipes/${id}`
     });
     request.then(() => {
       dispatch(deleteRecipeSuccess(id));
@@ -345,7 +362,7 @@ export const apiEditRecipe = (recipeId, {
         description
       },
       method: 'PATCH',
-      url: `/api/v1/recipes/${recipeId}`
+      url: `${baseUrl}/recipes/${recipeId}`
     });
     request.then((response) => {
       dispatch(editRecipeSuccess(response.data.updatedRecipe));
@@ -365,7 +382,7 @@ export const onViewRecipe = recipeId =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: `/api/v1/recipe/${recipeId}`
+      url: `${baseUrl}/recipe/${recipeId}`
     });
     request.then((response) => {
       dispatch(viewRecipeSuccess(response.data));
@@ -385,7 +402,7 @@ export const apiUpVoteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipe/${id}/upvote`
+      url: `${baseUrl}/recipe/${id}/upvote`
     });
     request.then(() => {
       dispatch(upVoteRecipeSuccess(id));
@@ -405,7 +422,7 @@ export const apiDownVoteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipe/${id}/downvote`
+      url: `${baseUrl}/recipe/${id}/downvote`
     });
     request.then(() => {
       dispatch(downVoteRecipeSuccess(id));
@@ -425,7 +442,7 @@ export const apifavoriteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipe/${id}/favorite`
+      url: `${baseUrl}/recipe/${id}/favorite`
     });
     request.then(() => {
       dispatch(favoriteRecipeSuccess(id));
@@ -448,7 +465,7 @@ export const apiGetAllFavoriteRecipes = limit =>
         limit
       },
       method: 'GET',
-      url: '/api/v1/favorites'
+      url: `${baseUrl}/favorites`
     });
     request.then((response) => {
       dispatch(getAllFavoriteRecipeSuccess(response.data.favRecipes));
@@ -468,7 +485,7 @@ export const apiGetFavoriteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: `/api/v1/user/${id}/favorites`
+      url: `${baseUrl}/user/${id}/favorites`
     });
     request.then((response) => {
       dispatch(getfavoriteRecipeSuccess(response.data));
@@ -488,7 +505,7 @@ export const apiDeleteFavoriteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipe/${id}/favorite`
+      url: `${baseUrl}/recipe/${id}/favorite`
     });
     request.then(() => {
       dispatch(deleteFavoriteRecipeSuccess(id));
@@ -502,7 +519,7 @@ export const apiRecipeReview = (id, reviews) =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipes/${id}/review`,
+      url: `${baseUrl}/recipes/${id}/review`,
       data: {
         reviews
       }
@@ -525,7 +542,7 @@ export const apiDeleteRecipeReview = id =>
   function action(dispatch) {
     const request = axios({
       method: 'DELETE',
-      url: `/api/v1/recipe/${id}/review`
+      url: `${baseUrl}/recipe/${id}/review`
     });
     request.then(() => {
       dispatch(deleteRecipeReviewSuccess(id));
@@ -545,7 +562,7 @@ export const apiSearchRecipe = recipeName =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: '/api/v1/search',
+      url: `${baseUrl}/search`,
       params: { search: recipeName }
     });
     request.then((response) => {
@@ -560,12 +577,33 @@ export const apiSearchRecipe = recipeName =>
  * Action for search Item
  *
  * @returns {promise} request
- * @param {object} recipeName
+ * @param {object} search
  */
-
 export const searchItem = search => (dispatch) => {
   dispatch({
     type: GET_SEARCH_ITEM,
     searchItem: search
   });
 };
+
+  /**
+   * Action to post recipe count
+   *
+   * @param {object} id
+   * @returns {void}
+   */
+export const apiRecipeViewCount = id =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/recipe/${id}/views`
+    });
+    request.then((response) => {
+      dispatch(recipeViewCountSuccess(id, response.data.views));
+    }).catch((err) => {
+      if (err && err.data) {
+        dispatch(recipeViewCountFailure(err.data.error));
+      }
+    });
+    return request;
+  };

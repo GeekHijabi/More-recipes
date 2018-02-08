@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import 'bootstrap/dist/css/bootstrap.css';
 import RecipeHeader from '../../Partials/RecipeHeader';
 import Footer from '../../Partials/Footer';
 import Tabs from './Tabs';
 import Content from './Content';
-import { onViewRecipe,
+import {
+  onViewRecipe,
   apiUpVoteRecipe,
   apiDownVoteRecipe,
-  apifavoriteRecipe
+  apifavoriteRecipe,
+  apiRecipeViewCount
 } from '../../../actions/recipe';
 
 const Image = require('../../../../assets/images/banner_bg.jpg');
@@ -17,15 +18,15 @@ const Image = require('../../../../assets/images/banner_bg.jpg');
 /**
  *
  *
- * @class MyProfile
+ * @class MyRecipe
  * @extends {React.Component}
  */
 class MyRecipe extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
-   * @memberof Home
-   * @return {void}
+   * @memberof MyRecipe
+   * @return {object} props
    */
   constructor(props) {
     super(props);
@@ -33,6 +34,8 @@ class MyRecipe extends React.Component {
       activeTab: {
         name: 'Descriptions',
         isActive: true,
+        upvotes: false,
+        downvotes: false
       }
     };
     this.handleChangeTab = this.handleChangeTab.bind(this);
@@ -40,20 +43,20 @@ class MyRecipe extends React.Component {
   }
 
   /**
- * @returns {void}
- *
+ * @description componentDidMount
  * @param {any} void
  * @memberof RecipeAdmin
+ * @returns {void}
  */
   componentDidMount() {
     const recipeId = this.props.match.params.id;
     this.props.onViewRecipe(recipeId);
+    this.props.apiRecipeViewCount(recipeId);
   }
 
   /**
    *
    * @param {object} tab
-   *
    * @returns {void}
    */
   handleChangeTab(tab) {
@@ -65,7 +68,6 @@ class MyRecipe extends React.Component {
   /**
    *
    * @param {object} id
-   *
    * @returns {void}
    */
   handleupvote() {
@@ -98,6 +100,7 @@ class MyRecipe extends React.Component {
         this.props.onViewRecipe(this.props.recipe.id);
       });
   }
+
   /**
    * @description constructor Function
    * @param {any} props
@@ -105,7 +108,9 @@ class MyRecipe extends React.Component {
    * @return {void}
    */
   render() {
-    const { recipe } = this.props;
+    const {
+      recipe, views,
+    } = this.props;
     return (
       <div>
         <RecipeHeader />
@@ -166,7 +171,7 @@ class MyRecipe extends React.Component {
                   title="number of views"
                 />
                 <span>views(s)</span>
-                <span className="detail-value">{recipe.views}</span>
+                <span className="detail-value">{views}</span>
               </span>
             </div>
           </div>
@@ -195,8 +200,10 @@ MyRecipe.propTypes = {
   apiUpVoteRecipe: PropTypes.func.isRequired,
   apiDownVoteRecipe: PropTypes.func.isRequired,
   apifavoriteRecipe: PropTypes.func.isRequired,
+  apiRecipeViewCount: PropTypes.func.isRequired,
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  views: PropTypes.number.isRequired,
 };
 
 /**
@@ -208,6 +215,7 @@ MyRecipe.propTypes = {
 function mapStateToProps(state) {
   return {
     recipe: state.recipe.recipe,
+    views: state.recipe.views
   };
 }
 
@@ -217,6 +225,7 @@ export default connect(
     onViewRecipe,
     apiUpVoteRecipe,
     apiDownVoteRecipe,
-    apifavoriteRecipe
+    apifavoriteRecipe,
+    apiRecipeViewCount
   }
 )(MyRecipe);

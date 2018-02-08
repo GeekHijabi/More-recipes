@@ -47,7 +47,7 @@ class FavoriteRecipes extends React.Component {
     return (
       <div>
         <RecipeHeader />
-        <div style={{ width: '85%', margin: '0 auto', minHeight: '700px' }}>
+        <div style={{ width: '85%', margin: '0 auto', minHeight: '710px' }}>
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
             <h4>
               <span>My Favorite Recipes</span>

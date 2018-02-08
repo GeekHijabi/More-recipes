@@ -246,7 +246,6 @@ export default {
    * @returns {object} recipe created by user
    */
   getSingleRecipe(req, res) {
-    const { id } = req.decoded;
     Recipe
       .findOne({
         where: {
@@ -273,11 +272,30 @@ export default {
             error: 'No Recipe found'
           });
         }
-        if (singleRecipe.userId !== id) {
-          singleRecipe
-            .update({ views: singleRecipe.views + 1 });
-        }
         return res.status(200).json(singleRecipe);
+      })
+      .catch(error => res.status(404).json({ error: error.message }));
+  },
+
+  updateRecipeView(req, res) {
+    const { id } = req.decoded;
+    Recipe
+      .findOne({
+        where: {
+          id: req.params.recipeId,
+        },
+      })
+      .then((recipeFound) => {
+        if (!recipeFound) {
+          return res.status(404).json({
+            error: 'No Recipe found'
+          });
+        }
+        if (recipeFound.userId !== id) {
+          recipeFound
+            .update({ views: recipeFound.views + 1 });
+        }
+        return res.status(200).json({ views: recipeFound.views });
       })
       .catch(error => res.status(404).json({ error: error.message }));
   },

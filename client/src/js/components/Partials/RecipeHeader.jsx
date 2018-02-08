@@ -11,7 +11,7 @@ import { LogoutUser } from '../../actions/auth';
  * @class Header
  * @extends {React.Component}
  */
-class RecipeHeader extends React.Component {
+export class RecipeHeader extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props

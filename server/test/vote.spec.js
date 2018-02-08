@@ -9,16 +9,17 @@ import db from '../models';
 const should = chai.Should();
 chai.use(chaiHttp);
 
+const baseUrl = '/api/v1';
 let token;
 
 describe('Vote', () => {
   beforeEach((done) => {
-    chai.request(app).post('/api/v1/user/signup')
+    chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.newUser)
       .end((err, res) => {
         res.should.have.status(201);
         chai.request(app)
-          .post('/api/v1/user/signin')
+          .post(`${baseUrl}/user/signin`)
           .send(fakeData.signedInUser2)
           .end((err, res) => {
             token = res.body.token;
@@ -31,9 +32,9 @@ describe('Vote', () => {
     truncate: true,
     restartIdentity: true
   }));
-  it('should let user add a recipe', (done) => {
+  it('should add a new recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/recipes')
+      .post(`${baseUrl}/recipes`)
       .set('x-token', token)
       .send(fakeData.recipe1)
       .end((err, res) => {
@@ -45,19 +46,19 @@ describe('Vote', () => {
         done();
       });
   });
-  describe('Votes', () => {
+  describe('for votes action', () => {
     beforeEach((done) => {
       chai.request(app)
-        .post('/api/v1/recipes')
+        .post(`${baseUrl}/recipes`)
         .set('x-token', token)
         .send(fakeData.recipe1)
         .end(() => {
           done();
         });
     });
-    it('should let user upvote a recipe', (done) => {
+    it('should return 200 when a recipe is upvoted', (done) => {
       chai.request(app)
-        .post('/api/v1/recipe/1/upvote')
+        .post(`${baseUrl}/recipe/1/upvote`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(200);
@@ -65,22 +66,31 @@ describe('Vote', () => {
           done();
         });
     });
-    it('should let user remove upvote', (done) => {
+    it('should remove upvote when upvote action is performed again', (done) => {
       chai.request(app)
-        .post('/api/v1/recipe/1/upvote')
+        .post(`${baseUrl}/recipe/1/upvote`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           done();
         });
     });
-    it('should let user downvote a recipe', (done) => {
+    it('should let 200 when a recipe is downvoted', (done) => {
       chai.request(app)
-        .post('/api/v1/recipe/1/downvote')
+        .post(`${baseUrl}/recipe/1/downvote`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('message').equal('Successfully downvoted');
+          done();
+        });
+    });
+    it('should remove downvote when downvote action is performed again', (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/recipe/1/downvote`)
+        .set('x-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
           done();
         });
     });

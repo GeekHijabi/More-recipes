@@ -118,10 +118,10 @@ class RecipeAdmin extends React.Component {
     return (
       <div>
         <RecipeHeader />
-        <div style={{ width: '85%', margin: '0 auto', minHeight: '700px' }}>
+        <div style={{ width: '85%', margin: '0 auto', minHeight: '750px' }}>
           <section id="list" className="row">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
-              <h4>
+              <h4 className="mb-5">
                 <span>My Recipe</span>
               </h4>
               <i

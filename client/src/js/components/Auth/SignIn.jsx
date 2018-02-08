@@ -7,14 +7,12 @@ import { apiLoginUser } from '../../actions/auth';
 
 
 /**
- *
- *
  * @class signIn
  * @extends {React.Component}
  */
-class SignIn extends React.Component {
+export class SignIn extends React.Component {
   /**
-   * @description COnstructor Function
+   * @description Constructor function
    * @param {any} props
    * @memberof SignIn
    * @return {void}
@@ -31,26 +29,28 @@ class SignIn extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
   }
+
   /**
- * @returns {void}
- *
- * @param {any} event
- * @memberof SignIn
+   *
+   * @param {any} event
+   * @memberof SignIn
+   * @returns {void}
  */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
+
   /**
- * @returns {void}
- *
- * @param {any} event
- * @memberof SignIn
+   *
+   * @param {any} event
+   * @memberof SignIn
+   * @returns {void}
  */
   onClick(event) {
     event.preventDefault();
     this.props.apiLoginUser(this.state)
       .then((res) => {
-        if (res && res.data) {
+        if (res) {
           toastr.options = {
             closeButton: true,
             progressBar: true
@@ -59,7 +59,7 @@ class SignIn extends React.Component {
           this.props.history.push('/recipes');
         }
       }).catch((err) => {
-        if (err && err.response) {
+        if (err) {
           this.setState({
             hasError: true,
             errorMessage: err.response.data.error
@@ -69,11 +69,11 @@ class SignIn extends React.Component {
   }
 
   /**
- * @returns {void}
- *
- * @param {any} event
- * @memberof SignIn
- */
+   *
+   * @param {any} event
+   * @memberof SignIn
+  * @returns {void}
+  */
   onDismiss(event) {
     event.preventDefault();
     this.setState({
@@ -101,25 +101,26 @@ class SignIn extends React.Component {
                     <strong>Sign in</strong>
                   </h3>
                 </div>
-                { this.state.hasError && (
-                <div
-                  className="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  {this.state.errorMessage}
-                  <button
-                    type="button"
-                    className="close"
-                    onClick={this.onDismiss}
-                    data-dismiss="alert"
-                    aria-label="Close"
+                {this.state.hasError && (
+                  <div
+                    className="alert alert-danger alert-dismissible fade show"
+                    role="alert"
                   >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              )}
+                    {this.state.errorMessage}
+                    <button
+                      type="button"
+                      className="close"
+                      onClick={this.onDismiss}
+                      data-dismiss="alert"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                )}
                 <div className="md-form">
-                  <label htmlFor="Form-email1" className="form-label">Username/Email
+                  <label htmlFor="Form-email1" className="form-label">
+                  Username/Email
               <span style={{ color: 'red' }} > *</span>
                     <input
                       type="text"
@@ -147,9 +148,11 @@ class SignIn extends React.Component {
                       title="8 to 15 characters required"
                       required
                     />
-                    <p className="font-small blue-text d-flex justify-content-end">
+                    <p
+                      className="font-small blue-text d-flex justify-content-end"
+                    >
                       <Link to="/" href="/" className="blue-text ml-1">
-                  Forgot Password?
+                        Forgot Password?
                       </Link>
                     </p>
                   </label>
@@ -157,10 +160,10 @@ class SignIn extends React.Component {
                 <div className="text-center mb-3">
                   <button
                     type="button"
-                    className="btn btn-white btn-rounded"
+                    className="btn btn-white btn-rounded submit float"
                     onClick={this.onClick}
                   >
-              Sign in
+                    Sign in
                   </button>
                 </div>
               </div>

@@ -10,11 +10,12 @@ import db from '../models';
 chai.should();
 chai.use(chaiHttp);
 
+const baseUrl = '/api/v1';
 let token;
 
-describe('Favorite', () => {
+describe('Favorite controller', () => {
   beforeEach((done) => {
-    chai.request(app).post('/api/v1/user/signup')
+    chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.newUser)
       .end((err, res) => {
         res.should.have.status(201);
@@ -32,9 +33,9 @@ describe('Favorite', () => {
     truncate: true,
     restartIdentity: true
   }));
-  it('should let user add a recipe', (done) => {
+  it('should add a new recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/recipes')
+      .post(`${baseUrl}/recipes`)
       .set('x-token', token)
       .send(fakeData.recipe1)
       .end((err, res) => {
@@ -49,16 +50,16 @@ describe('Favorite', () => {
   describe('Favorite', () => {
     beforeEach((done) => {
       chai.request(app)
-        .post('/api/v1/recipes')
+        .post(`${baseUrl}/recipes`)
         .set('x-token', token)
         .send(fakeData.recipe1)
         .end(() => {
           done();
         });
     });
-    it('should let user add a recipe has favorite', (done) => {
+    it('should return 201 when a recipe is favorited', (done) => {
       chai.request(app)
-        .post('/api/v1/recipe/1/favorite')
+        .post(`${baseUrl}/recipe/1/favorite`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(201);
@@ -66,33 +67,14 @@ describe('Favorite', () => {
           done();
         });
     });
-    // it('should let user remove a recipe from favorite', (done) => {
-    //   chai.request(app)
-    //     .post('/api/v1/recipe/1/favorite')
-    //     .set('x-token', token)
-    //     .end((err, res) => {
-    //       res.should.have.status(200);
-    //       res.body.should.have.property('message').equal('Recipe unfavorited');
-    //       done();
-    //     });
-    // });
-    it('should get favorite list', (done) => {
+    it('should return a list of favorited recipes', (done) => {
       chai.request(app)
-        .get('/api/v1/user/1/favorites')
+        .get(`${baseUrl}/user/1/favorites`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           done();
         });
     });
-    // it.only('should return 404 for no favorite', (done) => {
-    //   chai.request(app)
-    //     .get('/api/v1/user/5/favorites')
-    //     .set('x-token', token)
-    //     .end((err, res) => {
-    //       res.should.have.status(404);
-    //       done();
-    //     });
-    // });
   });
 });

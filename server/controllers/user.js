@@ -1,9 +1,33 @@
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import path from 'path';
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
+import hbs from 'nodemailer-express-handlebars';
+// import handlebars from '../middleware/HandleBars';
 import db from '../models';
 
+const emailAddress = process.env.MAILER_EMAIL_ID;
+const pass = process.env.MAILER_PASSWORD;
+
 const { User } = db;
+
+
+const smtpTransport = nodemailer.createTransport({
+  service: process.env.MAILER_SERVICE_PROVIDER,
+  auth: {
+    user: emailAddress,
+    pass
+  }
+});
+
+const handlebarsOptions = {
+  viewEngine: 'handlebars',
+  viewPath: path.resolve('./server/templates/'),
+  extName: '.html'
+};
+
+smtpTransport.use('compile', hbs(handlebarsOptions));
 
 dotenv.load();
 const secret = process.env.SECRETKEY;
@@ -99,7 +123,7 @@ export default {
         where: {
           id: userId
         },
-        attributes: { exclude: ['password'] }
+        attributes: { exclude: ['password', 'reset_password_token'] }
       })
       .then((currentUser) => {
         if (!currentUser) {
@@ -130,12 +154,12 @@ export default {
       imageUrl
     } = req.body;
     User
-      .findOne(({
+      .findOne({
         where: {
           id
         },
-        attributes: { exclude: ['password'] }
-      })).then((userProfile) => {
+        attributes: { exclude: ['password', 'reset_password_token'] }
+      }).then((userProfile) => {
         if (!userProfile) {
           return res.status(404).json({
             error: 'User not found'
@@ -160,5 +184,93 @@ export default {
       }).catch(() => res.status(500).json({
         error: 'Internal server error'
       }));
-  }
+  },
+
+  forgotPassword(req, res) {
+    const { id } = req.decoded;
+    User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then((userFound) => {
+      if (!userFound) {
+        return res.status(404).json({
+          error: 'user not found'
+        });
+      }
+      if (id === userFound.id) {
+        const token = jwt.sign({
+          id: userFound.dataValues.id
+        }, secret, { expiresIn: 86400 });
+        userFound.update({
+          reset_password_token: token,
+        });
+        const data = {
+          to: userFound.email,
+          from: emailAddress,
+          template: 'forgot-password-email',
+          subject: 'Password help has arrived!',
+          context: {
+            url: `http://${req.headers.host}/api/v1/${id}/reset-password?token=${token}`,
+            name: userFound.userName.split(' ')[0]
+          }
+        };
+        smtpTransport.sendMail(data, (err) => {
+          if (!err) {
+            return res.json({ message: 'Kindly check your email for further instructions' });
+          }
+          return res.json({ message: 'Not sending' });
+        });
+      }
+      if (id !== userFound.id) {
+        return res.status(403)
+          .json({
+            message: 'You are not authorized to perfom this action'
+          });
+      }
+    });
+  },
+
+  resetPassword(req, res) {
+    const { id } = req.decoded;
+    const { token, newPassword } = req.body;
+    User.findOne({
+      where: {
+        reset_password_token: token
+      }
+    }).then((userFound) => {
+      if (!userFound) {
+        return res.status(404).json({
+          error: 'user not found'
+        });
+      }
+      if (id === userFound.id) {
+        const hashedPassword = bcrypt.hashSync(newPassword, salt, null);
+        userFound.update({
+          password: hashedPassword,
+        });
+        const data = {
+          to: userFound.email,
+          from: emailAddress,
+          template: 'reset-password-email',
+          subject: 'Password Reset Confirmation',
+          context: {
+            name: userFound.userName.split(' ')[0]
+          }
+        };
+
+        smtpTransport.sendMail(data, (err) => {
+          if (!err) {
+            return res.json({ message: 'Password reset successfully' });
+          }
+          return (err);
+        });
+      } else {
+        return res.status(422).send({
+          message: 'Passwords do not match'
+        });
+      }
+    });
+  },
+
 };

@@ -9,14 +9,12 @@ import {
 
 
 /**
- *
- *
  * @class SignUp
  * @extends {React.Component}
  */
-class SignUp extends React.Component {
+export class SignUp extends React.Component {
   /**
-   * @description COnstructor Function
+   * @description constructor function
    * @param {any} props
    * @memberof SignUp
    * @return {void}
@@ -34,28 +32,29 @@ class SignUp extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
   }
+
   /**
- * @returns {void}
- *
- * @param {any} event
- * @memberof SignUp
- */
+  *
+  * @param {any} event
+  * @memberof SignUp
+  * @returns {object} event
+  */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
- * @returns {void}
- *
- * @param {any} event
- * @memberof SignUp
- */
+   *
+   * @param {any} event
+   * @memberof SignUp
+   * @returns {object} event
+  */
   onClick(event) {
     event.preventDefault();
     this.props.apiRegisterUser(this.state).then(() => {
       this.props.apiLoginUser(this.state)
         .then((res) => {
-          if (res && res.data) {
+          if (res) {
             toastr.options = {
               closeButton: true,
               progressBar: true
@@ -65,29 +64,22 @@ class SignUp extends React.Component {
           }
         })
         .catch((err) => {
-          if (err && err.data) {
+          if (err) {
             this.setState({
               hasError: true,
               errorMessage: err.data.error
             });
           }
         });
-    }).catch((err) => {
-      if (err && err.response) {
-        this.setState({
-          hasError: true,
-          errorMessage: err.response.data.error
-        });
-      }
     });
   }
 
   /**
- * @returns {void}
- *
- * @param {any} event
- * @memberof SignUp
- */
+   *
+   * @memberof SignUp
+   * @param {any} event
+  * @returns {object} event
+  */
   onDismiss(event) {
     event.preventDefault();
     this.setState({
@@ -97,10 +89,10 @@ class SignUp extends React.Component {
   }
 
   /**
-   * @description Constructor Function
+   * @description render function
    * @param {any} props
    * @memberof SignUp
-   * @return {void}
+   * @return {object} signup
    */
   render() {
     return (
@@ -184,10 +176,29 @@ class SignUp extends React.Component {
                   </label>
                 </div>
 
+                <div className="md-form pb-3">
+                  <label htmlFor="Form-pass2" className="form-label">
+                  Confirm Password
+                <span style={{ color: 'red' }} > *</span>
+                    <input
+                      type="password"
+                      id="Form-pass2"
+                      className="form-control"
+                      placeholder="********"
+                      name="password"
+                      onChange={this.onChange}
+                      value={this.state.password}
+                      pattern="(?=^.{8,15}$)(?!.*\s).*$"
+                      title="8 to 15 characters required"
+                      required
+                    />
+                  </label>
+                </div>
+
                 <div className="text-center mb-3">
                   <button
                     type="button"
-                    className="btn btn-white btn-rounded"
+                    className="btn btn-white btn-rounded float"
                     onClick={this.onClick}
                   >
                 Sign up

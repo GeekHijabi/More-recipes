@@ -87,7 +87,7 @@ class Recipes extends React.Component {
     return (
       <div>
         <RecipeHeader />
-        <div style={{ width: '85%', margin: '0 auto' }}>
+        <div style={{ width: '85%', margin: '0 auto', minHeight: '710px' }}>
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 headings">
             <h4 className="mb-4">
               <span>Recipes</span>
@@ -150,7 +150,8 @@ Recipes.propTypes = {
   search: PropTypes.arrayOf(PropTypes.any).isRequired,
   pageCount: PropTypes.number,
   isLoadingRecipe: PropTypes.bool,
-  searchValue: PropTypes.string.isRequired
+  searchValue: PropTypes.string.isRequired,
+  searchItem: PropTypes.func.isRequired
 };
 
 Recipes.defaultProps = {

@@ -69,6 +69,12 @@ const fakeData = {
     ingredients: 'water rice',
     description: 'boil rice',
   },
+  recipe3: {
+    id: 3,
+    recipeName: 'Rice',
+    ingredients: 'water rice',
+    description: 'boil rice',
+  },
   recipe2: {
     recipeName: 'Beans',
     ingredients: 'water, beans',

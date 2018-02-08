@@ -24,9 +24,9 @@ import {
   UPDATE_PROFILE_FAILURE
 } from '../../js/constants';
 
-const middlewares = [thunk];
+const middleware = [thunk];
 
-const mockStore = configureMockStore(middlewares);
+const mockStore = configureMockStore(middleware);
 
 window.localStorage = mockLocalStorage;
 
@@ -39,7 +39,7 @@ describe('Auth action', () => {
     (done) => {
       const { signupResponse, signupData } = dataMock;
       moxios.stubRequest('/api/v1/user/signup', {
-        status: 200,
+        status: 201,
         response: signupResponse
       });
       const expectedActions = [{

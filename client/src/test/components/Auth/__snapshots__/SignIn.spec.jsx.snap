@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: SignIn sign in snapshot should render correctly 1`] = `
+<div
+  page="signin"
+>
+  <div
+    className="overlay"
+  />
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-6 offset-md-3 col-lg-4 offset-lg-4"
+    >
+      <div
+        className="card card-style"
+      >
+        <div
+          className="card-body mx-4"
+        >
+          <div
+            className="text-center"
+          >
+            <h3
+              className="dark-grey-text mb-5"
+            >
+              <strong>
+                Sign in
+              </strong>
+            </h3>
+          </div>
+          <div
+            className="md-form"
+          >
+            <label
+              className="form-label"
+              htmlFor="Form-email1"
+            >
+              Username/Email
+              <span
+                style={
+                  Object {
+                    "color": "red",
+                  }
+                }
+              >
+                 *
+              </span>
+              <input
+                className="Form-email1 form-control required"
+                name="identifier"
+                onChange={[Function]}
+                placeholder="username or Email"
+                required={true}
+                type="text"
+                value=""
+              />
+            </label>
+          </div>
+          <div
+            className="md-form pb-3"
+          >
+            <label
+              className="form-label"
+              htmlFor="Form-pass1"
+            >
+              Password
+              <span
+                style={
+                  Object {
+                    "color": "red",
+                  }
+                }
+              >
+                 *
+              </span>
+              <input
+                className="form-control"
+                id="Form-pass1"
+                name="password"
+                onChange={[Function]}
+                pattern="(?=^.{8,15}$)(?!.*\\\\s).*$"
+                placeholder="password"
+                required={true}
+                title="8 to 15 characters required"
+                type="password"
+                value=""
+              />
+              <p
+                className="font-small blue-text d-flex justify-content-end"
+              >
+                <Link
+                  className="blue-text ml-1"
+                  href="/"
+                  replace={false}
+                  to="/"
+                >
+                  Forgot Password?
+                </Link>
+              </p>
+            </label>
+          </div>
+          <div
+            className="text-center mb-3"
+          >
+            <button
+              className="btn btn-white btn-rounded submit float"
+              onClick={[Function]}
+              type="button"
+            >
+              Sign in
+            </button>
+          </div>
+        </div>
+        <div
+          className="modal-footer mx-5 pt-3 mb-1"
+        >
+          <p
+            className="font-small"
+          >
+            Yet to Register?
+            <Link
+              href="./signup"
+              replace={false}
+              to="/signup"
+            >
+               Sign Up
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

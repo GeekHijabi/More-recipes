@@ -162,32 +162,12 @@ describe.only('Recipe reducer', () => {
     }
   );
 
-  it(
-    'should return updated upvote count when UPVOTE_RECIPE_SUCCESS is dispatched',
-    () => {
-      const { viewedRecipe } = dataMock;
-      const action = actions.upVoteRecipeSuccess(viewedRecipe);
-      const newState = recipe(initialState, action);
-      expect(newState.upvotes).toEqual(0);
-    }
-  );
-
   it('should return error when upvote recipe fails to dispatch', () => {
     const error = 'cannot get upvote';
     const action = actions.upVoteRecipeFailure(error);
     const newState = recipe(initialState, action);
     expect(newState.errorMessage).toEqual(error);
   });
-
-  it(
-    'should return updated downvote count when DOWNVOTE_RECIPE_SUCCESS is dispatched',
-    () => {
-      const { viewedRecipe } = dataMock;
-      const action = actions.downVoteRecipeSuccess(viewedRecipe);
-      const newState = recipe(initialState, action);
-      expect(newState.upvotes).toEqual(0);
-    }
-  );
 
   it('should return error when downvote recipe fails', () => {
     const error = 'cannot get downvote';

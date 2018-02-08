@@ -6,7 +6,6 @@ import app from '../app';
 chai.should();
 chai.use(chaiHttp);
 
-
 describe('More Recipes', () => {
   it('should get the home page', (done) => {
     chai
@@ -20,12 +19,4 @@ describe('More Recipes', () => {
         done();
       });
   });
-  // it('should get 404 page for incorrect route', (done) => {
-  //   chai.request(app)
-  //     .get('/ap')
-  //     .end((err, res) => {
-  //       res.should.have.status(404);
-  //       done();
-  //     });
-  // });
 });

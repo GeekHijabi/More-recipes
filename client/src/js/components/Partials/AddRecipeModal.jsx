@@ -166,6 +166,9 @@ class AddRecipeModal extends React.Component {
                   placeholder="input your recipe ingredients"
                 />
               </Col>
+              <span style={{ color: 'red', marginLeft: '13.5em' }}>
+              separate ingredients with commas
+              </span>
             </FormGroup>
 
             <FormGroup row>
@@ -184,6 +187,7 @@ class AddRecipeModal extends React.Component {
                 />
               </Col>
             </FormGroup>
+
 
             <FormGroup row>
               <Label for="exampleFile" lg={4}>Image</Label>

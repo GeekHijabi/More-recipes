@@ -25,10 +25,9 @@ class TrendingRecipe extends React.Component {
 
 
   /**
- * @returns {void}
- *
  * @param {any} void
  * @memberof Recipes
+ * @returns {void}
  */
   componentWillMount() {
     this.props.apiGetRecipe(0, 3, 'upvotes');
@@ -42,7 +41,7 @@ class TrendingRecipe extends React.Component {
   render() {
     const { recipes } = this.props;
     return (
-      <div style={{ width: '85%', margin: '0 2em' }}>
+      <div style={{ width: '85%', margin: '0 6.5em' }}>
         <h4 className="heading">
           <span>Currently Trending</span>
         </h4>

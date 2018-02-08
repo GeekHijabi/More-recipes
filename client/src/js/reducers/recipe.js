@@ -35,14 +35,17 @@ import {
   DELETE_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
   SEARCH_RECIPE_FAILURE,
-  GET_SEARCH_ITEM } from '../constants';
+  GET_SEARCH_ITEM,
+  RECIPE_VIEW_COUNT_SUCCESS,
+  RECIPE_VIEW_COUNT_FAILURE } from '../constants';
 
 export default (state = initialState, action) => {
   const newState = cloneDeep(state);
   const {
     type, recipe, recipeDetail, recipeReview,
     recipes, myRecipes, recipeId, error, searchRecipeName,
-    favRecipes, favoriteRecipes, deletedReviewId, searchItem, deletedFavoriteId
+    favRecipes, favoriteRecipes, deletedReviewId, searchItem,
+    deletedFavoriteId, views, upvotes, downvotes
   } = action;
 
   switch (type) {
@@ -145,6 +148,7 @@ export default (state = initialState, action) => {
         errorMessage: error
       };
     case RECIPE_UPVOTE_SUCCESS:
+      newState.upvotes = upvotes;
       return {
         ...newState
       };
@@ -153,6 +157,7 @@ export default (state = initialState, action) => {
         errorMessage: error
       };
     case RECIPE_DOWNVOTE_SUCCESS:
+      newState.downvotes = downvotes;
       return {
         ...newState
       };
@@ -225,7 +230,6 @@ export default (state = initialState, action) => {
 
     case SEARCH_RECIPE_SUCCESS:
       newState.SearchResults = searchRecipeName;
-      // newState.pageCount = recipes.pageCount;
       return {
         ...newState
       };
@@ -238,6 +242,15 @@ export default (state = initialState, action) => {
       return {
         ...newState,
         searchItem
+      };
+    case RECIPE_VIEW_COUNT_SUCCESS:
+      newState.views = views;
+      return {
+        ...newState
+      };
+    case RECIPE_VIEW_COUNT_FAILURE:
+      return {
+        errorMessage: error
       };
     default:
       return newState;
