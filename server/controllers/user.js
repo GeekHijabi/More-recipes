@@ -187,10 +187,10 @@ export default {
   },
 
   forgotPassword(req, res) {
-    const { id } = req.decoded;
+    const { userId } = req.params;
     User.findOne({
       where: {
-        email: req.body.email
+        id: userId
       }
     }).then((userFound) => {
       if (!userFound) {
@@ -198,7 +198,7 @@ export default {
           error: 'user not found'
         });
       }
-      if (id === userFound.id) {
+      if (userFound.id) {
         const token = jwt.sign({
           id: userFound.dataValues.id
         }, secret, { expiresIn: 86400 });
@@ -211,18 +211,20 @@ export default {
           template: 'forgot-password-email',
           subject: 'Password help has arrived!',
           context: {
-            url: `http://${req.headers.host}/api/v1/${id}/reset-password?token=${token}`,
+            url: `http://${req.headers.host}/reset-password/${userId}?token=${token}`,
             name: userFound.userName.split(' ')[0]
           }
         };
         smtpTransport.sendMail(data, (err) => {
           if (!err) {
-            return res.json({ message: 'Kindly check your email for further instructions' });
+            return res.json({
+              message: 'Kindly check your email for further instructions'
+            });
           }
           return res.json({ message: 'Not sending' });
         });
       }
-      if (id !== userFound.id) {
+      if (!userFound.id) {
         return res.status(403)
           .json({
             message: 'You are not authorized to perfom this action'
@@ -233,11 +235,19 @@ export default {
 
   resetPassword(req, res) {
     const { id } = req.decoded;
-    const { token, newPassword } = req.body;
+    const { newPassword } = req.body;
+    const { token } = req.query;
     User.findOne({
       where: {
-        reset_password_token: token
-      }
+        $or: [
+          {
+            id
+          },
+          {
+            reset_password_token: token
+          }
+        ]
+      },
     }).then((userFound) => {
       if (!userFound) {
         return res.status(404).json({
@@ -245,6 +255,7 @@ export default {
         });
       }
       if (id === userFound.id) {
+        console.log('new', newPassword, salt);
         const hashedPassword = bcrypt.hashSync(newPassword, salt, null);
         userFound.update({
           password: hashedPassword,
@@ -272,5 +283,55 @@ export default {
       }
     });
   },
+
+  // resetPassword(req, res) {
+  //   const { token, newPassword } = req.body;
+  //   // const { userId } = req.params;
+  //   User.findOne({
+  //     where: {
+  //       $and: [
+  //         // {
+  //         //   id: userId
+  //         // },
+  //         {
+  //           reset_password_token: token
+  //         }
+  //       ]
+  //     },
+  //   }).then((userFound) => {
+  //     console.log('userfiu', userFound);
+  //     if (!userFound) {
+  //       return res.status(404).json({
+  //         error: 'user not found'
+  //       });
+  //     }
+  //     if (userFound.id) {
+  //       const hashedPassword = bcrypt.hashSync(newPassword, salt, null);
+  //       userFound.update({
+  //         password: hashedPassword,
+  //       });
+  //       const data = {
+  //         to: userFound.email,
+  //         from: emailAddress,
+  //         template: 'reset-password-email',
+  //         subject: 'Password Reset Confirmation',
+  //         context: {
+  //           name: userFound.userName.split(' ')[0]
+  //         }
+  //       };
+
+  //       smtpTransport.sendMail(data, (err) => {
+  //         if (!err) {
+  //           return res.json({ message: 'Password reset successfully' });
+  //         }
+  //         return (err);
+  //       });
+  //     } else {
+  //       return res.status(422).send({
+  //         message: 'Password do not match'
+  //       });
+  //     }
+  //   });
+  // },
 
 };

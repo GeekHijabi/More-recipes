@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Description = props => (
   <div
@@ -17,5 +18,12 @@ const Description = props => (
     </div>
   </div>
 );
+Description.defaultProps = {
+  description: '',
+};
 
+Description.propTypes = {
+  description: PropTypes.string,
+  activeTab: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 export default Description;

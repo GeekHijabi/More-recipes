@@ -257,8 +257,8 @@ export const apiCreateRecipe = ({
     });
     request.then((response) => {
       dispatch(createRecipeSuccess(response.data));
-    }).catch(() => {
-      dispatch(createRecipeFailure('unable to create recipe'));
+    }).catch((err) => {
+      dispatch(createRecipeFailure(err.response.data.error));
     });
     return request;
   };
@@ -291,8 +291,8 @@ export const apiGetRecipe = (page, limit, sort) =>
         pageCount, pageSize, allRecipes, page, totalCount
       };
       dispatch(getRecipeSuccess(paginated));
-    }).catch(() => {
-      dispatch(getRecipeFailure('unable to get recipe'));
+    }).catch((err) => {
+      dispatch(getRecipeFailure(err.response.data.error));
     });
     return request;
   };
@@ -317,8 +317,8 @@ export const apiGetMyRecipe = page =>
         pageCount, pageSize, allMyRecipes, page
       };
       dispatch(getMyRecipeSuccess(paginated));
-    }).catch(() => {
-      dispatch(getMyRecipeFailure('unable to get user recipe'));
+    }).catch((err) => {
+      dispatch(getMyRecipeFailure(err.data.response.error));
     });
     return request;
   };
@@ -338,7 +338,7 @@ export const apiDeleteRecipe = id =>
     request.then(() => {
       dispatch(deleteRecipeSuccess(id));
     }).catch(() => {
-      dispatch(deleteRecipeFailure('recipe cannot be deleted at this time'));
+      dispatch(deleteRecipeFailure('Recipe cannot be deleted at this time'));
     });
     return request;
   };
@@ -367,7 +367,7 @@ export const apiEditRecipe = (recipeId, {
     request.then((response) => {
       dispatch(editRecipeSuccess(response.data.updatedRecipe));
     }).catch(() => {
-      dispatch(editRecipeFailure('recipe cannot be edited at this time'));
+      dispatch(editRecipeFailure('Recipe cannot be edited at this time'));
     });
     return request;
   };
@@ -386,8 +386,8 @@ export const onViewRecipe = recipeId =>
     });
     request.then((response) => {
       dispatch(viewRecipeSuccess(response.data));
-    }).catch(() => {
-      dispatch(viewRecipeFailure('unable to get recipe detail'));
+    }).catch((err) => {
+      dispatch(viewRecipeFailure(err.response.data.error));
     });
     return request;
   };
@@ -601,8 +601,8 @@ export const apiRecipeViewCount = id =>
     request.then((response) => {
       dispatch(recipeViewCountSuccess(id, response.data.views));
     }).catch((err) => {
-      if (err && err.data) {
-        dispatch(recipeViewCountFailure(err.data.error));
+      if (err) {
+        dispatch(recipeViewCountFailure(err.response.data.error));
       }
     });
     return request;

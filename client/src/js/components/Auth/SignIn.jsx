@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import toastr from 'toastr';
 import { apiLoginUser } from '../../actions/auth';
+import validateSigninInput from '../../utils/validations/signinValidation';
 
 
 /**
@@ -15,13 +16,14 @@ export class SignIn extends React.Component {
    * @description Constructor function
    * @param {any} props
    * @memberof SignIn
-   * @return {void}
+   * @return {object} any
    */
   constructor(props) {
     super(props);
     this.state = {
       identifier: '',
       password: '',
+      errors: {},
       errorMessage: '',
       hasError: false
     };
@@ -48,24 +50,28 @@ export class SignIn extends React.Component {
  */
   onClick(event) {
     event.preventDefault();
-    this.props.apiLoginUser(this.state)
-      .then((res) => {
-        if (res) {
-          toastr.options = {
-            closeButton: true,
-            progressBar: true
-          };
-          toastr.success(res.data.message);
-          this.props.history.push('/recipes');
-        }
-      }).catch((err) => {
-        if (err) {
-          this.setState({
-            hasError: true,
-            errorMessage: err.response.data.error
-          });
-        }
-      });
+    if (this.isValid()) {
+      this.setState({ errors: {} });
+      this.props.apiLoginUser(this.state)
+        .then((res) => {
+          if (res) {
+            toastr.options = {
+              closeButton: true,
+              progressBar: true
+            };
+            toastr.success(res.data.message);
+            this.props.history.push('/recipes');
+          }
+        })
+        .catch((err) => {
+          if (err) {
+            this.setState({
+              hasError: true,
+              errorMessage: err.response.data.error
+            });
+          }
+        });
+    }
   }
 
   /**
@@ -77,9 +83,24 @@ export class SignIn extends React.Component {
   onDismiss(event) {
     event.preventDefault();
     this.setState({
-      hasError: false,
-      errorMessage: ''
+      errors: {}
     });
+  }
+
+  /**
+  *
+  * @param {any} event
+  * @memberof SignIn
+  * @returns {object} event
+  */
+  isValid() {
+    const { errors, isValid } = validateSigninInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
   }
 
   /**
@@ -89,6 +110,7 @@ export class SignIn extends React.Component {
    * @return {void}
    */
   render() {
+    const { errors } = this.state;
     return (
       <div page="signin">
         <div className="overlay" />
@@ -131,6 +153,10 @@ export class SignIn extends React.Component {
                       value={this.state.identifier}
                       required
                     />
+                    {errors.identifier &&
+                    <small style={{ color: '#A43741' }}>
+                      {errors.identifier }
+                    </small>}
                   </label>
                 </div>
                 <div className="md-form pb-3">
@@ -148,10 +174,14 @@ export class SignIn extends React.Component {
                       title="8 to 15 characters required"
                       required
                     />
+                    {errors.password &&
+                    <small style={{ color: '#A43741' }}>
+                      {errors.password }
+                    </small>}
                     <p
                       className="font-small blue-text d-flex justify-content-end"
                     >
-                      <Link to="/" href="/" className="blue-text ml-1">
+                      <Link to="/forgot-password" href="/forgot-password" className="blue-text ml-1">
                         Forgot Password?
                       </Link>
                     </p>

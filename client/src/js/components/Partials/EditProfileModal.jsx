@@ -191,8 +191,8 @@ class EditProfileModal extends React.Component {
             <FormGroup check row>
               <Col sm={{ size: 10, offset: 2 }} className="modal-button">
                 {this.state.isLoading ? 'please wait a few seconds...' :
-                <Button onClick={this.onSubmit}>
-                   Save
+                <Button onClick={this.onSubmit} className="submit-btn">
+                   Edit
                 </Button>
             }
               </Col>

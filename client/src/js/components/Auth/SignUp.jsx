@@ -6,6 +6,7 @@ import toastr from 'toastr';
 import {
   apiRegisterUser,
   apiLoginUser } from '../../actions/auth';
+import validateSignupInput from '../../utils/validations/signupValidation';
 
 
 /**
@@ -24,9 +25,11 @@ export class SignUp extends React.Component {
     this.state = {
       userName: '',
       email: '',
-      errorMessage: '',
       password: '',
-      hasError: false
+      confirmPassword: '',
+      errors: {},
+      hasError: false,
+      errorMessage: ''
     };
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -51,27 +54,34 @@ export class SignUp extends React.Component {
   */
   onClick(event) {
     event.preventDefault();
-    this.props.apiRegisterUser(this.state).then(() => {
-      this.props.apiLoginUser(this.state)
-        .then((res) => {
-          if (res) {
-            toastr.options = {
-              closeButton: true,
-              progressBar: true
-            };
-            toastr.success(res.data.message);
-            this.props.history.push('/recipes');
-          }
-        })
-        .catch((err) => {
-          if (err) {
+    if (this.isValid()) {
+      this.setState({ errors: {} });
+      this.props.apiRegisterUser(this.state).then(() => {
+        this.props.apiLoginUser(this.state)
+          .then((res) => {
+            if (res) {
+              toastr.options = {
+                closeButton: true,
+                progressBar: true
+              };
+              toastr.success(res.data.message);
+              this.props.history.push('/recipes');
+            }
+          })
+          .catch((err) => {
             this.setState({
               hasError: true,
-              errorMessage: err.data.error
+              errorMessage: err.response.data.error
             });
-          }
+          });
+      })
+        .catch((err) => {
+          this.setState({
+            hasError: true,
+            errorMessage: err.response.data.error
+          });
         });
-    });
+    }
   }
 
   /**
@@ -83,9 +93,25 @@ export class SignUp extends React.Component {
   onDismiss(event) {
     event.preventDefault();
     this.setState({
-      hasError: false,
-      errorMessage: ''
+      errors: {}
     });
+  }
+
+
+  /**
+  *
+  * @param {any} event
+  * @memberof SignUp
+  * @returns {object} event
+  */
+  isValid() {
+    const { errors, isValid } = validateSignupInput(this.state);
+
+    if (!isValid) {
+      this.setState({ errors });
+    }
+
+    return isValid;
   }
 
   /**
@@ -95,6 +121,7 @@ export class SignUp extends React.Component {
    * @return {object} signup
    */
   render() {
+    const { errors } = this.state;
     return (
       <div page="signup">
         <div className="overlay" />
@@ -109,23 +136,23 @@ export class SignUp extends React.Component {
                     <strong>Sign up</strong>
                   </h3>
                 </div>
-                { this.state.hasError && (
-                <div
-                  className="alert alert-danger alert-dismissible fade show"
-                  role="alert"
-                >
-                  {this.state.errorMessage}
-                  <button
-                    type="button"
-                    className="close"
-                    onClick={this.onDismiss}
-                    data-dismiss="alert"
-                    aria-label="Close"
+                {this.state.hasError && (
+                  <div
+                    className="alert alert-danger alert-dismissible fade show"
+                    role="alert"
                   >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              )}
+                    {this.state.errorMessage}
+                    <button
+                      type="button"
+                      className="close"
+                      onClick={this.onDismiss}
+                      data-dismiss="alert"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                )}
                 <div className="md-form">
                   <label htmlFor="Form-email1" className="form-label">Username
                 <span style={{ color: 'red' }} > *</span>
@@ -140,6 +167,10 @@ export class SignUp extends React.Component {
                       title="2 to 15 characters required"
                       required
                     />
+                    {errors.userName &&
+                    <small style={{ color: '#A43741' }}>
+                      {errors.userName }
+                    </small>}
                   </label>
                 </div>
 
@@ -155,6 +186,10 @@ export class SignUp extends React.Component {
                       value={this.state.email}
                       required
                     />
+                    {errors.email &&
+                    <small style={{ color: '#A43741' }}>
+                      {errors.email }
+                    </small>}
                   </label>
                 </div>
 
@@ -173,6 +208,10 @@ export class SignUp extends React.Component {
                       title="8 to 15 characters required"
                       required
                     />
+                    {errors.password &&
+                    <small style={{ color: '#A43741' }}>
+                      {errors.password }
+                    </small>}
                   </label>
                 </div>
 
@@ -185,13 +224,16 @@ export class SignUp extends React.Component {
                       id="Form-pass2"
                       className="form-control"
                       placeholder="********"
-                      name="password"
+                      name="confirmPassword"
                       onChange={this.onChange}
-                      value={this.state.password}
+                      value={this.state.confirmPassword}
                       pattern="(?=^.{8,15}$)(?!.*\s).*$"
                       title="8 to 15 characters required"
-                      required
                     />
+                    {errors.confirmPassword &&
+                    <small style={{ color: '#A43741' }}>
+                      {errors.confirmPassword }
+                    </small>}
                   </label>
                 </div>
 

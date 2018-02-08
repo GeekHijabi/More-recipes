@@ -50,7 +50,11 @@ class MyRecipe extends React.Component {
  */
   componentDidMount() {
     const recipeId = this.props.match.params.id;
-    this.props.onViewRecipe(recipeId);
+    this.props.onViewRecipe(recipeId).catch((err) => {
+      if (err.response.status === 404) {
+        this.props.history.push('/*');
+      }
+    });
     this.props.apiRecipeViewCount(recipeId);
   }
 
@@ -135,7 +139,9 @@ class MyRecipe extends React.Component {
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handleupvote()}
                 />
-                <span>upvote(s)</span>
+                {recipe.upvotes > 1 ? <span>upvotes</span> :
+                <span>upvote</span>
+                }
                 <span className="detail-value">{recipe.upvotes}</span>
               </span>
               <span className="vote_type">
@@ -148,7 +154,9 @@ class MyRecipe extends React.Component {
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handledownvote()}
                 />
-                <span>downvote(s)</span>
+                {recipe.downvotes > 1 ? <span>downvotes</span> :
+                <span>downvote</span>
+                }
                 <span className="detail-value">{recipe.downvotes}</span>
               </span>
               <span className="vote_type">
@@ -161,7 +169,9 @@ class MyRecipe extends React.Component {
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handlefavorite()}
                 />
-                <span>favorite(s)</span>
+                {recipe.favoriteCount > 1 ? <span>favorites</span> :
+                <span>favorite</span>
+                }
                 <span className="detail-value">{recipe.favoriteCount}</span>
               </span>
               <span className="vote_type">
@@ -170,7 +180,9 @@ class MyRecipe extends React.Component {
                   data-toggle="tool-tip"
                   title="number of views"
                 />
-                <span>views(s)</span>
+                {views > 1 ? <span>views</span> :
+                <span>view</span>
+                }
                 <span className="detail-value">{views}</span>
               </span>
             </div>
@@ -204,6 +216,7 @@ MyRecipe.propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   views: PropTypes.number.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 /**

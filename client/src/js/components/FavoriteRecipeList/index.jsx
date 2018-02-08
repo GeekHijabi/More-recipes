@@ -14,7 +14,7 @@ import { apiGetFavoriteRecipe } from '../../actions/recipe';
  */
 class FavoriteRecipes extends React.Component {
   /**
-   * @description COnstructor Function
+   * @description constructor function
    * @param {any} props
    * @memberof Recipes
    * @return {void}
@@ -37,17 +37,17 @@ class FavoriteRecipes extends React.Component {
   }
 
   /**
-   * @description Constructor Function
+   * @description constructor function
    * @param {any} props
-   * @memberof Home
-   * @return {void}
+   * @memberof FavoriteRecipeList
+   * @return {array} favorite recipes
    */
   render() {
     const { favorites } = this.props;
     return (
       <div>
         <RecipeHeader />
-        <div style={{ width: '85%', margin: '0 auto', minHeight: '710px' }}>
+        <div style={{ width: '85%', margin: '0 auto', minHeight: '760px' }}>
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
             <h4>
               <span>My Favorite Recipes</span>
@@ -75,8 +75,7 @@ FavoriteRecipes.propTypes = {
 /**
  *
  * @param {object} state
- *
- * @returns {void}
+ * @returns {array} state
  */
 function mapStateToProps(state) {
   return {

@@ -118,7 +118,7 @@ class RecipeAdmin extends React.Component {
     return (
       <div>
         <RecipeHeader />
-        <div style={{ width: '85%', margin: '0 auto', minHeight: '750px' }}>
+        <div style={{ width: '85%', margin: '0 auto', minHeight: '795px' }}>
           <section id="list" className="row">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading">
               <h4 className="mb-5">
@@ -160,7 +160,7 @@ class RecipeAdmin extends React.Component {
               && (
               <span className="styleText">
               You have not created any recipe yet!, click
-              the button to add a new recipe
+              the icon above to add a new recipe
               </span>)}
                 </div>
               </div>

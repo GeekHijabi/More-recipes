@@ -42,10 +42,10 @@ const routes = (app) => {
       user.updateUserProfile
     );
 
-  app.route(`${baseUrl}/:userId/forgot-password`)
-    .post(authenticate, user.forgotPassword);
+  app.route(`${baseUrl}/forgot-password/:userId`)
+    .post(user.forgotPassword);
 
-  app.route(`${baseUrl}/:userId/reset-password`)
+  app.route(`${baseUrl}/reset-password/:userId`)
     .post(authenticate, user.resetPassword);
 
   app

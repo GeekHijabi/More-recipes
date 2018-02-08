@@ -10,16 +10,14 @@ import Footer from '../Partials/Footer';
 import { apiGetRecipe, searchItem } from '../../actions/recipe';
 
 /**
- *
- *
- * @class Recipes
+ * @class RecipeList
  * @extends {React.Component}
  */
 class Recipes extends React.Component {
   /**
-   * @description COnstructor Function
+   * @description Constructor Function
    * @param {any} props
-   * @memberof Recipes
+   * @memberof RecipeList
    * @return {void}
    */
   constructor(props) {
@@ -31,19 +29,19 @@ class Recipes extends React.Component {
   }
 
   /**
- * @returns {void}
- *
  * @param {any} void
  * @memberof Recipes
+ * @returns {void}
+
  */
   componentDidMount() {
     this.props.apiGetRecipe();
   }
 
   /**
-   * @description COnstructor Function
+   * @description Constructor Function
    * @param {any} nextProps
-   * @memberof Recipes
+   * @memberof RecipeList
    * @return {void}
    */
   componentWillReceiveProps(nextProps) {
@@ -53,10 +51,10 @@ class Recipes extends React.Component {
   }
 
   /**
- * @returns {void}
- *
- * @param {any} void
- * @memberof RecipeAdmin
+  *
+  * @param {any} void
+  * @memberof RecipeList
+  * @returns {void}
  */
   componentWillUnmount() {
     this.props.searchItem('');
@@ -64,10 +62,9 @@ class Recipes extends React.Component {
 
 
   /**
- * @returns {void}
- *
  * @param {any} current
- * @memberof Recipes
+ * @memberof RecipeList
+ * @returns {void}
  */
   onPageChange(current) {
     current.selected += 1;
@@ -87,7 +84,7 @@ class Recipes extends React.Component {
     return (
       <div>
         <RecipeHeader />
-        <div style={{ width: '85%', margin: '0 auto', minHeight: '710px' }}>
+        <div style={{ width: '85%', margin: '0 auto', minHeight: '795px' }}>
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 headings">
             <h4 className="mb-4">
               <span>Recipes</span>

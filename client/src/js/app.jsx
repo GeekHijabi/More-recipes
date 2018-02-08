@@ -12,6 +12,7 @@ import RecipeDetail from './components/DashBoard/RecipeDetails';
 import MyRecipes from './components/DashBoard/MyRecipes';
 import FavoriteRecipe from './components/FavoriteRecipeList';
 import ForgotPassword from './components/Auth/ForgotPassword';
+import ResetPassword from './components/Auth/ResetPassword';
 
 
 /**
@@ -63,6 +64,11 @@ const App = () => (
     <Route
       path="/forgot-password"
       render={props => (<ForgotPassword {...props} />)}
+    />
+
+    <Route
+      path="/reset-password"
+      render={props => (<ResetPassword {...props} />)}
     />
     <Route
       exact

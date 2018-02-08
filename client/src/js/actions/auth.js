@@ -10,7 +10,13 @@ import {
   LOGOUT_USER_SUCCESS,
   REMOVE_CURRENT_USER,
   UPDATE_PROFILE_SUCCESS,
-  UPDATE_PROFILE_FAILURE } from '../constants';
+  UPDATE_PROFILE_FAILURE,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
+
+} from '../constants';
 
 export const loginSuccess = message => ({
   type: LOGIN_USER_SUCCESS,
@@ -51,6 +57,22 @@ export const updateProfileFailure = error => ({
   type: UPDATE_PROFILE_FAILURE,
   error
 });
+export const forgotPasswordSuccess = email => ({
+  type: FORGOT_PASSWORD_SUCCESS,
+  email
+});
+export const forgotPasswordFailure = error => ({
+  type: FORGOT_PASSWORD_FAILURE,
+  error
+});
+export const resetPasswordSuccess = newPasswordMessage => ({
+  type: RESET_PASSWORD_SUCCESS,
+  newPasswordMessage
+});
+export const resetPasswordFailure = error => ({
+  type: RESET_PASSWORD_FAILURE,
+  error
+});
 
 const baseUrl = '/api/v1';
 
@@ -74,10 +96,8 @@ export const apiRegisterUser = ({
       if (res) {
         dispatch(signupSuccess(res.data));
       }
-    }).catch((err) => {
-      if (err) {
-        dispatch(signupFailure(err.response.data));
-      }
+    }).catch((error) => {
+      dispatch(signupFailure(error.response.data));
     });
     return request;
   };
@@ -108,9 +128,7 @@ export const apiLoginUser = ({
       dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
     }).catch((err) => {
-      if (err && err.data) {
-        dispatch(loginFailure(err.data.error));
-      }
+      dispatch(loginFailure(err.response.data.error));
     });
     return request;
   };
@@ -128,11 +146,10 @@ export const apiGetCurrentUser = userId =>
     });
     request.then((response) => {
       dispatch(setCurrentUser(response.data));
-    }).catch((error) => {
-      if (error && error.data) {
+    })
+      .catch((error) => {
         dispatch(updateProfileFailure(error.data.error));
-      }
-    });
+      });
     return request;
   };
 
@@ -168,9 +185,50 @@ export const apiUpdateUserProfile = ({
     request.then((response) => {
       dispatch(updateProfileSuccess(response.data));
     }).catch((err) => {
-      if (err && err.data) {
-        dispatch(updateProfileFailure(err.data.error));
-      }
+      dispatch(updateProfileFailure(err.data.error));
     });
     return request;
+  };
+
+/**
+ * Async action for forgot password
+ * @param {object} userId
+ * @returns {promise} request
+ */
+export const apiForgotPassword = userId =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/forgot-password/${userId}`,
+    });
+    request.then((response) => {
+      dispatch(forgotPasswordSuccess(response.data.message));
+    }).catch((err) => {
+      dispatch(forgotPasswordFailure(err));
+    });
+    return request;
+  };
+
+/**
+ * Async action for reset password
+ * @param {object} userId
+ * @returns {promise} request
+ */
+export const apiResetPassword = (userId, newPassword) =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/reset-password/2?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTE4MzQwMzMzLCJleHAiOjE1MTg0MjY3MzN9.-v2uiB54ZXRLFZYKL9tnSYoJ5aEQYQoV4Ie2cH71KM4`,
+      data: {
+        newPassword
+      }
+    });
+    return request.then((response) => {
+      console.log(response.data, 'response');
+      return dispatch(resetPasswordSuccess(response.data.message));
+    }).catch((err) => {
+      console.log('err', err);
+      dispatch(resetPasswordFailure(err));
+    });
+    // return request;
   };

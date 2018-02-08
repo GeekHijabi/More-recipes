@@ -7,3 +7,4 @@ client/dist/
 .nyc_output/
 coverage/
 .DS_Store
+.env

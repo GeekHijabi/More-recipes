@@ -20,14 +20,22 @@ const Content = props => (
     <Reviews
       reviewedRecipe={props.reviewedRecipe}
       activeTab={props.activeTab}
-      recipeId={props.recipeId} //
+      recipeId={props.recipeId}
     />
   </div>
 );
 
-PropTypes.Content = {
-  recipe: PropTypes.objectOf(PropTypes.string).isRequired,
-  description: PropTypes.string.isRequired,
+Content.defaultProps = {
+  description: '',
+  recipeId: 0
+};
+
+Content.propTypes = {
+  recipe: PropTypes.objectOf(PropTypes.any).isRequired,
+  description: PropTypes.string,
+  activeTab: PropTypes.objectOf(PropTypes.any).isRequired,
+  reviewedRecipe: PropTypes.objectOf(Array).isRequired,
+  recipeId: PropTypes.number
 
 };
 
