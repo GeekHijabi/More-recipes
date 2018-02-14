@@ -53,19 +53,16 @@ export class ResetPassword extends React.Component {
       event.preventDefault();
       this.props.apiResetPassword(2, this.state.newPassword)
         .then((data) => {
-          console.log('res contr', data.newPasswordMessage);
           toastr.options = {
             closeButton: true,
             progressBar: true
           };
-          toastr.success(data.newPasswordMessage);
           this.props.history.push('/signin');
+          toastr.success(data.newPasswordMessage);
         })
         .catch((err) => {
-          console.log('contr err', err);
           toastr.danger(err.data);
         });
-    // console.log(this.props.apiResetPassword());
     }
   }
 
@@ -124,7 +121,8 @@ export class ResetPassword extends React.Component {
               <label htmlFor="Form-email1" className="form-label">
                 <input
                   type="password"
-                  className="Form-email1 form-control"
+                  id="Form-email1 "
+                  className="form-control"
                   placeholder="confirm Password"
                   name="confirmpassword"
                   onChange={this.onChange}

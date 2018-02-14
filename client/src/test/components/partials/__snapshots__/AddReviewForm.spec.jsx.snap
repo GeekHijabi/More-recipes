@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: AddReviewForm AddReviewForm in snapshot should render correctly 1`] = `
+<div
+  className="review-form"
+  placeholder="Add review"
+>
+  <div
+    className="input-control add-review"
+  >
+    <label
+      htmlFor="review"
+      id="label"
+      style={
+        Object {
+          "margin": "0 auto",
+          "width": "100%",
+        }
+      }
+    >
+      <textarea
+        className="review-edit"
+        col="3"
+        id="add-review"
+        name="review"
+        onChange={[Function]}
+        placeholder="input your review"
+        type="text"
+        value=""
+      />
+    </label>
+  </div>
+  <button
+    className="review-btn"
+    onClick={[Function]}
+    type="button"
+  >
+    Add review
+  </button>
+</div>
+`;

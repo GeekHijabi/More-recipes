@@ -10,7 +10,7 @@ import { apiRecipeReview, onViewRecipe } from '../../actions/recipe';
  * @class Banner
  * @extends {React.Component}
  */
-class AddReviewForm extends React.Component {
+export class AddReviewForm extends React.Component {
 /**
  *
  *@param {object} props

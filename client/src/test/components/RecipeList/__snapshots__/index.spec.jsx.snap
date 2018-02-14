@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Recipes snapshot should render correctly 1`] = `
+<div>
+  <withRouter(Connect(RecipeHeader)) />
+  <div
+    style={
+      Object {
+        "margin": "0 auto",
+        "minHeight": "795px",
+        "width": "85%",
+      }
+    }
+  >
+    <div
+      className="col-xs-12 col-sm-12 col-md-12 col-lg-12 headings"
+    >
+      <h4
+        className="mb-4"
+      >
+        <span>
+          Recipes
+        </span>
+      </h4>
+    </div>
+    <div
+      className="container-fluid"
+    >
+      <div
+        className="row"
+      >
+        <onlyUpdateForKeys(Loader)
+          color="#B0C038"
+          loading={true}
+          size={60}
+        />
+        <div
+          className="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+        >
+          <span
+            className="styleText"
+          >
+            No recipes yet, Come back soon for amazing recipes!
+          </span>
+        </div>
+      </div>
+    </div>
+    <Connect(PopularRecipe) />
+  </div>
+  <Footer />
+</div>
+`;

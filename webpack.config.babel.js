@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
@@ -73,27 +74,34 @@ module.exports = {
     modules: ['node_modules', 'client/src'],
     extensions: ['.js', '.jsx', '.json', '.css', '.scss']
   }, // modules
-  plugins: debug ? [
-    HtmlWebpackPluginConfig,
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new ExtractTextPlugin({
-      filename: 'bundle.css',
-      allChunks: true
-    }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Hammer: 'hammerjs/hammer',
-      createDayLabel: 'jquery',
-      createWeekdayLabel: 'jquery',
-      activateOption: 'jquery',
-      leftPosition: 'jquery'
-    })
-  ] :
+  plugins: debug ?
+    [
+      HtmlWebpackPluginConfig,
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new ExtractTextPlugin({
+        filename: 'bundle.css',
+        allChunks: true
+      }),
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Hammer: 'hammerjs/hammer',
+        createDayLabel: 'jquery',
+        createWeekdayLabel: 'jquery',
+        activateOption: 'jquery',
+        leftPosition: 'jquery'
+      }),
+      new Dotenv({
+        path: './.env',
+        safe: false,
+        systemvars: true
+      })
+    ] :
     [new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production')
+        NODE_ENV: JSON.stringify('production'),
+        SECRETKEY: JSON.stringify(process.env.SECRETKEY)
       }
     }),
     new webpack.optimize.UglifyJsPlugin(),

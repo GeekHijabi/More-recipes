@@ -49,7 +49,7 @@ export class ForgotPassword extends React.Component {
     if (this.isValid()) {
       // const url = window.location.href;
       // const currentURL = url.split('/')[url.split('/').length - 1];
-      console.log('cr', currentUrl);
+      // console.log('cr', currentUrl);
       event.preventDefault();
       this.props.apiForgotPassword(2)
         .then((res) => {
@@ -57,8 +57,8 @@ export class ForgotPassword extends React.Component {
             closeButton: true,
             progressBar: true
           };
-          toastr.success(res.data.message);
           this.props.history.push('/reset-password');
+          toastr.success(res.data.message);
         })
         .catch((err) => {
           toastr.danger(err.data);
@@ -106,7 +106,8 @@ export class ForgotPassword extends React.Component {
               <label htmlFor="Form-email1" className="form-label">Email
             <input
               type="text"
-              className="Form-email1 form-control"
+              id="Form-email1"
+              className="form-control"
               placeholder="Email"
               name="email"
               onChange={this.onChange}

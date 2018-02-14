@@ -10,7 +10,7 @@ export default function setToken(token) {
     axios
       .defaults
       .headers
-      .post['Content-Type'] = 'application/x-www-form-urlencoded';
+      .common['x-token'] = token;
     return true;
   }
   delete axios.defaults.headers.common['x-token'];

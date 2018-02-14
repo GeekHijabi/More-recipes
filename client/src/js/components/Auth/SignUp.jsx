@@ -163,12 +163,15 @@ export class SignUp extends React.Component {
                       name="userName"
                       onChange={this.onChange}
                       value={this.state.userName}
-                      pattern="(?=^.{2,15}$)(?!.*\s).*$"
-                      title="2 to 15 characters required"
+                      pattern="(?=^.{6,15}$)(?!.*\s).*$"
+                      title="6 to 15 characters required"
                       required
                     />
                     {errors.userName &&
-                    <small style={{ color: '#A43741' }}>
+                    <small
+                      className="error-name"
+                      style={{ color: '#A43741' }}
+                    >
                       {errors.userName }
                     </small>}
                   </label>
@@ -187,7 +190,10 @@ export class SignUp extends React.Component {
                       required
                     />
                     {errors.email &&
-                    <small style={{ color: '#A43741' }}>
+                    <small
+                      className="error-email"
+                      style={{ color: '#A43741' }}
+                    >
                       {errors.email }
                     </small>}
                   </label>
@@ -209,7 +215,10 @@ export class SignUp extends React.Component {
                       required
                     />
                     {errors.password &&
-                    <small style={{ color: '#A43741' }}>
+                    <small
+                      className="error-password"
+                      style={{ color: '#A43741' }}
+                    >
                       {errors.password }
                     </small>}
                   </label>
@@ -231,7 +240,10 @@ export class SignUp extends React.Component {
                       title="8 to 15 characters required"
                     />
                     {errors.confirmPassword &&
-                    <small style={{ color: '#A43741' }}>
+                    <small
+                      className="error-confirmPassword"
+                      style={{ color: '#A43741' }}
+                    >
                       {errors.confirmPassword }
                     </small>}
                   </label>

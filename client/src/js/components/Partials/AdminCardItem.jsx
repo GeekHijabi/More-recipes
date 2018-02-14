@@ -12,7 +12,7 @@ const defaultImage = require('../../../assets/images/no_image.png');
  * @class AdminCardItem
  * @extends {React.Component}
  */
-class AdminCardItem extends React.Component {
+export class AdminCardItem extends React.Component {
   /**
    * @description Constructor Function
    * @param {any} props
@@ -80,7 +80,7 @@ class AdminCardItem extends React.Component {
       }
     } = this.props;
     return (
-      <div className="col-xs-12 col-sm-6 col-md-3 col-lg-4 mb-3">
+      <div id={`recipe-${id}`} className="col-xs-12 col-sm-6 col-md-3 col-lg-4 mb-3">
         <div className="card card-size">
           <img
             className="card-img-top card-height"

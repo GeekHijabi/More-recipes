@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SignIn } from '../../js/components/Auth/SignIn';
+import { SignIn } from '../../../js/components/Auth/SignIn';
 
 const userInput = {
-  username: 'tester',
+  identifier: 'tester',
   password: 'tester123'
 };
 
@@ -47,7 +47,7 @@ describe('Component: SignIn', () => {
       };
       const submit = shallow(<SignIn {...props} />);
       submit.setState(userInput);
-      submit.setState({ hasError: true, errorMessage: 'error' });
+      submit.setState({ hasError: true, errorMessage: 'error', errors: {} });
       submit.instance().onClick(event);
     });
 
@@ -57,7 +57,6 @@ describe('Component: SignIn', () => {
       };
       props.apiLoginUser = () => Promise.reject(new Error('fail'));
       const submit = shallow(<SignIn {...props} />);
-      //   submit.setState({ hasError: true, errorMessage: 'error' });
       submit.instance().onClick(event);
     });
   });

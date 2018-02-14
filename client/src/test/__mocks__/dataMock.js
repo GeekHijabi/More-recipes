@@ -10,6 +10,15 @@ const mockData = {
     password: 'madam123'
   },
 
+  forgotPasswordEmail: {
+    id: 1,
+    email: 'madam@md.com'
+  },
+
+  forgotPasswordResponse: {
+    message: 'Kindly check your email for instruction'
+  },
+
   signupResponse: {
     userDetails: {
       userName: 'madam',

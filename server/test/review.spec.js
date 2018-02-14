@@ -63,7 +63,20 @@ describe('Reviews controller', () => {
         .send(fakeData.reviews)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('message').equal('Your recipe has been reviewed');
+          res.body.should.have.property('message')
+            .equal('Your recipe has been reviewed');
+          done();
+        });
+    });
+    it('should return 422 when a user enters empty review dats', (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/recipes/1/review`)
+        .set('x-token', token)
+        .send(fakeData.reviews2)
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.body.should.have.property('error')
+            .equal('review cannot be empty');
           done();
         });
     });

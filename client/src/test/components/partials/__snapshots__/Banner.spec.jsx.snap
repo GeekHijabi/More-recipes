@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Banner should render correctly 1`] = `
+<section
+  id="banner"
+>
+  <img
+    alt=""
+    className="bg"
+    src={Object {}}
+  />
+  <div
+    className="body-title-card"
+  >
+    <h1
+      className="body-title"
+    >
+      Life is too short for just a rough meal
+    </h1>
+    <button
+      className="body-title-button"
+      onClick={[Function]}
+      type="button"
+    >
+      Try out one of our awesome recipes
+    </button>
+  </div>
+</section>
+`;

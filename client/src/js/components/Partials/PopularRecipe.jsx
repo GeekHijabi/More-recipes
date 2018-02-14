@@ -10,7 +10,7 @@ import CardItem from '../Partials/CardItem';
  * @class PopularRecipe
  * @extends {React.Component}
  */
-class PopularRecipe extends React.Component {
+export class PopularRecipe extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props

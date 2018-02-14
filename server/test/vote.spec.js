@@ -85,6 +85,16 @@ describe('Vote', () => {
           done();
         });
     });
+    // it('should let 200 when a recipe an downvoted recipe is added', (done) => {
+    //   chai.request(app)
+    //     .post(`${baseUrl}/recipe/1/downvote`)
+    //     .set('x-token', token)
+    //     .end((err, res) => {
+    //       res.should.have.status(200);
+    //       res.body.should.have.property('message').equal('downvote added');
+    //       done();
+    //     });
+    // });
     it('should remove downvote when downvote action is performed again', (done) => {
       chai.request(app)
         .post(`${baseUrl}/recipe/1/downvote`)

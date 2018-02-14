@@ -1,21 +1,26 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'toastr/build/toastr.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+import jwt from 'jsonwebtoken';
 import './../styles/index.scss';
 import configureStore from './store/configureStore';
 import App from './app';
+import setToken from './utils/setToken';
+import { setCurrentUser } from './actions/auth';
 
 const store = configureStore();
 
-render(
+if (localStorage.getItem('token')) {
+  setToken(localStorage.getItem('token'));
+  store.dispatch(setCurrentUser(jwt.decode(localStorage.getItem('token'))));
+}
+
+ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <App />
   </Provider>,
   document.getElementById('main')
 );

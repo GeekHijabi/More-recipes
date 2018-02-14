@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ingredients snapshot should render correctly 1`] = `
+<div
+  aria-labelledby="ingredients-tab"
+  className="tab-pane fade"
+  id="ingredients"
+  role="tabpanel"
+>
+  <div
+    className="card"
+  >
+    <div
+      className="card-header"
+    >
+      Ingredients
+    </div>
+    <ul
+      className="list-group list-group-flush"
+    >
+      <li
+        className="list-group-item"
+        key="ingredient 1"
+      >
+        water
+      </li>
+      <li
+        className="list-group-item"
+        key="ingredient 2"
+      >
+         rice
+      </li>
+    </ul>
+  </div>
+</div>
+`;

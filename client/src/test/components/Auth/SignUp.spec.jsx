@@ -1,10 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SignUp } from '../../js/components/Auth/SignUp';
+import { SignUp } from '../../../js/components/Auth/SignUp';
 
 const userInput = {
-  identifier: 'tester',
-  password: 'tester123'
+  userName: 'tester123',
+  password: 'tester123',
+  confirmPassword: 'tester123',
+  email: 'test@test.com'
 };
 
 
@@ -43,6 +45,34 @@ describe('Component: SignUp', () => {
   });
 
   describe('onClick', () => {
+    it('should return error when userName is less than 6', () => {
+      const event = {
+        preventDefault: jest.fn()
+      };
+      const lessUserName = {
+        userName: 'test'
+      };
+      const submit = shallow(<SignUp {...props} />);
+
+      submit.setState(lessUserName);
+      submit.setState({ hasError: true, errorMessage: 'error' });
+      submit.instance().onClick(event);
+    });
+
+    it('should return error when userName is less than 6', () => {
+      const event = {
+        preventDefault: jest.fn()
+      };
+      const lessPassword = {
+        password: 'test'
+      };
+      const submit = shallow(<SignUp {...props} />);
+
+      submit.setState(lessPassword);
+      submit.setState({ hasError: true, errorMessage: 'error' });
+      submit.instance().onClick(event);
+    });
+
     it('should signup user when user details is set to the state', () => {
       const event = {
         preventDefault: jest.fn()

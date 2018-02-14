@@ -13,7 +13,7 @@ import { apiGetRecipe, searchItem } from '../../actions/recipe';
  * @class RecipeList
  * @extends {React.Component}
  */
-class Recipes extends React.Component {
+export class Recipes extends React.Component {
   /**
    * @description Constructor Function
    * @param {any} props

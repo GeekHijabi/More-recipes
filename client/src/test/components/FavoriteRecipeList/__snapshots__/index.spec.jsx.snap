@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FavoriteRecipes snapshot should render correctly 1`] = `
+<div>
+  <withRouter(Connect(RecipeHeader)) />
+  <div
+    style={
+      Object {
+        "margin": "0 auto",
+        "minHeight": "760px",
+        "width": "85%",
+      }
+    }
+  >
+    <div
+      className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading"
+    >
+      <h4>
+        <span>
+          My Favorite Recipes
+        </span>
+      </h4>
+    </div>
+    <div
+      className="row"
+    >
+      <span
+        className="styleText"
+      >
+        You do not have any favorite recipe yet!
+      </span>
+    </div>
+  </div>
+  <Footer />
+</div>
+`;

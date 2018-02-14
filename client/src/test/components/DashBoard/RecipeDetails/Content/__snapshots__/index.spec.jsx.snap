@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Content snapshot should render correctly 1`] = `
+<div
+  className="tab-content"
+  id="myTabContent"
+>
+  <Description
+    activeTab={
+      Object {
+        "description": "description",
+        "ingredients": "ingredients",
+        "reviews": "reviews",
+      }
+    }
+    description=""
+  />
+  <Ingredients
+    activeTab={
+      Object {
+        "description": "description",
+        "ingredients": "ingredients",
+        "reviews": "reviews",
+      }
+    }
+    ingredients=""
+  />
+  <Connect(Reviews)
+    activeTab={
+      Object {
+        "description": "description",
+        "ingredients": "ingredients",
+        "reviews": "reviews",
+      }
+    }
+    recipeId={2}
+    reviewedRecipe={
+      Object {
+        "description": "boil rice",
+        "id": 1,
+        "ingredients": "rice, water",
+        "recipeName": "rice",
+      }
+    }
+  />
+</div>
+`;

@@ -154,7 +154,10 @@ export class SignIn extends React.Component {
                       required
                     />
                     {errors.identifier &&
-                    <small style={{ color: '#A43741' }}>
+                    <small
+                      className="error-identifier"
+                      style={{ color: '#A43741' }}
+                    >
                       {errors.identifier }
                     </small>}
                   </label>
@@ -175,13 +178,21 @@ export class SignIn extends React.Component {
                       required
                     />
                     {errors.password &&
-                    <small style={{ color: '#A43741' }}>
+                    <small
+                      className="error-password"
+                      style={{ color: '#A43741' }}
+                    >
                       {errors.password }
                     </small>}
                     <p
-                      className="font-small blue-text d-flex justify-content-end"
+                      className="font-small
+                      blue-text d-flex justify-content-end"
                     >
-                      <Link to="/forgot-password" href="/forgot-password" className="blue-text ml-1">
+                      <Link
+                        to="/forgot-password"
+                        href="/forgot-password"
+                        className="blue-text ml-1"
+                      >
                         Forgot Password?
                       </Link>
                     </p>

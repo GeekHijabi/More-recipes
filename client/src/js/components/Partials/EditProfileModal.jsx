@@ -18,7 +18,7 @@ const profile = require('../../../assets/images/profile.png');
  * @class EditProfileModal
  * @extends {React.Component}
  */
-class EditProfileModal extends React.Component {
+export class EditProfileModal extends React.Component {
   /**
    * @description Constructor Function
    * @param {any} props

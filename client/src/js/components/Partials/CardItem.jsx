@@ -13,7 +13,7 @@ const image = require('../../../assets/images/banner_bg.jpg');
  * @class Banner
  * @extends {React.Component}
  */
-class CardItem extends React.Component {
+export class CardItem extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
@@ -73,7 +73,7 @@ class CardItem extends React.Component {
     const url = window.location.href;
     const currentURL = url.split('/')[url.split('/').length - 1];
     return (
-      <div className="col-xs-12 col-sm-6 col-md-6 col-lg-4 mb-3">
+      <div id={`recipe-${id}`} className="col-xs-12 col-sm-6 col-md-6 col-lg-4 mb-3">
         <div className="card-style">
           <div className="card card-size">
             <img

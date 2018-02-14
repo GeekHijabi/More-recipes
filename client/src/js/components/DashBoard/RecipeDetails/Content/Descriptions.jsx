@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Description = props => (
+export const Description = props => (
   <div
     className={props.activeTab.name === 'Descriptions' ?
     'steps tab-pane fade show active' :

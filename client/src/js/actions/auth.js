@@ -124,7 +124,6 @@ export const apiLoginUser = ({
       const decodedToken = jwt.decode(token);
       setToken(token);
       localStorage.setItem('userId', decodedToken.id);
-
       dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
     }).catch((err) => {
@@ -135,7 +134,7 @@ export const apiLoginUser = ({
 
   /**
  * Async action for profile
- * @param {object} userId
+ * @param {number} userId
  * @returns {promise} request
  */
 export const apiGetCurrentUser = userId =>
@@ -192,14 +191,18 @@ export const apiUpdateUserProfile = ({
 
 /**
  * Async action for forgot password
- * @param {object} userId
+ * @param {number} userId
+ * @param {string} email
  * @returns {promise} request
  */
-export const apiForgotPassword = userId =>
+export const apiForgotPassword = (userId, email) =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
       url: `${baseUrl}/forgot-password/${userId}`,
+      data: {
+        email
+      }
     });
     request.then((response) => {
       dispatch(forgotPasswordSuccess(response.data.message));
@@ -211,7 +214,8 @@ export const apiForgotPassword = userId =>
 
 /**
  * Async action for reset password
- * @param {object} userId
+ * @param {number} userId
+ * @param {string} newPassword
  * @returns {promise} request
  */
 export const apiResetPassword = (userId, newPassword) =>
@@ -223,11 +227,8 @@ export const apiResetPassword = (userId, newPassword) =>
         newPassword
       }
     });
-    return request.then((response) => {
-      console.log(response.data, 'response');
-      return dispatch(resetPasswordSuccess(response.data.message));
-    }).catch((err) => {
-      console.log('err', err);
+    return request.then(response =>
+      dispatch(resetPasswordSuccess(response.data.message))).catch((err) => {
       dispatch(resetPasswordFailure(err));
     });
     // return request;

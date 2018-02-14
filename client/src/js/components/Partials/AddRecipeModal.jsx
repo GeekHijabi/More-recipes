@@ -17,7 +17,7 @@ const image = require('../../../assets/images/default_image.jpeg');
  * @class AddRecipeModal
  * @extends {React.Component}
  */
-class AddRecipeModal extends React.Component {
+export class AddRecipeModal extends React.Component {
   /**
    * @description constructor
    * @param {any} props
@@ -169,7 +169,10 @@ class AddRecipeModal extends React.Component {
                   placeholder="input Recipe name"
                 />
                 {errors.recipeName &&
-                <small style={{ color: '#A43741' }}>
+                <small
+                  className="error-recipeName"
+                  style={{ color: '#A43741' }}
+                >
                   {errors.recipeName }
                 </small>}
               </Col>
@@ -190,7 +193,10 @@ class AddRecipeModal extends React.Component {
                   placeholder="e.g 2 cups of beans, 1 onion-chopped"
                 />
                 {errors.ingredients &&
-                <small style={{ color: '#A43741' }}>
+                <small
+                  className="error-ingredients"
+                  style={{ color: '#A43741' }}
+                >
                   {errors.ingredients }
                 </small>}
               </Col>
@@ -214,7 +220,10 @@ class AddRecipeModal extends React.Component {
                   placeholder="e.g Sieve the beans, and blend to taste"
                 />
                 {errors.description &&
-                <small style={{ color: '#A43741' }}>
+                <small
+                  className="error-description"
+                  style={{ color: '#A43741' }}
+                >
                   {errors.description }
                 </small>}
               </Col>

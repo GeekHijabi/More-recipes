@@ -66,6 +66,47 @@ describe('Recipes controller', () => {
           done();
         });
     });
+    it('should return error when user tries to create recipe with no name', (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/recipes`)
+        .set('x-token', token)
+        .send(fakeData.norecipeName)
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.body.should.have.property('error').equal('Input a name for your recipe');
+          done();
+        });
+    });
+    it(
+      'should return error when user tries to create recipe with no ingredient',
+      (done) => {
+        chai.request(app)
+          .post(`${baseUrl}/recipes`)
+          .set('x-token', token)
+          .send(fakeData.noIngredient)
+          .end((err, res) => {
+            res.should.have.status(422);
+            res.body.should.have.property('error')
+              .equal('Input ingredients for your recipes');
+            done();
+          });
+      }
+    );
+    it(
+      'should return error when user tries to create recipe with no recipe description',
+      (done) => {
+        chai.request(app)
+          .post(`${baseUrl}/recipes`)
+          .set('x-token', token)
+          .send(fakeData.noDescription)
+          .end((err, res) => {
+            res.should.have.status(422);
+            res.body.should.have.property('error')
+              .equal('Input a description for your recipe');
+            done();
+          });
+      }
+    );
     it('should let authorized user delete a recipe', (done) => {
       chai.request(app)
         .delete(`${baseUrl}/recipes/1`)
@@ -149,17 +190,32 @@ describe('Recipes controller', () => {
     });
   });
 
-  it('should not grant permission to unauthorized user to create recipe', (done) => {
+  it('should not grant permission to unauthorized user to edit recipe', (done) => {
     chai.request(app)
-      .post(`${baseUrl}/recipes`)
+      .patch(`${baseUrl}/recipes/1`)
       .send(fakeData.recipe1)
       .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
       .end((err, res) => {
         res.should.have.status(403);
         res.body.should.be.a('object');
-        done();
       });
+    done();
   });
+
+  // it(
+  //   'should get the views ',
+  //   (done) => {
+  //     chai.request(app)
+  //       .patch(`${baseUrl}/recipes/1`)
+  //       .send(fakeData.recipe1)
+  //       .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
+  //       .end((err, res) => {
+  //         res.should.have.status(403);
+  //         res.body.should.be.a('object');
+  //       });
+  //     done();
+  //   }
+  // );
 });
 it('should get a list of all recipe', (done) => {
   chai.request(app)

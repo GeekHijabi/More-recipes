@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="0">
+
+  <testsuite name="e2etests.mockData"
+    errors="0" failures="0" hostname="" id="" package="mockData" skipped="0"
+    tests="0" time="0.000" timestamp="Wed, 14 Feb 2018 06:21:03 GMT">
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

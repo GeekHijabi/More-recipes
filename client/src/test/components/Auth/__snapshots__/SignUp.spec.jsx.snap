@@ -120,6 +120,36 @@ exports[`Component: SignUp sign up snapshot should render correctly 1`] = `
             </label>
           </div>
           <div
+            className="md-form pb-3"
+          >
+            <label
+              className="form-label"
+              htmlFor="Form-pass2"
+            >
+              Confirm Password
+              <span
+                style={
+                  Object {
+                    "color": "red",
+                  }
+                }
+              >
+                 *
+              </span>
+              <input
+                className="form-control"
+                id="Form-pass2"
+                name="confirmPassword"
+                onChange={[Function]}
+                pattern="(?=^.{8,15}$)(?!.*\\\\s).*$"
+                placeholder="********"
+                title="8 to 15 characters required"
+                type="password"
+                value=""
+              />
+            </label>
+          </div>
+          <div
             className="text-center mb-3"
           >
             <button

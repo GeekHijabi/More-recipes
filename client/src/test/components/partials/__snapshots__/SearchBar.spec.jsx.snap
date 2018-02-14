@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: SearchBar SearchBar in snapshot should render correctly 1`] = `
+<div
+  className="search"
+>
+  <div
+    className="form-inline"
+  >
+    <input
+      aria-label="Search"
+      className="form-control mr-sm-2"
+      id="search-bar"
+      name="SearchResults"
+      onChange={[Function]}
+      placeholder="Search"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;

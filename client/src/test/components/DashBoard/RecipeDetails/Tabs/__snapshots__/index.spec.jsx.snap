@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tabs snapshot should render correctly 1`] = `
+<nav
+  className="nav nav-tabs white"
+  id="myTab"
+>
+  <Tab
+    handleClick={[Function]}
+    isActive={false}
+    key="1"
+    tabOption={
+      Object {
+        "id": 1,
+        "isActive": true,
+        "name": "Ingredients",
+      }
+    }
+  />
+  <Tab
+    handleClick={[Function]}
+    isActive={false}
+    key="2"
+    tabOption={
+      Object {
+        "id": 2,
+        "isActive": false,
+        "name": "Descriptions",
+      }
+    }
+  />
+  <Tab
+    handleClick={[Function]}
+    isActive={false}
+    key="3"
+    tabOption={
+      Object {
+        "id": 3,
+        "isActive": false,
+        "name": "Reviews",
+      }
+    }
+  />
+</nav>
+`;

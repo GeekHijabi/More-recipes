@@ -4,7 +4,7 @@ import RecipeHeader from './Partials/RecipeHeader';
 
 const image = require('../../assets/images/page-404.gif');
 
-const NotFound = () => (
+export const NotFound = () => (
   <div>
     <RecipeHeader />
     <div style={{ width: '85%', margin: '0 auto', minHeight: '795px' }}>

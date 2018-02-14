@@ -18,7 +18,7 @@ const fakeData = {
   },
 
   signedInUser2: {
-    identifier: 'test@test.com' || 'tester',
+    identifier: 'test@test.com',
     password: 'fodddyyy',
   },
   signedInUser5: {
@@ -32,7 +32,11 @@ const fakeData = {
   },
 
   signedInUser3: {
-    identifier: 'test@test.com' || 'tester',
+    identifier: 'test@test.com',
+    password: 'fodddyy',
+  },
+  userNameLess: {
+    identifier: 'test',
     password: 'fodddyy',
   },
 
@@ -64,6 +68,10 @@ const fakeData = {
     email: faker.internet.email(),
     password: 'food',
   },
+  emailReset: {
+    email: 'test2@test.com'
+
+  },
   recipe1: {
     recipeName: 'Rice',
     ingredients: 'water rice',
@@ -80,10 +88,23 @@ const fakeData = {
     ingredients: 'water, beans',
     description: 'fry beans'
   },
+  norecipeName: {
+    ingredients: 'water rice',
+    description: 'boil rice'
+  },
+  noDescription: {
+    recipeName: 'rice',
+    ingredients: 'water rice'
+  },
+  noIngredient: {
+    recipeName: 'rice',
+    description: 'water rice',
+  },
   reviews: {
     reviews: 'Very nice recipe'
   },
   reviews2: {
+    reviews: '    '
   },
 };
 
