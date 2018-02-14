@@ -32,8 +32,6 @@ import {
   DELETE_FAVORITE_RECIPE_FAILURE,
   RECIPE_REVIEW_SUCCESS,
   RECIPE_REVIEW_FAILURE,
-  GET_RECIPE_REVIEW_SUCCESS,
-  GET_RECIPE_REVIEW_FAILURE,
   DELETE_RECIPE_REVIEW_SUCCESS,
   DELETE_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
@@ -213,16 +211,6 @@ export const deleteRecipeReviewFailure = error => ({
   error
 });
 
-export const getRecipeReviewSuccess = id => ({
-  type: GET_RECIPE_REVIEW_SUCCESS,
-  recipeId: id,
-});
-
-export const getRecipeReviewFailure = error => ({
-  type: GET_RECIPE_REVIEW_FAILURE,
-  error
-});
-
 export const searchRecipeSuccess = searchRecipeName => ({
   type: SEARCH_RECIPE_SUCCESS,
   searchRecipeName
@@ -244,11 +232,13 @@ export const recipeViewCountFailure = error => ({
   error
 });
 
-  /**
- * Action for createRecipe
+const baseUrl = '/api/v1';
+
+/**
+ * Action for create recipe
  *
- * @returns {promise} request
  * @param {object} options
+ * @returns {promise} request
  */
 export const apiCreateRecipe = ({
   recipeName, imageUrl, ingredients, description
@@ -263,25 +253,22 @@ export const apiCreateRecipe = ({
         description
       },
       method: 'POST',
-      url: '/api/v1/recipes'
+      url: `${baseUrl}/recipes`
     });
     request.then((response) => {
       dispatch(createRecipeSuccess(response.data));
-    }).catch((error) => {
-      if (error) {
-        dispatch(createRecipeFailure(error.response.data.error));
-      }
+    }).catch((err) => {
+      dispatch(createRecipeFailure(err.response.data.error));
     });
     return request;
   };
 
 /**
  * Action for getRecipe
- *
- * @returns {promise} request
  * @param {object} page
  * @param {object} limit
  * @param {object} sort
+ * @returns {promise} request
  */
 export const apiGetRecipe = (page, limit, sort) =>
   function action(dispatch) {
@@ -293,7 +280,7 @@ export const apiGetRecipe = (page, limit, sort) =>
         sort
       },
       method: 'GET',
-      url: `/api/v1/recipes?page=${page}`
+      url: `${baseUrl}/recipes?page=${page}`
     });
 
     request.then((response) => {
@@ -305,25 +292,22 @@ export const apiGetRecipe = (page, limit, sort) =>
       };
       dispatch(getRecipeSuccess(paginated));
     }).catch((err) => {
-      if (err && err.data) {
-        dispatch(getRecipeFailure(err.data.error));
-      }
+      dispatch(getRecipeFailure(err.response.data.error));
     });
     return request;
   };
 
   /**
  * Action for getMyRecipe
- *
- * @returns {promise} request
  * @param {object} page
+ * @returns {promise} request
  */
 export const apiGetMyRecipe = page =>
   function action(dispatch) {
     dispatch(getMyRecipe());
     const request = axios({
       method: 'GET',
-      url: `/api/v1/myrecipes?page=${page}`
+      url: `${baseUrl}/myrecipes?page=${page}`
     });
     request.then((response) => {
       const {
@@ -334,9 +318,7 @@ export const apiGetMyRecipe = page =>
       };
       dispatch(getMyRecipeSuccess(paginated));
     }).catch((err) => {
-      if (err && err.data) {
-        dispatch(getMyRecipeFailure(err.data.error));
-      }
+      dispatch(getMyRecipeFailure(err.data.response.error));
     });
     return request;
   };
@@ -351,14 +333,12 @@ export const apiDeleteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'DELETE',
-      url: `/api/v1/recipes/${id}`
+      url: `${baseUrl}/recipes/${id}`
     });
     request.then(() => {
       dispatch(deleteRecipeSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(deleteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(deleteRecipeFailure('Recipe cannot be deleted at this time'));
     });
     return request;
   };
@@ -381,15 +361,13 @@ export const apiEditRecipe = (recipeId, {
         ingredients,
         description
       },
-      method: 'PUT',
-      url: `/api/v1/recipes/${recipeId}`
+      method: 'PATCH',
+      url: `${baseUrl}/recipes/${recipeId}`
     });
     request.then((response) => {
       dispatch(editRecipeSuccess(response.data.updatedRecipe));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(editRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(editRecipeFailure('Recipe cannot be edited at this time'));
     });
     return request;
   };
@@ -404,14 +382,12 @@ export const onViewRecipe = recipeId =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: `/api/v1/recipe/${recipeId}`
+      url: `${baseUrl}/recipe/${recipeId}`
     });
     request.then((response) => {
       dispatch(viewRecipeSuccess(response.data));
     }).catch((err) => {
-      if (err && err.data) {
-        dispatch(viewRecipeFailure(err.data.error));
-      }
+      dispatch(viewRecipeFailure(err.response.data.error));
     });
     return request;
   };
@@ -426,14 +402,12 @@ export const apiUpVoteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipe/${id}/upvote`
+      url: `${baseUrl}/recipe/${id}/upvote`
     });
-    request.then((response) => {
-      dispatch(upVoteRecipeSuccess(id, response.data.upvotes, response.data.downvotes));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(upVoteRecipeFailure(err.data.error));
-      }
+    request.then(() => {
+      dispatch(upVoteRecipeSuccess(id));
+    }).catch(() => {
+      dispatch(upVoteRecipeFailure('upvote not recorded'));
     });
     return request;
   };
@@ -448,15 +422,12 @@ export const apiDownVoteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipe/${id}/downvote`
+      url: `${baseUrl}/recipe/${id}/downvote`
     });
-    request.then((response) => {
-      console.log('vote res', response);
-      dispatch(downVoteRecipeSuccess(id, response.data.upvotes, response.data.downvotes));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(downVoteRecipeFailure(err.data.error));
-      }
+    request.then(() => {
+      dispatch(downVoteRecipeSuccess(id));
+    }).catch(() => {
+      dispatch(downVoteRecipeFailure('downvote not recorded'));
     });
     return request;
   };
@@ -471,14 +442,12 @@ export const apifavoriteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipe/${id}/favorite`
+      url: `${baseUrl}/recipe/${id}/favorite`
     });
     request.then(() => {
       dispatch(favoriteRecipeSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(favoriteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(favoriteRecipeFailure('cannot create favorite yet'));
     });
     return request;
   };
@@ -496,14 +465,12 @@ export const apiGetAllFavoriteRecipes = limit =>
         limit
       },
       method: 'GET',
-      url: '/api/v1/favorites'
+      url: `${baseUrl}/favorites`
     });
     request.then((response) => {
       dispatch(getAllFavoriteRecipeSuccess(response.data.favRecipes));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(getAllFavoriteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(getAllFavoriteRecipeFailure('unable to get favorite recipe'));
     });
     return request;
   };
@@ -518,14 +485,12 @@ export const apiGetFavoriteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: `/api/v1/user/${id}/favorites`
+      url: `${baseUrl}/user/${id}/favorites`
     });
     request.then((response) => {
       dispatch(getfavoriteRecipeSuccess(response.data));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(getfavoriteRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(getfavoriteRecipeFailure('unable to get favorite recipe list'));
     });
     return request;
   };
@@ -540,31 +505,12 @@ export const apiDeleteFavoriteRecipe = id =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipe/${id}/favorite`
+      url: `${baseUrl}/recipe/${id}/favorite`
     });
     request.then(() => {
       dispatch(deleteFavoriteRecipeSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(deleteFavoriteRecipeFailure(err.data.error));
-      }
-    });
-    return request;
-  };
-
-
-export const apiGetRecipeReview = id =>
-  function action(dispatch) {
-    const request = axios({
-      method: 'GET',
-      url: `/api/v1/recipe/${id}/reviews`
-    });
-    request.then((response) => {
-      dispatch(getRecipeReviewSuccess(response.data.recipeReview.reviews));
-    }).catch((error) => {
-      if (error && error.data) {
-        dispatch(getRecipeReviewFailure(error.data.error));
-      }
+    }).catch(() => {
+      dispatch(deleteFavoriteRecipeFailure('favorite recipe cannot be deleted at this time'));
     });
     return request;
   };
@@ -573,23 +519,21 @@ export const apiRecipeReview = (id, reviews) =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipes/${id}/review`,
+      url: `${baseUrl}/recipes/${id}/review`,
       data: {
         reviews
       }
     });
     request.then((response) => {
       dispatch(reviewRecipeSuccess(response.data.review));
-    }).catch((error) => {
-      if (error && error.data) {
-        dispatch(reviewRecipeFailure(error.data.error));
-      }
+    }).catch(() => {
+      dispatch(reviewRecipeFailure('reviews not created'));
     });
     return request;
   };
 
 /**
- * Action for deleteRecipe
+ * Action for delete recipe review
  *
  * @returns {promise} request
  * @param {integer} id
@@ -598,14 +542,12 @@ export const apiDeleteRecipeReview = id =>
   function action(dispatch) {
     const request = axios({
       method: 'DELETE',
-      url: `/api/v1/recipe/${id}/review`
+      url: `${baseUrl}/recipe/${id}/review`
     });
     request.then(() => {
       dispatch(deleteRecipeReviewSuccess(id));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(deleteRecipeReviewFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(deleteRecipeReviewFailure('review cannot be deleted at this time'));
     });
     return request;
   };
@@ -620,20 +562,19 @@ export const apiSearchRecipe = recipeName =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: '/api/v1/search',
+      url: `${baseUrl}/search`,
       params: { search: recipeName }
     });
     request.then((response) => {
       dispatch(searchRecipeSuccess(response.data.searchFound));
-    }).catch((err) => {
-      if (err && err.data) {
-        dispatch(searchRecipeFailure(err.data.error));
-      }
+    }).catch(() => {
+      dispatch(searchRecipeFailure('search result not found'));
     });
     return request;
   };
+
   /**
- * Action for searchRecipe
+ * Action for search Item
  *
  * @returns {promise} request
  * @param {object} search
@@ -655,13 +596,13 @@ export const apiRecipeViewCount = id =>
   function action(dispatch) {
     const request = axios({
       method: 'POST',
-      url: `/api/v1/recipe/${id}/views`
+      url: `${baseUrl}/recipe/${id}/views`
     });
     request.then((response) => {
       dispatch(recipeViewCountSuccess(id, response.data.views));
     }).catch((err) => {
-      if (err && err.data) {
-        dispatch(recipeViewCountFailure(err.data.error));
+      if (err) {
+        dispatch(recipeViewCountFailure(err.response.data.error));
       }
     });
     return request;

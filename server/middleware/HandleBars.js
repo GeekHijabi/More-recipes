@@ -2,9 +2,8 @@ import path from 'path';
 import nodemailer from 'nodemailer';
 
 const hbs = require('nodemailer-express-handlebars'),
-  email = process.env.MAILER_EMAIL_ID || 'morerecipes27@gmail.com',
-  pass = process.env.MAILER_PASSWORD || '0810More';
-nodemailer = require('nodemailer');
+  email = process.env.MAILER_EMAIL_ID,
+  pass = process.env.MAILER_PASSWORD;
 
 const smtpTransport = nodemailer.createTransport({
   service: process.env.MAILER_SERVICE_PROVIDER || 'Gmail',

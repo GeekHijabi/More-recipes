@@ -9,6 +9,10 @@
       "commonjs": true,
       "jquery": true
     },
+    "globals": {
+      "jest": true,
+      "expect": true
+    },
     "rules": {
       "one-var": 0,
       "one-var-declaration-per-line": 0,
@@ -19,6 +23,7 @@
       "no-useless-escape": 0,
       "no-case-declarations": 0,
       "comma-dangle": 0,
+      "import/no-named-as-default": 0,
       "curly": ["error", "multi-line"],
       "import/no-unresolved": [2, { "commonjs": true }],
       "no-shadow": ["error", { "allow": ["req", "res", "err"] }],

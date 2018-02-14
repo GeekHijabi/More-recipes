@@ -6,23 +6,22 @@ import fakeData from './faker';
 import app from '../app';
 import db from '../models';
 
-// const should = chai.Should();
 chai.should();
 chai.use(chaiHttp);
 
+const baseUrl = '/api/v1';
 let token;
 
-describe('Recipes', () => {
+describe('Recipes controller', () => {
   beforeEach((done) => {
-    chai.request(app).post('/api/v1/user/signup')
+    chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.newUser)
       .end((err, res) => {
         res.should.have.status(201);
         chai.request(app)
-          .post('/api/v1/user/signin')
+          .post(`${baseUrl}/user/signin`)
           .send(fakeData.signedInUser2)
           .end((err, res) => {
-            console.log('error', err);
             token = res.body.token;
             done();
           });
@@ -33,9 +32,9 @@ describe('Recipes', () => {
     truncate: true,
     restartIdentity: true
   }));
-  it('should let user add a recipe', (done) => {
+  it('should create a recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/recipes')
+      .post(`${baseUrl}/recipes`)
       .set('x-token', token)
       .send(fakeData.recipe1)
       .end((err, res) => {
@@ -47,19 +46,19 @@ describe('Recipes', () => {
         done();
       });
   });
-  describe('Recipe', () => {
+  describe('for recipe actions', () => {
     beforeEach((done) => {
       chai.request(app)
-        .post('/api/v1/recipes')
+        .post(`${baseUrl}/recipes`)
         .set('x-token', token)
         .send(fakeData.recipe1)
         .end(() => {
           done();
         });
     });
-    it('should let user add same recipe twice', (done) => {
+    it('should return error when user tries to add same recipe twice', (done) => {
       chai.request(app)
-        .post('/api/v1/recipes')
+        .post(`${baseUrl}/recipes`)
         .set('x-token', token)
         .send(fakeData.recipe1)
         .end((err, res) => {
@@ -67,9 +66,9 @@ describe('Recipes', () => {
           done();
         });
     });
-    it('should let user delete a recipe', (done) => {
+    it('should let authorized user delete a recipe', (done) => {
       chai.request(app)
-        .delete('/api/v1/recipes/1')
+        .delete(`${baseUrl}/recipes/1`)
         .set('x-token', token)
         .end((err, res) => {
           res.body.should.have.property('message')
@@ -80,7 +79,7 @@ describe('Recipes', () => {
     });
     it('should return 404 when recipe is not available', (done) => {
       chai.request(app)
-        .delete('/api/v1/recipes/2')
+        .delete(`${baseUrl}/recipes/2`)
         .set('x-token', token)
         .end((err, res) => {
           res.body.should.have.property('error')
@@ -89,9 +88,9 @@ describe('Recipes', () => {
           done();
         });
     });
-    it('should let user edit a recipe', (done) => {
+    it('should let authorized user edit a recipe', (done) => {
       chai.request(app)
-        .put('/api/v1/recipes/1')
+        .patch(`${baseUrl}/recipes/1`)
         .send(fakeData.recipe2)
         .set('x-token', token)
         .end((err, res) => {
@@ -100,9 +99,9 @@ describe('Recipes', () => {
           done();
         });
     });
-    it('should check if the recipe is available for editing', (done) => {
+    it('should return 404 if no recipe is available', (done) => {
       chai.request(app)
-        .put('/api/v1/recipes/2')
+        .patch(`${baseUrl}/recipes/2`)
         .set('x-token', token)
         .send(fakeData.recipe2)
         .end((err, res) => {
@@ -111,18 +110,18 @@ describe('Recipes', () => {
           done();
         });
     });
-    it('should list all favorite recipe of a user', (done) => {
+    it('should return the favorited recipes of an authorized user', (done) => {
       chai.request(app)
-        .get('/api/v1/favorites?page=1&limit=4&order=asc')
+        .get(`${baseUrl}/favorites?page=1&limit=4&order=asc`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           done();
         });
     });
-    it('should get current user recipe', (done) => {
+    it('should return a list of recipe created by an authorized user', (done) => {
       chai.request(app)
-        .get('/api/v1/myrecipes?page=1&limit=4&order=asc')
+        .get(`${baseUrl}/myrecipes?page=1&limit=4&order=asc`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(200);
@@ -130,18 +129,18 @@ describe('Recipes', () => {
           done();
         });
     });
-    it('should get single recipe detail', (done) => {
+    it('should return the details of a single recipe', (done) => {
       chai.request(app)
-        .get('/api/v1/recipe/1')
+        .get(`${baseUrl}/recipe/1`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           done();
         });
     });
-    it('should return 404 for recipe detail not available', (done) => {
+    it('should return 404 when there is no recipe detail found', (done) => {
       chai.request(app)
-        .get('/api/v1/recipe/2')
+        .get(`${baseUrl}/recipe/2`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(404);
@@ -150,9 +149,9 @@ describe('Recipes', () => {
     });
   });
 
-  it('should not let unverified user create recipe', (done) => {
+  it('should not grant permission to unauthorized user to create recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/recipes')
+      .post(`${baseUrl}/recipes`)
       .send(fakeData.recipe1)
       .set('x-token', 'Awkdfnsmejfgnfdjfgrew')
       .end((err, res) => {
@@ -161,22 +160,22 @@ describe('Recipes', () => {
         done();
       });
   });
-  it('should get all recipe', (done) => {
-    chai.request(app)
-      .get('/api/v1/recipes?page=1&limit=8&sort=createdAt&order=desc')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.an('Object');
-        done();
-      });
-  });
-  it('should search all recipe', (done) => {
-    chai.request(app)
-      .get('/api/v1/search?page=1')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.an('Object');
-        done();
-      });
-  });
+});
+it('should get a list of all recipe', (done) => {
+  chai.request(app)
+    .get(`${baseUrl}/recipes?page=1&limit=6&sort=createdAt&order=desc`)
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.should.be.an('Object');
+      done();
+    });
+});
+it('should return the search result of a recipe', (done) => {
+  chai.request(app)
+    .get(`${baseUrl}/search?page=1`)
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.should.be.an('Object');
+      done();
+    });
 });

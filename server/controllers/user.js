@@ -36,8 +36,6 @@ const salt = bcrypt.genSaltSync(5);
 export default {
   signUp(req, res) {
     const {
-      firstName,
-      lastName,
       userName,
       email
     } = req.body;
@@ -60,8 +58,6 @@ export default {
         }
         return User
           .create({
-            firstName,
-            lastName,
             userName,
             email,
             password: bcrypt
@@ -70,13 +66,11 @@ export default {
           .then((user) => {
             const userDetail = {
               userName: user.userName,
-              email: user.email,
-              firstName: user.firstName,
-              lastName: user.lastName
+              email: user.email
             };
             res.status(201).json({ userDetail });
           });
-      }).catch(() => res.status(500).json('Internal server error'));
+      }).catch(error => res.status(500).json({ error: error.message }));
   },
 
   signIn(req, res) {
@@ -96,8 +90,8 @@ export default {
       })
       .then((userDetail) => {
         if (!userDetail) {
-          return res.status(404).json({
-            error: 'User is not registered'
+          return res.status(401).json({
+            error: 'Email/Username and password mismatch'
           });
         }
         const { password } = userDetail;
@@ -116,33 +110,45 @@ export default {
             message: 'You have successfully signed in!',
             token
           });
-      });
+      }).catch(error => res.status(500).json({
+        error: error.message
+      }));
   },
 
   getCurrentUser(req, res) {
     const { id } = req.decoded;
+    const { userId } = req.params;
     User
       .findOne({
         where: {
-          id
+          id: userId
         },
-        attributes: { exclude: ['password'] }
+        attributes: { exclude: ['password', 'reset_password_token'] }
       })
-      .then(currentUser =>
-        // if (!currentUser) {
-        //   return res.status(404).json({
-        //     error: 'No current user'
-        //   });
-        // }
-        res.status(200).json(currentUser))
-      .catch(() => res.status(500).json({ error: 'Internal server error' }));
+      .then((currentUser) => {
+        if (!currentUser) {
+          return res.status(404).json({
+            error: 'No current user'
+          });
+        }
+        if (currentUser.id === id) {
+          return res.status(200).json(currentUser);
+        }
+        if (currentUser.id !== id) {
+          return res.status(403).json({
+            error: 'You cannot perform this action'
+          });
+        }
+      })
+      .catch(() => res.status(500).json({
+        error: 'Internal server error'
+      }));
   },
 
   updateUserProfile(req, res) {
     const { id } = req.decoded;
     const {
-      firstName,
-      lastName,
+      userName,
       bio,
       summary,
       imageUrl
@@ -152,7 +158,7 @@ export default {
         where: {
           id
         },
-        attributes: { exclude: ['password'] }
+        attributes: { exclude: ['password', 'reset_password_token'] }
       }).then((userProfile) => {
         if (!userProfile) {
           return res.status(404).json({
@@ -167,8 +173,7 @@ export default {
         }
         return userProfile
           .update({
-            firstName: firstName || userProfile.firstName,
-            lastName: lastName || userProfile.lastName,
+            userName: userName || userProfile.userName,
             bio: bio || userProfile.bio,
             summary: summary || userProfile.summary,
             imageUrl: imageUrl || userProfile.imageUrl
@@ -182,10 +187,10 @@ export default {
   },
 
   forgotPassword(req, res) {
-    const { id } = req.decoded;
+    const { email } = req.body;
     User.findOne({
       where: {
-        email: req.body.email
+        email
       }
     }).then((userFound) => {
       if (!userFound) {
@@ -193,7 +198,7 @@ export default {
           error: 'user not found'
         });
       }
-      if (id === userFound.id) {
+      if (userFound.id) {
         const token = jwt.sign({
           id: userFound.dataValues.id
         }, secret, { expiresIn: 86400 });
@@ -206,18 +211,20 @@ export default {
           template: 'forgot-password-email',
           subject: 'Password help has arrived!',
           context: {
-            url: `http://${req.headers.host}/api/v1/${id}/reset-password?token=${token}`,
+            url: `http://${req.headers.host}/reset-password/${userFound.id}?token=${token}`,
             name: userFound.userName.split(' ')[0]
           }
         };
         smtpTransport.sendMail(data, (err) => {
           if (!err) {
-            return res.json({ message: 'Kindly check your email for further instructions' });
+            return res.json({
+              message: 'Kindly check your email for further instructions'
+            });
           }
           return res.json({ message: 'Not sending' });
         });
       }
-      if (id !== userFound.id) {
+      if (!userFound.id) {
         return res.status(403)
           .json({
             message: 'You are not authorized to perfom this action'
@@ -228,11 +235,19 @@ export default {
 
   resetPassword(req, res) {
     const { id } = req.decoded;
-    const { token, newPassword } = req.body;
+    const { newPassword } = req.body;
+    const { token } = req.query;
     User.findOne({
       where: {
-        reset_password_token: token
-      }
+        $or: [
+          {
+            id
+          },
+          {
+            reset_password_token: token
+          }
+        ]
+      },
     }).then((userFound) => {
       if (!userFound) {
         return res.status(404).json({
@@ -267,5 +282,4 @@ export default {
       }
     });
   },
-
 };

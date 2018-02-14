@@ -4,9 +4,11 @@ const Ingredients = ((props) => {
   const SplitIngredients = props.ingredients.split(',');
   return (
     <div
-      className={props.activeTab.name === 'Ingredients' ?
-    'tab-pane fade show active' :
-    'tab-pane fade'}
+      className={
+        props.activeTab.name === 'Ingredients' ?
+        'tab-pane fade show active' :
+        'tab-pane fade'
+      }
       id="ingredients"
       role="tabpanel"
       aria-labelledby="ingredients-tab"

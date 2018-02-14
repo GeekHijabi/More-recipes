@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Header = () => (
+export const Header = () => (
   <div>
     <nav className="navbar navbar-expand-lg navbar-light">
       <Link to="/" className="navbar-brand" href="/">
@@ -23,10 +23,14 @@ const Header = () => (
         {localStorage.getItem('token') ? '' :
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <Link to="/signin" className="nav-link btn cornflowerblue" href="/signin">Sign in</Link>
+            <Link to="/signin" className="nav-link btn" href="/signin">
+            Sign in
+            </Link>
           </li>
           <li className="nav-item">
-            <Link to="/signup" className="nav-link btn cornflowerblue" href="/signup">Sign up</Link>
+            <Link to="/signup" className="nav-link btn" href="/signup">
+            Sign up
+            </Link>
           </li>
         </ul>
         }

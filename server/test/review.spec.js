@@ -9,16 +9,17 @@ import db from '../models';
 chai.should();
 chai.use(chaiHttp);
 
+const baseUrl = '/api/v1';
 let token;
 
-describe('Reviews', () => {
+describe('Reviews controller', () => {
   beforeEach((done) => {
-    chai.request(app).post('/api/v1/user/signup')
+    chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.newUser)
       .end((err, res) => {
         res.should.have.status(201);
         chai.request(app)
-          .post('/api/v1/user/signin')
+          .post(`${baseUrl}/user/signin`)
           .send(fakeData.signedInUser2)
           .end((err, res) => {
             token = res.body.token;
@@ -31,9 +32,9 @@ describe('Reviews', () => {
     truncate: true,
     restartIdentity: true
   }));
-  it('should let user add a recipe', (done) => {
+  it('should add a new recipe', (done) => {
     chai.request(app)
-      .post('/api/v1/recipes')
+      .post(`${baseUrl}/recipes`)
       .set('x-token', token)
       .send(fakeData.recipe1)
       .end((err, res) => {
@@ -45,19 +46,19 @@ describe('Reviews', () => {
         done();
       });
   });
-  describe('Review', () => {
+  describe('for review actions', () => {
     beforeEach((done) => {
       chai.request(app)
-        .post('/api/v1/recipes')
+        .post(`${baseUrl}/recipes`)
         .set('x-token', token)
         .send(fakeData.recipe1)
         .end(() => {
           done();
         });
     });
-    it('should let user add a review', (done) => {
+    it('should return 200 when a user reviews a recipe', (done) => {
       chai.request(app)
-        .post('/api/v1/recipes/1/review')
+        .post(`${baseUrl}/recipes/1/review`)
         .set('x-token', token)
         .send(fakeData.reviews)
         .end((err, res) => {
@@ -66,27 +67,19 @@ describe('Reviews', () => {
           done();
         });
     });
-    it('should get single review', (done) => {
+    it('should return the data of a single review', (done) => {
       chai.request(app)
-        .get('/api/v1/recipe/1/review')
+        .get(`${baseUrl}/recipe/1/review`)
         .set('x-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           done();
         });
     });
-    // it('should get single review', (done) => {
-    //   chai.request(app)
-    //     .get('/api/v1/recipe/3/review')
-    //     .set('x-token', token)
-    //     .end((err, res) => {
-    //       res.should.have.status(404);
-    //       done();
-    //     });
-    // });
-    it('should return 404 for review to recipe not found', (done) => {
+
+    it('should return 404 for review to an unavailable recipe', (done) => {
       chai.request(app)
-        .post('/api/v1/recipes/2/review')
+        .post(`${baseUrl}/recipes/2/review`)
         .set('x-token', token)
         .send(fakeData.reviews)
         .end((err, res) => {
@@ -94,9 +87,9 @@ describe('Reviews', () => {
           done();
         });
     });
-    it('should return 404 for review not found', (done) => {
+    it('should return 404 for attempting to delete an unexisting review', (done) => {
       chai.request(app)
-        .delete('/api/v1/recipe/1/review')
+        .delete(`${baseUrl}/recipe/1/review`)
         .set('x-token', token)
         .end((err, res) => {
           res.body.should.have.property('error')
@@ -105,25 +98,5 @@ describe('Reviews', () => {
           done();
         });
     });
-    // beforeEach((done) => {
-    //   chai.request(app)
-    //     .post('/api/v1/recipes/3/review')
-    //     .set('x-token', token)
-    //     .send(fakeData.reviews2)
-    //     .end(() => {
-    //       done();
-    //     });
-    // });
-    // it('should return 404 for review not found', (done) => {
-    //   chai.request(app)
-    //     .delete('/api/v1/recipe/3/review')
-    //     .set('x-token', token)
-    //     .end((err, res) => {
-    //     // res.body.should.have.property('error')
-    //     //   .equal('Review not found');
-    //       res.should.have.status(200);
-    //       done();
-    //     });
-    // });
   });
 });

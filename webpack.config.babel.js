@@ -77,7 +77,7 @@ module.exports = {
     HtmlWebpackPluginConfig,
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin({
-      filename: 'bundle.css', 
+      filename: 'bundle.css',
       allChunks: true
     }),
     new webpack.ProvidePlugin({
@@ -105,12 +105,7 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Hammer: 'hammerjs/hammer',
-      createDayLabel: 'jquery',
-      createWeekdayLabel: 'jquery',
-      activateOption: 'jquery',
-      leftPosition: 'jquery'
+      'window.jQuery': 'jquery'
     })
     ], // plugins
   devServer: {

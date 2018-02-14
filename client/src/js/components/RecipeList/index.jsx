@@ -10,16 +10,14 @@ import Footer from '../Partials/Footer';
 import { apiGetRecipe, searchItem } from '../../actions/recipe';
 
 /**
- *
- *
- * @class Recipes
+ * @class RecipeList
  * @extends {React.Component}
  */
 class Recipes extends React.Component {
   /**
-   * @description COnstructor Function
+   * @description Constructor Function
    * @param {any} props
-   * @memberof Recipes
+   * @memberof RecipeList
    * @return {void}
    */
   constructor(props) {
@@ -31,19 +29,19 @@ class Recipes extends React.Component {
   }
 
   /**
- * @returns {void}
- *
  * @param {any} void
  * @memberof Recipes
+ * @returns {void}
+
  */
   componentDidMount() {
     this.props.apiGetRecipe();
   }
 
   /**
-   * @description COnstructor Function
+   * @description Constructor Function
    * @param {any} nextProps
-   * @memberof Recipes
+   * @memberof RecipeList
    * @return {void}
    */
   componentWillReceiveProps(nextProps) {
@@ -53,22 +51,20 @@ class Recipes extends React.Component {
   }
 
   /**
- * @returns {void}
- *
- * @param {any} void
- * @memberof RecipeAdmin
+  *
+  * @param {any} void
+  * @memberof RecipeList
+  * @returns {void}
  */
   componentWillUnmount() {
     this.props.searchItem('');
-    console.log(this.props.searchValue);
   }
 
 
   /**
- * @returns {void}
- *
  * @param {any} current
- * @memberof Recipes
+ * @memberof RecipeList
+ * @returns {void}
  */
   onPageChange(current) {
     current.selected += 1;
@@ -83,24 +79,28 @@ class Recipes extends React.Component {
    */
   render() {
     const { recipes, search, searchValue } = this.props;
-    const recipeList = !searchValue || ((search.length === 0) && !searchValue) ? recipes : search;
+    const recipeList = !searchValue || ((search.length === 0) && !searchValue) ?
+      recipes : search;
     return (
       <div>
         <RecipeHeader />
-        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 headings">
-          <h4>
-            <span>Recipes</span>
-          </h4>
-        </div>
-        <div className="row container-fluid mv-card">
-          {this.props.isLoadingRecipe ? <RingLoader
-            color="#B0C038"
-            loading={this.props.isLoadingRecipe}
-          /> :
+        <div style={{ width: '85%', margin: '0 auto', minHeight: '795px' }}>
+          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 headings">
+            <h4 className="mb-4">
+              <span>Recipes</span>
+            </h4>
+          </div>
+          <div className="container-fluid">
+            <div className="row">
+              {this.props.isLoadingRecipe ? <RingLoader
+                color="#B0C038"
+                loading={this.props.isLoadingRecipe}
+              /> :
           recipeList.map(recipe =>
             <CardItem recipe={recipe} key={recipe.id} />)
           }
-          {
+              <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                {
             recipeList.length === 0 && (search.length === 0 && searchValue ?
               <span className="styleText">
                 No search found! Clear the seach bar to get more recipes
@@ -110,25 +110,31 @@ class Recipes extends React.Component {
                 No recipes yet, Come back soon for amazing recipes!
               </span>)
           }
+              </div>
+            </div>
+          </div>
+          {recipes.length > 0 ?
+            <ReactPaginate
+              pageCount={this.state.page}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={3}
+              previousLabel="Previous"
+              nextLabel="Next"
+              breakClassName="text-center"
+              containerClassName="container pagination justify-content-center"
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              activeClassName="page-item active"
+              previousClassName="page-item"
+              nextClassName="page-item"
+              nextLinkClassName="page-link"
+              previousLinkClassName="page-link"
+              onPageChange={this.onPageChange}
+            />
+        : ''
+        }
+          <PopularRecipe />
         </div>
-        <ReactPaginate
-          pageCount={this.state.page}
-          pageRangeDisplayed={5}
-          marginPagesDisplayed={3}
-          previousLabel="Previous"
-          nextLabel="Next"
-          breakClassName="text-center"
-          containerClassName="container pagination justify-content-center"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          activeClassName="page-item active"
-          previousClassName="page-item"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          previousLinkClassName="page-link"
-          onPageChange={this.onPageChange}
-        />
-        <PopularRecipe />
         <Footer />
       </div>
     );
@@ -141,7 +147,8 @@ Recipes.propTypes = {
   search: PropTypes.arrayOf(PropTypes.any).isRequired,
   pageCount: PropTypes.number,
   isLoadingRecipe: PropTypes.bool,
-  searchValue: PropTypes.string.isRequired
+  searchValue: PropTypes.string.isRequired,
+  searchItem: PropTypes.func.isRequired
 };
 
 Recipes.defaultProps = {

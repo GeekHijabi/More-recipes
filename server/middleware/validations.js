@@ -18,11 +18,11 @@ export const signUpField = (req, res, next) => {
 
 
   if (!req.body.userName ||
-    req.body.userName.length < 2 ||
+    req.body.userName.length < 6 ||
     req.body.userName
       .toLowerCase().replace(/ +/g, '').trim() === '') {
     return res.status(422).json({
-      error: 'Please provide a valid username with atleast 2 characters.'
+      error: 'Please provide a valid username with atleast 6 characters.'
     });
   }
   if (!req.body.email || !filter.test(req.body.email)) {
@@ -34,18 +34,6 @@ export const signUpField = (req, res, next) => {
     return res.status(422)
       .json({
         error: 'password cannot be empty'
-      });
-  }
-  if (!req.body.firstName || req.body.firstName.trim() === '') {
-    return res.status(422)
-      .json({
-        error: 'Input a valid first Name'
-      });
-  }
-  if (!req.body.lastName || req.body.lastName.trim() === '') {
-    return res.status(422)
-      .json({
-        error: 'Input a valid last Name'
       });
   }
   if (req.body.password.length < 8) {

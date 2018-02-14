@@ -9,7 +9,7 @@ export default {
   myRecipes: [],
   recipe: {
     ingredients: '',
-    reviews: []
+    Reviews: []
   },
   upvotes: 0,
   downvotes: 0,

@@ -11,7 +11,7 @@ import { LogoutUser } from '../../actions/auth';
  * @class Header
  * @extends {React.Component}
  */
-class RecipeHeader extends React.Component {
+export class RecipeHeader extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props
@@ -60,70 +60,78 @@ class RecipeHeader extends React.Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon" />
+          <span
+            className="navbar-toggler-icon"
+            style={{ cursor: 'pointer', color: 'white' }}
+          >
+            <i
+              className="fa fa-bars 4x"
+            />
+          </span>
         </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link
-                to="/profile"
-                className="nav-link text-white"
-                href="/profile"
-                title="User's profile"
-              >
-                <i className="fa fa-user-circle-o fa-2x" />
-              </Link>
-            </li>
-
-            <div className="nav-item dropdown">
-              <a
-                href="/"
-                className="nav-link text-white dropdown-toggle"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Menu
-              </a>
-              <div
-                className="dropdown-menu"
-                aria-labelledby="dropdownMenuButton"
-              >
+        {localStorage.getItem('token') ?
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
                 <Link
-                  to="/recipes"
-                  className="dropdown-item"
-                  href="/recipes"
-                >
-                  <i className="fa fa-cutlery fa-1x" /> Recipes
-                </Link>
-                <Link
-                  to="/admin"
-                  className="dropdown-item"
+                  to="/profile"
+                  className="nav-link text-white"
                   href="/profile"
+                  title="User's profile"
                 >
-                  <i className="fa fa-user-o fa-1x" /> MyRecipes
+                  <i className="fa fa-user-circle-o fa-2x" />
                 </Link>
-                <Link
-                  to="/favorites"
-                  className="dropdown-item"
-                  href="/favorites"
-                >
-                  <i className="fa fa-gratipay fa-1x" /> My favorites
-                </Link>
-                <Link
-                  to="/"
-                  className="dropdown-item"
+              </li>
+
+              <div className="nav-item dropdown">
+                <a
                   href="/"
-                  onClick={this.onClick}
+                  className="nav-link text-white dropdown-toggle"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
                 >
-                  <i className="fa fa-sign-out" /> Logout
-                </Link>
+                Menu
+                </a>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <Link
+                    to="/recipes"
+                    className="dropdown-item"
+                    href="/recipes"
+                  >
+                    <i className="fa fa-cutlery fa-1x" /> Recipes
+                  </Link>
+                  <Link
+                    to="/admin"
+                    className="dropdown-item"
+                    href="/profile"
+                  >
+                    <i className="fa fa-user-o fa-1x" /> My Recipes
+                  </Link>
+                  <Link
+                    to="/favorites"
+                    className="dropdown-item"
+                    href="/favorites"
+                  >
+                    <i className="fa fa-gratipay fa-1x" /> My favorites
+                  </Link>
+                  <Link
+                    to="/"
+                    className="dropdown-item"
+                    href="/"
+                    onClick={this.onClick}
+                  >
+                    <i className="fa fa-sign-out" /> Logout
+                  </Link>
+                </div>
               </div>
-            </div>
-          </ul>
-        </div>
+            </ul>
+          </div>
+        : '' }
       </nav>
     );
   }

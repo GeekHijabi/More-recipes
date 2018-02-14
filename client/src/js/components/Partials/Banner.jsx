@@ -43,27 +43,21 @@ class Banner extends React.Component {
    */
   render() {
     return (
-      <div>
-        <section id="banner" className="row">
-          <img src={image} alt="" className="bg" />
-          <div className="container">
-            <div className="card card-body body-title-card">
-              <h1 className="body-title">
+      <section id="banner">
+        <img src={image} alt="" className="bg" />
+        <div className="body-title-card">
+          <h1 className="body-title">
               Life is too short for just a rough meal
-              </h1>
-              <div>
-                <button
-                  className="body-title-button"
-                  type="button"
-                  onClick={this.onClick}
-                >
+          </h1>
+          <button
+            className="body-title-button"
+            type="button"
+            onClick={this.onClick}
+          >
                   Try out one of our awesome recipes
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
+          </button>
+        </div>
+      </section>
     );
   }
 }

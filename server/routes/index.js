@@ -10,42 +10,46 @@ import reviews from '../controllers/reviews';
 import favoriteRecipe from '../controllers/favoriteRecipe';
 import votes from '../controllers/votes';
 
+
+const baseUrl = '/api/v1';
+
 const routes = (app) => {
-  app.get('/api/v1', (req, res) => {
+  app.get(`${baseUrl}`, (req, res) => {
     res.status(200).send({
       message: 'Welcome to more recipes API'
     });
   });
 
+
   app.post(
-    '/api/v1/user/signup',
+    `${baseUrl}/user/signup`,
     signUpField,
     user.signUp
   );
   app.post(
-    '/api/v1/user/signin',
+    `${baseUrl}/user/signin`,
     signInField,
     user.signIn
   );
 
-  app.route('/api/v1/user/:userId')
+  app.route(`${baseUrl}/user/:userId`)
     .get(
       authenticate,
       user.getCurrentUser
     )
-    .put(
+    .patch(
       authenticate,
       user.updateUserProfile
     );
 
-  app.route('/api/v1/:userId/forgot-password')
-    .post(authenticate, user.forgotPassword);
+  app.route(`${baseUrl}/forgot-password`)
+    .post(user.forgotPassword);
 
-  app.route('/api/v1/:userId/reset-password')
+  app.route(`${baseUrl}/reset-password/:userId`)
     .post(authenticate, user.resetPassword);
 
   app
-    .route('/api/v1/recipes')
+    .route(`${baseUrl}/recipes`)
     .get(recipes.listAllRecipes)
     .post(
       authenticate,
@@ -55,82 +59,82 @@ const routes = (app) => {
     );
 
   app
-    .route('/api/v1/recipes/:recipeId')
+    .route(`${baseUrl}/recipes/:recipeId`)
     .delete(
       authenticate,
       recipes.destroyRecipe
     )
-    .put(
+    .patch(
       authenticate,
       recipes.updateRecipe
     );
 
   app.get(
-    '/api/v1/myrecipes',
+    `${baseUrl}/myrecipes`,
     authenticate,
     recipes.getUserRecipes
   );
 
   app.get(
-    '/api/v1/recipe/:recipeId',
+    `${baseUrl}/recipe/:recipeId`,
     authenticate,
     recipes.getSingleRecipe
   );
   app.post(
-    '/api/v1/recipe/:recipeId/views',
+    `${baseUrl}/recipe/:recipeId/views`,
     authenticate,
     recipes.updateRecipeView
   );
   app.get(
-    '/api/v1/favorites',
+    `${baseUrl}/favorites`,
     authenticate,
     recipes.listAllFavoriteRecipes
   );
 
   app.get(
-    '/api/v1/search',
+    `${baseUrl}/search`,
     recipes.searchRecipe
   );
 
   app.post(
-    '/api/v1/recipes/:recipeId/review',
+    `${baseUrl}/recipes/:recipeId/review`,
     authenticate,
     reviewsValidation,
     reviews.createReview
   );
   app.get(
-    '/api/v1/recipe/:recipeId/review',
+    `${baseUrl}/recipe/:recipeId/review`,
     authenticate,
     reviews.getSingleReview
   );
   app.delete(
-    '/api/v1/recipe/:id/review',
+    `${baseUrl}/recipe/:id/review`,
     authenticate,
     reviews.destroySingleReview
   );
   app.get(
-    '/api/v1/user/:userId/favorites',
+    `${baseUrl}/user/:userId/favorites`,
     authenticate,
     favoriteRecipe.list
   );
   app.post(
-    '/api/v1/recipe/:recipeId/favorite',
+    `${baseUrl}/recipe/:recipeId/favorite`,
     authenticate, favoriteRecipe.create
   );
   app.delete(
-    '/api/v1/recipe/:recipeId/favorite',
+    `${baseUrl}/recipe/:recipeId/favorite`,
     authenticate,
     favoriteRecipe.destroyFavorite
   );
 
   app.post(
-    '/api/v1/recipe/:recipeId/upvote',
+    `${baseUrl}/recipe/:recipeId/upvote`,
     authenticate,
     votes.upvote
   );
 
   app.post(
-    '/api/v1/recipe/:recipeId/downvote',
+    `${baseUrl}/recipe/:recipeId/downvote`,
     authenticate,
     votes.downvote
   );

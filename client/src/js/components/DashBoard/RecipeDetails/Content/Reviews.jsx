@@ -10,9 +10,6 @@ const image = require('../../../../../assets/images/no_picture.png');
 
 
 /**
- *
- *
- * <@UNVERIFIED|@class> Reviews
  * @extends {React.Component}
  */
 class Reviews extends React.Component {
@@ -69,10 +66,10 @@ class Reviews extends React.Component {
   }
 
   /**
-   * @description Constructor Function
+   * @description Constructor function
    * @param {any} props
-   * @memberof Home
-   * @return {void}
+   * @memberof Reviews
+   * @return {object} reviews
    */
   render() {
     return (
@@ -133,7 +130,9 @@ class Reviews extends React.Component {
             </p>
           </div>
         </li>))
-      : 'This recipe has not been reviewed yet' }
+      : <span className="reviewText">
+      This recipe has not been reviewed yet, Add a review.
+        </span> }
         </ul>
       </div>
     );

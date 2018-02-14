@@ -8,6 +8,9 @@ import PropTypes from 'prop-types';
 import { RingLoader } from 'react-spinners';
 import imageUpload from '../../utils/imageUpload';
 
+const image = require('../../../assets/images/default_image.jpeg');
+
+
 /**
  *
  *
@@ -42,20 +45,20 @@ class EditRecipeModal extends React.Component {
   }
 
   /**
- * @returns {void}
  *
  * @param {any} event
  * @memberof EditRecipeModal
+ * @returns {void}
  */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
   /**
- * @returns {void}
  *
  * @param {any} event
  * @memberof EditRecipeModal
+ * @returns {void}
  */
   onSubmit(event) {
     event.preventDefault();
@@ -70,10 +73,9 @@ class EditRecipeModal extends React.Component {
   }
 
   /**
- * @returns {void}
- *
  * @param {any} files
  * @memberof EditRecipeModal
+ * @returns {void}
  */
   onDrop(files) {
     this.setState({
@@ -108,7 +110,7 @@ class EditRecipeModal extends React.Component {
         <ModalBody>
           <Form>
             <FormGroup row>
-              <Label for="exampleEmail" sm={3}>Recipe Name</Label>
+              <Label for="exampleEmail" sm={4}>Recipe Name</Label>
               <Col sm={8}>
                 <Input
                   type="text"
@@ -121,8 +123,8 @@ class EditRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={3}>Ingredients</Label>
-              <Col sm={8}>
+              <Label for="exampleEmail" sm={4}>Ingredients</Label>
+              <Col sm={4}>
                 <textarea
                   type="text"
                   name="ingredients"
@@ -135,7 +137,7 @@ class EditRecipeModal extends React.Component {
             </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={3}>Description</Label>
+              <Label for="exampleEmail" sm={4}>Description</Label>
               <Col sm={8}>
                 <textarea
                   type="text"
@@ -163,17 +165,17 @@ class EditRecipeModal extends React.Component {
                     loading={this.props.isLoadingRecipe}
                   /> :
                   <img
-                    src={imageUrl}
+                    src={imageUrl || image}
                     alt="sample"
                     className="styledImage"
                   />}
               </Col>
             </FormGroup>
 
-            <FormGroup check row className="editButton styleButton">
+            <FormGroup check row className="modal-button">
               <Col sm={{ size: 10, offset: 5 }}>
                 {this.state.isLoading ? 'please wait a few seconds...' :
-                <Button onClick={this.onSubmit}>
+                <Button onClick={this.onSubmit} className="submit-btn">
                Edit
                 </Button>
             }
@@ -199,5 +201,4 @@ EditRecipeModal.propTypes = {
 
 
 };
-
 export default EditRecipeModal;

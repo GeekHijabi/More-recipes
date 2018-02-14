@@ -10,7 +10,13 @@ import {
   LOGOUT_USER_SUCCESS,
   REMOVE_CURRENT_USER,
   UPDATE_PROFILE_SUCCESS,
-  UPDATE_PROFILE_FAILURE } from '../constants';
+  UPDATE_PROFILE_FAILURE,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
+
+} from '../constants';
 
 export const loginSuccess = message => ({
   type: LOGIN_USER_SUCCESS,
@@ -22,9 +28,9 @@ export const loginFailure = error => ({
   error
 });
 
-export const signupSuccess = message => ({
+export const signupSuccess = user => ({
   type: SIGNUP_USER_SUCCESS,
-  message
+  user
 });
 
 export const signupFailure = error => ({
@@ -51,6 +57,24 @@ export const updateProfileFailure = error => ({
   type: UPDATE_PROFILE_FAILURE,
   error
 });
+export const forgotPasswordSuccess = email => ({
+  type: FORGOT_PASSWORD_SUCCESS,
+  email
+});
+export const forgotPasswordFailure = error => ({
+  type: FORGOT_PASSWORD_FAILURE,
+  error
+});
+export const resetPasswordSuccess = newPasswordMessage => ({
+  type: RESET_PASSWORD_SUCCESS,
+  newPasswordMessage
+});
+export const resetPasswordFailure = error => ({
+  type: RESET_PASSWORD_FAILURE,
+  error
+});
+
+const baseUrl = '/api/v1';
 
 /**
  * Async action for Register user
@@ -58,44 +82,42 @@ export const updateProfileFailure = error => ({
  * @param {object} options
  */
 export const apiRegisterUser = ({
-  userName, email, password, firstName, lastName
+  userName, email, password
 }) =>
   function action(dispatch) {
     const request = axios({
       data: {
-        userName, email, password, firstName, lastName
+        userName, email, password
       },
       method: 'POST',
-      url: '/api/v1/user/signup'
+      url: `${baseUrl}/user/signup`
     });
     request.then((res) => {
-      // if (res && res.response) {
-        dispatch(signupSuccess(res.response.data.message));
-      // }
-    }).catch((err) => {
-      if (err && err.response) {
-        dispatch(signupFailure(err.response.data.error));
+      if (res) {
+        dispatch(signupSuccess(res.data));
       }
+    }).catch((error) => {
+      dispatch(signupFailure(error.response.data));
     });
     return request;
   };
 
 /**
  * Async action for Login
- * @returns {promise} request
  * @param {object} options
+ * @returns {promise} request
  */
 export const apiLoginUser = ({
-  identifier, userName, email, password
+  identifier, password, email, userName
 }) =>
   function action(dispatch) {
     const request = axios({
       data: {
-        identifier: identifier || userName || email,
+        identifier: identifier || email || userName,
         password
       },
       method: 'POST',
-      url: '/api/v1/user/signin'
+      url: `${baseUrl}/user/signin`
     });
     request.then((response) => {
       const { token } = response.data;
@@ -106,31 +128,28 @@ export const apiLoginUser = ({
       dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
     }).catch((err) => {
-      if (err && err.data) {
-        dispatch(loginFailure(err.data.error));
-      }
+      dispatch(loginFailure(err.response.data.error));
     });
     return request;
   };
 
   /**
  * Async action for profile
+ * @param {object} userId
  * @returns {promise} request
- * @param {object} options
  */
-export const apiGetCurrentUser = () =>
+export const apiGetCurrentUser = userId =>
   function action(dispatch) {
     const request = axios({
       method: 'GET',
-      url: '/api/v1/user/:userId'
+      url: `${baseUrl}/user/${userId}`
     });
     request.then((response) => {
       dispatch(setCurrentUser(response.data));
-    }).catch((error) => {
-      if (error && error.data) {
+    })
+      .catch((error) => {
         dispatch(updateProfileFailure(error.data.error));
-      }
-    });
+      });
     return request;
   };
 
@@ -145,31 +164,73 @@ export const LogoutUser = () =>
   };
 
 /**
- * Async action for profile
- * @returns {promise} request
+ * Async action for update profile
  * @param {object} options
+ * @returns {promise} request
  */
 export const apiUpdateUserProfile = ({
-  firstName, lastName, bio, summary, imageUrl
+  userName, bio, summary, imageUrl
 }) =>
   function action(dispatch) {
     const request = axios({
       data: {
-        firstName,
-        lastName,
+        userName,
         bio,
         summary,
         imageUrl
       },
-      method: 'PUT',
-      url: '/api/v1/user/:userId'
+      method: 'PATCH',
+      url: `${baseUrl}/user/:userId`
     });
     request.then((response) => {
       dispatch(updateProfileSuccess(response.data));
     }).catch((err) => {
-      if (err && err.data) {
-        dispatch(updateProfileFailure(err.data.error));
-      }
+      dispatch(updateProfileFailure(err.data.error));
     });
     return request;
+  };
+
+/**
+ * Async action for forgot password
+ * @param {string} email
+ * @returns {promise} request
+ */
+export const apiForgotPassword = email =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/forgot-password`,
+      data: {
+        email
+      }
+    });
+    request.then((response) => {
+      dispatch(forgotPasswordSuccess(response.data.message));
+    }).catch((err) => {
+      dispatch(forgotPasswordFailure(err));
+    });
+    return request;
+  };
+
+/**
+ * Async action for reset password
+ * @param {number} userId
+ * @param {string} newPassword
+ * @param {string} token
+ * @returns {promise} request
+ */
+export const apiResetPassword = (userId, newPassword, token) =>
+  function action(dispatch) {
+    const request = axios({
+      method: 'POST',
+      url: `${baseUrl}/reset-password/${userId}?token=${token}`,
+      data: {
+        newPassword
+      }
+    });
+    return request.then(response =>
+      dispatch(resetPasswordSuccess(response.data.message)))
+      .catch((err) => {
+        dispatch(resetPasswordFailure(err));
+      });
   };

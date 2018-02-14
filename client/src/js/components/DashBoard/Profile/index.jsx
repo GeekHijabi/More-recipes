@@ -9,7 +9,7 @@ import {
   apiGetCurrentUser
 } from '../../../actions/auth';
 
-const image = require('../../../../assets/images/no_picture.png');
+const image = require('../../../../assets/images/no-avatar.png');
 
 /**
  *
@@ -38,8 +38,8 @@ class Profile extends React.Component {
    * @param {any} void
    * @memberof RecipeAdmin
    */
-  componentWillMount() {
-    this.props.apiGetCurrentUser();
+  componentDidMount() {
+    this.props.apiGetCurrentUser(localStorage.getItem('userId'));
   }
 
 
@@ -70,24 +70,24 @@ class Profile extends React.Component {
         <RecipeHeader />
         <main className="row prof-up">
           <div className="dual col-xs-12 col-sm-6 col-md-6 col-lg-5">
-            <div className="container">
-              <div className="col-xs-6 col-sm-6 col-md-6 col-lg-7">
-                <i
-                  role="button"
-                  tabIndex="-1"
-                  onClick={this.toggle}
-                  data-toggle="tooltip"
-                  title="Edit profile"
-                  onKeyPress={this.handleKeyPress}
-                  className="fa fa-edit fa-2x fa-icons profile-edit"
-                />
-              </div>
-              <h1 className="name">{currentUser.firstName}
-                <br /> {currentUser.lastName}
+            <div className="mt-3">
+              <span
+                className="float-right span-profile"
+                role="button"
+                tabIndex="-1"
+                onClick={this.toggle}
+                data-toggle="tooltip"
+                title="Edit profile"
+                onKeyPress={this.handleKeyPress}
+              >
+                <i className="fa fa-edit fa-2x" />
+              </span>
+              <h1 className="name mb-5">{currentUser.userName}
               </h1>
+              <h4>Summary</h4>
               <p className="name-desc">{currentUser.summary}</p>
-              <div className="red-border-line" />
-              <h4>Bio</h4>
+              <div className="red-border-line mb-4" />
+              <h4>About Me</h4>
               <p>{currentUser.bio}</p>
               <EditProfileModal
                 user={currentUser}
@@ -95,17 +95,17 @@ class Profile extends React.Component {
                 toggle={this.toggle}
                 editProfile={this.props.apiUpdateUserProfile}
               />
-              <div className="social-icons">
-                <a href="/">
-                  <i className="fa fa-twitter-square fa-2x" />
-                </a>
-                <a href="/">
-                  <i className="fa fa-instagram fa-2x" />
-                </a>
-                <a href="/">
-                  <i className="fa fa-pinterest-square fa-2x" />
-                </a>
-              </div>
+            </div>
+            <div className="social-icons">
+              <a href="/">
+                <i className="fa fa-twitter-square fa-2x" />
+              </a>
+              <a href="/">
+                <i className="fa fa-instagram fa-2x" />
+              </a>
+              <a href="/">
+                <i className="fa fa-pinterest-square fa-2x" />
+              </a>
             </div>
           </div>
           <div className="dual col-xs-12 col-sm-6 col-md-6 col-lg-7">

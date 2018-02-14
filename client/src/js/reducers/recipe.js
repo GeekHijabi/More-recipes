@@ -33,8 +33,6 @@ import {
   RECIPE_REVIEW_FAILURE,
   DELETE_RECIPE_REVIEW_SUCCESS,
   DELETE_RECIPE_REVIEW_FAILURE,
-  GET_RECIPE_REVIEW_SUCCESS,
-  GET_RECIPE_REVIEW_FAILURE,
   SEARCH_RECIPE_SUCCESS,
   SEARCH_RECIPE_FAILURE,
   GET_SEARCH_ITEM,
@@ -141,7 +139,6 @@ export default (state = initialState, action) => {
         isLoadingRecipe: false
       };
     case VIEW_RECIPE_SUCCESS:
-      // console.log(recipeDetail, 'recipe detail');
       return {
         ...newState,
         recipe: recipeDetail
@@ -151,9 +148,7 @@ export default (state = initialState, action) => {
         errorMessage: error
       };
     case RECIPE_UPVOTE_SUCCESS:
-      console.log(upvotes, downvotes, 'upvotes');
-      newState.recipe.upvotes = upvotes;
-      newState.recipe.downvotes = downvotes;
+      newState.upvotes = upvotes;
       return {
         ...newState
       };
@@ -162,9 +157,7 @@ export default (state = initialState, action) => {
         errorMessage: error
       };
     case RECIPE_DOWNVOTE_SUCCESS:
-      console.log(upvotes, downvotes, 'upvotes');
-      newState.recipe.downvotes = downvotes;
-      newState.recipe.upvotes = upvotes;
+      newState.downvotes = downvotes;
       return {
         ...newState
       };
@@ -204,11 +197,9 @@ export default (state = initialState, action) => {
       const newFavorite = newState.favorites
         .filter(favorite => favorite.recipeId !== deletedFavoriteId);
       newState.favorites = newFavorite;
+
       return {
-        ...newState,
-        // recipe: {
-        //   Favorites: newFavorite
-        // }
+        ...newState
       };
     case DELETE_FAVORITE_RECIPE_FAILURE:
       return {
@@ -222,11 +213,7 @@ export default (state = initialState, action) => {
       };
     case RECIPE_REVIEW_FAILURE:
       return {
-        errorMessage: Error
-      };
-    case GET_RECIPE_REVIEW_SUCCESS:
-      return {
-        ...newState
+        errorMessage: error
       };
     case DELETE_RECIPE_REVIEW_SUCCESS:
       const newReview = newState.recipe.Reviews
@@ -240,13 +227,9 @@ export default (state = initialState, action) => {
         ...newState,
         errorMessage: error
       };
-    case GET_RECIPE_REVIEW_FAILURE:
-      return {
-        errorMessage: error,
-      };
+
     case SEARCH_RECIPE_SUCCESS:
       newState.SearchResults = searchRecipeName;
-      // newState.pageCount = recipes.pageCount;
       return {
         ...newState
       };
@@ -261,9 +244,7 @@ export default (state = initialState, action) => {
         searchItem
       };
     case RECIPE_VIEW_COUNT_SUCCESS:
-      // const newView = newState.recipe.views;
       newState.views = views;
-      console.log('ns', newState);
       return {
         ...newState
       };

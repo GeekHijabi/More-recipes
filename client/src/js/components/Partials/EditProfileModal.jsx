@@ -1,12 +1,13 @@
 import React from 'react';
 import toastr from 'toastr';
-import {
-  Button, Modal,
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Button, Modal,
   ModalHeader, ModalBody, Form, Label, Input, FormGroup, Col
 } from 'reactstrap';
-import PropTypes from 'prop-types';
 import { RingLoader } from 'react-spinners';
 import imageUpload from '../../utils/imageUpload';
+import { apiGetCurrentUser } from '../../actions/auth';
 
 const profile = require('../../../assets/images/profile.png');
 
@@ -27,8 +28,7 @@ class EditProfileModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
+      userName: '',
       bio: '',
       summary: '',
       imageUrl: ''
@@ -36,6 +36,26 @@ class EditProfileModal extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDrop = this.onDrop.bind(this);
+  }
+
+  /**
+ * @returns {void}
+ *
+ * @param {any} nextProps
+ * @memberof EditProfileModal
+ */
+  componentWillReceiveProps(nextProps) {
+    const {
+      userName,
+      bio, summary,
+      imageUrl
+    } = nextProps.currentUser;
+    this.setState({
+      userName,
+      bio: bio || '',
+      summary: summary || '',
+      imageUrl: imageUrl || ''
+    });
   }
 
   /**
@@ -104,28 +124,15 @@ class EditProfileModal extends React.Component {
         <ModalHeader toggle={this.props.toggle}>Edit Profile</ModalHeader>
         <ModalBody>
           <Form>
-            <FormGroup row>
-              <Label for="exampleEmail" sm={4}>First Name</Label>
-              <Col sm={8}>
-                <Input
-                  type="text"
-                  name="firstName"
-                  id="exampleEmail"
-                  value={this.state.firstName}
-                  onChange={this.onChange}
-                  placeholder="input first name"
-                />
-              </Col>
-            </FormGroup>
 
             <FormGroup row>
-              <Label for="exampleEmail" sm={4}>Last Name</Label>
+              <Label for="exampleEmail" sm={4}>Username</Label>
               <Col sm={8}>
                 <Input
                   type="text"
                   name="lastName"
                   id="exampleEmail"
-                  value={this.state.lastName}
+                  value={this.state.userName}
                   onChange={this.onChange}
                   placeholder="input last name"
                 />
@@ -182,9 +189,9 @@ class EditProfileModal extends React.Component {
             </FormGroup>
 
             <FormGroup check row>
-              <Col sm={{ size: 10, offset: 2 }}>
+              <Col sm={{ size: 10, offset: 2 }} className="modal-button">
                 {this.state.isLoading ? 'please wait a few seconds...' :
-                <Button onClick={this.onSubmit}>
+                <Button onClick={this.onSubmit} className="submit-btn">
                    Edit
                 </Button>
             }
@@ -203,6 +210,7 @@ EditProfileModal.defaultProps = {
 
 EditProfileModal.propTypes = {
   editProfile: PropTypes.func.isRequired,
+  currentUser: PropTypes.objectOf(PropTypes.any).isRequired,
   toggle: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isLoadingRecipe: PropTypes.bool
@@ -210,5 +218,20 @@ EditProfileModal.propTypes = {
 
 };
 
+/**
+ *
+ * @param {object} state
+ *
+ * @returns {void}
+ */
+function mapStateToProps(state) {
+  return {
+    currentUser: state.auth.currentUser,
+  };
+}
 
-export default EditProfileModal;
+export default connect(
+  mapStateToProps,
+  { apiGetCurrentUser }
+)(EditProfileModal);
+

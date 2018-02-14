@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Homepage should render correctly 1`] = `
+<div>
+  <Header />
+  <withRouter(Banner) />
+  <Connect(TrendingRecipe) />
+  <Footer />
+</div>
+`;

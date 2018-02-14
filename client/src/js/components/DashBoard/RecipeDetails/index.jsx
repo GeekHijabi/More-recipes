@@ -10,7 +10,6 @@ import {
   apiUpVoteRecipe,
   apiDownVoteRecipe,
   apifavoriteRecipe,
-  apiGetRecipeReview,
   apiRecipeViewCount
 } from '../../../actions/recipe';
 
@@ -27,13 +26,13 @@ class MyRecipe extends React.Component {
    * @description COnstructor Function
    * @param {any} props
    * @memberof MyRecipe
-   * @return {void}
+   * @return {object} props
    */
   constructor(props) {
     super(props);
     this.state = {
       activeTab: {
-        name: 'Ingredients',
+        name: 'Descriptions',
         isActive: true,
         upvotes: false,
         downvotes: false
@@ -44,29 +43,24 @@ class MyRecipe extends React.Component {
   }
 
   /**
- * @returns {void}
- *
+ * @description componentDidMount
  * @param {any} void
  * @memberof RecipeAdmin
+ * @returns {void}
  */
   componentDidMount() {
     const recipeId = this.props.match.params.id;
-    this.props.onViewRecipe(recipeId);
-    this.props.apiRecipeViewCount(this.props.match.params.id);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps, 'new props');
-    this.setState({
-      upvotes: nextProps.upvotes,
-      downvotes: nextProps.downvotes
+    this.props.onViewRecipe(recipeId).catch((err) => {
+      if (err.response.status === 404) {
+        this.props.history.push('/*');
+      }
     });
+    this.props.apiRecipeViewCount(recipeId);
   }
 
   /**
    *
    * @param {object} tab
-   *
    * @returns {void}
    */
   handleChangeTab(tab) {
@@ -78,15 +72,13 @@ class MyRecipe extends React.Component {
   /**
    *
    * @param {object} id
-   *
    * @returns {void}
    */
   handleupvote() {
-    this.props.apiUpVoteRecipe(this.props.recipe.id);
-    // .then((data) => {
-    //   console.log(data, 'data');
-    //   this.props.onViewRecipe(this.props.recipe.id);
-    // });
+    this.props.apiUpVoteRecipe(this.props.recipe.id)
+      .then(() => {
+        this.props.onViewRecipe(this.props.recipe.id);
+      });
   }
   /**
    *
@@ -95,10 +87,10 @@ class MyRecipe extends React.Component {
    * @returns {void}
    */
   handledownvote() {
-    this.props.apiDownVoteRecipe(this.props.recipe.id);
-    // .then(() => {
-    //   this.props.onViewRecipe(this.props.recipe.id);
-    // });
+    this.props.apiDownVoteRecipe(this.props.recipe.id)
+      .then(() => {
+        this.props.onViewRecipe(this.props.recipe.id);
+      });
   }
   /**
    *
@@ -121,7 +113,7 @@ class MyRecipe extends React.Component {
    */
   render() {
     const {
-      recipe, views, upvotes, downvotes
+      recipe, views,
     } = this.props;
     return (
       <div>
@@ -147,8 +139,10 @@ class MyRecipe extends React.Component {
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handleupvote()}
                 />
-                <span>upvote(s)</span>
-                <span className="detail-value">{this.state.upvotes}</span>
+                {recipe.upvotes > 1 ? <span>upvotes</span> :
+                <span>upvote</span>
+                }
+                <span className="detail-value">{recipe.upvotes}</span>
               </span>
               <span className="vote_type">
                 <i
@@ -160,8 +154,10 @@ class MyRecipe extends React.Component {
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handledownvote()}
                 />
-                <span>downvote(s)</span>
-                <span className="detail-value">{this.state.downvotes}</span>
+                {recipe.downvotes > 1 ? <span>downvotes</span> :
+                <span>downvote</span>
+                }
+                <span className="detail-value">{recipe.downvotes}</span>
               </span>
               <span className="vote_type">
                 <i
@@ -173,7 +169,9 @@ class MyRecipe extends React.Component {
                   onKeyPress={this.handleKeyPress}
                   onClick={() => this.handlefavorite()}
                 />
-                <span>favorite(s)</span>
+                {recipe.favoriteCount > 1 ? <span>favorites</span> :
+                <span>favorite</span>
+                }
                 <span className="detail-value">{recipe.favoriteCount}</span>
               </span>
               <span className="vote_type">
@@ -182,7 +180,9 @@ class MyRecipe extends React.Component {
                   data-toggle="tool-tip"
                   title="number of views"
                 />
-                <span>views(s)</span>
+                {views > 1 ? <span>views</span> :
+                <span>view</span>
+                }
                 <span className="detail-value">{views}</span>
               </span>
             </div>
@@ -215,7 +215,8 @@ MyRecipe.propTypes = {
   apiRecipeViewCount: PropTypes.func.isRequired,
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  views: PropTypes.number.isRequired
+  views: PropTypes.number.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 /**
@@ -227,9 +228,7 @@ MyRecipe.propTypes = {
 function mapStateToProps(state) {
   return {
     recipe: state.recipe.recipe,
-    views: state.recipe.views,
-    upvotes: state.recipe.recipe.upvotes,
-    downvotes: state.recipe.recipe.downvotes
+    views: state.recipe.views
   };
 }
 
@@ -240,7 +239,6 @@ export default connect(
     apiUpVoteRecipe,
     apiDownVoteRecipe,
     apifavoriteRecipe,
-    apiGetRecipeReview,
     apiRecipeViewCount
   }
 )(MyRecipe);

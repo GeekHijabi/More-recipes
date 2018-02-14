@@ -7,21 +7,24 @@ import db from '../models';
 chai.should();
 chai.use(chaiHttp);
 
+const baseUrl = '/api/v1';
 let token;
 
-describe('User', () => {
+
+describe('User controller', () => {
   before((done) => {
-    chai.request(app).post('/api/v1/user/signup')
+    chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.newUser)
       .end((err, res) => {
         res.should.have.status(201);
         chai.request(app)
-          .post('/api/v1/user/signin')
+          .post(`${baseUrl}/user/signin`)
           .send(fakeData.signedInUser2)
           .end((err, res) => {
             res.body.should.be.a('object');
             res.body.should.have.property('message')
               .equal('You have successfully signed in!');
+            res.should.be.a('object');
             done();
           });
       });
@@ -32,15 +35,15 @@ describe('User', () => {
     restartIdentity: true
   }));
   it('should create a new User', (done) => {
-    chai.request(app).post('/api/v1/user/signup')
+    chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.signupUser)
       .end((err, res) => {
         res.should.have.status(201);
         done();
       });
   });
-  it('should not create user with details that exists already', (done) => {
-    chai.request(app).post('/api/v1/user/signup')
+  it('should not create user with details that already exists', (done) => {
+    chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.newUser)
       .end((err, res) => {
         res.body.should.have
@@ -49,40 +52,43 @@ describe('User', () => {
         done();
       });
   });
-  it('should create object response for user signup', (done) => {
-    chai.request(app).post('/api/v1/user/signup')
-      .send(fakeData.newUser)
-      .end((err, res) => {
-        res.should.be.a('object');
-        done();
-      });
-  });
-  it('should not create User with invalid email', (done) => {
+  // it('should create object response for user signup', (done) => {
+  //   chai.request(app).post(`${baseUrl}/user/signup`)
+  //     .send(fakeData.newUser)
+  //     .end((err, res) => {
+  //       res.should.be.a('object');
+  //       done();
+  //     });
+  // });
+  it('should not create user with invalid Email', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signup')
+      .post(`${baseUrl}/user/signup`)
       .send(fakeData.noEmailInput)
       .end((err, res) => {
         res
           .should
           .have
           .status(422);
-        done();
-      });
-  });
-  it('should check if email address is supplied', (done) => {
-    chai.request(app).post('/api/v1/user/signup')
-      .send(fakeData.noEmailInput)
-      .end((err, res) => {
-        res.should.have.status(422);
         res.body.should.have
           .property('error')
           .equal('Please supply valid email address');
         done();
       });
   });
+  // it('should check if email address is supplied', (done) => {
+  //   chai.request(app).post(`${baseUrl}/user/signup`)
+  //     .send(fakeData.noEmailInput)
+  //     .end((err, res) => {
+  //       res.should.have.status(422);
+  //       res.body.should.have
+  //         .property('error')
+  //         .equal('Please supply valid email address');
+  //       done();
+  //     });
+  // });
   it('should check if password is supplied', (done) => {
-    chai.request(app).post('/api/v1/user/signup')
+    chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.noPasswordSignupInput)
       .end((err, res) => {
         res.should.have.status(422);
@@ -93,7 +99,7 @@ describe('User', () => {
       });
   });
   it('should check if password is less than 8 characters', (done) => {
-    chai.request(app).post('/api/v1/user/signup')
+    chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.lenPasswordShort)
       .end((err, res) => {
         res.should.have.status(422);
@@ -103,74 +109,16 @@ describe('User', () => {
         done();
       });
   });
-  it('should not create user without first name', (done) => {
+
+  it('should not grant access to unregistered user', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.noFirstNameInput)
-      .end((err, res) => {
-        res.should.have.status(422);
-        done();
-      });
-  });
-  it('should not create user without last name', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.nolastNameInput)
-      .end((err, res) => {
-        res.should.have.status(422);
-        done();
-      });
-  });
-  it('should not create user with empty first name', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.IncorrectFirstNameInput)
-      .end((err, res) => {
-        res.should.have.status(422);
-        res.body.should.have
-          .property('error')
-          .equal('Input a valid first Name');
-        done();
-      });
-  });
-  it('should not create same user twice', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.newUser)
-      .end((err, res) => {
-        res.should.have.status(409);
-        res.body.should.have
-          .property('error')
-          .equal('User already exists');
-        done();
-      });
-  });
-  it('should not create user with empty last name', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signup')
-      .send(fakeData.IncorrectLastNameInput)
-      .end((err, res) => {
-        res.should.have.status(422);
-        res.body.should.have
-          .property('error')
-          .equal('Input a valid last Name');
-        done();
-      });
-  });
-  it('should not allow unregistered sign In', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/user/signin')
+      .post(`${baseUrl}/user/signin`)
       .send(fakeData.newUser2)
       .end((err, res) => {
-        res.should.have.status(404);
+        res.should.have.status(401);
         res.body.should.have.property('error')
-          .equal('User is not registered');
+          .equal('Email/Username and password mismatch');
         done();
       });
   });
@@ -178,7 +126,7 @@ describe('User', () => {
   it('should not let user sign in without password ', (done) => {
     chai
       .request(app)
-      .post('/api/v1/user/signin')
+      .post(`${baseUrl}/user/signin`)
       .send(fakeData.noPasswordInput)
       .end((err, res) => {
         res.body.should.have.property('error')
@@ -186,9 +134,9 @@ describe('User', () => {
         done();
       });
   });
-  it('should let user sign in', (done) => {
+  it('should sign in user with correct access information', (done) => {
     chai.request(app)
-      .post('/api/v1/user/signin')
+      .post(`${baseUrl}/user/signin`)
       .send(fakeData.signedInUser2)
       .end((err, res) => {
         res.body.should.be.a('object');
@@ -197,21 +145,24 @@ describe('User', () => {
         done();
       });
   });
-  it('should check that email/username and password match', (done) => {
+  it(
+    'should check that email/username and password combination matches',
+    (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/user/signin`)
+        .send(fakeData.signedInUser3)
+        .end((err, res) => {
+          token = { token };
+          res.body.should.be.a('object');
+          res.body.should.have.property('error')
+            .equal('Email/Username and password mismatch');
+          done();
+        });
+    }
+  );
+  it('should check that correct email or username is supplied', (done) => {
     chai.request(app)
-      .post('/api/v1/user/signin')
-      .send(fakeData.signedInUser3)
-      .end((err, res) => {
-        token = { token };
-        res.body.should.be.a('object');
-        res.body.should.have.property('error')
-          .equal('Email/Username and password mismatch');
-        done();
-      });
-  });
-  it('should check that correct email/username is supplied', (done) => {
-    chai.request(app)
-      .post('/api/v1/user/signin')
+      .post(`${baseUrl}/user/signin`)
       .send(fakeData.signedInUser4)
       .end((err, res) => {
         token = { token };
@@ -222,9 +173,9 @@ describe('User', () => {
         done();
       });
   });
-  it('should not allow unauthorized user to current user details', (done) => {
+  it('should not allow unauthorized user to get user details', (done) => {
     chai.request(app)
-      .get('/api/v1/user/:userId')
+      .get(`${baseUrl}/user/:userId`)
       .end((err, res) => {
         res.body.should.be.a('object');
         res.should.have.status(401);
@@ -232,28 +183,18 @@ describe('User', () => {
       });
   });
 
-  describe('', () => {
+  describe('for Authorized user', () => {
     before((done) => {
-      chai.request(app).post('/api/v1/user/signin')
+      chai.request(app).post(`${baseUrl}/user/signin`)
         .send(fakeData.signedInUser2)
         .end((err, res) => {
           token = res.body.token;
           done();
         });
     });
-    it('should not allow unauthorized user to current user details', (done) => {
+    it('should allow user profile update', (done) => {
       chai.request(app)
-        .get('/api/v1/user/1')
-        .set('x-token', token)
-        .end((err, res) => {
-          res.body.should.be.a('object');
-          res.should.have.status(200);
-          done();
-        });
-    });
-    it('should be able to update profile', (done) => {
-      chai.request(app)
-        .put('/api/v1/user/1')
+        .patch(`${baseUrl}/user/:userId`)
         .send(fakeData.updateProfile)
         .set('x-token', token)
         .end((err, res) => {
@@ -263,9 +204,9 @@ describe('User', () => {
         });
     });
   });
-  it('should not allow unauthorized user to view profile', (done) => {
+  it('should not grant permission to unauthorized user to view other\'s profile', (done) => {
     chai.request(app)
-      .put('/api/v1/user/:userId')
+      .patch(`${baseUrl}/user/:userId`)
       .end((err, res) => {
         res.body.should.be.a('object');
         res.should.have.status(401);

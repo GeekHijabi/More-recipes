@@ -1,28 +1,37 @@
-@import "./variables";
 @import url('https://fonts.googleapis.com/css?family=Tangerine');
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
+html {
+  position: relative;
+  height: 100%;
+}
+
+#main {
+  height: 100%;
+}
+
 body {
   overflow-x: hidden;
-  min-height: 700px;
+  height: 100%;
 }
 
 ul.ml-auto {
   margin-right: 2rem;
  }
 
-.font-up, footer.page-footer .title {
+.font-up, xfooter.page-footer .title {
   text-transform: inherit;
 }
 
 #banner {
   position: relative;
   height: calc(90vh - 50px);
-  padding-top: 18%;
+
   img.bg{
     position: absolute;
     width: 100%;
     height: 100%;
+    z-index: -1;
     top: 0;
     left: 0;
     -o-object-fit: cover;
@@ -44,17 +53,27 @@ img.bg{
           filter: brightness(0.8)
 }
 
-#banner>.container>.body-title-card {
-  background: none;
-  text-align: center;
-  margin: -24px;
+.body-title-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 1rem;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  // background: none;
+  // text-align: center;
+  // margin: -24px;
   font-family: 'Tangerine', cursive;
+
   h1.body-title {
     font-size: 6rem;
-    color: floralwhite
+    color: floralwhite;
+    text-align: center;
   }
   .body-title-button {
-    width: 40rem;
+    width: 60%;
     cursor: pointer;
     padding: 1rem 0;
     background: #B0C038;
@@ -69,8 +88,8 @@ img.bg{
   }
 }
 
-#list {
-  padding: 2rem 2%;
+#list.row{
+  margin: 0;
 }
 
 .form-label{
@@ -86,10 +105,21 @@ img.bg{
   display: block;
 }
 
-.heading {
-  padding-bottom: 2rem;
-  margin-top: 33px;
+.card-size{
+  min-height: 400px;
+  max-height: 400px;
+  overflow: hidden;
 }
+
+.card-style {
+  width: 92%;
+  margin: 5em auto;
+}
+
+.heading {
+  margin-top: 2em;
+}
+
 .headings {
   margin-top: 31px;
   margin-left: 29px;
@@ -108,7 +138,7 @@ img.bg{
 .heading i {
   position: absolute;
   top: 0;
-  right: 0.5rem;
+  right: 1.5rem;
   margin-top: -0.3rem;
   cursor: pointer;
 }
@@ -154,6 +184,8 @@ main[page="details"] span.food_name {
   padding: 0.5rem 1.5rem;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+  word-wrap: break-word;
+  width: 60%
 }
 
 main[page="details"] .food_vote {
@@ -227,6 +259,7 @@ span .detail-value {
 
 [page="profile"] div.dual:first-child {
   background: antiquewhite;
+  padding: 0 2em;
 }
 
 [page="profile"] div.dual:first-child >.container {
@@ -234,21 +267,19 @@ span .detail-value {
 }
 
 h1.name {
-  font-size: 4rem;
-  padding: 0.7rem 0rem;
+  font-size: 3rem;
+  margin-top: 2rem;
 }
 
 .name-desc {
-  margin-top: -1rem;
   font-size: 2rem;
   font-family: tangerine;
 }
 
 .red-border-line {
-  width: 10rem;
+  width: 100%;
   height: 3px;
   background: #E91E63;
-  margin-bottom: 2rem;
 }
 
 .social-icons {
@@ -261,14 +292,14 @@ h1.name {
 }
 
 [page="signup"] {
-  padding: 10rem 36rem;
   background-image: url(../assets/images/banner_bg.jpg);
   background-size: cover;
+  height: 100%;
 }
 [page="signin"] {
-  padding: 18rem 36rem;
   background-image: url(../assets/images/banner_bg.jpg);
   background-size: cover;
+  height: 100%;
 }
 
 .overlay {
@@ -291,6 +322,7 @@ h1.name {
  .btn-white {
   background: #B0C038;
   background: #B0C038;
+  box-shadow: 23px 15px 20px rgba(0, 0, 0, 0.1);
   -webkit-transition: .3s ease-in-out;
   -o-transition: .3s ease-in-out;
   -webkit-transition: .3s ease-in-out;
@@ -330,11 +362,9 @@ h1.name {
   padding-bottom: 2rem;
 }
 
-.mv-card {
-  padding-bottom: 2rem;
-  padding-left: 3rem;
-  height: -webkit-fill-available;
-  padding-top: 1rem;
+.headings {
+  margin-top: 31px;
+  margin-left: 5px;
 }
 
 .recipe-header{
@@ -367,7 +397,7 @@ h1.name {
 }
 
 .card-height{
-  height: 180px;
+  height: 250px;
 }
 
 .bg-success {
@@ -394,11 +424,19 @@ h1.name {
 .review-edit {
   margin: 0 auto;
   width: 600px;
-	height: 110px;
+  border: 1px solid black;
+  width: 94%;
+  display: block;
+  height: 110px;
+  border-radius: 0.25em;
 }
 
 .review-btn {
   background: #B0C038;
+  color: white;
+  margin-top: 1em;
+  margin-left: 16em;
+  box-shadow: 23px 15px 20px rgba(0, 0, 0, 0.1);
 }
 
 .review-img {
@@ -430,6 +468,7 @@ h1.name {
 
 .modal-title {
   margin-left: 40%;
+  color: white;
 }
 
 .modal-header{
@@ -439,6 +478,7 @@ h1.name {
 .styledTextarea{
   width: 368px;
   height: 100px;
+  border-radius: 0.25rem;
 }
 
 .btn-secondary {
@@ -455,11 +495,13 @@ h1.name {
 }
 
 .styleText{
-  font-size: 40px;
+  font-size: 60px;
   font-family: Tangerine;
-  color: #B0C038;
-  margin-left: 35%;
-  margin-right: 50px
+}
+
+.reviewText{
+  font-size: 45px;
+  font-family: Tangerine;
 }
 
 .edit-button{
@@ -469,9 +511,9 @@ h1.name {
 .fa-icons{
   cursor: pointer;
 }
-.profile-edit{
-    float: right;
-    padding: 84px 20px;
+
+.span-profile {
+  display: inline-block;
 }
 
 .review-avatar{
@@ -488,22 +530,82 @@ h1.name {
   clear: both;
 }
 
-@media screen and (max-width: 576px) { 
-  #banner {
-    padding-top: 50%
-  }
- }
+.remove-fav 
+{ 
+  padding-left: 8rem 
+}
+
+.modal-button {
+  padding: 1.5rem 10rem 0;
+}
+
+.fa-style {
+  font-size: 0.5em;
+}
+
+.submit-btn {
+  cursor: pointer;
+  box-shadow: 23px 15px 20px rgba(0, 0, 0, 0.1)
+}
+
+.error-page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-filter: brightness(2.5);
+          filter: brightness(2.5)
+}
+
+.pageStyle {
+  margin-top: 2em;
+  margin-left: 2em;
+  font-size: 48px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.float {
+  -webkit-transition:all .3s ease-out;
+  -moz-transition:all .3s ease-out;
+  -ms-transition:all .3s ease-out;
+  -o-transition:all .3s ease-out;
+  transition:all .3s ease-out;
+}
+
+.float:hover {
+  -webkit-transform:translate(0px,-10px);
+  -moz-transform:translate(0px,-10px);
+  -ms-transform:translate(0px,-10px);
+  -o-transform:translate(0px,-10px);
+  transform:translate(0px,-10px);
+}
+
 @media screen and (max-width: 1400px) {
+  .body-title-button {
+    width: 100% !important;
+   }
+
   .bg-size {
     display: none
   }
 
-  [page="signup"] {
-    padding: 20rem 0rem;
+  .error-page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    -o-object-fit: cover;
+       object-fit: cover;
+    -webkit-filter: brightness(2.5);
+            filter: brightness(2.5)
   }
-  [page="signin"] {
-    padding: 30rem 0rem;
-  }
+
   .form-elegant {
     height: 100%
   }
