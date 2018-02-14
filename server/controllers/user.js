@@ -187,10 +187,10 @@ export default {
   },
 
   forgotPassword(req, res) {
-    const { userId } = req.params;
+    const { email } = req.body;
     User.findOne({
       where: {
-        id: userId
+        email
       }
     }).then((userFound) => {
       if (!userFound) {
@@ -211,7 +211,7 @@ export default {
           template: 'forgot-password-email',
           subject: 'Password help has arrived!',
           context: {
-            url: `http://${req.headers.host}/reset-password/${userId}?token=${token}`,
+            url: `http://${req.headers.host}/reset-password/${userFound.id}?token=${token}`,
             name: userFound.userName.split(' ')[0]
           }
         };
@@ -255,7 +255,6 @@ export default {
         });
       }
       if (id === userFound.id) {
-        console.log('new', newPassword, salt);
         const hashedPassword = bcrypt.hashSync(newPassword, salt, null);
         userFound.update({
           password: hashedPassword,
@@ -283,55 +282,4 @@ export default {
       }
     });
   },
-
-  // resetPassword(req, res) {
-  //   const { token, newPassword } = req.body;
-  //   // const { userId } = req.params;
-  //   User.findOne({
-  //     where: {
-  //       $and: [
-  //         // {
-  //         //   id: userId
-  //         // },
-  //         {
-  //           reset_password_token: token
-  //         }
-  //       ]
-  //     },
-  //   }).then((userFound) => {
-  //     console.log('userfiu', userFound);
-  //     if (!userFound) {
-  //       return res.status(404).json({
-  //         error: 'user not found'
-  //       });
-  //     }
-  //     if (userFound.id) {
-  //       const hashedPassword = bcrypt.hashSync(newPassword, salt, null);
-  //       userFound.update({
-  //         password: hashedPassword,
-  //       });
-  //       const data = {
-  //         to: userFound.email,
-  //         from: emailAddress,
-  //         template: 'reset-password-email',
-  //         subject: 'Password Reset Confirmation',
-  //         context: {
-  //           name: userFound.userName.split(' ')[0]
-  //         }
-  //       };
-
-  //       smtpTransport.sendMail(data, (err) => {
-  //         if (!err) {
-  //           return res.json({ message: 'Password reset successfully' });
-  //         }
-  //         return (err);
-  //       });
-  //     } else {
-  //       return res.status(422).send({
-  //         message: 'Password do not match'
-  //       });
-  //     }
-  //   });
-  // },
-
 };

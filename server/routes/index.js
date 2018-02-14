@@ -42,7 +42,7 @@ const routes = (app) => {
       user.updateUserProfile
     );
 
-  app.route(`${baseUrl}/forgot-password/:userId`)
+  app.route(`${baseUrl}/forgot-password`)
     .post(user.forgotPassword);
 
   app.route(`${baseUrl}/reset-password/:userId`)

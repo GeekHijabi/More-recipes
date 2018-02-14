@@ -23,7 +23,7 @@ export class ResetPassword extends React.Component {
     super(props);
     this.state = {
       newPassword: '',
-      confirmpassword: '',
+      confirmPassword: '',
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
@@ -47,13 +47,14 @@ export class ResetPassword extends React.Component {
    * @returns {void}
  */
   onClick(event) {
-    // const url = window.location.href;
-    // const currentURL = url.split('/')[url.split('/').length - 1];
+    const baseUrl = window.location.href;
+    const url = baseUrl.split('?token=');
+    const currentURL = url[0];
+    const userId = currentURL.split('/')[currentURL.split('/').length - 1];
     if (this.isValid()) {
       event.preventDefault();
-      this.props.apiResetPassword(2, this.state.newPassword)
+      this.props.apiResetPassword(userId, this.state.newPassword, url[1])
         .then((data) => {
-          console.log('res contr', data.newPasswordMessage);
           toastr.options = {
             closeButton: true,
             progressBar: true
@@ -62,10 +63,8 @@ export class ResetPassword extends React.Component {
           this.props.history.push('/signin');
         })
         .catch((err) => {
-          console.log('contr err', err);
           toastr.danger(err.data);
         });
-    // console.log(this.props.apiResetPassword());
     }
   }
 
@@ -126,9 +125,9 @@ export class ResetPassword extends React.Component {
                   type="password"
                   className="Form-email1 form-control"
                   placeholder="confirm Password"
-                  name="confirmpassword"
+                  name="confirmPassword"
                   onChange={this.onChange}
-                  value={this.state.confirmpassword}
+                  value={this.state.confirmPassword}
                   required
                 />
                 {errors.confirmPassword &&

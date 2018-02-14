@@ -47,18 +47,15 @@ export class ForgotPassword extends React.Component {
  */
   onClick(event) {
     if (this.isValid()) {
-      // const url = window.location.href;
-      // const currentURL = url.split('/')[url.split('/').length - 1];
-      console.log('cr', currentUrl);
       event.preventDefault();
-      this.props.apiForgotPassword(2)
+      this.props.apiForgotPassword(this.state.email)
         .then((res) => {
           toastr.options = {
             closeButton: true,
             progressBar: true
           };
           toastr.success(res.data.message);
-          this.props.history.push('/reset-password');
+          this.props.history.push('/signin');
         })
         .catch((err) => {
           toastr.danger(err.data);
