@@ -23,7 +23,7 @@ export class ResetPassword extends React.Component {
     super(props);
     this.state = {
       newPassword: '',
-      confirmpassword: '',
+      confirmPassword: '',
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
@@ -47,11 +47,13 @@ export class ResetPassword extends React.Component {
    * @returns {void}
  */
   onClick(event) {
-    // const url = window.location.href;
-    // const currentURL = url.split('/')[url.split('/').length - 1];
+    const baseUrl = window.location.href;
+    const url = baseUrl.split('?token=');
+    const currentURL = url[0];
+    const userId = currentURL.split('/')[currentURL.split('/').length - 1];
     if (this.isValid()) {
       event.preventDefault();
-      this.props.apiResetPassword(2, this.state.newPassword)
+      this.props.apiResetPassword(userId, this.state.newPassword, url[1])
         .then((data) => {
           toastr.options = {
             closeButton: true,
@@ -124,9 +126,9 @@ export class ResetPassword extends React.Component {
                   id="Form-email1 "
                   className="form-control"
                   placeholder="confirm Password"
-                  name="confirmpassword"
+                  name="confirmPassword"
                   onChange={this.onChange}
-                  value={this.state.confirmpassword}
+                  value={this.state.confirmPassword}
                   required
                 />
                 {errors.confirmPassword &&
