@@ -17,7 +17,7 @@ import ResetPassword from './components/Auth/ResetPassword';
 
 const App = () => (
   <BrowserRouter>
-    <div id="wrap">
+    <div id="wrap" style={{ height: '100%' }}>
       <Switch>
         <Route
           path="/"

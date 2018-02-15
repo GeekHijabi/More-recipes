@@ -96,7 +96,7 @@ export class ResetPassword extends React.Component {
       <div page="signin">
         <div className="overlay" />
         <RecipeHeader />
-        <div className="card card-style">
+        <div className="card card-style reset-card">
           <div className="card-body mx-4">
             <div className="text-center">
               <h3 className="dark-grey-text mb-5" >

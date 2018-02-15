@@ -61,10 +61,6 @@ img.bg{
   align-items: center;
   width: 100%;
   height: 100%;
-
-  // background: none;
-  // text-align: center;
-  // margin: -24px;
   font-family: 'Tangerine', cursive;
 
   h1.body-title {
@@ -582,6 +578,14 @@ h1.name {
   -ms-transform:translate(0px,-10px);
   -o-transform:translate(0px,-10px);
   transform:translate(0px,-10px);
+}
+
+.reset-card {
+  width: 45%;
+}
+
+.reset-text {
+  display: block;
 }
 
 @media screen and (max-width: 1400px) {

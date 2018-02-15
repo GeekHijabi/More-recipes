@@ -92,25 +92,29 @@ export class ForgotPassword extends React.Component {
       <div page="signin">
         <div className="overlay" />
         <RecipeHeader />
-        <div className="card card-style">
+        <div className="card card-style reset-card">
           <div className="card-body mx-4">
             <div className="text-center">
-              <h3 className="dark-grey-text mb-5" >
+              <h3 className="dark-grey-text mb-4" >
                 <strong>Forgot password?</strong>
               </h3>
+              <span className="mb-3 reset-text">No worries!
+              Input your email address below and we will send you
+              reset information
+              </span>
             </div>
             <div className="md-form">
-              <label htmlFor="Form-email1" className="form-label">Email
-            <input
-              type="text"
-              id="Form-email1"
-              className="form-control"
-              placeholder="Email"
-              name="email"
-              onChange={this.onChange}
-              value={this.state.email}
-              required
-            />
+              <label htmlFor="Form-email1" className="form-label">
+                <input
+                  type="text"
+                  id="Form-email1"
+                  className="form-control"
+                  placeholder="Email"
+                  name="email"
+                  onChange={this.onChange}
+                  value={this.state.email}
+                  required
+                />
                 {errors.email &&
                 <small style={{ color: '#A43741' }}>
                   {errors.email }

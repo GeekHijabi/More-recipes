@@ -44,7 +44,7 @@ const routes = (app) => {
   app.route(`${baseUrl}/forgot-password`)
     .post(user.forgotPassword);
 
-  app.route(`${baseUrl}/reset-password/:userId`)
+  app.route(`${baseUrl}/reset-password`)
     .post(authenticate, user.resetPassword);
 
   app

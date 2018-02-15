@@ -17,12 +17,12 @@ export default function validateresetPasswordInput(data) {
     errors.newPassword = 'Password is too short, Must be min. of 8';
   }
 
-  if (Validator.isEmpty(data.confirmpassword)) {
-    errors.confirmpassword = 'This field is required';
+  if (Validator.isEmpty(data.confirmPassword)) {
+    errors.confirmPassword = 'This field is required';
   }
 
-  if (!Validator.equals(data.newPassword, data.confirmpassword)) {
-    errors.confirmpassword = 'Password does not match';
+  if (!Validator.equals(data.newPassword, data.confirmPassword)) {
+    errors.confirmPassword = 'Password does not match';
   }
 
   return {
