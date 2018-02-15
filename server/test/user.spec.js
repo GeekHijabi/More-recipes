@@ -214,7 +214,7 @@ describe('User controller', () => {
     'should allow user reset their password through email',
     (done) => {
       chai.request(app)
-        .post(`${baseUrl}/forgot-password/1`)
+        .post(`${baseUrl}/forgot-password`)
         .send(fakeData.emailReset)
         .end((err, res) => {
           // res.body.should.be.a('object');

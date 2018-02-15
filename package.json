@@ -19,11 +19,12 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha ./server/test/ --compilers js:babel-register",
-    "test:client": "jest ./client/src/test --coverage --collectCoverageFrom=client/**/**/*.{js,jsx}",
+    "test:client": "jest --coverage --collectCoverageFrom=client/**/**/*.{js,jsx}",
     "jest": "jest",
     "pre:test": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "e2e-setup": "node_modules/selenium-standalone/bin/selenium-standalone install",
-    "e2e:test": "npm run pre:test && nightwatch ./e2etests/*.js"
+    "e2e:test": "npm run pre:test && nightwatch ./e2etests/*.js",
+    "app:test": "npm run jest -- -u && npm run test"
   },
   "repository": {
     "type": "git",
@@ -55,6 +56,7 @@
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "classnames": "^2.2.5",
+    "codeclimate-test-reporter": "^0.5.0",
     "concurrently": "^3.5.0",
     "coveralls": "^3.0.0",
     "css-loader": "^0.28.4",

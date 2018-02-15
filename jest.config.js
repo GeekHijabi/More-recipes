@@ -17,7 +17,7 @@ module.exports = {
     '!**/vendor/**'
   ],
   rootDir: 'client',
-  roots: ['<rootDir>'],
+  roots: ['<rootDir>/src'],
   setupFiles: [
     '<rootDir>/src/test/testSetup.js',
     '<rootDir>/src/test/__mocks__/localStorageMock.js',

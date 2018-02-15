@@ -51,10 +51,10 @@ exports[`Component: SignUp sign up snapshot should render correctly 1`] = `
                 className="Form-email1 form-control"
                 name="userName"
                 onChange={[Function]}
-                pattern="(?=^.{2,15}$)(?!.*\\\\s).*$"
+                pattern="(?=^.{6,15}$)(?!.*\\\\s).*$"
                 placeholder="janedoe"
                 required={true}
-                title="2 to 15 characters required"
+                title="6 to 15 characters required"
                 type="text"
                 value=""
               />

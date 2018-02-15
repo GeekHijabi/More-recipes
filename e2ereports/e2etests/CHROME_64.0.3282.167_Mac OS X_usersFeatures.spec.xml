@@ -5,9 +5,9 @@
 
   <testsuite name="e2etests.usersFeatures.spec"
     errors="0" failures="0" hostname="" id="" package="usersFeatures.spec" skipped="0"
-    tests="18" time="140.4" timestamp="Wed, 14 Feb 2018 18:05:52 GMT">
+    tests="18" time="140.8" timestamp="Thu, 15 Feb 2018 12:51:29 GMT">
   
-    <testcase name="Display homepage and ensure all element are available" classname="e2etests.usersFeatures.spec" time="6.342" assertions="11">
+    <testcase name="Display homepage and ensure all element are available" classname="e2etests.usersFeatures.spec" time="8.359" assertions="11">
 
     
 
@@ -32,7 +32,7 @@
     
     </testcase>
   
-    <testcase name="User receives an error if a required field for signup is empty" classname="e2etests.usersFeatures.spec" time="12.79" assertions="9">
+    <testcase name="User receives an error if a required field for signup is empty" classname="e2etests.usersFeatures.spec" time="13.11" assertions="9">
 
     
 
@@ -53,7 +53,7 @@
     
     </testcase>
   
-    <testcase name="User can sign up" classname="e2etests.usersFeatures.spec" time="12.35" assertions="6">
+    <testcase name="User can sign up" classname="e2etests.usersFeatures.spec" time="12.52" assertions="6">
 
     
 
@@ -68,7 +68,7 @@
     
     </testcase>
   
-    <testcase name="User cannot sign up with data that already exists" classname="e2etests.usersFeatures.spec" time="4.816" assertions="3">
+    <testcase name="User cannot sign up with data that already exists" classname="e2etests.usersFeatures.spec" time="5.480" assertions="3">
 
     
 
@@ -77,51 +77,7 @@
     
     </testcase>
   
-    <testcase name="User receives an error if a required field for signin is empty" classname="e2etests.usersFeatures.spec" time="7.473" assertions="5">
-
-    
-
-    
-
-    
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="User can sign in to the app" classname="e2etests.usersFeatures.spec" time="6.030" assertions="4">
-
-    
-
-    
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="AllRecipes: user sees a message when there&#39;s no recipe on the app" classname="e2etests.usersFeatures.spec" time="4.186" assertions="2">
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="AllRecipes: user sees a message when no recipe has been created" classname="e2etests.usersFeatures.spec" time="4.198" assertions="2">
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="User gets an error if required fields for creating recipe is empty" classname="e2etests.usersFeatures.spec" time="11.33" assertions="8">
-
-    
-
-    
-
-    
+    <testcase name="User receives an error if a required field for signin is empty" classname="e2etests.usersFeatures.spec" time="7.597" assertions="5">
 
     
 
@@ -134,7 +90,7 @@
     
     </testcase>
   
-    <testcase name="User can create a recipe" classname="e2etests.usersFeatures.spec" time="15.73" assertions="13">
+    <testcase name="User can sign in to the app" classname="e2etests.usersFeatures.spec" time="6.186" assertions="4">
 
     
 
@@ -143,8 +99,23 @@
     
 
     
+    </testcase>
+  
+    <testcase name="AllRecipes: user sees a message when there&#39;s no recipe on the app" classname="e2etests.usersFeatures.spec" time="4.242" assertions="2">
 
     
+
+    
+    </testcase>
+  
+    <testcase name="AllRecipes: user sees a message when no recipe has been created" classname="e2etests.usersFeatures.spec" time="4.212" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="User gets an error if required fields for creating recipe is empty" classname="e2etests.usersFeatures.spec" time="7.415" assertions="8">
 
     
 
@@ -163,7 +134,7 @@
     
     </testcase>
   
-    <testcase name="User can not create recipe with same name twice" classname="e2etests.usersFeatures.spec" time="3.378" assertions="4">
+    <testcase name="User can create a recipe" classname="e2etests.usersFeatures.spec" time="15.97" assertions="13">
 
     
 
@@ -172,23 +143,6 @@
     
 
     
-    </testcase>
-  
-    <testcase name="Edit Recipe: users can edit recipes created by them" classname="e2etests.usersFeatures.spec" time="6.800" assertions="1">
-
-    
-    </testcase>
-  
-    <testcase name="Delete Recipe: users can delete recipes created by them" classname="e2etests.usersFeatures.spec" time="7.408" assertions="3">
-
-    
-
-    
-
-    
-    </testcase>
-  
-    <testcase name="Recipe Details: users can view recipe details" classname="e2etests.usersFeatures.spec" time="12.78" assertions="9">
 
     
 
@@ -209,15 +163,9 @@
     
     </testcase>
   
-    <testcase name="Favorite: user see their favorite recipes" classname="e2etests.usersFeatures.spec" time="7.357" assertions="1">
+    <testcase name="User can not create recipe with same name twice" classname="e2etests.usersFeatures.spec" time="3.600" assertions="4">
 
     
-    </testcase>
-  
-    <testcase name="Profile: user see their profile page" classname="e2etests.usersFeatures.spec" time="6.972" assertions="0">
-    </testcase>
-  
-    <testcase name="AllRecipes: user can get all the recipes available" classname="e2etests.usersFeatures.spec" time="4.200" assertions="3">
 
     
 
@@ -226,7 +174,59 @@
     
     </testcase>
   
-    <testcase name="user gets redirected to a 404 page when route is invalid" classname="e2etests.usersFeatures.spec" time="6.249" assertions="2">
+    <testcase name="Edit Recipe: users can edit recipes created by them" classname="e2etests.usersFeatures.spec" time="6.844" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Delete Recipe: users can delete recipes created by them" classname="e2etests.usersFeatures.spec" time="7.474" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Recipe Details: users can view recipe details" classname="e2etests.usersFeatures.spec" time="12.85" assertions="9">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Favorite: user see their favorite recipes" classname="e2etests.usersFeatures.spec" time="7.388" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Profile: user see their profile page" classname="e2etests.usersFeatures.spec" time="7.062" assertions="0">
+    </testcase>
+  
+    <testcase name="AllRecipes: user can get all the recipes available" classname="e2etests.usersFeatures.spec" time="4.232" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user gets redirected to a 404 page when route is invalid" classname="e2etests.usersFeatures.spec" time="6.290" assertions="2">
 
     
 

@@ -4,6 +4,11 @@ exports[`App should render routes correctly 1`] = `
 <BrowserRouter>
   <div
     id="wrap"
+    style={
+      Object {
+        "height": "100%",
+      }
+    }
   >
     <Switch>
       <Route

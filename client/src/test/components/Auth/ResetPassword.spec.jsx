@@ -51,18 +51,18 @@ describe('Component: ResetPassword', () => {
     });
   });
 
-  // describe('isValid', () => {
-  //   it('should check if data is valid', () => {
-  //     const errors = {
-  //       email: ''
-  //     };
-  //     const event = {
-  //       preventDefault: jest.fn()
-  //     };
-  //     const isNotvalid = shallow(<ResetPassword {...props} />);
-  //     isNotvalid.setState(errors);
-  //     isNotvalid.instance().isValid(event);
-  //   });
-  // });
+  describe('isValid', () => {
+    it('should check if data is valid', () => {
+      const errors = {
+        email: ''
+      };
+      const event = {
+        preventDefault: jest.fn()
+      };
+      const isNotvalid = shallow(<ResetPassword {...props} />);
+      isNotvalid.setState(errors);
+      isNotvalid.instance().isValid(event);
+    });
+  });
 });
 
