@@ -5,7 +5,7 @@ import initialState from '../../js/utils/initialState';
 import dataMock from '../__mocks__/dataMock';
 import { GET_SEARCH_ITEM } from '../../js/constants';
 
-describe.only('Recipe reducer', () => {
+describe('Recipe reducer', () => {
   it(
     'should return isLoadingRecipe as true when CREATE_RECIPE is dispatched',
     () => {

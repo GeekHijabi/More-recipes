@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: TrendingRecipe TrendingRecipe in snapshot should render correctly 1`] = `
+<div
+  style={
+    Object {
+      "margin": "0 6.5em",
+      "width": "85%",
+    }
+  }
+>
+  <h4
+    className="heading"
+  >
+    <span>
+      Currently Trending
+    </span>
+  </h4>
+  <div
+    className="container-fluid"
+  >
+    <div
+      className="row"
+    />
+  </div>
+</div>
+`;

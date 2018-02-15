@@ -17,7 +17,7 @@ const image = require('../../../assets/images/default_image.jpeg');
  * @class EditRecipeModal
  * @extends {React.Component}
  */
-class EditRecipeModal extends React.Component {
+export class EditRecipeModal extends React.Component {
   /**
    * @description constructor Function
    * @param {any} props

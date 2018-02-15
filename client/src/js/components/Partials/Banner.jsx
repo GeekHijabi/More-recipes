@@ -10,7 +10,7 @@ const image = require('../../../assets/images/banner_bg.jpg');
  * @class Banner
  * @extends {React.Component}
  */
-class Banner extends React.Component {
+export class Banner extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props

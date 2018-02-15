@@ -3,7 +3,7 @@ import auth from '../../js/reducers/auth';
 import * as actions from '../../js/actions/auth';
 import initialState from '../../js/utils/initialState';
 
-describe.only('Auth reducer', () => {
+describe('Auth reducer', () => {
   it('should return the initial state', () => {
     expect(auth(undefined, {})).toEqual(initialState);
   });

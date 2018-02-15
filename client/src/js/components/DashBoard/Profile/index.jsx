@@ -17,7 +17,7 @@ const image = require('../../../../assets/images/no-avatar.png');
  * @class Profile
  * @extends {React.Component}
  */
-class Profile extends React.Component {
+export class Profile extends React.Component {
   /**
    * @description Constructor Function
    * @param {any} props

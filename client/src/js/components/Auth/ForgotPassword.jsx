@@ -103,7 +103,8 @@ export class ForgotPassword extends React.Component {
               <label htmlFor="Form-email1" className="form-label">Email
             <input
               type="text"
-              className="Form-email1 form-control"
+              id="Form-email1"
+              className="form-control"
               placeholder="Email"
               name="email"
               onChange={this.onChange}

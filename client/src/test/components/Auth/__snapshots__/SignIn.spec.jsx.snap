@@ -92,9 +92,9 @@ exports[`Component: SignIn sign in snapshot should render correctly 1`] = `
               >
                 <Link
                   className="blue-text ml-1"
-                  href="/"
+                  href="/forgot-password"
                   replace={false}
-                  to="/"
+                  to="/forgot-password"
                 >
                   Forgot Password?
                 </Link>

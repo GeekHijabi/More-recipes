@@ -10,7 +10,7 @@ import { apiSearchRecipe, searchItem } from '../../actions/recipe';
  * @class SearchBar
  * @extends {React.Component}
  */
-class SearchBar extends React.Component {
+export class SearchBar extends React.Component {
 /**
  *
  *@param {object} props

@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import initialState from '../utils/initialState';
 import {
   LOGIN_USER_SUCCESS,
@@ -42,7 +43,7 @@ export default (state = initialState, action) => {
       };
     case SET_CURRENT_USER:
       return {
-        ...newState,
+        isAuthenticated: !isEmpty(user),
         currentUser: user
       };
     case REMOVE_CURRENT_USER:

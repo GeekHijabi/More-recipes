@@ -52,14 +52,6 @@ describe('User controller', () => {
         done();
       });
   });
-  // it('should create object response for user signup', (done) => {
-  //   chai.request(app).post(`${baseUrl}/user/signup`)
-  //     .send(fakeData.newUser)
-  //     .end((err, res) => {
-  //       res.should.be.a('object');
-  //       done();
-  //     });
-  // });
   it('should not create user with invalid Email', (done) => {
     chai
       .request(app)
@@ -76,17 +68,6 @@ describe('User controller', () => {
         done();
       });
   });
-  // it('should check if email address is supplied', (done) => {
-  //   chai.request(app).post(`${baseUrl}/user/signup`)
-  //     .send(fakeData.noEmailInput)
-  //     .end((err, res) => {
-  //       res.should.have.status(422);
-  //       res.body.should.have
-  //         .property('error')
-  //         .equal('Please supply valid email address');
-  //       done();
-  //     });
-  // });
   it('should check if password is supplied', (done) => {
     chai.request(app).post(`${baseUrl}/user/signup`)
       .send(fakeData.noPasswordSignupInput)
@@ -173,6 +154,19 @@ describe('User controller', () => {
         done();
       });
   });
+  it('should check that username is up to 6 characters', (done) => {
+    chai.request(app)
+      .post(`${baseUrl}/user/signup`)
+      .send(fakeData.userNameLess)
+      .end((err, res) => {
+        token = { token };
+        res.body.should.be.a('object');
+        res.should.have.status(422);
+        res.body.should.have.property('error')
+          .equal('Please provide a valid username with atleast 6 characters.');
+        done();
+      });
+  });
   it('should not allow unauthorized user to get user details', (done) => {
     chai.request(app)
       .get(`${baseUrl}/user/:userId`)
@@ -204,13 +198,29 @@ describe('User controller', () => {
         });
     });
   });
-  it('should not grant permission to unauthorized user to view other\'s profile', (done) => {
-    chai.request(app)
-      .patch(`${baseUrl}/user/:userId`)
-      .end((err, res) => {
-        res.body.should.be.a('object');
-        res.should.have.status(401);
-        done();
-      });
-  });
+  it(
+    'should not grant permission to unauthorized user to view other\'s profile',
+    (done) => {
+      chai.request(app)
+        .patch(`${baseUrl}/user/:userId`)
+        .end((err, res) => {
+          res.body.should.be.a('object');
+          res.should.have.status(401);
+          done();
+        });
+    }
+  );
+  it(
+    'should allow user reset their password through email',
+    (done) => {
+      chai.request(app)
+        .post(`${baseUrl}/forgot-password/1`)
+        .send(fakeData.emailReset)
+        .end((err, res) => {
+          // res.body.should.be.a('object');
+          res.should.have.status(200);
+        });
+      done();
+    }
+  );
 });

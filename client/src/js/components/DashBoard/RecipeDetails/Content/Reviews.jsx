@@ -12,7 +12,7 @@ const image = require('../../../../../assets/images/no_picture.png');
 /**
  * @extends {React.Component}
  */
-class Reviews extends React.Component {
+export class Reviews extends React.Component {
   /**
    * @description Constructor Function
    * @param {any} props

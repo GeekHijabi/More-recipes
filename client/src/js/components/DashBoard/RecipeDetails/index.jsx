@@ -21,7 +21,7 @@ const Image = require('../../../../assets/images/banner_bg.jpg');
  * @class MyRecipe
  * @extends {React.Component}
  */
-class MyRecipe extends React.Component {
+export class MyRecipe extends React.Component {
   /**
    * @description COnstructor Function
    * @param {any} props

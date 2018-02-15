@@ -3,10 +3,10 @@ import toastr from 'toastr';
 import $ from 'jquery';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import { configure, shallow, mount } from 'enzyme';
+import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import { LocalStorage } from './__mocks__/localStorageMock';
+import localStorage from './__mocks__/localStorageMock';
 
 configure({ adapter: new Adapter() });
 
@@ -24,5 +24,7 @@ global.toastr = toastr;
 global.navigator = {
   userAgent: 'node.js'
 };
+global.localStorage = localStorage;
 
-const documentRef = document;
+
+let documentRef = document;

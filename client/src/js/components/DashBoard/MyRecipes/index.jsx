@@ -20,7 +20,7 @@ import { apiCreateRecipe,
  * @class RecipeAdmin
  * @extends {React.Component}
  */
-class RecipeAdmin extends React.Component {
+export class RecipeAdmin extends React.Component {
   /**
    * @description Constructor Function
    * @param {any} props
@@ -105,7 +105,7 @@ class RecipeAdmin extends React.Component {
    */
   viewRecipe(recipeId) {
     this.props.onViewRecipe(recipeId);
-    this.context.router.history.push(`/recipe/${recipeId}`);
+    this.props.history.push(`/recipe/${recipeId}`);
   }
 
   /**
@@ -206,11 +206,8 @@ RecipeAdmin.propTypes = {
   myRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
   errorMessage: PropTypes.string.isRequired,
   pageCount: PropTypes.number,
-  isLoadingRecipe: PropTypes.bool
-};
-
-RecipeAdmin.contextTypes = {
-  router: PropTypes.object.isRequired
+  isLoadingRecipe: PropTypes.bool,
+  history: PropTypes.objectOf(PropTypes.any).isRequired
 };
 
 /**

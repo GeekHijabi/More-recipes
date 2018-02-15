@@ -1,7 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RecipeHeader should render correctly 1`] = `
-<Route
-  render={[Function]}
-/>
+<nav
+  className="navbar bg-success navbar-expand-lg"
+>
+  <Link
+    className="navbar-brand text-white"
+    href="/"
+    replace={false}
+    to="/"
+  >
+    <i
+      className="fa fa-eercast"
+    />
+     More Recipe
+  </Link>
+  <button
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    className="navbar-toggler"
+    data-target="#navbarSupportedContent"
+    data-toggle="collapse"
+    type="button"
+  >
+    <span
+      className="navbar-toggler-icon"
+      style={
+        Object {
+          "color": "white",
+          "cursor": "pointer",
+        }
+      }
+    >
+      <i
+        className="fa fa-bars 4x"
+      />
+    </span>
+  </button>
+</nav>
 `;

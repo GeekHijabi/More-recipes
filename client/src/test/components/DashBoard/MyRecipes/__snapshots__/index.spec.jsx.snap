@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecipeAdmin snapshot should render correctly 1`] = `
+<div>
+  <withRouter(Connect(RecipeHeader)) />
+  <div
+    style={
+      Object {
+        "margin": "0 auto",
+        "minHeight": "795px",
+        "width": "85%",
+      }
+    }
+  >
+    <section
+      className="row"
+      id="list"
+    >
+      <div
+        className="col-xs-12 col-sm-12 col-md-12 col-lg-12 heading"
+      >
+        <h4
+          className="mb-5"
+        >
+          <span>
+            My Recipe
+          </span>
+        </h4>
+        <i
+          className="fa fa-plus-circle fa-2x fa-icons"
+          data-toggle="tooltip"
+          onClick={[Function]}
+          role="button"
+          tabIndex="-1"
+          title="Add recipe"
+        />
+      </div>
+      <AddRecipeModal
+        createRecipe={[MockFunction]}
+        errorMessage="error"
+        isLoadingRecipe={true}
+        isOpen={false}
+        toggle={[Function]}
+      />
+      <div
+        className="container-fluid"
+      >
+        <div
+          className="row"
+        >
+          <AdminCardItem
+            deleteRecipe={[Function]}
+            editRecipe={[MockFunction]}
+            key="1"
+            onViewRecipe={[Function]}
+            recipe={
+              Object {
+                "description": "boil rice",
+                "id": 1,
+                "ingredients": "rice, water",
+                "recipeName": "rice",
+              }
+            }
+          />
+          <AdminCardItem
+            deleteRecipe={[Function]}
+            editRecipe={[MockFunction]}
+            key="2"
+            onViewRecipe={[Function]}
+            recipe={
+              Object {
+                "description": "cook beans",
+                "id": 2,
+                "ingredients": "beans, water",
+                "recipeName": "beans",
+              }
+            }
+          />
+          <div
+            className="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+          />
+        </div>
+      </div>
+    </section>
+  </div>
+  <PaginationBoxView
+    activeClassName="page-item active"
+    breakClassName="text-center"
+    breakLabel="..."
+    containerClassName="container pagination justify-content-center"
+    disableInitialCallback={false}
+    disabledClassName="disabled"
+    marginPagesDisplayed={3}
+    nextClassName="page-item"
+    nextLabel="Next"
+    nextLinkClassName="page-link"
+    onPageChange={[Function]}
+    pageClassName="page-item"
+    pageCount={1}
+    pageLinkClassName="page-link"
+    pageRangeDisplayed={5}
+    previousClassName="page-item"
+    previousLabel="Previous"
+    previousLinkClassName="page-link"
+  />
+  <Footer />
+</div>
+`;

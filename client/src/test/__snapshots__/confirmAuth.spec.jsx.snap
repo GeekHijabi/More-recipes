@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test for Confirm Authentication should render component 1`] = `
+<Footer
+  auth={Object {}}
+  signout={[MockFunction]}
+/>
+`;

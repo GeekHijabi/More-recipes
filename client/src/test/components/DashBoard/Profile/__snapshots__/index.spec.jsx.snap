@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Profile snapshot should render correctly 1`] = `
+<div
+  page="profile"
+>
+  <withRouter(Connect(RecipeHeader)) />
+  <main
+    className="row prof-up"
+  >
+    <div
+      className="dual col-xs-12 col-sm-6 col-md-6 col-lg-5"
+    >
+      <div
+        className="mt-3"
+      >
+        <span
+          className="float-right span-profile"
+          data-toggle="tooltip"
+          onClick={[Function]}
+          role="button"
+          tabIndex="-1"
+          title="Edit profile"
+        >
+          <i
+            className="fa fa-edit fa-2x"
+          />
+        </span>
+        <h1
+          className="name mb-5"
+        >
+          tester
+        </h1>
+        <h4>
+          Summary
+        </h4>
+        <p
+          className="name-desc"
+        />
+        <div
+          className="red-border-line mb-4"
+        />
+        <h4>
+          About Me
+        </h4>
+        <p />
+        <Connect(EditProfileModal)
+          editProfile={[MockFunction]}
+          isOpen={false}
+          toggle={[Function]}
+          user={
+            Object {
+              "bio": "",
+              "id": 1,
+              "summary": "",
+              "userName": "tester",
+            }
+          }
+        />
+      </div>
+      <div
+        className="social-icons"
+      >
+        <a
+          href="/"
+        >
+          <i
+            className="fa fa-twitter-square fa-2x"
+          />
+        </a>
+        <a
+          href="/"
+        >
+          <i
+            className="fa fa-instagram fa-2x"
+          />
+        </a>
+        <a
+          href="/"
+        >
+          <i
+            className="fa fa-pinterest-square fa-2x"
+          />
+        </a>
+      </div>
+    </div>
+    <div
+      className="dual col-xs-12 col-sm-6 col-md-6 col-lg-7"
+    >
+      <img
+        alt=""
+        className="bg"
+        src={Object {}}
+      />
+    </div>
+  </main>
+  <Footer />
+</div>
+`;

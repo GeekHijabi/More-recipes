@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: Reviews Review snapshot should render correctly 1`] = `
+<div
+  aria-labelledby="reviews-tab"
+  className="tab-pane fade"
+  id="reviews"
+  role="tabpanel"
+>
+  <Connect(AddReviewForm)
+    recipeId={2}
+  />
+  <ul
+    className="tab-pane fade"
+  >
+    <span
+      className="reviewText"
+    >
+      This recipe has not been reviewed yet, Add a review.
+    </span>
+  </ul>
+</div>
+`;

@@ -124,7 +124,6 @@ export const apiLoginUser = ({
       const decodedToken = jwt.decode(token);
       setToken(token);
       localStorage.setItem('userId', decodedToken.id);
-
       dispatch(loginSuccess(response.data.message));
       dispatch(setCurrentUser(decodedToken));
     }).catch((err) => {
@@ -135,7 +134,7 @@ export const apiLoginUser = ({
 
   /**
  * Async action for profile
- * @param {object} userId
+ * @param {number} userId
  * @returns {promise} request
  */
 export const apiGetCurrentUser = userId =>
@@ -229,6 +228,7 @@ export const apiResetPassword = (userId, newPassword, token) =>
       }
     });
     return request.then(response =>
+
       dispatch(resetPasswordSuccess(response.data.message)))
       .catch((err) => {
         dispatch(resetPasswordFailure(err));

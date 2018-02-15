@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Tab from './Tab';
 
 const tabOptions = [
@@ -11,7 +12,7 @@ const Tabs = props => (
   <nav
     className="nav nav-tabs white"
     id="myTab"
-    role="tablist"
+    // role="tablist"
   >
     {
       tabOptions.map(tab => (
@@ -26,5 +27,15 @@ const Tabs = props => (
     {props.isActive}
   </nav>
 );
+
+Tabs.defaultProps = {
+  isActive: false
+};
+
+Tabs.propTypes = {
+  isActive: PropTypes.bool,
+  activeTab: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
 
 export default Tabs;

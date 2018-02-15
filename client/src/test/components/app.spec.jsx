@@ -5,6 +5,8 @@ import { shallow, configure } from 'enzyme';
 
 import App from '../../js/app';
 
+localStorage.setItem('token', 'psdafdf');
+
 configure({ adapter: new Adapter() });
 
 describe('App', () => {

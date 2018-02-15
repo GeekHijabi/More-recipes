@@ -59,8 +59,8 @@ export class ResetPassword extends React.Component {
             closeButton: true,
             progressBar: true
           };
-          toastr.success(data.newPasswordMessage);
           this.props.history.push('/signin');
+          toastr.success(data.newPasswordMessage);
         })
         .catch((err) => {
           toastr.danger(err.data);
@@ -123,7 +123,8 @@ export class ResetPassword extends React.Component {
               <label htmlFor="Form-email1" className="form-label">
                 <input
                   type="password"
-                  className="Form-email1 form-control"
+                  id="Form-email1 "
+                  className="form-control"
                   placeholder="confirm Password"
                   name="confirmPassword"
                   onChange={this.onChange}

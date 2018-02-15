@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Ingredients = ((props) => {
+export const Ingredients = ((props) => {
   const SplitIngredients = props.ingredients.split(',');
   return (
     <div
@@ -31,5 +32,14 @@ const Ingredients = ((props) => {
     </div>
   );
 });
+
+Ingredients.defaultProps = {
+  ingredients: '',
+};
+
+Ingredients.propTypes = {
+  ingredients: PropTypes.string,
+  activeTab: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Ingredients;

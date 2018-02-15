@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: AddRecipeModal AddRecipeModal snapshot should render correctly 1`] = `
+<Modal
+  autoFocus={true}
+  backdrop={true}
+  backdropTransition={
+    Object {
+      "mountOnEnter": true,
+      "timeout": 150,
+    }
+  }
+  fade={true}
+  isOpen={true}
+  keyboard={true}
+  modalTransition={
+    Object {
+      "timeout": 300,
+    }
+  }
+  onClosed={[Function]}
+  onOpened={[Function]}
+  role="dialog"
+  toggle={[MockFunction]}
+  zIndex={1050}
+>
+  <ModalHeader
+    closeAriaLabel="Close"
+    tag="h4"
+    toggle={[MockFunction]}
+    wrapTag="div"
+  >
+    Add recipe
+  </ModalHeader>
+  <ModalBody
+    tag="div"
+  >
+    <Form
+      tag="form"
+    >
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="exampleEmail"
+          sm={4}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Recipe Name
+          <span
+            style={
+              Object {
+                "color": "red",
+              }
+            }
+          >
+             *
+          </span>
+        </Label>
+        <Col
+          sm={8}
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <Input
+            id="exampleEmail"
+            name="recipeName"
+            onChange={[Function]}
+            placeholder="input Recipe name"
+            tag="p"
+            type="text"
+            value=""
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="exampleEmail"
+          sm={4}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Ingredients
+          <span
+            style={
+              Object {
+                "color": "red",
+              }
+            }
+          >
+             *
+          </span>
+        </Label>
+        <Col
+          sm={8}
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <textarea
+            className="styledTextarea"
+            id="exampleEmail"
+            name="ingredients"
+            onChange={[Function]}
+            placeholder="e.g 2 cups of beans, 1 onion-chopped"
+            type="text"
+            value=""
+          />
+        </Col>
+        <span
+          style={
+            Object {
+              "color": "red",
+              "marginLeft": "13.5em",
+            }
+          }
+        >
+          separate ingredients with commas
+        </span>
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="exampleEmail"
+          sm={4}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Description
+          <span
+            style={
+              Object {
+                "color": "red",
+              }
+            }
+          >
+             *
+          </span>
+        </Label>
+        <Col
+          sm={8}
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <textarea
+            className="styledTextarea"
+            id="exampleEmail"
+            name="description"
+            onChange={[Function]}
+            placeholder="e.g Sieve the beans, and blend to taste"
+            type="text"
+            value=""
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="exampleFile"
+          lg={4}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Image
+        </Label>
+        <Col
+          sm={8}
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <input
+            accept="image/*"
+            name="image"
+            onChange={[Function]}
+            type="file"
+          />
+          <img
+            alt="sample"
+            className="styledImage"
+            src={Object {}}
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        check={true}
+        className="modal-button"
+        row={true}
+        tag="div"
+      >
+        <Col
+          sm={
+            Object {
+              "offset": 5,
+              "size": 10,
+            }
+          }
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <Button
+            className="submit-btn"
+            color="secondary"
+            onClick={[Function]}
+            tag="button"
+          >
+            Submit
+          </Button>
+        </Col>
+      </FormGroup>
+    </Form>
+  </ModalBody>
+</Modal>
+`;

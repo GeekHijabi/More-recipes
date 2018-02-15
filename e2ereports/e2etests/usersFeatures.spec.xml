@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="18">
+
+  <testsuite name="e2etests.usersFeatures.spec"
+    errors="1" failures="0" hostname="" id="" package="usersFeatures.spec" skipped="17"
+    tests="18" time="0.004000" timestamp="Wed, 14 Feb 2018 17:36:11 GMT">
+  
+    <testcase name="Display homepage and ensure all element are available" classname="e2etests.usersFeatures.spec" time="0.004000" assertions="0">
+    </testcase>
+  
+
+  
+    <system-err>
+        Error while running [E2etests / Users Features Spec / Display homepage and ensure all element are available]:
+
+  TypeError: browser.url(...).waitForElementVisible(...).assert.containsText(...).assert.containsText(...).assert.visible(...).assert.visible(...).assert.containsText(...).assert.containsText(...).assert.containsText(...).assert.visible(...).assert.visible(...).assert.containsText(...).expect.element(...).to.have.attribute(...).which.contains(...).pause is not a function
+    at Object.Display homepage and ensure all element are available (/Users/andeladeveloper/Desktop/More-recipes/e2etests/usersFeatures.spec.js:26:8)
+    at Module.call (/usr/local/lib/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /usr/local/lib/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/usr/local/lib/node_modules/nightwatch/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/usr/local/lib/node_modules/nightwatch/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/usr/local/lib/node_modules/nightwatch/node_modules/q/q.js:796:13)
+    at /usr/local/lib/node_modules/nightwatch/node_modules/q/q.js:556:49
+    at runSingle (/usr/local/lib/node_modules/nightwatch/node_modules/q/q.js:137:13)
+    at flush (/usr/local/lib/node_modules/nightwatch/node_modules/q/q.js:125:13)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+    </system-err>
+  
+
+  
+    
+    <testcase
+      name="User receives an error if a required field for signup is empty" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="User can sign up" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="User cannot sign up with data that already exists" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="User receives an error if a required field for signin is empty" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="User can sign in to the app" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="AllRecipes: user sees a message when there&#39;s no recipe on the app" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="AllRecipes: user sees a message when no recipe has been created" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="User gets an error if required fields for creating recipe is empty" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="User can create a recipe" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="User can not create recipe with same name twice" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Edit Recipe: users can edit recipes created by them" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Delete Recipe: users can delete recipes created by them" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Recipe Details: users can view recipe details" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Favorite: user see their favorite recipes" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Profile: user see their profile page" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="AllRecipes: user can get all the recipes available" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="user gets redirected to a 404 page when route is invalid" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

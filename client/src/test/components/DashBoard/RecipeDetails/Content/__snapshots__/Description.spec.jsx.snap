@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Description snapshot should render correctly 1`] = `
+<div
+  aria-labelledby="directions-tab"
+  className="steps tab-pane fade"
+  id="directions"
+  role="tabpanel"
+>
+  <div
+    className="step"
+  >
+    <h5>
+      Steps
+    </h5>
+    <p
+      className="step_details"
+    >
+      boil rice
+    </p>
+  </div>
+</div>
+`;

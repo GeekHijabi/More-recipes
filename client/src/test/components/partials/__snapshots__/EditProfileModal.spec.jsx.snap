@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component: EditProfileModal EditProfileModal snapshot should render correctly 1`] = `
+<Modal
+  autoFocus={true}
+  backdrop={true}
+  backdropTransition={
+    Object {
+      "mountOnEnter": true,
+      "timeout": 150,
+    }
+  }
+  fade={true}
+  isOpen={true}
+  keyboard={true}
+  modalTransition={
+    Object {
+      "timeout": 300,
+    }
+  }
+  onClosed={[Function]}
+  onOpened={[Function]}
+  role="dialog"
+  toggle={[MockFunction]}
+  zIndex={1050}
+>
+  <ModalHeader
+    closeAriaLabel="Close"
+    tag="h4"
+    toggle={[MockFunction]}
+    wrapTag="div"
+  >
+    Edit Profile
+  </ModalHeader>
+  <ModalBody
+    tag="div"
+  >
+    <Form
+      tag="form"
+    >
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="exampleEmail"
+          sm={4}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Username
+        </Label>
+        <Col
+          sm={8}
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <Input
+            id="exampleEmail"
+            name="lastName"
+            onChange={[Function]}
+            placeholder="input last name"
+            tag="p"
+            type="text"
+            value=""
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="exampleEmail"
+          sm={4}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Bio
+        </Label>
+        <Col
+          sm={8}
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <Input
+            id="exampleEmail"
+            name="bio"
+            onChange={[Function]}
+            placeholder="Input a bio describing you"
+            tag="p"
+            type="text"
+            value=""
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="exampleEmail"
+          sm={4}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Summary
+        </Label>
+        <Col
+          sm={8}
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <Input
+            id="exampleEmail"
+            name="summary"
+            onChange={[Function]}
+            placeholder="Input a cute summary of yourself"
+            tag="p"
+            type="text"
+            value=""
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        row={true}
+        tag="div"
+      >
+        <Label
+          for="exampleFile"
+          lg={4}
+          tag="label"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          Image
+        </Label>
+        <Col
+          sm={8}
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <input
+            accept="image/*"
+            name="image"
+            onChange={[Function]}
+            type="file"
+          />
+          <img
+            alt="sample"
+            className="styledImage"
+            src={Object {}}
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        check={true}
+        row={true}
+        tag="div"
+      >
+        <Col
+          className="modal-button"
+          sm={
+            Object {
+              "offset": 2,
+              "size": 10,
+            }
+          }
+          tag="div"
+          widths={
+            Array [
+              "xs",
+              "sm",
+              "md",
+              "lg",
+              "xl",
+            ]
+          }
+        >
+          <Button
+            className="submit-btn"
+            color="secondary"
+            onClick={[Function]}
+            tag="button"
+          >
+            Edit
+          </Button>
+        </Col>
+      </FormGroup>
+    </Form>
+  </ModalBody>
+</Modal>
+`;

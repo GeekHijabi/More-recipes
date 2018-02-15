@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tab snapshot should render correctly 1`] = `
+<a
+  aria-controls="tab"
+  aria-selected="false"
+  className="nav-item nav-link"
+  data-toggle="tab"
+  href="#[object Object]"
+  id="tab"
+  onClick={[MockFunction]}
+  role="tab"
+>
+  Reviews
+</a>
+`;

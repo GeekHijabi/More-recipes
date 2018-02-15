@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Tab = props => (
   <a
@@ -17,5 +18,15 @@ const Tab = props => (
     {props.tabOption.name}
   </a>
 );
+
+Tab.defaultProps = {
+  isActive: false
+};
+
+Tab.propTypes = {
+  isActive: PropTypes.bool,
+  tabOption: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleClick: PropTypes.func.isRequired
+};
 
 export default Tab;

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="3">
+
+  <testsuite name="e2etests.usersFeatures.spec"
+    errors="0" failures="1" hostname="" id="" package="usersFeatures.spec" skipped="1"
+    tests="3" time="16.69" timestamp="Wed, 14 Feb 2018 06:21:03 GMT">
+  
+    <testcase name="User can sign up" classname="e2etests.usersFeatures.spec" time="8.855" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="user receives an error if a required field for signup is empty" classname="e2etests.usersFeatures.spec" time="7.837" assertions="5">
+
+    
+
+    
+
+    
+
+      <failure message="Testing if element &lt;.error&gt; contains text: &#34;Email is invalid&#34;.">    at Object.user receives an error if a required field for signup is empty (/Users/andeladeveloper/Desktop/More-recipes/e2etests/usersFeatures.spec.js:48:15)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)</failure>
+
+    
+    </testcase>
+  
+
+  
+
+  
+    
+    <testcase
+      name="user cannot sign up with data that already exists" classname="e2etests.usersFeatures.spec">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

@@ -10,7 +10,9 @@ import {
   apiLoginUser,
   apiGetCurrentUser,
   LogoutUser,
-  apiUpdateUserProfile
+  apiUpdateUserProfile,
+  apiForgotPassword,
+  apiResetPassword
 } from '../../js/actions/auth';
 import {
   LOGIN_USER_SUCCESS,
@@ -21,7 +23,11 @@ import {
   LOGOUT_USER_SUCCESS,
   UPDATE_PROFILE_SUCCESS,
   REMOVE_CURRENT_USER,
-  UPDATE_PROFILE_FAILURE
+  UPDATE_PROFILE_FAILURE,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE
 } from '../../js/constants';
 
 const middleware = [thunk];
@@ -204,6 +210,90 @@ describe('Auth action', () => {
       }];
       const store = mockStore({});
       store.dispatch(apiUpdateUserProfile(userProfileData))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      done();
+    }
+  );
+
+  it(
+    'dispatches FORGOT_PASSWORD_SUCCESS when user calls forgot password route',
+    (done) => {
+      const { forgotPasswordEmail, forgotPasswordResponse } = dataMock;
+      moxios.stubRequest(`/api/v1/user/${1}`, {
+        status: 200,
+        email: forgotPasswordResponse
+      });
+      const expectedActions = [{
+        type: FORGOT_PASSWORD_SUCCESS,
+        email: forgotPasswordResponse
+      }];
+      const store = mockStore({});
+      store.dispatch(apiForgotPassword(forgotPasswordEmail.id))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      done();
+    }
+  );
+
+  it(
+    'dispatches FORGOT_PASSWORD_FAILURE when user calls forgot password route',
+    (done) => {
+      const { forgotPasswordEmail } = dataMock;
+      moxios.stubRequest(`/api/v1/user/${1}`, {
+        status: 200,
+        error: 'error'
+      });
+      const expectedActions = [{
+        type: FORGOT_PASSWORD_FAILURE,
+        error: 'error'
+      }];
+      const store = mockStore({});
+      store.dispatch(apiForgotPassword(forgotPasswordEmail.id))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      done();
+    }
+  );
+
+  it(
+    'dispatches RESET_PASSWORD_SUCCESS when user calls forgot password route',
+    (done) => {
+      const { newPassword } = dataMock;
+      moxios.stubRequest(`/api/v1/user/${1}`, {
+        status: 200,
+        newPasswordMessage: 'newpassword'
+      });
+      const expectedActions = [{
+        type: RESET_PASSWORD_SUCCESS,
+        newPasswordMessage: 'newpassword'
+      }];
+      const store = mockStore({});
+      store.dispatch(apiResetPassword(newPassword))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
+      done();
+    }
+  );
+
+  it(
+    'dispatches RESET_PASSWORD_FAILURE when user calls forgot password route',
+    (done) => {
+      const { forgotPasswordEmail } = dataMock;
+      moxios.stubRequest(`/api/v1/user/${1}`, {
+        status: 200,
+        error: 'error'
+      });
+      const expectedActions = [{
+        type: RESET_PASSWORD_FAILURE,
+        error: 'error'
+      }];
+      const store = mockStore({});
+      store.dispatch(apiResetPassword(forgotPasswordEmail.id))
         .then(() => {
           expect(store.getActions()).toEqual(expectedActions);
         });

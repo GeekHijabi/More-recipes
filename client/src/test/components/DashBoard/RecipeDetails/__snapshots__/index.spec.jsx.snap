@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyRecipe snapshot should render correctly 1`] = `
+<div>
+  <withRouter(Connect(RecipeHeader)) />
+  <main
+    className="row"
+    page="details"
+  >
+    <div
+      className="dual col-xs-12 col-sm-6 col-md-6 col-lg-7"
+    >
+      <img
+        className="food"
+        src={Object {}}
+      />
+      <h4>
+        <span
+          className="food_name"
+        />
+      </h4>
+      <div
+        className="food_vote"
+      >
+        <span
+          className="vote_type"
+        >
+          <i
+            className="fa fa-thumbs-o-up fa-2x"
+            data-toggle="tool-tip"
+            onClick={[Function]}
+            role="button"
+            tabIndex="-1"
+            title="upvote recipe"
+          />
+          <span>
+            upvote
+          </span>
+          <span
+            className="detail-value"
+          />
+        </span>
+        <span
+          className="vote_type"
+        >
+          <i
+            className="fa fa-thumbs-o-down fa-2x"
+            data-toggle="tool-tip"
+            onClick={[Function]}
+            role="button"
+            tabIndex="-1"
+            title="downvote recipe"
+          />
+          <span>
+            downvote
+          </span>
+          <span
+            className="detail-value"
+          />
+        </span>
+        <span
+          className="vote_type"
+        >
+          <i
+            className="fa fa-heart fa-2x"
+            data-toggle="tool-tip"
+            onClick={[Function]}
+            role="button"
+            tabIndex="-1"
+            title="add to favorites"
+          />
+          <span>
+            favorite
+          </span>
+          <span
+            className="detail-value"
+          />
+        </span>
+        <span
+          className="vote_type"
+        >
+          <i
+            className="fa fa-eye fa-2x"
+            data-toggle="tool-tip"
+            title="number of views"
+          />
+          <span>
+            view
+          </span>
+          <span
+            className="detail-value"
+          >
+            0
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      className="dual col-xs-12 col-sm-6 col-md-6 col-lg-5"
+    >
+      <Tabs
+        activeTab={
+          Object {
+            "downvotes": false,
+            "isActive": true,
+            "name": "Descriptions",
+            "upvotes": false,
+          }
+        }
+        changeTab={[Function]}
+        isActive={false}
+      />
+      <Content
+        activeTab={
+          Object {
+            "downvotes": false,
+            "isActive": true,
+            "name": "Descriptions",
+            "upvotes": false,
+          }
+        }
+        description=""
+        ingredients=""
+        recipe={Object {}}
+        recipeId={0}
+        reviewedRecipe={Object {}}
+      />
+    </div>
+  </main>
+  <Footer />
+</div>
+`;

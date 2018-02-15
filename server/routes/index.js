@@ -2,7 +2,6 @@ import authenticate from '../middleware/authenticate';
 import { signUpField,
   signInField,
   validateGetRecipe,
-  recipeValidation,
   reviewsValidation } from '../middleware/validations';
 import user from '../controllers/user';
 import recipes from '../controllers/recipes';
@@ -53,7 +52,6 @@ const routes = (app) => {
     .get(recipes.listAllRecipes)
     .post(
       authenticate,
-      recipeValidation,
       validateGetRecipe,
       recipes.createRecipe
     );

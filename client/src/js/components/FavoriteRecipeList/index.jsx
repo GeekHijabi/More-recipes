@@ -12,7 +12,7 @@ import { apiGetFavoriteRecipe } from '../../actions/recipe';
  * @class Recipes
  * @extends {React.Component}
  */
-class FavoriteRecipes extends React.Component {
+export class FavoriteRecipes extends React.Component {
   /**
    * @description constructor function
    * @param {any} props

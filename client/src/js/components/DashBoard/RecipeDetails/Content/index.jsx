@@ -4,7 +4,7 @@ import Description from './Descriptions';
 import Ingredients from './Ingredients';
 import Reviews from './Reviews';
 
-const Content = props => (
+export const Content = props => (
   <div
     className="tab-content"
     id="myTabContent"
@@ -27,12 +27,14 @@ const Content = props => (
 
 Content.defaultProps = {
   description: '',
+  ingredients: '',
   recipeId: 0
 };
 
 Content.propTypes = {
   recipe: PropTypes.objectOf(PropTypes.any).isRequired,
   description: PropTypes.string,
+  ingredients: PropTypes.string,
   activeTab: PropTypes.objectOf(PropTypes.any).isRequired,
   reviewedRecipe: PropTypes.objectOf(Array).isRequired,
   recipeId: PropTypes.number
